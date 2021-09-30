@@ -31,9 +31,11 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.26.1",
+    "fast-glob": "^3.2.7",
     "flow-bin": "^0.161.0",
     "jest": "^27.2.4",
     "jest-extended": "^0.11.5",
+    "lerna": "^4.0.0",
     "prettier": "^2.4.1",
     "rollup": "^2.57.0",
     "rollup-plugin-auto-external": "^2.0.0",
@@ -44,7 +46,10 @@
     "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules",
     "coverage": "yarn run jest --coverage",
     "flow:ci": "flow check --max-workers 0",
+    "dry-run-publish": "yarn run publishchecks && lerna version --no-git-tag-version --no-push",
     "lint": "eslint packages",
+    "publishchecks": "git diff --stat --exit-code HEAD && yarn build && node utils/pre-publish-check.js",
+    "publish": "yarn run publishchecks && lerna publish",
     "test": "yarn jest"
   }
 }
