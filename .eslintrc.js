@@ -1,10 +1,13 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
     extends: ["@khanacademy"],
-    plugins: ["import", "jest", "promise", "monorepo"],
+    plugins: ["import", "jest", "promise", "monorepo", "disable"],
     settings: {
-        react: {
-            version: "detect",
+        "eslint-plugin-disable": {
+            paths: {
+                react: ["./*.js", "src/*.js"],
+                "jsx-a11y": ["./*.js", "src/*.js"],
+            },
         },
     },
     overrides: [
@@ -12,6 +15,12 @@ module.exports = {
             files: ["utils/*.js"],
             rules: {
                 "import/no-commonjs": "off",
+            },
+        },
+        {
+            files: ["**/__tests__/**/*.test.js"],
+            rules: {
+                "max-lines": "off",
             },
         },
     ],
