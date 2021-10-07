@@ -13,7 +13,7 @@ on:
     - feature/*
 
 # Our jobs run like this to minimize wasting resource cycles:
-#   1. Prime caches for primary configuration (ubuntu on node 12).
+#   1. Prime caches for primary configuration (ubuntu on node 14).
 #      This way the next two jobs can run in parallel but rely on this primed
 #      cache.
 #   2. Lint and coverage
@@ -30,7 +30,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [12.x]
+        node-version: [14.x]
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -58,7 +58,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [12.x]
+        node-version: [14.x]
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -91,6 +91,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, macOS-latest]
         node-version: [12.x, 14.x]
+        exclude:
+          # The coverage job covers this configuration
+          - os: ubuntu-latest
+            node-version: 14.x
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -120,7 +124,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [12.x]
+        node-version: [14.x]
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
