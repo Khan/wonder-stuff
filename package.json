@@ -43,7 +43,7 @@
     "build": "rollup -c build-settings/rollup.config.js",
     "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules",
     "coverage": "yarn run jest --coverage",
-    "flow-ci": "flow check --max-workers 0",
+    "flow:ci": "flow check --max-workers 0",
     "lint": "eslint packages",
     "test": "yarn jest"
   }
