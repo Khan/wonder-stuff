@@ -1,3 +1,4 @@
+/* eslint-disable import/no-commonjs */
 /**
  * This is the main jest config.  It runs tests using the default
  * test environment: jest-environment-node.

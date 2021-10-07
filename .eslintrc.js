@@ -1,7 +1,6 @@
+/* eslint-disable import/no-commonjs */
 module.exports = {
-    extends: [
-        "@khanacademy",
-    ],
+    extends: ["@khanacademy"],
     plugins: ["import", "jest", "promise", "monorepo"],
     settings: {
         react: {

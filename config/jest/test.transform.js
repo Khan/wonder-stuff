@@ -1,3 +1,4 @@
+/* eslint-disable import/no-commonjs */
 const babelJest = require("babel-jest");
 
 const babelConfig = require("../../build-settings/babel.config.js");
