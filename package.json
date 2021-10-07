@@ -1,0 +1,10 @@
+{
+  "name": "wonder-stuff",
+  "version": "1.0.0",
+  "description": "Packages for sharing features across JavaScript-based projects",
+  "main": "index.js",
+  "repository": "git@github.com:Khan/wonder-stuff.git",
+  "author": "Jeff Yates <jeff@khanacademy.org>",
+  "license": "MIT",
+  "private": true
+}
