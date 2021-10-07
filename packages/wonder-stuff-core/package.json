@@ -1,0 +1,15 @@
+{
+    "name": "@khanacademy/wonder-stuff-core",
+    "version": "1.0.0",
+    "description": "",
+    "module": "dist/index.js",
+    "source": "src/index.js",
+    "scripts": {
+        "test": "echo \"Run tests from the repository root\" && exit 1"
+    },
+    "devDependencies": {
+        "ws-dev-build-settings": "^0.0.2"
+    },
+    "author": "",
+    "license": "MIT"
+}
