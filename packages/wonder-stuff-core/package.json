@@ -1,4 +1,8 @@
 {
+    "publishConfig": {
+        "access": "restricted"
+    },
+    "private": true,
     "name": "@khanacademy/wonder-stuff-core",
     "version": "1.0.0",
     "description": "",

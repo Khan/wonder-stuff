@@ -1,0 +1,18 @@
+{
+    "packages": [
+        "packages/*"
+    ],
+    "command": {
+        "publish": {
+            "ignoreChanges": [
+                "*.test.js",
+                "*.vite_test.js",
+                "*.md",
+                "*.js.snap"
+            ]
+        }
+    },
+    "version": "independent",
+    "npmClient": "yarn",
+    "useWorkspaces": true
+}
