@@ -9,7 +9,8 @@ module.exports = {
                     "@babel/preset-env",
                     {
                         targets: {
-                            node: true,
+                            // Our currently minimum support is node 12
+                            node: 12,
                         },
                     },
                 ],
