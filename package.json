@@ -35,8 +35,7 @@
     "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules",
     "coverage": "yarn run jest --coverage",
     "flow-ci": "flow check --max-workers 0",
-    "jest": "jest --config config/jest/test.config.js",
-    "lint": "eslint --config .eslintrc.js packages",
-    "test": "yarn run jest"
+    "lint": "eslint packages",
+    "test": "yarn jest"
   }
 }
