@@ -25,9 +25,9 @@ const createSharedConfig = (pkgName) => ({
         terser(),
 
         // This generates the flow import file.
-        // The copyOnce ensures that we just get one copy of the requested
-        // target file, so it's ok that we duplicate this step in our two
-        // outputs.
+        // The copyOnce ensures that we copy just once for a specific target
+        // file, even if we have multiple copy plugin configs for that file,
+        // so it's ok that we duplicate this step in our two outputs.
         copy({
             copyOnce: true,
             verbose: true,
