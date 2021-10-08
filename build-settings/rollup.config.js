@@ -6,6 +6,7 @@ import {babel} from "@rollup/plugin-babel";
 import {terser} from "rollup-plugin-terser";
 import copy from "rollup-plugin-copy";
 import resolve from "@rollup/plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
 
 const createBabelPresets = require("./create-babel-presets.js");
 
@@ -28,6 +29,14 @@ const createConfig = ({name, format, platform, file}) => ({
     output: createOutputConfig(name, format, file),
     input: makePackageBasedPath(name, "./src/index.js"),
     plugins: [
+        replace({
+            preventAssignment: true,
+            values: {
+                "process.env.NODE_ENV": JSON.stringify(
+                    process.env.NODE_ENV || "production",
+                ),
+            },
+        }),
         babel({
             babelHelpers: "bundled",
             presets: createBabelPresets({platform, format}),
@@ -102,7 +111,25 @@ const getPackageInfo = (pkgName) => {
     ].filter((i) => !!i.file);
 };
 
-export default fs
-    .readdirSync("packages")
-    .flatMap(getPackageInfo)
-    .map(createConfig);
+/**
+ * Creates the full rollup configuration for the given args.
+ *
+ * If the `configPackages` arg is included, we split it on commas and
+ * take each as the name of a package to process. Otherwise, we process all
+ * packages.
+ */
+const createRollupConfig = (commandLineArgs) => {
+    const {configPackages} = commandLineArgs;
+    const pkgNames =
+        configPackages && configPackages.length
+            ? configPackages
+                  .split(",")
+                  .map((s) =>
+                      s.startsWith("wonder-stuff") ? s : `wonder-stuff-${s}`,
+                  )
+            : fs.readdirSync("packages");
+
+    return pkgNames.flatMap(getPackageInfo).map(createConfig);
+};
+
+export default createRollupConfig;
