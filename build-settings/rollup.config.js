@@ -3,6 +3,7 @@ import fs from "fs";
 import autoExternal from "rollup-plugin-auto-external";
 import {babel} from "@rollup/plugin-babel";
 import {terser} from "rollup-plugin-terser";
+import copy from "rollup-plugin-copy";
 
 const {presets, plugins} = require("./babel.config.js");
 
@@ -22,6 +23,25 @@ const createSharedConfig = (pkgName) => ({
             packagePath: `packages/${pkgName}/package.json`,
         }),
         terser(),
+
+        // This generates the flow import file.
+        // The copyOnce ensures that we just get one copy of the requested
+        // target file, so it's ok that we duplicate this step in our two
+        // outputs.
+        copy({
+            copyOnce: true,
+            verbose: true,
+            targets: [
+                {
+                    // src path is relative to the package root unless started
+                    // with ./
+                    src: "build-settings/index.flow.js.template",
+                    // dest path is relative to src path.
+                    dest: `packages/${pkgName}/dist`,
+                    rename: "index.flow.js",
+                },
+            ],
+        }),
     ],
 });
 
@@ -45,6 +65,7 @@ const createConfig = (pkgName) => {
         {
             output: {
                 file: `packages/${pkgName}/dist/index.js`,
+                sourcemap: true,
                 format: "cjs",
             },
             ...sharedConfig,
@@ -52,6 +73,7 @@ const createConfig = (pkgName) => {
         {
             output: {
                 file: `packages/${pkgName}/dist/es/index.js`,
+                sourcemap: true,
                 format: "esm",
             },
             ...sharedConfig,
