@@ -120,15 +120,40 @@ const getPackageInfo = (pkgName) => {
  */
 const createRollupConfig = (commandLineArgs) => {
     const {configPackages} = commandLineArgs;
-    const pkgNames =
-        configPackages && configPackages.length
-            ? configPackages
-                  .split(",")
-                  .map((s) =>
-                      s.startsWith("wonder-stuff") ? s : `wonder-stuff-${s}`,
-                  )
-            : fs.readdirSync("packages");
 
+    // Get the list of packages that we have in our packages folder.
+    const actualPackages = fs.readdirSync("packages");
+
+    // Parse the configPackages arg into an array of package names.
+    const specificPackages =
+        configPackages && configPackages.length
+            ? configPackages.split(",").map((p) => p.trim())
+            : null;
+
+    // Filter our list of actual packages to only those that were requested.
+    const pkgNames = actualPackages.filter(
+        (p) => !specificPackages || specificPackages.some((s) => p.endsWith(s)),
+    );
+
+    if (
+        specificPackages != null &&
+        specificPackages.length !== pkgNames.length
+    ) {
+        // If we were asked for specific packages but we did not match them
+        // all, then let's tell the caller which ones we couldn't find.
+        const missingPackages = specificPackages.filter(
+            (s) => !pkgNames.some((p) => p.endsWith(s)),
+        );
+        throw new Error(
+            `Could not find one or more of the requested packages: ${missingPackages}`,
+        );
+    } else if (pkgNames.length === 0) {
+        // If we just don't have any packages right now, let's also report that.
+        throw new Error("No packages found in /packages folder");
+    }
+
+    // For the packages we have determined we want, let's get more information
+    // about them and  generate configurations.
     return pkgNames.flatMap(getPackageInfo).map(createConfig);
 };
 
