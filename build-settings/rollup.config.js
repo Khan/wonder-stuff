@@ -1,33 +1,56 @@
 /* eslint-disable import/no-commonjs */
 import fs from "fs";
+import path from "path";
 import autoExternal from "rollup-plugin-auto-external";
 import {babel} from "@rollup/plugin-babel";
 import {terser} from "rollup-plugin-terser";
 import copy from "rollup-plugin-copy";
+import resolve from "@rollup/plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
 
-const {presets, plugins} = require("./babel.config.js");
+const createBabelPresets = require("./create-babel-presets.js");
 
 /**
- * Creates the rollup config shared by all our output formats.
+ * Make path to a package relative path.
  */
-const createSharedConfig = (pkgName) => ({
-    input: `packages/${pkgName}/src/index.js`,
+const makePackageBasedPath = (pkgName, pkgRelPath) =>
+    path.normalize(path.join("packages", pkgName, pkgRelPath));
+
+/**
+ * Generate the rollup output configuration for a given
+ */
+const createOutputConfig = (pkgName, format, targetFile) => ({
+    file: makePackageBasedPath(pkgName, targetFile),
+    sourcemap: true,
+    format,
+});
+
+const createConfig = ({name, format, platform, file}) => ({
+    output: createOutputConfig(name, format, file),
+    input: makePackageBasedPath(name, "./src/index.js"),
     plugins: [
+        replace({
+            preventAssignment: true,
+            values: {
+                "process.env.NODE_ENV": JSON.stringify(
+                    process.env.NODE_ENV || "production",
+                ),
+            },
+        }),
         babel({
             babelHelpers: "bundled",
-            presets,
-            plugins,
+            presets: createBabelPresets({platform, format}),
             exclude: "node_modules/**",
         }),
+        resolve({
+            browser: platform === "browser",
+        }),
         autoExternal({
-            packagePath: `packages/${pkgName}/package.json`,
+            packagePath: makePackageBasedPath(name, "./package.json"),
         }),
         terser(),
 
         // This generates the flow import file.
-        // The copyOnce ensures that we copy just once for a specific target
-        // file, even if we have multiple copy plugin configs for that file,
-        // so it's ok that we duplicate this step in our two outputs.
         copy({
             copyOnce: true,
             verbose: true,
@@ -37,7 +60,7 @@ const createSharedConfig = (pkgName) => ({
                     // with ./
                     src: "build-settings/index.flow.js.template",
                     // dest path is relative to src path.
-                    dest: `packages/${pkgName}/dist`,
+                    dest: makePackageBasedPath(name, "./dist"),
                     rename: "index.flow.js",
                 },
             ],
@@ -45,41 +68,93 @@ const createSharedConfig = (pkgName) => ({
     ],
 });
 
-/**
- * For a given package, generate the outputs we want.
- * - CommonJS
- * - ES6
- *
- * https://redfin.engineering/node-modules-at-war-why-commonjs-and-es-modules-cant-get-along-9617135eeca1
- * Per the above blog, we could possibly do better for our consumers by making
- * the ES6 output wrap the CJS output so folks can't accidentally have code
- * including two full copies of the same code somehow, but then that wouldn't
- * have the benefits of ES6 like tree shaking. In reality, the CJS output is
- * likely only used by Jest anyway. We could force consumers to use Babel around
- * their imports so that Jest mocking is supported, but that feels mean and
- * messy.
- */
-const createConfig = (pkgName) => {
-    const sharedConfig = createSharedConfig(pkgName);
+// For each package in our packages folder, generate the outputs we want.
+// To determine what those outputs are, we read the package.json file for
+// each package. If the package has a `browser` field, then we generate
+// browser and node assets. If not, we just generate the node assets.
+// Note that we also get the output paths from the package.json.
+const getPackageInfo = (pkgName) => {
+    const pkgJsonPath = makePackageBasedPath(pkgName, "./package.json");
+    const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath));
+
+    // Now we have the package.json, we need to look at the main, module, and
+    // browser fields and values.
+    const {main: cjsNode, module: esmNode, browser} = pkgJson;
+    const cjsBrowser = browser == null ? undefined : browser[cjsNode];
+    const esmBrowser = browser == null ? undefined : browser[esmNode];
+
     return [
         {
-            output: {
-                file: `packages/${pkgName}/dist/index.js`,
-                sourcemap: true,
-                format: "cjs",
-            },
-            ...sharedConfig,
+            name: pkgName,
+            format: "esm",
+            platform: "node",
+            file: esmNode,
         },
         {
-            output: {
-                file: `packages/${pkgName}/dist/es/index.js`,
-                sourcemap: true,
-                format: "esm",
-            },
-            ...sharedConfig,
+            name: pkgName,
+            format: "esm",
+            platform: "browser",
+            file: esmBrowser,
         },
-    ];
+        {
+            name: pkgName,
+            format: "cjs",
+            platform: "node",
+            file: cjsNode,
+        },
+        {
+            name: pkgName,
+            format: "cjs",
+            platform: "browser",
+            file: cjsBrowser,
+        },
+    ].filter((i) => !!i.file);
 };
 
-// For each package in our packages folder, generate the outputs we want.
-export default fs.readdirSync("packages").flatMap(createConfig);
+/**
+ * Creates the full rollup configuration for the given args.
+ *
+ * If the `configPackages` arg is included, we split it on commas and
+ * take each as the name of a package to process. Otherwise, we process all
+ * packages.
+ */
+const createRollupConfig = (commandLineArgs) => {
+    const {configPackages} = commandLineArgs;
+
+    // Get the list of packages that we have in our packages folder.
+    const actualPackages = fs.readdirSync("packages");
+
+    // Parse the configPackages arg into an array of package names.
+    const specificPackages =
+        configPackages && configPackages.length
+            ? configPackages.split(",").map((p) => p.trim())
+            : null;
+
+    // Filter our list of actual packages to only those that were requested.
+    const pkgNames = actualPackages.filter(
+        (p) => !specificPackages || specificPackages.some((s) => p.endsWith(s)),
+    );
+
+    if (
+        specificPackages != null &&
+        specificPackages.length !== pkgNames.length
+    ) {
+        // If we were asked for specific packages but we did not match them
+        // all, then let's tell the caller which ones we couldn't find.
+        const missingPackages = specificPackages.filter(
+            (s) => !pkgNames.some((p) => p.endsWith(s)),
+        );
+        throw new Error(
+            `Could not find one or more of the requested packages: ${missingPackages}`,
+        );
+    } else if (pkgNames.length === 0) {
+        // If we just don't have any packages right now, let's also report that.
+        throw new Error("No packages found in /packages folder");
+    }
+
+    // For the packages we have determined we want, let's get more information
+    // about them and  generate configurations.
+    return pkgNames.flatMap(getPackageInfo).map(createConfig);
+};
+
+export default createRollupConfig;

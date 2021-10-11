@@ -39,8 +39,31 @@ const checkPackageField = (pkgJson, field, value) => {
     }
 };
 
-const checkPackageModule = (pkgJson) =>
-    checkPackageField(pkgJson, "module", "dist/index.js");
+const checkPackageEntrypoints = (pkgJson) => {
+    checkPackageField(pkgJson, "module", "dist/es/index.js");
+    checkPackageField(pkgJson, "main", "dist/index.js");
+    if (pkgJson.browser) {
+        const expectedValue = {
+            [pkgJson.main]: "dist/index.browser.js",
+            [pkgJson.module]: "dist/es/index.browser.js",
+        };
+
+        for (const key of Object.keys(pkgJson.browser)) {
+            if (expectedValue[key] !== pkgJson.browser[key]) {
+                console.error(
+                    `ERROR: ${
+                        pkgJson.name
+                    } must have a "browser" set to \n${JSON.stringify(
+                        expectedValue,
+                        null,
+                        4,
+                    )}.`,
+                );
+                process.exit(1);
+            }
+        }
+    }
+};
 
 const checkPackageSource = (pkgJson) =>
     checkPackageField(pkgJson, "source", "src/index.js");
@@ -76,7 +99,7 @@ fg(path.join(__dirname, "..", "packages", "**", "package.json")).then(
             const pkgJson = require(path.relative(__dirname, pkgPath));
 
             checkPublishConfig(pkgJson);
-            checkPackageModule(pkgJson);
+            checkPackageEntrypoints(pkgJson);
             checkPackageSource(pkgJson);
             warnings = checkPackagePrivate(pkgJson);
         }
