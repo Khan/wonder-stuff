@@ -57,6 +57,33 @@ export class ErrorInfo {
      * at the point of the original throw of error A (i.e. error A's top stack
      * frame), the deduped trace of error B is inserted to show what happened
      * after the error was caught.
+     *
+     * So, given:
+     *
+     * cause = ErrorA, with stack,
+     *    Error: A
+     *      stackA2
+     *      stackA1
+     *      stackShared2
+     *      stackShared1
+     *
+     * and consequence = ErrorB, with stack,
+     *    Error: B
+     *       stackB2
+     *       stackB1
+     *       stackShared2
+     *       stackShared1
+     *
+     * This method would produce the equivalent of:
+     *    Error: B
+     *        caused by
+     *            Error: A
+     *      stackA2
+     *      stackA1
+     *      stackB2
+     *      stackB1
+     *      stackShared2
+     *      stackShared1
      */
     static combine(consequence: ErrorInfo, cause: ErrorInfo): ErrorInfo {
         // Verify our arguments.
