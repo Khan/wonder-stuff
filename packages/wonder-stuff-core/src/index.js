@@ -3,4 +3,4 @@
 export {KindError} from "./kind-error.js";
 export {Errors} from "./errors.js";
 
-export type {ErrorKind, Metadata} from "./types.js";
+export type {Metadata} from "./types.js";

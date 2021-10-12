@@ -1,9 +1,13 @@
 // @flow
-export type {ErrorKind} from "./errors.js";
+type MetadataPrimitive = string | number | boolean;
 
 /**
  * A collection of data.
  */
 export type Metadata = {
-    +[name: string]: Metadata | string | number | boolean | null,
+    +[name: string]: ?(
+        | MetadataPrimitive
+        | $ReadOnly<Metadata>
+        | $ReadOnlyArray<?(MetadataPrimitive | Metadata)>
+    ),
 };

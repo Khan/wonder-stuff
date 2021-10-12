@@ -5304,6 +5304,11 @@ jest-watcher@^27.2.5:
     jest-util "^27.2.5"
     string-length "^4.0.1"
 
+jest-when@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/jest-when/-/jest-when-3.4.1.tgz#833de057ac2bd4da8bed33dad783657a28d80ba3"
+  integrity sha512-oFxeKarvTsuE46SPTzX+znKb+vzQKUxhkPF/fOfhMJE19EcW+sk9dKiACgFVE3K82GgALDH1pjCvHU+uE91QYA==
+
 jest-worker@^26.2.1:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-26.6.2.tgz#7f72cbc4d643c365e27b9fd775f9d0eaa9c7a8ed"

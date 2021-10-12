@@ -1,8 +1,9 @@
 // @flow
 import {Errors} from "./errors.js";
 import {ErrorInfo} from "./error-info.js";
+import {cloneMetadata} from "./clone-metadata.js";
 
-import type {ErrorKind, Metadata} from "./types.js";
+import type {Metadata} from "./types.js";
 
 /**
  * An error to describe detailed states and relationships.
@@ -12,8 +13,8 @@ import type {ErrorKind, Metadata} from "./types.js";
  * More specific variations can be built off this to provide a payload for
  * logging setups like Sentry or winston.
  */
-export class KindError<TKinds: ErrorKind> extends Error {
-    +kind: TKinds;
+export class KindError extends Error {
+    +kind: string;
     +originalMessage: string;
     +metadata: ?$ReadOnly<Metadata>;
 
@@ -37,19 +38,37 @@ export class KindError<TKinds: ErrorKind> extends Error {
      */
     constructor(
         message: string,
-        kind: TKinds = Errors.Unknown,
+        kind: string = Errors.Unknown,
         cause: ?Error = null,
         metadata: ?$ReadOnly<Metadata> = null,
         prefix: string = "",
         stripStackFrames: number = 0,
+        minimumFrameCount: number = 1,
     ) {
+        // Validate arguments.
+        if (cause && !(cause instanceof Error)) {
+            throw new Error("cause must be an instance of Error");
+        }
+        if (kind && /\s/g.test(kind)) {
+            throw new Error("kind must not contain whitespace");
+        }
+        if (prefix && /\s/g.test(prefix)) {
+            throw new Error("prefix must not contain whitespace");
+        }
+        if (stripStackFrames < 0) {
+            throw new Error("stripStackFrames must be >= 0");
+        }
+        if (minimumFrameCount < 0) {
+            throw new Error("minimumFrameCount must be >= 0");
+        }
+
         super(message);
 
         // Save the original message as we may change this message later.
         this.originalMessage = message;
 
         // Metadata associated with this error.
-        this.metadata = metadata;
+        this.metadata = cloneMetadata(metadata);
 
         // Set the name so we get a nice error output, like
         // KAInternalError
@@ -62,7 +81,11 @@ export class KindError<TKinds: ErrorKind> extends Error {
         if (cause != null) {
             // We want to generate a better stack trace using the source error
             // and our own stack.
-            const normalizedError = ErrorInfo.normalize(this, stripStackFrames);
+            const normalizedError = ErrorInfo.normalize(
+                this,
+                stripStackFrames,
+                minimumFrameCount,
+            );
             const normalizedCause = ErrorInfo.normalize(cause);
             const combined = ErrorInfo.combine(
                 normalizedError,
