@@ -72,7 +72,7 @@ describe("KindError", () => {
 
                 // Act
                 const act = () =>
-                    new KindError("MESSAGE", "CUSTOM_KIND", null, null, prefix);
+                    new KindError("MESSAGE", "CUSTOM_KIND", {prefix});
 
                 // Assert
                 expect(act).toThrowErrorMatchingSnapshot();
@@ -84,7 +84,7 @@ describe("KindError", () => {
 
             // Act
             const act = () =>
-                new KindError("MESSAGE", "CUSTOM_KIND", null, null, "", -1);
+                new KindError("MESSAGE", "CUSTOM_KIND", {stripStackFrames: -1});
 
             // Assert
             expect(act).toThrowErrorMatchingInlineSnapshot(
@@ -97,7 +97,9 @@ describe("KindError", () => {
 
             // Act
             const act = () =>
-                new KindError("MESSAGE", "CUSTOM_KIND", null, null, "", 1, -1);
+                new KindError("MESSAGE", "CUSTOM_KIND", {
+                    minimumFrameCount: -1,
+                });
 
             // Assert
             expect(act).toThrowErrorMatchingInlineSnapshot(
@@ -115,12 +117,7 @@ describe("KindError", () => {
                 .mockReturnValue("CLONED_METADATA");
 
             // Act
-            const error = new KindError(
-                "MESSAGE",
-                Errors.Unknown,
-                null,
-                metadata,
-            );
+            const error = new KindError("MESSAGE", Errors.Unknown, {metadata});
 
             // Assert
             expect(spy).toHaveBeenCalledWith(metadata);
@@ -133,11 +130,9 @@ describe("KindError", () => {
 
                 // Act
                 const act = () =>
-                    new KindError(
-                        "MESSAGE",
-                        Errors.Unknown,
-                        ("NOT_AN_ERROR": any),
-                    );
+                    new KindError("MESSAGE", Errors.Unknown, {
+                        cause: ("NOT_AN_ERROR": any),
+                    });
 
                 // Assert
                 expect(act).toThrowErrorMatchingInlineSnapshot(
@@ -151,15 +146,11 @@ describe("KindError", () => {
                 const spy = jest.spyOn(ErrorInfo, "normalize");
 
                 // Act
-                const error = new KindError(
-                    "MESSAGE",
-                    Errors.Unknown,
+                const error = new KindError("MESSAGE", Errors.Unknown, {
                     cause,
-                    null,
-                    "",
-                    1,
-                    2,
-                );
+                    stripStackFrames: 1,
+                    minimumFrameCount: 2,
+                });
 
                 // Assert
                 expect(spy).toHaveBeenCalledWith(error, 1, 2);
@@ -172,15 +163,11 @@ describe("KindError", () => {
 
                 // Act
                 const act = () =>
-                    new KindError(
-                        "MESSAGE",
-                        Errors.Unknown,
+                    new KindError("MESSAGE", Errors.Unknown, {
                         cause,
-                        null,
-                        "",
-                        1,
-                        2,
-                    );
+                        stripStackFrames: 1,
+                        minimumFrameCount: 2,
+                    });
                 act();
 
                 // Assert
@@ -206,7 +193,7 @@ describe("KindError", () => {
 
                 // Act
                 const act = () =>
-                    new KindError("MESSAGE", Errors.Unknown, cause, null);
+                    new KindError("MESSAGE", Errors.Unknown, {cause});
                 act();
 
                 // Assert
@@ -228,7 +215,7 @@ describe("KindError", () => {
                 );
 
                 // Act
-                const error = new KindError("MESSAGE", Errors.Unknown, cause);
+                const error = new KindError("MESSAGE", Errors.Unknown, {cause});
 
                 // Assert
                 expect(error.stack).toBe(combinedErrorInfo.toString());
@@ -246,7 +233,7 @@ describe("KindError", () => {
                 );
 
                 // Act
-                const error = new KindError("MESSAGE", Errors.Unknown, cause);
+                const error = new KindError("MESSAGE", Errors.Unknown, {cause});
 
                 // Assert
                 expect(error.message).toBe(combinedErrorInfo.message);

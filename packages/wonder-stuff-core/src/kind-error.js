@@ -5,6 +5,14 @@ import {cloneMetadata} from "./clone-metadata.js";
 
 import type {Metadata} from "./types.js";
 
+type Options = {|
+    cause?: Error,
+    metadata?: $ReadOnly<Metadata>,
+    prefix?: string,
+    stripStackFrames?: number,
+    minimumFrameCount?: number,
+|};
+
 /**
  * An error to describe detailed states and relationships.
  *
@@ -39,11 +47,19 @@ export class KindError extends Error {
     constructor(
         message: string,
         kind: string = Errors.Unknown,
-        cause: ?Error = null,
-        metadata: ?$ReadOnly<Metadata> = null,
-        prefix: string = "",
-        stripStackFrames: number = 0,
-        minimumFrameCount: number = 1,
+        {
+            cause,
+            prefix,
+            metadata,
+            stripStackFrames,
+            minimumFrameCount,
+        }: Options = {
+            cause: undefined,
+            metadata: undefined,
+            prefix: "",
+            stripStackFrames: 0,
+            minimumFrameCount: 1,
+        },
     ) {
         // Validate arguments.
         if (cause && !(cause instanceof Error)) {
@@ -55,10 +71,10 @@ export class KindError extends Error {
         if (prefix && /\s/g.test(prefix)) {
             throw new Error("prefix must not contain whitespace");
         }
-        if (stripStackFrames < 0) {
+        if (stripStackFrames && stripStackFrames < 0) {
             throw new Error("stripStackFrames must be >= 0");
         }
-        if (minimumFrameCount < 0) {
+        if (minimumFrameCount && minimumFrameCount < 0) {
             throw new Error("minimumFrameCount must be >= 0");
         }
 
@@ -72,7 +88,7 @@ export class KindError extends Error {
 
         // Set the name so we get a nice error output, like
         // KAInternalError
-        this.name = `${prefix}${kind}Error`;
+        this.name = `${prefix ?? ""}${kind}Error`;
 
         // The kind of error which can be used for grouping with
         // other error sources that use the same error taxonomy.
