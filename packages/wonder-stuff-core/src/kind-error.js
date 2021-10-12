@@ -1,6 +1,6 @@
 // @flow
-import {getNormalizedErrorInfo} from "./get-normalized-error-info.js";
-import {combineErrorWithCause} from "./combine-error-with-cause.js";
+import {Errors} from "./errors.js";
+import {ErrorInfo} from "./error-info.js";
 
 import type {ErrorKind, Metadata} from "./types.js";
 
@@ -21,8 +21,9 @@ export class KindError<TKinds: ErrorKind> extends Error {
      * Creates an instance of `KindError`.
      *
      * @param {string} message The error message.
-     * @param {TKinds} kind The kind of error. This will be combined with
+     * @param {TKinds} [kind] The kind of error. This will be combined with
      * `prefix` to form the name of the error, i.e. PrefixKindError.
+     * Defaults to `Errors.Unknown`.
      * @param {Error} [cause] The error that caused this error.
      * @param {Metadata} [metadata] The metadata to attach to the error.
      * @param {string} [prefix] A prefix to prepend the name of the error.
@@ -36,7 +37,7 @@ export class KindError<TKinds: ErrorKind> extends Error {
      */
     constructor(
         message: string,
-        kind: TKinds,
+        kind: TKinds = Errors.Unknown,
         cause: ?Error = null,
         metadata: ?$ReadOnly<Metadata> = null,
         prefix: string = "",
@@ -61,12 +62,9 @@ export class KindError<TKinds: ErrorKind> extends Error {
         if (cause != null) {
             // We want to generate a better stack trace using the source error
             // and our own stack.
-            const normalizedError = getNormalizedErrorInfo(
-                this,
-                stripStackFrames,
-            );
-            const normalizedCause = getNormalizedErrorInfo(cause);
-            const combined = combineErrorWithCause(
+            const normalizedError = ErrorInfo.normalize(this, stripStackFrames);
+            const normalizedCause = ErrorInfo.normalize(cause);
+            const combined = ErrorInfo.combine(
                 normalizedError,
                 normalizedCause,
             );

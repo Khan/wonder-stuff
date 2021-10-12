@@ -11,5 +11,10 @@
  * @type {Errors} A base error taxonomy.
  */
 export const Errors = Object.freeze({
-    Unknown: "Unknown",
+    Unknown: ("Unknown": ErrorKind),
 });
+
+/**
+ * What kind of error is being reported.
+ */
+export type ErrorKind = $Values<typeof Errors>;
