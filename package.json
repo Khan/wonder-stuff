@@ -38,6 +38,7 @@
     "flow-bin": "^0.161.0",
     "jest": "^27.2.4",
     "jest-extended": "^1.0.0",
+    "jest-when": "^3.4.1",
     "lerna": "^4.0.0",
     "prettier": "^2.4.1",
     "rollup": "^2.57.0",
@@ -57,7 +58,5 @@
     "publish": "yarn run publishchecks && lerna publish",
     "test": "yarn jest"
   },
-  "dependencies": {
-    "jest-when": "^3.4.1"
-  }
+  "dependencies": {}
 }
