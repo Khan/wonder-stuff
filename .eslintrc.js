@@ -1,7 +1,14 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
     extends: ["@khanacademy"],
-    plugins: ["import", "jest", "promise", "monorepo", "disable"],
+    parser: "@babel/eslint-parser",
+    parserOptions: {
+        sourceType: "module",
+        babelOptions: {
+            configFile: "./build-settings/babel.config.js",
+        },
+    },
+    plugins: ["@babel", "import", "jest", "promise", "monorepo", "disable"],
     settings: {
         "eslint-plugin-disable": {
             paths: {
@@ -25,8 +32,17 @@ module.exports = {
         },
     ],
     rules: {
+        "new-cap": "off",
+        "no-invalid-this": "off",
+        "object-curly-spacing": "off",
+        semi: "off",
+        "@babel/new-cap": "error",
+        "@babel/no-invalid-this": "error",
+        "@babel/object-curly-spacing": "error",
+        "@babel/semi": "error",
         "flowtype/require-exact-type": ["error", "always"],
         "flowtype/no-types-missing-file-annotation": "error",
+        "import/no-default-export": "error",
         "import/no-unresolved": "error",
         "import/named": "error",
         "import/default": "error",
