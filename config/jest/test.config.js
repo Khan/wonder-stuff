@@ -12,7 +12,7 @@ module.exports = {
     },
     testEnvironment: "jest-environment-node",
     testMatch: ["<rootDir>/**/*.test.js"],
-    setupFilesAfterEnv: ["<rootDir>/config/jest/test-setup.js"],
+    setupFilesAfterEnv: ["jest-extended/all", "<rootDir>/config/jest/test-setup.js"],
     moduleNameMapper: {
         "^@khanacademy/wonder-stuff-(.*)$":
             "<rootDir>/packages/wonder-stuff-$1/src/index.js",
