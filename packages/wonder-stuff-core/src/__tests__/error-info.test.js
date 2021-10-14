@@ -51,13 +51,14 @@ describe("ErrorInfo", () => {
         });
     });
 
-    describe("#combine", () => {
+    describe("#fromConsequenceAndCause", () => {
         it("should throw if the consequence info is not ErrorInfo", () => {
             // Arrange
             const cause = new ErrorInfo("CAUSE", []);
 
             // Act
-            const act = () => ErrorInfo.combine((null: any), cause);
+            const act = () =>
+                ErrorInfo.fromConsequenceAndCause((null: any), cause);
 
             // Assert
             expect(act).toThrowErrorMatchingInlineSnapshot(
@@ -70,7 +71,8 @@ describe("ErrorInfo", () => {
             const consequence = new ErrorInfo("CONSEQUENCE", []);
 
             // Act
-            const act = () => ErrorInfo.combine(consequence, (null: any));
+            const act = () =>
+                ErrorInfo.fromConsequenceAndCause(consequence, (null: any));
 
             // Assert
             expect(act).toThrowErrorMatchingInlineSnapshot(
@@ -84,7 +86,8 @@ describe("ErrorInfo", () => {
             const consequence = cause;
 
             // Act
-            const act = () => ErrorInfo.combine(consequence, cause);
+            const act = () =>
+                ErrorInfo.fromConsequenceAndCause(consequence, cause);
 
             // Assert
             expect(act).toThrowErrorMatchingInlineSnapshot(
@@ -101,7 +104,10 @@ describe("ErrorInfo", () => {
                 .mockReturnValue("COMBINED MESSAGE");
 
             // Act
-            const result = ErrorInfo.combine(consequence, cause);
+            const result = ErrorInfo.fromConsequenceAndCause(
+                consequence,
+                cause,
+            );
 
             // Assert
             expect(spy).toHaveBeenCalledWith("CONSEQUENCE", "CAUSE");
@@ -115,7 +121,10 @@ describe("ErrorInfo", () => {
             const consequence = new ErrorInfo("CONSEQUENCE", duplicateStack);
 
             // Act
-            const result = ErrorInfo.combine(consequence, cause);
+            const result = ErrorInfo.fromConsequenceAndCause(
+                consequence,
+                cause,
+            );
 
             // Assert
             expect(result.stack).toEqual(duplicateStack);
@@ -139,7 +148,10 @@ describe("ErrorInfo", () => {
             ]);
 
             // Act
-            const result = ErrorInfo.combine(consequence, cause);
+            const result = ErrorInfo.fromConsequenceAndCause(
+                consequence,
+                cause,
+            );
 
             // Assert
             expect(result.stack).toEqual([

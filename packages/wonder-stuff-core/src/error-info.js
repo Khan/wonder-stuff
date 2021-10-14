@@ -42,11 +42,11 @@ export class ErrorInfo {
     }
 
     /**
-     * Combine the stack of the error that caused this one.
+     * Combine the info of an error and the error that caused it.
      *
-     * This combines the stack of another error into this one, creating a new
-     * stack trace that incorporates the frames of both errors to tell a deeper
-     * story of what happened.
+     * This combines the stacks of a consequential error and the error that
+     * caused it, creating a new stack trace that incorporates the frames of
+     * both errors to tell a deeper story of what happened.
      *
      * For example, some work is done and error A gets thrown, this is caught
      * and ultimately wrapped by error B, which then gets thrown. By combining
@@ -85,7 +85,10 @@ export class ErrorInfo {
      *      stackShared2
      *      stackShared1
      */
-    static combine(consequence: ErrorInfo, cause: ErrorInfo): ErrorInfo {
+    static fromConsequenceAndCause(
+        consequence: ErrorInfo,
+        cause: ErrorInfo,
+    ): ErrorInfo {
         // Verify our arguments.
         if (!(consequence instanceof ErrorInfo)) {
             throw new Error("consequence must be an instance of ErrorInfo");

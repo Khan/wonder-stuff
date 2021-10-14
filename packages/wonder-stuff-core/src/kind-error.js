@@ -139,7 +139,7 @@ export class KindError extends Error {
                 minimumFrameCount,
             );
             const normalizedCause = ErrorInfo.normalize(cause);
-            const combined = ErrorInfo.combine(
+            const combined = ErrorInfo.fromConsequenceAndCause(
                 normalizedError,
                 normalizedCause,
             );

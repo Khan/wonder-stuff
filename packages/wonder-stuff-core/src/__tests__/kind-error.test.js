@@ -189,7 +189,7 @@ describe("KindError", () => {
                     .mockReturnValue(consequentialErrorInfo)
                     .calledWith(cause)
                     .mockReturnValue(causalErrorInfo);
-                const spy = jest.spyOn(ErrorInfo, "combine");
+                const spy = jest.spyOn(ErrorInfo, "fromConsequenceAndCause");
 
                 // Act
                 const act = () =>
@@ -210,9 +210,10 @@ describe("KindError", () => {
                     "combinedstack1",
                     "combinedstack2",
                 ]);
-                jest.spyOn(ErrorInfo, "combine").mockReturnValue(
-                    combinedErrorInfo,
-                );
+                jest.spyOn(
+                    ErrorInfo,
+                    "fromConsequenceAndCause",
+                ).mockReturnValue(combinedErrorInfo);
 
                 // Act
                 const error = new KindError("MESSAGE", Errors.Unknown, {cause});
@@ -228,9 +229,10 @@ describe("KindError", () => {
                     "combinedstack1",
                     "combinedstack2",
                 ]);
-                jest.spyOn(ErrorInfo, "combine").mockReturnValue(
-                    combinedErrorInfo,
-                );
+                jest.spyOn(
+                    ErrorInfo,
+                    "fromConsequenceAndCause",
+                ).mockReturnValue(combinedErrorInfo);
 
                 // Act
                 const error = new KindError("MESSAGE", Errors.Unknown, {cause});
