@@ -1,16 +1,5 @@
-/* eslint-disable no-console */
 // @flow
-switch (process.env.NODE_ENV) {
-    default:
-    case "production":
-        console.log("Hello production World!");
-        break;
+export {KindError} from "./kind-error.js";
+export {Errors} from "./errors.js";
 
-    case "development":
-        console.log("Hello development World!");
-        break;
-
-    case "test":
-        console.log("Hello test World!");
-        break;
-}
+export type {Metadata} from "./types.js";
