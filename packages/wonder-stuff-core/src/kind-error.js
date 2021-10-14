@@ -5,11 +5,43 @@ import {cloneMetadata} from "./clone-metadata.js";
 
 import type {Metadata} from "./types.js";
 
+/**
+ * Options for constructing a `KindError`.
+ */
 type Options = {|
+    /**
+     * An error responsible for the error being created.
+     *
+     * @type {Error}
+     */
     cause?: Error,
+
+    /**
+     * Data to be attached to the error.
+     *
+     * @type {$ReadOnly<Metadata>}
+     */
     metadata?: $ReadOnly<Metadata>,
+
+    /**
+     * A prefix to be added to the error name.
+     *
+     * @type {string}
+     */
     prefix?: string,
+
+    /**
+     * The number of stack frames to strip from the error.
+     *
+     * @type {number}
+     */
     stripStackFrames?: number,
+
+    /**
+     * The minimum number of stack frames to try and retain.
+     *
+     * @type {number}
+     */
     minimumFrameCount?: number,
 |};
 
@@ -29,20 +61,24 @@ export class KindError extends Error {
     /**
      * Creates an instance of `KindError`.
      *
+     * @memberof KindError
      * @param {string} message The error message.
-     * @param {TKinds} [kind] The kind of error. This will be combined with
+     * @param {string} [kind] The kind of error. This will be combined with
      * `prefix` to form the name of the error, i.e. PrefixKindError.
      * Defaults to `Errors.Unknown`.
-     * @param {Error} [cause] The error that caused this error.
-     * @param {Metadata} [metadata] The metadata to attach to the error.
-     * @param {string} [prefix] A prefix to prepend the name of the error.
-     * Defaults to `""`.
-     * @param {number} [stripStackFrames] The number of stack frames to remove
-     * from the error's stack. This can be used to ensure that the top call of
-     * the stack references the point at which an error is thrown which can
-     * be useful when helper functions are used to build the error being thrown.
-     * Defaults to `0`.
-     * @memberof KindError
+     * @param {Options} [options] Options for constructing the error.
+     * @param {Error} [options.cause] The error that caused this error.
+     * @param {Metadata} [options.metadata] The metadata to attach to the error.
+     * @param {string} [options.prefix=""] A prefix to prepend the name of the
+     * error.
+     * @param {number} [options.stripStackFrames=0] The number of stack frames to
+     * remove from the error's stack. This can be used to ensure that the top
+     * call of the stack references the point at which an error is thrown which
+     * can be useful when helper functions are used to build the error being
+     * thrown.
+     * @param {number} [options.minimumFrameCount=1] The minimum number of
+     * stack frames to try and retain. This can be used to prevent stripping
+     * all stack frames from the error's stack.
      */
     constructor(
         message: string,
