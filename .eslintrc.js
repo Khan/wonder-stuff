@@ -42,6 +42,7 @@ module.exports = {
         "@babel/semi": "error",
         "flowtype/require-exact-type": ["error", "always"],
         "flowtype/no-types-missing-file-annotation": "error",
+        "flowtype/no-existential-type": "error",
         "import/no-default-export": "error",
         "import/no-unresolved": "error",
         "import/named": "error",

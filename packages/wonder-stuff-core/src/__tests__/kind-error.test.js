@@ -131,6 +131,7 @@ describe("KindError", () => {
                 // Act
                 const act = () =>
                     new KindError("MESSAGE", Errors.Unknown, {
+                        // $FlowIgnore[unclear-type]
                         cause: ("NOT_AN_ERROR": any),
                     });
 

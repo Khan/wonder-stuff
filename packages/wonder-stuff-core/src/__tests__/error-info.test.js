@@ -58,6 +58,7 @@ describe("ErrorInfo", () => {
 
             // Act
             const act = () =>
+                // $FlowIgnore[unclear-type]
                 ErrorInfo.fromConsequenceAndCause((null: any), cause);
 
             // Assert
@@ -72,6 +73,7 @@ describe("ErrorInfo", () => {
 
             // Act
             const act = () =>
+                // $FlowIgnore[unclear-type]
                 ErrorInfo.fromConsequenceAndCause(consequence, (null: any));
 
             // Assert
@@ -165,6 +167,7 @@ describe("ErrorInfo", () => {
     describe("#normalize", () => {
         it("should throw if error is not an Error", () => {
             // Arrange
+            // $FlowIgnore[unclear-type]
             const error: Error = ({}: any);
 
             // Act

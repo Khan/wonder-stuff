@@ -12,37 +12,37 @@ type Options = {|
     /**
      * An error responsible for the error being created.
      *
-     * @type {Error}
+     * @type {?Error}
      */
-    cause?: Error,
+    cause?: ?Error,
 
     /**
      * Data to be attached to the error.
      *
-     * @type {$ReadOnly<Metadata>}
+     * @type {?$ReadOnly<Metadata>}
      */
-    metadata?: $ReadOnly<Metadata>,
+    metadata?: ?$ReadOnly<Metadata>,
 
     /**
      * A prefix to be added to the error name.
      *
-     * @type {string}
+     * @type {?string}
      */
-    prefix?: string,
+    prefix?: ?string,
 
     /**
      * The number of stack frames to strip from the error.
      *
-     * @type {number}
+     * @type {?number}
      */
-    stripStackFrames?: number,
+    stripStackFrames?: ?number,
 
     /**
      * The minimum number of stack frames to try and retain.
      *
-     * @type {number}
+     * @type {?number}
      */
-    minimumFrameCount?: number,
+    minimumFrameCount?: ?number,
 |};
 
 /**
@@ -89,13 +89,7 @@ export class KindError extends Error {
             metadata,
             stripStackFrames,
             minimumFrameCount,
-        }: Options = {
-            cause: undefined,
-            metadata: undefined,
-            prefix: "",
-            stripStackFrames: 0,
-            minimumFrameCount: 1,
-        },
+        }: Options = {},
     ) {
         // Validate arguments.
         if (cause && !(cause instanceof Error)) {
@@ -104,13 +98,13 @@ export class KindError extends Error {
         if (kind && /\s/g.test(kind)) {
             throw new Error("kind must not contain whitespace");
         }
-        if (prefix && /\s/g.test(prefix)) {
+        if (prefix != null && /\s/g.test(prefix)) {
             throw new Error("prefix must not contain whitespace");
         }
-        if (stripStackFrames && stripStackFrames < 0) {
+        if (stripStackFrames != null && stripStackFrames < 0) {
             throw new Error("stripStackFrames must be >= 0");
         }
-        if (minimumFrameCount && minimumFrameCount < 0) {
+        if (minimumFrameCount != null && minimumFrameCount < 0) {
             throw new Error("minimumFrameCount must be >= 0");
         }
 
@@ -135,8 +129,8 @@ export class KindError extends Error {
             // and our own stack.
             const normalizedError = ErrorInfo.normalize(
                 this,
-                stripStackFrames,
-                minimumFrameCount,
+                stripStackFrames ?? 0,
+                minimumFrameCount ?? 1,
             );
             const normalizedCause = ErrorInfo.normalize(cause);
             const combined = ErrorInfo.fromConsequenceAndCause(
