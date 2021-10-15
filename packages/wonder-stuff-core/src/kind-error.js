@@ -106,7 +106,10 @@ export class KindError extends Error {
         if (cause && !(cause instanceof Error)) {
             throw new Error("cause must be an instance of Error");
         }
-        if (kind && /\s/g.test(kind)) {
+        if (name != null && /\s/g.test(name)) {
+            throw new Error("name must not contain whitespace");
+        }
+        if (/\s/g.test(kind)) {
             throw new Error("kind must not contain whitespace");
         }
         if (prefix != null && /\s/g.test(prefix)) {
@@ -129,7 +132,7 @@ export class KindError extends Error {
 
         // Set the name so we get a nice error output, like
         // KAInternalError
-        this.name = `${prefix ?? ""}${kind}${name ?? "Error"}`;
+        this.name = `${prefix ?? ""}${kind}${name ?? ""}Error`;
 
         // The kind of error which can be used for grouping with
         // other error sources that use the same error taxonomy.

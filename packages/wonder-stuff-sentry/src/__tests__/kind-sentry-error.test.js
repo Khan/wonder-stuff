@@ -7,7 +7,7 @@ import * as SentryDataReducer from "../sentry-data-reducer.js";
 
 describe("KindSentryError", () => {
     describe("#constructor", () => {
-        it("should end name with SentryError", () => {
+        it("should end name with default SentryError", () => {
             // Arrange
 
             // Act
@@ -15,6 +15,18 @@ describe("KindSentryError", () => {
 
             // Assert
             expect(result).toEndWith("SentryError");
+        });
+
+        it("should end name with given ending", () => {
+            // Arrange
+
+            // Act
+            const {name: result} = new KindSentryError("MESSAGE", "KIND", {
+                name: "NAME",
+            });
+
+            // Assert
+            expect(result).toEndWith("NAMEError");
         });
 
         it("should start name with specified prefix", () => {

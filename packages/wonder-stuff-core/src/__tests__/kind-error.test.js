@@ -52,6 +52,42 @@ describe("KindError", () => {
             expect(error.kind).toBe("CUSTOM_KIND");
         });
 
+        it("should default name", () => {
+            // Arrange
+
+            // Act
+            const error = new KindError("MESSAGE");
+
+            // Assert
+            expect(error.name).toEndWith("Error");
+        });
+
+        it("should set the name", () => {
+            // Arrange
+
+            // Act
+            const error = new KindError("MESSAGE", Errors.Unknown, {
+                name: "CUSTOM_NAME",
+            });
+
+            // Assert
+            expect(error.name).toEndWith("CUSTOM_NAMEError");
+        });
+
+        it.each(["N A M E", "NA\nME"])(
+            "should throw if the name has whitespace like %s",
+            (name) => {
+                // Arrange
+
+                // Act
+                const act = () =>
+                    new KindError("MESSAGE", Errors.Unknown, {name});
+
+                // Assert
+                expect(act).toThrowErrorMatchingSnapshot();
+            },
+        );
+
         it.each(["K I N D", "KI\nND"])(
             "should throw if the kind has whitespace like %s",
             (kind) => {

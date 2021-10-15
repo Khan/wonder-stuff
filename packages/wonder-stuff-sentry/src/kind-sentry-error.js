@@ -43,6 +43,13 @@ type Options = {|
     prefix?: ?string,
 
     /**
+     * A name for the error.
+     *
+     * @type {?string}
+     */
+    name?: ?string,
+
+    /**
      * The number of stack frames to strip from the error.
      *
      * @type {?number}
@@ -74,7 +81,7 @@ export class KindSentryError extends KindError {
         // $FlowIgnore[unclear-type]
         options: Options = ({}: any),
     ) {
-        const {metadata, sentryData, ...restOptions} = options;
+        const {metadata, sentryData, name, ...restOptions} = options;
         // We want to combine sentry data and metadata into a single object
         // to send to our super class since folks using this error likely
         // still want the sentry data to go wherever metadata goes.
@@ -90,7 +97,7 @@ export class KindSentryError extends KindError {
         // option 1.
         super(message, kind, {
             ...restOptions,
-            name: "SentryError",
+            name: name ?? "Sentry",
             metadata: {
                 sentry: {
                     // We set the defaults here so that we know these will be
