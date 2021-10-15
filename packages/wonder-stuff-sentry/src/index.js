@@ -1,3 +1,2 @@
 // @flow
-// eslint-disable-next-line no-console
-console.log("Hello world!");
+export {KindSentryError} from "./kind-sentry-error.js";

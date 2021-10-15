@@ -5,9 +5,10 @@ type MetadataPrimitive = string | number | boolean;
  * A collection of data.
  */
 export type Metadata = {
-    +[name: string]: ?(
+    [name: string]: ?(
         | MetadataPrimitive
         | $ReadOnly<Metadata>
         | $ReadOnlyArray<?(MetadataPrimitive | Metadata)>
     ),
+    ...
 };

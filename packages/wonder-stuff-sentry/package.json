@@ -1,8 +1,7 @@
 {
     "publishConfig": {
-        "access": "restricted"
+        "access": "public"
     },
-    "private": true,
     "name": "@khanacademy/wonder-stuff-sentry",
     "version": "0.0.1",
     "description": "",
@@ -11,6 +10,9 @@
     "source": "src/index.js",
     "scripts": {
         "test": "echo \"Run tests from the repository root\" && exit 1"
+    },
+    "dependencies": {
+        "@khanacademy/wonder-stuff-core": "^0.0.1"
     },
     "devDependencies": {
         "ws-dev-build-settings": "^0.0.2"

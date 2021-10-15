@@ -41,6 +41,7 @@ module.exports = {
         "@babel/object-curly-spacing": "error",
         "@babel/semi": "error",
         "flowtype/require-exact-type": ["error", "always"],
+        "flowtype/require-inexact-type": ["error", "always"],
         "flowtype/no-types-missing-file-annotation": "error",
         "flowtype/no-existential-type": "error",
         "import/no-default-export": "error",

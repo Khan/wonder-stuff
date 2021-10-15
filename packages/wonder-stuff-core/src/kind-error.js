@@ -24,11 +24,18 @@ type Options = {|
     metadata?: ?$ReadOnly<Metadata>,
 
     /**
-     * A prefix to be added to the error name.
+     * A prefix for the error name.
      *
      * @type {?string}
      */
     prefix?: ?string,
+
+    /**
+     * A name for the error.
+     *
+     * @type {?string}
+     */
+    name?: ?string,
 
     /**
      * The number of stack frames to strip from the error.
@@ -57,6 +64,7 @@ export class KindError extends Error {
     +kind: string;
     +originalMessage: string;
     +metadata: ?$ReadOnly<Metadata>;
+    +cause: ?Error;
 
     /**
      * Creates an instance of `KindError`.
@@ -68,11 +76,13 @@ export class KindError extends Error {
      * Defaults to `Errors.Unknown`.
      * @param {Options} [options] Options for constructing the error.
      * @param {Error} [options.cause] The error that caused this error.
-     * @param {Metadata} [options.metadata] The metadata to attach to the error.
+     * @param {$ReadOnly<Metadata>} [options.metadata] The metadata to attach
+     * to the error.
      * @param {string} [options.prefix=""] A prefix to prepend the name of the
      * error.
-     * @param {number} [options.stripStackFrames=0] The number of stack frames to
-     * remove from the error's stack. This can be used to ensure that the top
+     * @param {string} [options.name="Error"] The name of the error.
+     * @param {number} [options.stripStackFrames=0] The number of stack frames
+     * to remove from the error's stack. This can be used to ensure that the top
      * call of the stack references the point at which an error is thrown which
      * can be useful when helper functions are used to build the error being
      * thrown.
@@ -86,6 +96,7 @@ export class KindError extends Error {
         {
             cause,
             prefix,
+            name,
             metadata,
             stripStackFrames,
             minimumFrameCount,
@@ -118,12 +129,14 @@ export class KindError extends Error {
 
         // Set the name so we get a nice error output, like
         // KAInternalError
-        this.name = `${prefix ?? ""}${kind}Error`;
+        this.name = `${prefix ?? ""}${kind}${name ?? "Error"}`;
 
         // The kind of error which can be used for grouping with
         // other error sources that use the same error taxonomy.
         this.kind = kind;
 
+        // The cause of this error, if there is one.
+        this.cause = cause;
         if (cause != null) {
             // We want to generate a better stack trace using the source error
             // and our own stack.
