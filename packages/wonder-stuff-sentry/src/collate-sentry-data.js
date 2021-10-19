@@ -33,7 +33,7 @@ import type {SentryData} from "./types.js";
 export const collateSentryData = (error: Error): $ReadOnly<SentryData> => {
     // First, get all the errors in the stack.
     const consquenceAndCauses: $ReadOnlyArray<Error> = Array.from(
-        errorsFromError(error, Order.ConsquenceFirst),
+        errorsFromError(error, Order.ConsequenceFirst),
     );
 
     // Now, we need to collate this stack as follows:

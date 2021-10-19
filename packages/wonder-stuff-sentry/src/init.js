@@ -1,22 +1,17 @@
 // @flow
-import type {UnifiedSentryAPI} from "./types.js";
+import {DefaultInitOptions} from "./default-init-options.js";
+import type {UnifiedSentryAPI, InitOptions} from "./types.js";
 
 let _registeredSentry: ?UnifiedSentryAPI = null;
-let _options: ?Options = null;
+let _options: ?InitOptions = null;
 
-type Options = {
-    kindTagName: string,
-    groupByTagName: string,
-    concatenatedMessageTagName: string,
-    causalErrorContextPrefix: string,
-};
-
-const DefaultOptions: Options = {
-    kindTagName: "kind",
-    groupByTagName: "group_by_message",
-    concatenatedMessageTagName: "concatenated_message",
-    causalErrorContextPrefix: "Source Error - ",
-};
+/**
+ * Indicates if the Sentry API has been initialized.
+ *
+ * @returns {boolean} true if the Sentry API has been initialized, otherwise
+ * false.
+ */
+export const isInitialized = (): boolean => _registeredSentry != null;
 
 /**
  * Initialize our Wonder Stuff Sentry support with a Sentry API and options.
@@ -26,7 +21,7 @@ const DefaultOptions: Options = {
  */
 export const init = (
     sentry: UnifiedSentryAPI,
-    options?: $Partial<Options>,
+    options?: $Partial<InitOptions>,
 ): void => {
     if (sentry == null) {
         throw new Error("Cannot register a null API");
@@ -37,11 +32,13 @@ export const init = (
     }
 
     _registeredSentry = sentry;
-    _options = {...DefaultOptions, ...options};
+    _options = {...DefaultInitOptions, ...options};
 };
 
 /**
  * Get the initialized Sentry API.
+ *
+ * @returns {UnifiedSentryAPI} The initialized Sentry API.
  */
 export const getSentry = (): UnifiedSentryAPI => {
     if (_registeredSentry == null) {
@@ -52,8 +49,10 @@ export const getSentry = (): UnifiedSentryAPI => {
 
 /**
  * Get our initialization options.
+ *
+ * @returns {Options} The initialization options.
  */
-export const getOptions = (): Options => {
+export const getOptions = (): InitOptions => {
     if (_options == null) {
         throw new Error("Wonder Stuff Sentry not initialized");
     }

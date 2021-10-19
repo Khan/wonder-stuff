@@ -2,7 +2,7 @@
 import {KindError} from "@khanacademy/wonder-stuff-core";
 
 export const Order = Object.freeze({
-    ConsquenceFirst: "consequence-first",
+    ConsequenceFirst: "consequence-first",
     CauseFirst: "cause-first",
 });
 
@@ -26,7 +26,7 @@ export function* errorsFromError(
         return;
     }
 
-    if (order === Order.ConsquenceFirst) {
+    if (order === Order.ConsequenceFirst) {
         yield error;
     }
     if (error instanceof KindError) {

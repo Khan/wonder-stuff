@@ -65,6 +65,13 @@ export type SentryData = {|
     +fingerprint: $ReadOnlyArray<string>,
 |};
 
+export type InitOptions = {
+    kindTagName: string,
+    groupByTagName: string,
+    concatenatedMessageTagName: string,
+    causalErrorContextPrefix: string,
+};
+
 /////////////////////////////////////////////
 // -> Sentry-specific types below this point.
 // NOTE(somewhatabstract): This is not comprehensive typing. Just the things
