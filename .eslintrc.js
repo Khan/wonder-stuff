@@ -17,6 +17,9 @@ module.exports = {
             },
         },
     },
+    globals: {
+        __IS_BROWSER__: "readonly",
+    },
     overrides: [
         {
             files: ["utils/*.js"],

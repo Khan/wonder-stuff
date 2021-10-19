@@ -24,7 +24,7 @@ export type SentryContext = $ReadOnly<Metadata>;
  * The key of each item is the name of the context.
  */
 export type SentryContexts = {
-    [name: string]: ?$ReadOnly<SentryContext>,
+    [name: string]: $ReadOnly<SentryContext>,
     ...
 };
 
@@ -64,3 +64,38 @@ export type SentryData = {|
      */
     +fingerprint: $ReadOnlyArray<string>,
 |};
+
+/////////////////////////////////////////////
+// -> Sentry-specific types below this point.
+// NOTE(somewhatabstract): This is not comprehensive typing. Just the things
+// we need to use.
+type SentrySeverity =
+    | "fatal"
+    | "error"
+    | "warning"
+    | "log"
+    | "info"
+    | "debug"
+    | "critical";
+
+interface SentryScope {
+    setTags(tags: $ReadOnly<{|[key: string]: string|}>): void;
+    setTag(tag: string, value: string): void;
+    setFingerprint(fingerprint: $ReadOnlyArray<string>): void;
+    setContext(
+        name: string,
+        context: $ReadOnly<{|[key: string]: mixed|}>,
+    ): void;
+}
+
+/**
+ * The parts of the unified sentry API that we use.
+ *
+ * This is the interface that Sentry implementations must expose for us to call.
+ */
+export interface UnifiedSentryAPI {
+    withScope(callback: (scope: SentryScope) => void): void;
+    captureException(message: Error, severity?: SentrySeverity): void;
+}
+// <- Sentry-specific types above this point.
+/////////////////////////////////////////////

@@ -12,7 +12,7 @@ describe("#sentryDataReducer", () => {
         };
 
         // Act
-        const result = sentryDataReducer(accumulator, null, 0, [null]);
+        const result = sentryDataReducer(accumulator, null, 0);
 
         // Assert
         expect(result).toEqual(accumulator);
@@ -38,7 +38,7 @@ describe("#sentryDataReducer", () => {
         };
 
         // Act
-        const result = sentryDataReducer(accumulator, current, 0, [current]);
+        const result = sentryDataReducer(accumulator, current, 0);
 
         // Assert
         expect(result).toEqual(accumulator);
@@ -64,7 +64,7 @@ describe("#sentryDataReducer", () => {
         };
 
         // Act
-        const result = sentryDataReducer(accumulator, current, 0, [current]);
+        const result = sentryDataReducer(accumulator, current, 0);
 
         // Assert
         expect(result).toEqual(current);
@@ -84,7 +84,7 @@ describe("#sentryDataReducer", () => {
         };
 
         // Act
-        const result = sentryDataReducer(accumulator, current, 0, [current]);
+        const result = sentryDataReducer(accumulator, current, 0);
 
         // Assert
         expect(result).toEqual({
@@ -128,7 +128,7 @@ describe("#sentryDataReducer", () => {
         };
 
         // Act
-        const result = sentryDataReducer(accumulator, current, 0, [current]);
+        const result = sentryDataReducer(accumulator, current, 0);
 
         // Assert
         expect(result).toEqual({
@@ -178,7 +178,7 @@ describe("#sentryDataReducer", () => {
         };
 
         // Act
-        const result = sentryDataReducer(accumulator, current, 0, [current]);
+        const result = sentryDataReducer(accumulator, current, 0);
 
         // Assert
         expect(result).toEqual(current);

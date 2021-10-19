@@ -1,42 +1,52 @@
 // @flow
+import {
+    safeStringify,
+    getOriginalStackFromError,
+} from "@khanacademy/wonder-stuff-core";
+import {getSentryDataFromError} from "./get-sentry-data-from-error.js";
+import {getOptions} from "./init.js";
 import type {SentryData} from "./types.js";
+import {EmptySentryData} from "./empty-sentry-data.js";
 
 /**
- * Reduce the values of one sentry data object into another.
+ * Reduces an Error down into sentry data.
  *
- * For `tags` and `contexts`, existing values are overwritten.
+ * For `tags` and `contexts`, existing values in the accumulator are overwritten.
  * For `fingerprints`, the arrays are concatenated together.
+ *
+ * Each error that is not index-0 is also added as a named context.
  *
  * This method works best with `reduce` or `reduceRight`.
  *
- * @param {SentryData} accumulator The target object being reduced into.
- * @param {?$ReadOnly<SentryData>} current The next SentryData object to be reduced.
- * @param {number} index The index in the array being reduced of the current
- * object being reduced.
- * @param {$ReadOnlyArray<SentryData>} array The array being reduced.
+ * @param {$ReadOnly<SentryData>} accumulator The accumulated `SentryData` so
+ * far.
+ * @param {Error} current The next Error to be reduced.
+ * @param {number} index The index in the reducing array of the current
+ * Error being reduced.
  * @returns {SentryData} The reduced sentry data.
  */
 export const sentryDataReducer = (
-    accumulator: SentryData,
-    current: ?$ReadOnly<SentryData>,
+    accumulator: $ReadOnly<SentryData>,
+    current: Error,
     index: number,
-    array: $ReadOnlyArray<?SentryData>,
 ): SentryData => {
-    if (current == null) {
-        return accumulator;
-    }
+    const {causalErrorContextPrefix} = getOptions();
 
-    // Get the bits of information from the accumulator and current datasets.
+    // Get the bits of information from the accumulator and current error.
     const {
         tags: accumulatorTags,
         contexts: accumulatorContexts,
         fingerprint: accumulatorFingerprint,
     } = accumulator;
+    const currentSentryData = getSentryDataFromError(current);
     const {
         tags: currentTags,
         contexts: currentContexts,
         fingerprint: currentFingerprint,
-    } = current;
+    } = currentSentryData ?? EmptySentryData;
+
+    // TODO(somewhatabstract): Should we verify we aren't using any reserved
+    // contexts, tags?
 
     // Combine tags by spreading the current tags over the accumulator tags.
     const tags = {...accumulatorTags, ...currentTags};
@@ -52,6 +62,17 @@ export const sentryDataReducer = (
             [...accumulatorFingerprint, ...currentFingerprint].filter(Boolean),
         ),
     );
+
+    // Next, unless the index is 0, we need to add a context for the error.
+    if (index !== 0) {
+        contexts[
+            `${causalErrorContextPrefix}${index}` // e.g., "Source Error - 1"
+        ] = {
+            error: current.toString(),
+            sentryData: safeStringify(currentSentryData),
+            originalStack: getOriginalStackFromError(current),
+        };
+    }
 
     // Rebuild into a combined dataset and return.
     return {
