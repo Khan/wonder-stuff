@@ -148,7 +148,9 @@ export class KindError extends Error {
                 stripStackFrames ?? 0,
                 minimumFrameCount ?? 1,
             );
-            const normalizedCause = ErrorInfo.normalize(cause);
+            // We don't normalize the cause as this should have happened already
+            // when it was, itself, created with a cause.
+            const normalizedCause = ErrorInfo.from(cause);
             const combined = ErrorInfo.fromConsequenceAndCause(
                 normalizedError,
                 normalizedCause,

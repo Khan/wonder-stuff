@@ -1,6 +1,4 @@
 // @flow
-import {when} from "jest-when";
-
 import * as CloneMetadata from "../clone-metadata.js";
 import {ErrorInfo} from "../error-info.js";
 import {Errors} from "../errors.js";
@@ -193,10 +191,10 @@ describe("KindError", () => {
                 expect(spy).toHaveBeenCalledWith(error, 1, 2);
             });
 
-            it("should get the normalized error info for the cause error, without stripping frames", () => {
+            it("should get error info for the cause error", () => {
                 // Arrange
                 const cause = new Error("CAUSE_MESSAGE");
-                const spy = jest.spyOn(ErrorInfo, "normalize");
+                const spy = jest.spyOn(ErrorInfo, "from");
 
                 // Act
                 const act = () =>
@@ -211,7 +209,7 @@ describe("KindError", () => {
                 expect(spy).toHaveBeenCalledWith(cause);
             });
 
-            it("should combine the normalized error information of the constructed error and the causal error", () => {
+            it("should combine the normalized error information of the constructed error and the regular error information from the causal error", () => {
                 // Arrange
                 const consequentialErrorInfo = new ErrorInfo(
                     "CONSEQUENCE_MESSAGE",
@@ -222,10 +220,10 @@ describe("KindError", () => {
                     "cause2",
                 ]);
                 const cause = new Error("CAUSE_MESSAGE");
-                when(jest.spyOn(ErrorInfo, "normalize"))
-                    .mockReturnValue(consequentialErrorInfo)
-                    .calledWith(cause)
-                    .mockReturnValue(causalErrorInfo);
+                jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
+                    consequentialErrorInfo,
+                );
+                jest.spyOn(ErrorInfo, "from").mockReturnValue(causalErrorInfo);
                 const spy = jest.spyOn(ErrorInfo, "fromConsequenceAndCause");
 
                 // Act

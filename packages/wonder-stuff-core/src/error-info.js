@@ -200,4 +200,35 @@ export class ErrorInfo {
             stackFrames.slice(actualStripFrames),
         );
     }
+
+    /**
+     * Get error information from an error.
+     *
+     * @param {Error} error The error from which to grab the info.
+     * @returns {ErrorInfo} Error information for the given error.
+     */
+    static from(error: Error): ErrorInfo {
+        // Verify our arguments.
+        if (!(error instanceof Error)) {
+            throw new Error("Error must be an instance of Error");
+        }
+
+        // We split the error information into the message and the stack frames.
+        const fullErrorMessage = error.toString();
+
+        // OK, get the stack without the error message (unless they are the same).
+        const stackWithoutMessage =
+            error.stack?.startsWith(fullErrorMessage) &&
+            error.stack !== fullErrorMessage
+                ? error.stack.substring(fullErrorMessage.length)
+                : error.stack ?? "";
+
+        // Now split those frames into individual frame lines, filtering
+        // out any lines that are solely whitespace.
+        const stackFrames = stackWithoutMessage
+            .split("\n")
+            .filter((s) => s.trim().length);
+
+        return new ErrorInfo(fullErrorMessage, stackFrames);
+    }
 }
