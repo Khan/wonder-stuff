@@ -58,10 +58,10 @@ const createConfig = ({name, format, platform, file}) => ({
                 {
                     // src path is relative to the package root unless started
                     // with ./
-                    src: "build-settings/index.flow.js.template",
+                    src: "build-settings/index.js.flow.template",
                     // dest path is relative to src path.
                     dest: makePackageBasedPath(name, "./dist"),
-                    rename: "index.flow.js",
+                    rename: "index.js.flow",
                 },
             ],
         }),
@@ -75,6 +75,9 @@ const createConfig = ({name, format, platform, file}) => ({
 // Note that we also get the output paths from the package.json.
 const getPackageInfo = (pkgName) => {
     const pkgJsonPath = makePackageBasedPath(pkgName, "./package.json");
+    if (!fs.existsSync(pkgJsonPath)) {
+        return [];
+    }
     const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath));
 
     // Now we have the package.json, we need to look at the main, module, and
@@ -157,4 +160,5 @@ const createRollupConfig = (commandLineArgs) => {
     return pkgNames.flatMap(getPackageInfo).map(createConfig);
 };
 
+// eslint-disable-next-line import/no-default-export
 export default createRollupConfig;
