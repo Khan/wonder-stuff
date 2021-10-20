@@ -79,12 +79,12 @@ jobs:
     - name: Check Builds
       uses: preactjs/compressed-size-action@v2
       with:
-        # Specify our custom build script
-        build-script: "build"
         # Any JS files anywhere within a dist directory:
         pattern: "**/dist/**/*.js"
         # Always ignore SourceMaps and node_modules:
         exclude: "{**/*.map,**/node_modules/**}"
+        # Clean up before a build
+        clean-script: "clean"
     # Linting / type checking
     - name: Run ESLint
       uses: Khan/eslint-action@v1.1.5
