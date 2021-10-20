@@ -4,8 +4,6 @@ import {ErrorInfo} from "../error-info.js";
 import {Errors} from "../errors.js";
 import {KindError} from "../kind-error.js";
 
-jest.mock("../clone-metadata.js");
-
 describe("KindError", () => {
     describe("#constructor", () => {
         it("should set the message", () => {
@@ -274,6 +272,30 @@ describe("KindError", () => {
 
                 // Assert
                 expect(error.message).toBe(combinedErrorInfo.message);
+            });
+
+            it("should have a combined message that cascades all causes", () => {
+                // Arrange
+                const cause1 = new Error("CAUSE_MESSAGE");
+                const cause2 = new KindError(
+                    "CAUSE_2_MESSAGE",
+                    Errors.Unknown,
+                    {cause: cause1},
+                );
+
+                // Act
+                const result = new KindError("ROOT_MESSAGE", Errors.Unknown, {
+                    cause: cause2,
+                });
+
+                // Assert
+                expect(result.message).toMatchInlineSnapshot(`
+                    "UnknownError: ROOT_MESSAGE
+                    	caused by
+                    		UnknownError: UnknownError: CAUSE_2_MESSAGE
+                    	caused by
+                    		Error: CAUSE_MESSAGE"
+                `);
             });
         });
     });
