@@ -35,7 +35,7 @@ describe("#errorsFromError", () => {
         it("should yield errors in the order of the root error down to the lowermost cause", () => {
             // Arrange
             class MyError extends KindError {
-                constructor(message: string, options: {cause?: Error}) {
+                constructor(message, options) {
                     super(message, "CustomKind", {...options});
                 }
             }
@@ -60,7 +60,7 @@ describe("#errorsFromError", () => {
         it("should yield errors in the order of the lowermost causal error up to the root consequence", () => {
             // Arrange
             class MyError extends KindError {
-                constructor(message: string, options: {cause?: Error}) {
+                constructor(message, options) {
                     super(message, "CustomKind", {...options});
                 }
             }

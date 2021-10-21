@@ -43,7 +43,6 @@ module.exports = {
         "@babel/no-invalid-this": "error",
         "@babel/object-curly-spacing": "error",
         "@babel/semi": "error",
-        "flowtype/require-inexact-type": ["error", "always"],
         "flowtype/no-types-missing-file-annotation": "error",
         "flowtype/no-existential-type": "error",
         "import/no-default-export": "error",

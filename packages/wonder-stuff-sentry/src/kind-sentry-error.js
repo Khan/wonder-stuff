@@ -72,7 +72,6 @@ export class KindSentryError extends KindError {
         message: string,
         kind: string = Errors.Unknown,
         // It's perfectly valid for options to be an empty object.
-        // $FlowIgnore[unclear-type]
         options: Options = ({}: $Shape<Options>),
     ) {
         const {metadata, sentryData, name, ...restOptions} = options;

@@ -66,8 +66,8 @@ describe("ErrorInfo", () => {
 
             // Act
             const act = () =>
-                // $FlowIgnore[unclear-type]
-                ErrorInfo.fromConsequenceAndCause((null: any), cause);
+                // $FlowIgnore[incompatible-call]
+                ErrorInfo.fromConsequenceAndCause(null, cause);
 
             // Assert
             expect(act).toThrowErrorMatchingInlineSnapshot(
@@ -85,8 +85,8 @@ describe("ErrorInfo", () => {
 
             // Act
             const act = () =>
-                // $FlowIgnore[unclear-type]
-                ErrorInfo.fromConsequenceAndCause(consequence, (null: any));
+                // $FlowIgnore[incompatible-call]
+                ErrorInfo.fromConsequenceAndCause(consequence, null);
 
             // Assert
             expect(act).toThrowErrorMatchingInlineSnapshot(
@@ -191,8 +191,8 @@ describe("ErrorInfo", () => {
     describe("#normalize", () => {
         it("should throw if error is not an Error", () => {
             // Arrange
-            // $FlowIgnore[unclear-type]
-            const error: Error = ({}: any);
+            // $FlowIgnore[incompatible-type]
+            const error: Error = {};
 
             // Act
             const act = () => ErrorInfo.normalize(error);
@@ -313,8 +313,8 @@ describe("ErrorInfo", () => {
     describe("#from", () => {
         it("should throw if error is not an Error", () => {
             // Arrange
-            // $FlowIgnore[unclear-type]
-            const error: Error = ({}: any);
+            // $FlowIgnore[incompatible-type]
+            const error: Error = {};
 
             // Act
             const act = () => ErrorInfo.from(error);

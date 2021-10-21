@@ -8,7 +8,6 @@ import type {Metadata} from "@khanacademy/wonder-stuff-core";
  */
 export type SentryTags = {
     [name: string]: string,
-    ...
 };
 
 /**
@@ -25,7 +24,6 @@ export type SentryContext = $ReadOnly<Metadata>;
  */
 export type SentryContexts = {
     [name: string]: $ReadOnly<SentryContext>,
-    ...
 };
 
 /**
