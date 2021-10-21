@@ -337,14 +337,17 @@ describe("KindSentryError", () => {
                     },
                 },
             });
-            const spy = jest.spyOn(SentryDataReducer, "sentryDataReducer");
+            const sentryDataReducerSpy = jest.spyOn(
+                SentryDataReducer,
+                "sentryDataReducer",
+            );
 
             // Act
             error.getMergedSentryData();
 
             // Assert
-            expect(spy).toHaveBeenCalledTimes(3);
-            expect(spy).toHaveBeenNthCalledWith(
+            expect(sentryDataReducerSpy).toHaveBeenCalledTimes(3);
+            expect(sentryDataReducerSpy).toHaveBeenNthCalledWith(
                 1,
                 {
                     tags: {},
@@ -361,7 +364,7 @@ describe("KindSentryError", () => {
                 2,
                 expect.any(Array),
             );
-            expect(spy).toHaveBeenLastCalledWith(
+            expect(sentryDataReducerSpy).toHaveBeenLastCalledWith(
                 {
                     tags: {
                         tag1: "tagvalue1",

@@ -101,7 +101,7 @@ describe("ErrorInfo", () => {
             // Arrange
             const cause = new ErrorInfo("CAUSE", []);
             const consequence = new ErrorInfo("CONSEQUENCE", []);
-            const spy = jest
+            const buildCausedByMessageSpy = jest
                 .spyOn(BuildCausedByMessage, "buildCausedByMessage")
                 .mockReturnValue("COMBINED MESSAGE");
 
@@ -112,7 +112,10 @@ describe("ErrorInfo", () => {
             );
 
             // Assert
-            expect(spy).toHaveBeenCalledWith("CONSEQUENCE", "CAUSE");
+            expect(buildCausedByMessageSpy).toHaveBeenCalledWith(
+                "CONSEQUENCE",
+                "CAUSE",
+            );
             expect(result.message).toEqual("COMBINED MESSAGE");
         });
 

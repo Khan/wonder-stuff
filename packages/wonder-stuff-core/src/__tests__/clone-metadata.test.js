@@ -17,13 +17,13 @@ describe("#cloneMetadata", () => {
 
     it("should freeze the clone", () => {
         // Arrange
-        const spy = jest.spyOn(Object, "freeze");
+        const freezeSpy = jest.spyOn(Object, "freeze");
 
         // Act
         const result = cloneMetadata({});
 
         // Assert
-        expect(spy).toHaveBeenCalledWith(result);
+        expect(freezeSpy).toHaveBeenCalledWith(result);
     });
 
     it("should clone a simple object", () => {

@@ -79,25 +79,25 @@ export class KindSentryError extends KindError {
         kind: string = Errors.Unknown,
         // It's perfectly valid for options to be an empty object.
         // $FlowIgnore[unclear-type]
-        options: Options = ({}: any),
+        options: Options = ({}: $Shape<Options>),
     ) {
         const {metadata, sentryData, name, ...restOptions} = options;
-        // We want to combine sentry data and metadata into a single object
-        // to send to our super class since folks using this error likely
-        // still want the sentry data to go wherever metadata goes.
-        // We have a couple of options to avoid name collisions:
-        //   1. Assign the given metadata and sentryData to independent keys.
-        //   2. Check that metadata doesn't contain `sentryData` and use that
-        //      key, either overwriting what is there, or erroring if this
-        //      reserved key is used.
-        // Option 1 is cleaner but adds indentation to the data.
-        // Option 2 may make more readable data when stringified, but needs
-        // a policy on what to do about a key collision.
-        // For simplicity of implementation and ease of API use, we choose
-        // option 1.
         super(message, kind, {
             ...restOptions,
             name: name ?? "Sentry",
+            // We want to combine sentry data and metadata into a single object
+            // to send to our super class since folks using this error likely
+            // still want the sentry data to go wherever metadata goes.
+            // We have a couple of options to avoid name collisions:
+            //   1. Assign the given metadata and sentryData to independent keys.
+            //   2. Check that metadata doesn't contain `sentryData` and use that
+            //      key, either overwriting what is there, or erroring if this
+            //      reserved key is used.
+            // Option 1 is cleaner but adds indentation to the data.
+            // Option 2 may make more readable data when stringified, but needs
+            // a policy on what to do about a key collision.
+            // For simplicity of implementation and ease of API use, we choose
+            // option 1.
             metadata: {
                 sentry: {
                     // We set the defaults here so that we know these will be

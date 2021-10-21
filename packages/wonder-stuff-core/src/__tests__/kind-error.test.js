@@ -144,7 +144,7 @@ describe("KindError", () => {
             const metadata = {
                 foo: "bar",
             };
-            const spy = jest
+            const cloneMetadataSpy = jest
                 .spyOn(CloneMetadata, "cloneMetadata")
                 .mockReturnValue("CLONED_METADATA");
 
@@ -152,7 +152,7 @@ describe("KindError", () => {
             const error = new KindError("MESSAGE", Errors.Unknown, {metadata});
 
             // Assert
-            expect(spy).toHaveBeenCalledWith(metadata);
+            expect(cloneMetadataSpy).toHaveBeenCalledWith(metadata);
             expect(error.metadata).toBe("CLONED_METADATA");
         });
 
@@ -176,7 +176,7 @@ describe("KindError", () => {
             it("should get the normalized error info for the error being constructed, stripping frames", () => {
                 // Arrange
                 const cause = new Error("CAUSE_MESSAGE");
-                const spy = jest.spyOn(ErrorInfo, "normalize");
+                const normalizeSpy = jest.spyOn(ErrorInfo, "normalize");
 
                 // Act
                 const error = new KindError("MESSAGE", Errors.Unknown, {
@@ -186,13 +186,13 @@ describe("KindError", () => {
                 });
 
                 // Assert
-                expect(spy).toHaveBeenCalledWith(error, 1, 2);
+                expect(normalizeSpy).toHaveBeenCalledWith(error, 1, 2);
             });
 
             it("should get error info for the cause error", () => {
                 // Arrange
                 const cause = new Error("CAUSE_MESSAGE");
-                const spy = jest.spyOn(ErrorInfo, "from");
+                const fromSpy = jest.spyOn(ErrorInfo, "from");
 
                 // Act
                 const act = () =>
@@ -204,7 +204,7 @@ describe("KindError", () => {
                 act();
 
                 // Assert
-                expect(spy).toHaveBeenCalledWith(cause);
+                expect(fromSpy).toHaveBeenCalledWith(cause);
             });
 
             it("should combine the normalized error information of the constructed error and the regular error information from the causal error", () => {
@@ -222,7 +222,10 @@ describe("KindError", () => {
                     consequentialErrorInfo,
                 );
                 jest.spyOn(ErrorInfo, "from").mockReturnValue(causalErrorInfo);
-                const spy = jest.spyOn(ErrorInfo, "fromConsequenceAndCause");
+                const fromConsequenceAndCauseSpy = jest.spyOn(
+                    ErrorInfo,
+                    "fromConsequenceAndCause",
+                );
 
                 // Act
                 const act = () =>
@@ -230,7 +233,7 @@ describe("KindError", () => {
                 act();
 
                 // Assert
-                expect(spy).toHaveBeenCalledWith(
+                expect(fromConsequenceAndCauseSpy).toHaveBeenCalledWith(
                     consequentialErrorInfo,
                     causalErrorInfo,
                 );
