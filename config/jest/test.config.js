@@ -10,6 +10,8 @@ module.exports = {
     transform: {
         "^.+\\.jsx?$": "<rootDir>/config/jest/test.transform.js",
     },
+    restoreMocks: true,
+    resetMocks: true,
     testEnvironment: "jest-environment-node",
     testMatch: ["<rootDir>/**/*.test.js"],
     setupFilesAfterEnv: [

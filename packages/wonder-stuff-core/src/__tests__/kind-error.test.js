@@ -1,12 +1,8 @@
 // @flow
-import {when} from "jest-when";
-
 import * as CloneMetadata from "../clone-metadata.js";
 import {ErrorInfo} from "../error-info.js";
 import {Errors} from "../errors.js";
 import {KindError} from "../kind-error.js";
-
-jest.mock("../clone-metadata.js");
 
 describe("KindError", () => {
     describe("#constructor", () => {
@@ -51,6 +47,42 @@ describe("KindError", () => {
             // Assert
             expect(error.kind).toBe("CUSTOM_KIND");
         });
+
+        it("should default name", () => {
+            // Arrange
+
+            // Act
+            const error = new KindError("MESSAGE");
+
+            // Assert
+            expect(error.name).toEndWith("Error");
+        });
+
+        it("should set the name", () => {
+            // Arrange
+
+            // Act
+            const error = new KindError("MESSAGE", Errors.Unknown, {
+                name: "CUSTOM_NAME",
+            });
+
+            // Assert
+            expect(error.name).toEndWith("CUSTOM_NAMEError");
+        });
+
+        it.each(["N A M E", "NA\nME"])(
+            "should throw if the name has whitespace like %s",
+            (name) => {
+                // Arrange
+
+                // Act
+                const act = () =>
+                    new KindError("MESSAGE", Errors.Unknown, {name});
+
+                // Assert
+                expect(act).toThrowErrorMatchingSnapshot();
+            },
+        );
 
         it.each(["K I N D", "KI\nND"])(
             "should throw if the kind has whitespace like %s",
@@ -112,7 +144,7 @@ describe("KindError", () => {
             const metadata = {
                 foo: "bar",
             };
-            const spy = jest
+            const cloneMetadataSpy = jest
                 .spyOn(CloneMetadata, "cloneMetadata")
                 .mockReturnValue("CLONED_METADATA");
 
@@ -120,7 +152,7 @@ describe("KindError", () => {
             const error = new KindError("MESSAGE", Errors.Unknown, {metadata});
 
             // Assert
-            expect(spy).toHaveBeenCalledWith(metadata);
+            expect(cloneMetadataSpy).toHaveBeenCalledWith(metadata);
             expect(error.metadata).toBe("CLONED_METADATA");
         });
 
@@ -131,6 +163,7 @@ describe("KindError", () => {
                 // Act
                 const act = () =>
                     new KindError("MESSAGE", Errors.Unknown, {
+                        // $FlowIgnore[unclear-type]
                         cause: ("NOT_AN_ERROR": any),
                     });
 
@@ -143,7 +176,7 @@ describe("KindError", () => {
             it("should get the normalized error info for the error being constructed, stripping frames", () => {
                 // Arrange
                 const cause = new Error("CAUSE_MESSAGE");
-                const spy = jest.spyOn(ErrorInfo, "normalize");
+                const normalizeSpy = jest.spyOn(ErrorInfo, "normalize");
 
                 // Act
                 const error = new KindError("MESSAGE", Errors.Unknown, {
@@ -153,13 +186,13 @@ describe("KindError", () => {
                 });
 
                 // Assert
-                expect(spy).toHaveBeenCalledWith(error, 1, 2);
+                expect(normalizeSpy).toHaveBeenCalledWith(error, 1, 2);
             });
 
-            it("should get the normalized error info for the cause error, without stripping frames", () => {
+            it("should get error info for the cause error", () => {
                 // Arrange
                 const cause = new Error("CAUSE_MESSAGE");
-                const spy = jest.spyOn(ErrorInfo, "normalize");
+                const fromSpy = jest.spyOn(ErrorInfo, "from");
 
                 // Act
                 const act = () =>
@@ -171,10 +204,10 @@ describe("KindError", () => {
                 act();
 
                 // Assert
-                expect(spy).toHaveBeenCalledWith(cause);
+                expect(fromSpy).toHaveBeenCalledWith(cause);
             });
 
-            it("should combine the normalized error information of the constructed error and the causal error", () => {
+            it("should combine the normalized error information of the constructed error and the regular error information from the causal error", () => {
                 // Arrange
                 const consequentialErrorInfo = new ErrorInfo(
                     "CONSEQUENCE_MESSAGE",
@@ -185,11 +218,14 @@ describe("KindError", () => {
                     "cause2",
                 ]);
                 const cause = new Error("CAUSE_MESSAGE");
-                when(jest.spyOn(ErrorInfo, "normalize"))
-                    .mockReturnValue(consequentialErrorInfo)
-                    .calledWith(cause)
-                    .mockReturnValue(causalErrorInfo);
-                const spy = jest.spyOn(ErrorInfo, "fromConsequenceAndCause");
+                jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
+                    consequentialErrorInfo,
+                );
+                jest.spyOn(ErrorInfo, "from").mockReturnValue(causalErrorInfo);
+                const fromConsequenceAndCauseSpy = jest.spyOn(
+                    ErrorInfo,
+                    "fromConsequenceAndCause",
+                );
 
                 // Act
                 const act = () =>
@@ -197,7 +233,7 @@ describe("KindError", () => {
                 act();
 
                 // Assert
-                expect(spy).toHaveBeenCalledWith(
+                expect(fromConsequenceAndCauseSpy).toHaveBeenCalledWith(
                     consequentialErrorInfo,
                     causalErrorInfo,
                 );
@@ -239,6 +275,30 @@ describe("KindError", () => {
 
                 // Assert
                 expect(error.message).toBe(combinedErrorInfo.message);
+            });
+
+            it("should have a combined message that cascades all causes", () => {
+                // Arrange
+                const cause1 = new Error("CAUSE_MESSAGE");
+                const cause2 = new KindError(
+                    "CAUSE_2_MESSAGE",
+                    Errors.Unknown,
+                    {cause: cause1},
+                );
+
+                // Act
+                const result = new KindError("ROOT_MESSAGE", Errors.Unknown, {
+                    cause: cause2,
+                });
+
+                // Assert
+                expect(result.message).toMatchInlineSnapshot(`
+                    "UnknownError: ROOT_MESSAGE
+                    	caused by
+                    		UnknownError: UnknownError: CAUSE_2_MESSAGE
+                    	caused by
+                    		Error: CAUSE_MESSAGE"
+                `);
             });
         });
     });

@@ -2,7 +2,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "name": "@khanacademy/wonder-stuff-core",
+    "name": "@khanacademy/wonder-stuff-sentry",
     "version": "0.0.1",
     "description": "",
     "module": "dist/es/index.js",
@@ -10,6 +10,9 @@
     "source": "src/index.js",
     "scripts": {
         "test": "echo \"Run tests from the repository root\" && exit 1"
+    },
+    "dependencies": {
+        "@khanacademy/wonder-stuff-core": "^0.0.1"
     },
     "devDependencies": {
         "ws-dev-build-settings": "^0.0.2"

@@ -66,6 +66,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - uses: actions/cache@v2
+      name: Cache node_modules
       id: node-modules-cache # use this to check for `cache-hit` (`steps.node-modules-cache.outputs.cache-hit != 'true'`)
       with:
         path: node_modules
@@ -75,10 +76,34 @@ jobs:
     - name: Install dependencies
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
-    - name: Lint
-      run: yarn lint
-    - name: Flow
-      run: yarn flow:ci
+    - name: Checking out base ref
+      run: |
+        # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
+        # have a ref to compare against.
+        git fetch --depth 1 origin ${GITHUB_BASE_REF}
+    - name: Check Builds
+      uses: preactjs/compressed-size-action@v2
+      with:
+        # Any JS files anywhere within a dist directory:
+        pattern: "**/dist/**/*.js"
+        # Always ignore SourceMaps and node_modules:
+        exclude: "{**/*.map,**/node_modules/**}"
+        # Clean up before a build
+        clean-script: "clean"
+    # Linting / type checking
+    - name: Run ESLint
+      uses: Khan/eslint-action@v1.1.5
+      with:
+        eslint-lib: ./node_modules/eslint
+        run-all-if-changed: package.json,.eslintrc.js
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Run Flow
+      uses: Khan/flow-action@v1.1.3
+      with:
+        flow-bin: ./node_modules/.bin/flow
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
   test:
@@ -111,8 +136,19 @@ jobs:
     - name: Install dependencies
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
-    - name: Run tests
-      run: yarn test
+    - name: Checking out base ref
+      run: |
+        # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
+        # have a ref to compare against.
+        git fetch --depth 1 origin ${GITHUB_BASE_REF}
+    - name: Run jest tests
+      uses: Khan/jest-action@v1.2.0
+      with:
+        run-all-if-changed: package.json,jest.config.js,babel.config.js
+        jest-bin: ./node_modules/.bin/jest
+        find-related-tests: 1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
   coverage:
@@ -141,10 +177,16 @@ jobs:
     - name: Install dependencies
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
-    - name: Run tests with coverage
-      run: yarn coverage
+    - name: Run Jest with coverage
+      uses: Khan/jest-coverage-action@v1.1.3
+      with:
+        jest-bin: ./node_modules/.bin/jest
+        coverage-data-path: ./coverage/coverage-final.json
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Upload Coverage
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage/coverage-final.json
         fail_ci_if_error: true

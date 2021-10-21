@@ -58,6 +58,7 @@ describe("ErrorInfo", () => {
 
             // Act
             const act = () =>
+                // $FlowIgnore[unclear-type]
                 ErrorInfo.fromConsequenceAndCause((null: any), cause);
 
             // Assert
@@ -72,6 +73,7 @@ describe("ErrorInfo", () => {
 
             // Act
             const act = () =>
+                // $FlowIgnore[unclear-type]
                 ErrorInfo.fromConsequenceAndCause(consequence, (null: any));
 
             // Assert
@@ -99,7 +101,7 @@ describe("ErrorInfo", () => {
             // Arrange
             const cause = new ErrorInfo("CAUSE", []);
             const consequence = new ErrorInfo("CONSEQUENCE", []);
-            const spy = jest
+            const buildCausedByMessageSpy = jest
                 .spyOn(BuildCausedByMessage, "buildCausedByMessage")
                 .mockReturnValue("COMBINED MESSAGE");
 
@@ -110,7 +112,10 @@ describe("ErrorInfo", () => {
             );
 
             // Assert
-            expect(spy).toHaveBeenCalledWith("CONSEQUENCE", "CAUSE");
+            expect(buildCausedByMessageSpy).toHaveBeenCalledWith(
+                "CONSEQUENCE",
+                "CAUSE",
+            );
             expect(result.message).toEqual("COMBINED MESSAGE");
         });
 
@@ -165,6 +170,7 @@ describe("ErrorInfo", () => {
     describe("#normalize", () => {
         it("should throw if error is not an Error", () => {
             // Arrange
+            // $FlowIgnore[unclear-type]
             const error: Error = ({}: any);
 
             // Act
@@ -267,6 +273,80 @@ describe("ErrorInfo", () => {
 
             // Act
             const result = ErrorInfo.normalize(error);
+
+            // Assert
+            expect(result.stack).toEqual([]);
+        });
+    });
+
+    describe("#from", () => {
+        it("should throw if error is not an Error", () => {
+            // Arrange
+            // $FlowIgnore[unclear-type]
+            const error: Error = ({}: any);
+
+            // Act
+            const act = () => ErrorInfo.from(error);
+
+            // Assert
+            expect(act).toThrowErrorMatchingInlineSnapshot(
+                `"Error must be an instance of Error"`,
+            );
+        });
+
+        it("should set the message to the error.toString value", () => {
+            // Arrange
+            const error = new Error("test");
+
+            // Act
+            const result = ErrorInfo.from(error);
+
+            // Assert
+            expect(result.message).toBe("Error: test");
+        });
+
+        it("should create the stack array without the error.toString text", () => {
+            // Arrange
+            const error = new Error("test");
+            // Have to mock out the stack because otherwise it may contain
+            // specifics to the given test environment, which will change
+            // depending on where the test is run.
+            error.stack = "Error: test\nframe1\nframe2\nframe3";
+
+            // Act
+            const result = ErrorInfo.from(error);
+
+            // Assert
+            expect(result.stack).toEqual(["frame1", "frame2", "frame3"]);
+        });
+
+        it("should create the stack array including the error.toString text if error.stack and error.toString are the same", () => {
+            // Arrange
+            const error = new Error("test");
+            const stackAndToString = "Error: test\nframe1\nframe2\nframe3";
+            jest.spyOn(error, "toString").mockReturnValue(stackAndToString);
+            error.stack = stackAndToString;
+
+            // Act
+            const result = ErrorInfo.from(error);
+
+            // Assert
+            expect(result.stack).toEqual([
+                "Error: test",
+                "frame1",
+                "frame2",
+                "frame3",
+            ]);
+        });
+
+        it("should create an empty stack array if there is no stack", () => {
+            // Arrange
+            const error = new Error("test");
+            // $FlowIgnore[incompatible-type]
+            delete error.stack;
+
+            // Act
+            const result = ErrorInfo.from(error);
 
             // Assert
             expect(result.stack).toEqual([]);

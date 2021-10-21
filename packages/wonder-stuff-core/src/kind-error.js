@@ -12,37 +12,44 @@ type Options = {|
     /**
      * An error responsible for the error being created.
      *
-     * @type {Error}
+     * @type {?Error}
      */
-    cause?: Error,
+    cause?: ?Error,
 
     /**
      * Data to be attached to the error.
      *
-     * @type {$ReadOnly<Metadata>}
+     * @type {?$ReadOnly<Metadata>}
      */
-    metadata?: $ReadOnly<Metadata>,
+    metadata?: ?$ReadOnly<Metadata>,
 
     /**
-     * A prefix to be added to the error name.
+     * A prefix for the error name.
      *
-     * @type {string}
+     * @type {?string}
      */
-    prefix?: string,
+    prefix?: ?string,
+
+    /**
+     * A name for the error.
+     *
+     * @type {?string}
+     */
+    name?: ?string,
 
     /**
      * The number of stack frames to strip from the error.
      *
-     * @type {number}
+     * @type {?number}
      */
-    stripStackFrames?: number,
+    stripStackFrames?: ?number,
 
     /**
      * The minimum number of stack frames to try and retain.
      *
-     * @type {number}
+     * @type {?number}
      */
-    minimumFrameCount?: number,
+    minimumFrameCount?: ?number,
 |};
 
 /**
@@ -57,6 +64,7 @@ export class KindError extends Error {
     +kind: string;
     +originalMessage: string;
     +metadata: ?$ReadOnly<Metadata>;
+    +cause: ?Error;
 
     /**
      * Creates an instance of `KindError`.
@@ -68,11 +76,13 @@ export class KindError extends Error {
      * Defaults to `Errors.Unknown`.
      * @param {Options} [options] Options for constructing the error.
      * @param {Error} [options.cause] The error that caused this error.
-     * @param {Metadata} [options.metadata] The metadata to attach to the error.
+     * @param {$ReadOnly<Metadata>} [options.metadata] The metadata to attach
+     * to the error.
      * @param {string} [options.prefix=""] A prefix to prepend the name of the
      * error.
-     * @param {number} [options.stripStackFrames=0] The number of stack frames to
-     * remove from the error's stack. This can be used to ensure that the top
+     * @param {string} [options.name="Error"] The name of the error.
+     * @param {number} [options.stripStackFrames=0] The number of stack frames
+     * to remove from the error's stack. This can be used to ensure that the top
      * call of the stack references the point at which an error is thrown which
      * can be useful when helper functions are used to build the error being
      * thrown.
@@ -86,31 +96,29 @@ export class KindError extends Error {
         {
             cause,
             prefix,
+            name,
             metadata,
             stripStackFrames,
             minimumFrameCount,
-        }: Options = {
-            cause: undefined,
-            metadata: undefined,
-            prefix: "",
-            stripStackFrames: 0,
-            minimumFrameCount: 1,
-        },
+        }: Options = {},
     ) {
         // Validate arguments.
         if (cause && !(cause instanceof Error)) {
             throw new Error("cause must be an instance of Error");
         }
-        if (kind && /\s/g.test(kind)) {
+        if (name != null && /\s/g.test(name)) {
+            throw new Error("name must not contain whitespace");
+        }
+        if (/\s/g.test(kind)) {
             throw new Error("kind must not contain whitespace");
         }
-        if (prefix && /\s/g.test(prefix)) {
+        if (prefix != null && /\s/g.test(prefix)) {
             throw new Error("prefix must not contain whitespace");
         }
-        if (stripStackFrames && stripStackFrames < 0) {
+        if (stripStackFrames != null && stripStackFrames < 0) {
             throw new Error("stripStackFrames must be >= 0");
         }
-        if (minimumFrameCount && minimumFrameCount < 0) {
+        if (minimumFrameCount != null && minimumFrameCount < 0) {
             throw new Error("minimumFrameCount must be >= 0");
         }
 
@@ -124,21 +132,25 @@ export class KindError extends Error {
 
         // Set the name so we get a nice error output, like
         // KAInternalError
-        this.name = `${prefix ?? ""}${kind}Error`;
+        this.name = `${prefix ?? ""}${kind}${name ?? ""}Error`;
 
         // The kind of error which can be used for grouping with
         // other error sources that use the same error taxonomy.
         this.kind = kind;
 
+        // The cause of this error, if there is one.
+        this.cause = cause;
         if (cause != null) {
             // We want to generate a better stack trace using the source error
             // and our own stack.
             const normalizedError = ErrorInfo.normalize(
                 this,
-                stripStackFrames,
-                minimumFrameCount,
+                stripStackFrames ?? 0,
+                minimumFrameCount ?? 1,
             );
-            const normalizedCause = ErrorInfo.normalize(cause);
+            // We don't normalize the cause as this should have happened already
+            // when it was, itself, created with a cause.
+            const normalizedCause = ErrorInfo.from(cause);
             const combined = ErrorInfo.fromConsequenceAndCause(
                 normalizedError,
                 normalizedCause,
