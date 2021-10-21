@@ -76,6 +76,11 @@ jobs:
     - name: Install dependencies
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
+    - name: Checking out base ref
+      run: |
+        # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
+        # have a ref to compare against.
+        git fetch --depth 1 origin ${GITHUB_BASE_REF}
     - name: Check Builds
       uses: preactjs/compressed-size-action@v2
       with:
@@ -131,6 +136,11 @@ jobs:
     - name: Install dependencies
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
+    - name: Checking out base ref
+      run: |
+        # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
+        # have a ref to compare against.
+        git fetch --depth 1 origin ${GITHUB_BASE_REF}
     - name: Run jest tests
       uses: Khan/jest-action@v1.2.0
       with:
