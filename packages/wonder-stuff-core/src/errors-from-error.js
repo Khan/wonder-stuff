@@ -1,5 +1,5 @@
 // @flow
-import {KindError} from "@khanacademy/wonder-stuff-core";
+import {KindError} from "./kind-error.js";
 
 export const Order = Object.freeze({
     ConsequenceFirst: "consequence-first",
