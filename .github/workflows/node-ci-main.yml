@@ -75,6 +75,8 @@ jobs:
         # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
         # have a ref to compare against.
         git fetch --depth 1 origin ${GITHUB_BASE_REF}
+    - name: Build code so that linting will pass
+      run: yarn build
     # Linting / type checking
     - name: Lint
       run: yarn lint
