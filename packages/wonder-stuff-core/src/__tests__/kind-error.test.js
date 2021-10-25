@@ -210,13 +210,15 @@ describe("KindError", () => {
             it("should combine the normalized error information of the constructed error and the regular error information from the causal error", () => {
                 // Arrange
                 const consequentialErrorInfo = new ErrorInfo(
+                    "CONSEQUENCE_NAME",
                     "CONSEQUENCE_MESSAGE",
                     ["consequence1", "consequence2"],
                 );
-                const causalErrorInfo = new ErrorInfo("CAUSE_MESSAGE", [
-                    "cause1",
-                    "cause2",
-                ]);
+                const causalErrorInfo = new ErrorInfo(
+                    "CAUSE_NAME",
+                    "CAUSE_MESSAGE",
+                    ["cause1", "cause2"],
+                );
                 const cause = new Error("CAUSE_MESSAGE");
                 jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
                     consequentialErrorInfo,
@@ -239,13 +241,14 @@ describe("KindError", () => {
                 );
             });
 
-            it("should set the stack to the combined error info string", () => {
+            it("should set the stack to the combined error standardized stack", () => {
                 // Arrange
                 const cause = new Error("CAUSE_MESSAGE");
-                const combinedErrorInfo = new ErrorInfo("COMBINED_MESSAGE", [
-                    "combinedstack1",
-                    "combinedstack2",
-                ]);
+                const combinedErrorInfo = new ErrorInfo(
+                    "COMBINED_NAME",
+                    "COMBINED_MESSAGE",
+                    ["combinedstack1", "combinedstack2"],
+                );
                 jest.spyOn(
                     ErrorInfo,
                     "fromConsequenceAndCause",
@@ -255,16 +258,17 @@ describe("KindError", () => {
                 const error = new KindError("MESSAGE", Errors.Unknown, {cause});
 
                 // Assert
-                expect(error.stack).toBe(combinedErrorInfo.toString());
+                expect(error.stack).toBe(combinedErrorInfo.standardizedStack);
             });
 
             it("should set the message to the combined error info message", () => {
                 // Arrange
                 const cause = new Error("CAUSE_MESSAGE");
-                const combinedErrorInfo = new ErrorInfo("COMBINED_MESSAGE", [
-                    "combinedstack1",
-                    "combinedstack2",
-                ]);
+                const combinedErrorInfo = new ErrorInfo(
+                    "COMBINED_NAME",
+                    "COMBINED_MESSAGE",
+                    ["combinedstack1", "combinedstack2"],
+                );
                 jest.spyOn(
                     ErrorInfo,
                     "fromConsequenceAndCause",
@@ -293,9 +297,9 @@ describe("KindError", () => {
 
                 // Assert
                 expect(result.message).toMatchInlineSnapshot(`
-                    "UnknownError: ROOT_MESSAGE
+                    "ROOT_MESSAGE
                     	caused by
-                    		UnknownError: UnknownError: CAUSE_2_MESSAGE
+                    		UnknownError: CAUSE_2_MESSAGE
                     	caused by
                     		Error: CAUSE_MESSAGE"
                 `);

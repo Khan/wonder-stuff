@@ -163,10 +163,10 @@ export class KindError extends Error {
              * assign to a readonly thing, so being mildly cautious.
              */
             delete this.stack;
-            this.stack = combined.toString();
+            this.stack = combined.standardizedStack;
 
-            // We update our message to a normalized one from the combined
-            // stacks, as this gives us a nice causal relationship.
+            // We update our message to a standardized one from the combined
+            // stacks, giving us a nice causal relationship.
             this.message = combined.message;
         }
     }

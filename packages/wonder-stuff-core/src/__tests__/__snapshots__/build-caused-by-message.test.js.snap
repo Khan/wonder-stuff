@@ -1,24 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`#buildCausedByMessage should default nullish and whitespace strings to (empty message) 1`] = `
+exports[`#buildCausedByMessage should default whitespace strings to (empty message) 1`] = `
 "(empty message)
 	caused by
 		(empty message)"
 `;
 
-exports[`#buildCausedByMessage should default nullish and whitespace strings to (empty message) 2`] = `
-"(empty message)
-	caused by
-		(empty message)"
-`;
-
-exports[`#buildCausedByMessage should default nullish and whitespace strings to (empty message) 3`] = `
-"(empty message)
-	caused by
-		(empty message)"
-`;
-
-exports[`#buildCausedByMessage should default nullish and whitespace strings to (empty message) 4`] = `
+exports[`#buildCausedByMessage should default whitespace strings to (empty message) 2`] = `
 "(empty message)
 	caused by
 		(empty message)"

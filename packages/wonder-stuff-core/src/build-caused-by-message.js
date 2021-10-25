@@ -10,7 +10,14 @@
 export const buildCausedByMessage = (
     consequence: ?string,
     cause: ?string,
-): string =>
-    `${consequence?.trim() || "(empty message)"}\n\tcaused by\n\t\t${
-        cause?.trim() || "(empty message)"
-    }`;
+): string => {
+    const messageOrDefault = (message: ?string): string =>
+        message?.trim() || "(empty message)";
+
+    const consequenceMessage = messageOrDefault(consequence);
+    if (cause == null) {
+        return consequenceMessage;
+    }
+
+    return `${consequenceMessage}\n\tcaused by\n\t\t${messageOrDefault(cause)}`;
+};

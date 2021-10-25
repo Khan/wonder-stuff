@@ -18,8 +18,38 @@ describe("#buildCausedByMessage", () => {
         `);
     });
 
-    it.each([null, undefined, "    ", "\n\t\t"])(
-        "should default nullish and whitespace strings to (empty message)",
+    it.each([null, undefined])(
+        "should only include cause if it is non-null",
+        (testCase) => {
+            // Arrange
+            const consequence = "No more Halloween candy";
+            const cause = testCase;
+
+            // Act
+            const result = buildCausedByMessage(consequence, cause);
+
+            // Assert
+            expect(result).toBe(consequence);
+        },
+    );
+
+    it.each([null, undefined])(
+        "should default nullish consequences to (empty message)",
+        (testCase) => {
+            // Arrange
+            const consequence = testCase;
+            const cause = null;
+
+            // Act
+            const result = buildCausedByMessage(consequence, cause);
+
+            // Assert
+            expect(result).toBe("(empty message)");
+        },
+    );
+
+    it.each(["    ", "\n\t\t"])(
+        "should default whitespace strings to (empty message)",
         (testCase) => {
             // Arrange
             const consequence = testCase;
