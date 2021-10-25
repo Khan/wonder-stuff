@@ -7,11 +7,6 @@ on:
     # The rest are the defaults.
     types: [edited, opened, synchronize, reopened]
 
-  push:
-    branches:
-    - main
-    - feature/*
-
 # Our jobs run like this to minimize wasting resource cycles:
 #   1. Prime caches for primary configuration (ubuntu on node 14).
 #      This way the next two jobs can run in parallel but rely on this primed
