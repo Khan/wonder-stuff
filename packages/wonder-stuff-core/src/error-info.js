@@ -17,8 +17,8 @@ export class ErrorInfo {
         message: string,
         stackFrames: $ReadOnlyArray<string>,
     ) {
-        this._message = message;
         this._name = name;
+        this._message = message;
         // Copy the stack array just to be sure our internal state won't
         // mutate outside our control.
         this._stackFrames = [...stackFrames];

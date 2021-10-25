@@ -140,34 +140,47 @@ export class KindError extends Error {
 
         // The cause of this error, if there is one.
         this.cause = cause;
-        if (cause != null) {
+
+        // We want to normalize our error message and stack, stripping off
+        // frames that may obfuscate the real error cause.
+        const normalizedError = ErrorInfo.normalize(
+            this,
+            stripStackFrames ?? 0,
+            minimumFrameCount ?? 1,
+        );
+
+        /**
+         * $FlowIgnore[incompatible-type]
+         * Flow doesn't like us leaving KAError temporarily without a
+         * stack, but I don't want this crashing because we try to
+         * assign to a readonly thing, so being mildly cautious.
+         *
+         * We're going to replace the stack with our normalized one or
+         * one combined with our cause - so we need to make sure the old one is
+         * gone.
+         */
+        delete this.stack;
+
+        if (cause == null) {
+            // If there is no cause, we can just use the normalized error.
+            this.message = normalizedError.message;
+            this.stack = normalizedError.standardizedStack;
+        } else {
             // We want to generate a better stack trace using the source error
             // and our own stack.
-            const normalizedError = ErrorInfo.normalize(
-                this,
-                stripStackFrames ?? 0,
-                minimumFrameCount ?? 1,
-            );
             // We don't normalize the cause as this should have happened already
             // when it was, itself, created with a cause.
-            const normalizedCause = ErrorInfo.from(cause);
+            const causeInfo = ErrorInfo.from(cause);
             const combined = ErrorInfo.fromConsequenceAndCause(
                 normalizedError,
-                normalizedCause,
+                causeInfo,
             );
 
-            /**
-             * $FlowIgnore[incompatible-type]
-             * Flow doesn't like us leaving KAError temporarily without a
-             * stack, but I don't want this crashing because we try to
-             * assign to a readonly thing, so being mildly cautious.
-             */
-            delete this.stack;
-            this.stack = combined.standardizedStack;
-
             // We update our message to a standardized one from the combined
-            // stacks, giving us a nice causal relationship.
+            // stacks, giving us a nice causal relationship and we set our
+            // stack to the combined one.
             this.message = combined.message;
+            this.stack = combined.standardizedStack;
         }
     }
 }

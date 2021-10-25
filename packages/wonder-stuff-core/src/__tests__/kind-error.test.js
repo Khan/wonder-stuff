@@ -156,6 +156,56 @@ describe("KindError", () => {
             expect(error.metadata).toBe("CLONED_METADATA");
         });
 
+        it("should get the normalized error info for the error being constructed, stripping frames", () => {
+            // Arrange
+            const normalizeSpy = jest.spyOn(ErrorInfo, "normalize");
+
+            // Act
+            const error = new KindError("MESSAGE", Errors.Unknown, {
+                stripStackFrames: 1,
+                minimumFrameCount: 2,
+            });
+
+            // Assert
+            expect(normalizeSpy).toHaveBeenCalledWith(error, 1, 2);
+        });
+
+        it("should set the stack to the normalized value", () => {
+            // Arrange
+            const normalizedErrorInfo = new ErrorInfo(
+                "NORMALIZED_NAME",
+                "NORMALIZED_MESSAGE",
+                ["normalizedstack1", "normalizedstack2"],
+            );
+            jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
+                normalizedErrorInfo,
+            );
+
+            // Act
+            const error = new KindError("MESSAGE", Errors.Unknown);
+
+            // Assert
+            expect(error.stack).toBe(normalizedErrorInfo.standardizedStack);
+        });
+
+        it("should set the message to the normalized value", () => {
+            // Arrange
+            const normalizedErrorInfo = new ErrorInfo(
+                "NORMALIZED_NAME",
+                "NORMALIZED_MESSAGE",
+                ["normalizedstack1", "normalizedstack2"],
+            );
+            jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
+                normalizedErrorInfo,
+            );
+
+            // Act
+            const error = new KindError("MESSAGE", Errors.Unknown);
+
+            // Assert
+            expect(error.message).toBe(normalizedErrorInfo.message);
+        });
+
         describe("when cause is non-null", () => {
             it("should throw if cause is  not an Error", () => {
                 // Arrange
@@ -171,22 +221,6 @@ describe("KindError", () => {
                 expect(act).toThrowErrorMatchingInlineSnapshot(
                     `"cause must be an instance of Error"`,
                 );
-            });
-
-            it("should get the normalized error info for the error being constructed, stripping frames", () => {
-                // Arrange
-                const cause = new Error("CAUSE_MESSAGE");
-                const normalizeSpy = jest.spyOn(ErrorInfo, "normalize");
-
-                // Act
-                const error = new KindError("MESSAGE", Errors.Unknown, {
-                    cause,
-                    stripStackFrames: 1,
-                    minimumFrameCount: 2,
-                });
-
-                // Assert
-                expect(normalizeSpy).toHaveBeenCalledWith(error, 1, 2);
             });
 
             it("should get error info for the cause error", () => {
