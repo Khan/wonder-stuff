@@ -2,13 +2,22 @@
 import {buildCausedByMessage} from "./build-caused-by-message.js";
 
 /**
- * Normalized error message and stack.
+ * Information about an error.
+ *
+ * This is used to simplify and standardize extracting and combining error
+ * information.
  */
 export class ErrorInfo {
+    +_name: string;
     +_message: string;
     +_stackFrames: $ReadOnlyArray<string>;
 
-    constructor(message: string, stackFrames: $ReadOnlyArray<string>) {
+    constructor(
+        name: string,
+        message: string,
+        stackFrames: $ReadOnlyArray<string>,
+    ) {
+        this._name = name;
         this._message = message;
         // Copy the stack array just to be sure our internal state won't
         // mutate outside our control.
@@ -16,10 +25,24 @@ export class ErrorInfo {
     }
 
     /**
-     * The normalized error message associated with this stack trace.
+     * The error message.
      */
     get message(): string {
         return this._message;
+    }
+
+    /**
+     * The error name.
+     */
+    get name(): string {
+        return this._name;
+    }
+
+    /**
+     * The error message prefixed with the error name.
+     */
+    get messageWithName(): string {
+        return `${this.name}: ${this.message}`;
     }
 
     /**
@@ -34,11 +57,14 @@ export class ErrorInfo {
     }
 
     /**
-     * Get the stack trace as a string.
+     * Get the stack trace including the error name and message.
+     *
+     * This includes the error name and message at the start as is standard
+     * in many platforms, thus standardizing how we represent this info.
      */
-    toString(): string {
+    get standardizedStack(): string {
         // Now construct the string value.
-        return `${this._message}\n${this._stackFrames.join("\n")}`;
+        return `${this.messageWithName}\n${this._stackFrames.join("\n")}`;
     }
 
     /**
@@ -133,7 +159,8 @@ export class ErrorInfo {
         // Now that we've combined the stacks, let's also combine the messages
         // and return our new stack.
         return new ErrorInfo(
-            buildCausedByMessage(consequence.message, cause.message),
+            consequence.name,
+            buildCausedByMessage(consequence.message, cause.messageWithName),
             combinedStackFrames,
         );
     }
@@ -165,17 +192,18 @@ export class ErrorInfo {
             throw new Error("minimumFrameCount must be >= 0");
         }
 
-        // We split the error information into the message and the stack frames.
-        const fullErrorMessage = error.toString();
+        const errorMessage = error.message;
 
-        // The normalized message is just the first line of the error.
+        // The normalized message is just the first line of the error message.
         const normalizedMessage =
-            fullErrorMessage
+            errorMessage
                 .toString()
                 .split("\n")
                 .find((l) => l.trim().length) ?? "(empty message)";
 
-        // OK, get the stack without the error message (unless they are the same).
+        // OK, get the stack without the error name and message
+        // (unless they are the same).
+        const fullErrorMessage = error.toString();
         const stackWithoutMessage =
             error.stack?.startsWith(fullErrorMessage) &&
             error.stack !== fullErrorMessage
@@ -196,6 +224,7 @@ export class ErrorInfo {
                 : 0;
 
         return new ErrorInfo(
+            error.name,
             normalizedMessage,
             stackFrames.slice(actualStripFrames),
         );
@@ -213,10 +242,8 @@ export class ErrorInfo {
             throw new Error("Error must be an instance of Error");
         }
 
-        // We split the error information into the message and the stack frames.
-        const fullErrorMessage = error.toString();
-
         // OK, get the stack without the error message (unless they are the same).
+        const fullErrorMessage = error.toString();
         const stackWithoutMessage =
             error.stack?.startsWith(fullErrorMessage) &&
             error.stack !== fullErrorMessage
@@ -229,6 +256,6 @@ export class ErrorInfo {
             .split("\n")
             .filter((s) => s.trim().length);
 
-        return new ErrorInfo(fullErrorMessage, stackFrames);
+        return new ErrorInfo(error.name, error.message, stackFrames);
     }
 }

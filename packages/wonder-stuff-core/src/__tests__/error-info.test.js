@@ -5,18 +5,22 @@ import {ErrorInfo} from "../error-info.js";
 jest.mock("../build-caused-by-message.js");
 
 describe("ErrorInfo", () => {
-    describe("#toString", () => {
-        it("should combine the message and stack into a string", () => {
+    describe("@standardizedStack", () => {
+        it("should combine the name, message, and stack into a string", () => {
             // Arrange
             const theStack = ["\trecent", "\tolder", "\toldest"];
-            const underTest = new ErrorInfo("THE MESSAGE", theStack);
+            const underTest = new ErrorInfo(
+                "THE_NAME",
+                "THE MESSAGE",
+                theStack,
+            );
 
             // Act
-            const result = underTest.toString();
+            const result = underTest.standardizedStack;
 
             // Assert
             expect(result).toMatchInlineSnapshot(`
-                "THE MESSAGE
+                "THE_NAME: THE MESSAGE
                 	recent
                 	older
                 	oldest"
@@ -27,7 +31,7 @@ describe("ErrorInfo", () => {
     describe("@message", () => {
         it("should be the error message", () => {
             // Arrange
-            const underTest = new ErrorInfo("THE MESSAGE", []);
+            const underTest = new ErrorInfo("THE_NAME", "THE MESSAGE", []);
 
             // Act
             const result = underTest.message;
@@ -41,7 +45,11 @@ describe("ErrorInfo", () => {
         it("should be the error stack", () => {
             // Arrange
             const theStack = ["recent", "older", "oldest"];
-            const underTest = new ErrorInfo("THE MESSAGE", theStack);
+            const underTest = new ErrorInfo(
+                "THE_NAME",
+                "THE MESSAGE",
+                theStack,
+            );
 
             // Act
             const result = underTest.stack;
@@ -54,7 +62,7 @@ describe("ErrorInfo", () => {
     describe("#fromConsequenceAndCause", () => {
         it("should throw if the consequence info is not ErrorInfo", () => {
             // Arrange
-            const cause = new ErrorInfo("CAUSE", []);
+            const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", []);
 
             // Act
             const act = () =>
@@ -69,7 +77,11 @@ describe("ErrorInfo", () => {
 
         it("should throw if the cause info is not ErrorInfo", () => {
             // Arrange
-            const consequence = new ErrorInfo("CONSEQUENCE", []);
+            const consequence = new ErrorInfo(
+                "CONSEQUENCE_NAME",
+                "CONSEQUENCE",
+                [],
+            );
 
             // Act
             const act = () =>
@@ -84,7 +96,7 @@ describe("ErrorInfo", () => {
 
         it("should throw if consequence and cause are the same ErrorInfo", () => {
             // Arrange
-            const cause = new ErrorInfo("CAUSE", []);
+            const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", []);
             const consequence = cause;
 
             // Act
@@ -99,8 +111,12 @@ describe("ErrorInfo", () => {
 
         it("should combine messages using buildCausedByMessage", () => {
             // Arrange
-            const cause = new ErrorInfo("CAUSE", []);
-            const consequence = new ErrorInfo("CONSEQUENCE", []);
+            const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", []);
+            const consequence = new ErrorInfo(
+                "CONSEQUENCE_NAME",
+                "CONSEQUENCE",
+                [],
+            );
             const buildCausedByMessageSpy = jest
                 .spyOn(BuildCausedByMessage, "buildCausedByMessage")
                 .mockReturnValue("COMBINED MESSAGE");
@@ -114,7 +130,7 @@ describe("ErrorInfo", () => {
             // Assert
             expect(buildCausedByMessageSpy).toHaveBeenCalledWith(
                 "CONSEQUENCE",
-                "CAUSE",
+                "CAUSE_NAME: CAUSE",
             );
             expect(result.message).toEqual("COMBINED MESSAGE");
         });
@@ -122,8 +138,12 @@ describe("ErrorInfo", () => {
         it("should deduplicate the bottom of the incoming stacks", () => {
             // Arrange
             const duplicateStack = ["duplicate1", "duplicate2"];
-            const cause = new ErrorInfo("CAUSE", duplicateStack);
-            const consequence = new ErrorInfo("CONSEQUENCE", duplicateStack);
+            const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", duplicateStack);
+            const consequence = new ErrorInfo(
+                "CONSEQUENCE_NAME",
+                "CONSEQUENCE",
+                duplicateStack,
+            );
 
             // Act
             const result = ErrorInfo.fromConsequenceAndCause(
@@ -143,14 +163,15 @@ describe("ErrorInfo", () => {
                 "consequenceOnly2",
             ];
             const duplicateStack = ["duplicate1", "duplicate2"];
-            const cause = new ErrorInfo("CAUSE", [
+            const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", [
                 ...causalOnlyStack,
                 ...duplicateStack,
             ]);
-            const consequence = new ErrorInfo("CONSEQUENCE", [
-                ...consequenceOnlyStack,
-                ...duplicateStack,
-            ]);
+            const consequence = new ErrorInfo(
+                "CONSEQUENCE_NAME",
+                "CONSEQUENCE",
+                [...consequenceOnlyStack, ...duplicateStack],
+            );
 
             // Act
             const result = ErrorInfo.fromConsequenceAndCause(
@@ -208,7 +229,7 @@ describe("ErrorInfo", () => {
             );
         });
 
-        it("should use the first line of the incoming error.toString for the normalized message", () => {
+        it("should use the error.name for the name", () => {
             // Arrange
             const error = new Error("test");
 
@@ -216,13 +237,23 @@ describe("ErrorInfo", () => {
             const result = ErrorInfo.normalize(error);
 
             // Assert
-            expect(result.message).toBe("Error: test");
+            expect(result.name).toBe("Error");
         });
 
-        it("should set the normalized message to (empty message) when no first line can be found", () => {
+        it("should use the first line of the incoming error.message for the message", () => {
             // Arrange
             const error = new Error("test");
-            jest.spyOn(error, "toString").mockReturnValue("");
+
+            // Act
+            const result = ErrorInfo.normalize(error);
+
+            // Assert
+            expect(result.message).toBe("test");
+        });
+
+        it("should set the message to (empty message) when no first line can be found", () => {
+            // Arrange
+            const error = new Error("");
 
             // Act
             const result = ErrorInfo.normalize(error);
@@ -294,7 +325,7 @@ describe("ErrorInfo", () => {
             );
         });
 
-        it("should set the message to the error.toString value", () => {
+        it("should set the name to the error.name value", () => {
             // Arrange
             const error = new Error("test");
 
@@ -302,7 +333,18 @@ describe("ErrorInfo", () => {
             const result = ErrorInfo.from(error);
 
             // Assert
-            expect(result.message).toBe("Error: test");
+            expect(result.name).toBe("Error");
+        });
+
+        it("should set the message to the error.message value", () => {
+            // Arrange
+            const error = new Error("test");
+
+            // Act
+            const result = ErrorInfo.from(error);
+
+            // Assert
+            expect(result.message).toBe("test");
         });
 
         it("should create the stack array without the error.toString text", () => {
