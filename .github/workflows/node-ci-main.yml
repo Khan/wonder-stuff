@@ -10,18 +10,20 @@ on:
 #   1. Prime caches for primary configuration (ubuntu on node 14).
 #      This way the next two jobs can run in parallel but rely on this primed
 #      cache.
-#   2. Lint and coverage
-#     a. Lint
-#     b. Coverage
-#   3. Run tests for remaining configurations
-#      Since these don't share caches, we don't need to prime those caches.
+#   2. Coverage
+#
+# For pushes directly to a branch, we assume a PR has been used with wider
+# checks, this just makes sure our coverage data is up-to-date.
 jobs:
   prime_cache_primary:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: Prime node_modules cache for primary configuration
     env:
       CI: true
     runs-on: ${{ matrix.os }}
     strategy:
+      # Use a matrix as it means we get the version info in the job name
+      # which is very helpful.
       matrix:
         os: [ubuntu-latest]
         node-version: [14.x]
@@ -41,84 +43,10 @@ jobs:
     - name: Install dependencies
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
-
-
-  lint:
-    needs: [prime_cache_primary]
-    name: Lint and flow check
-    env:
-      CI: true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [14.x]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - uses: actions/cache@v2
-      name: Cache node_modules
-      id: node-modules-cache # use this to check for `cache-hit` (`steps.node-modules-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: node_modules
-        key: ${{ runner.os }}${{ matrix.node-version }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}${{ matrix.node-version }}-node-modules-
-    - name: Install dependencies
-      if: steps.node-modules-cache.outputs.cache-hit != 'true'
-      run: yarn install --frozen-lockfile
-    - name: Checking out base ref
-      run: |
-        # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
-        # have a ref to compare against.
-        git fetch --depth 1 origin ${GITHUB_BASE_REF}
-    - name: Build code so that linting will pass
-      run: yarn build
-    # Linting / type checking
-    - name: Lint
-      run: yarn lint
-    - name: Flow
-      run: yarn flow:ci
-
-
-  test:
-    needs: [lint, coverage]
-    name: Test
-    env:
-      CI: true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macOS-latest]
-        node-version: [12.x, 14.x]
-        exclude:
-          # The coverage job covers this configuration
-          - os: ubuntu-latest
-            node-version: 14.x
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - uses: actions/cache@v2
-      id: node-modules-cache # use this to check for `cache-hit` (`steps.node-modules-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: node_modules
-        key: ${{ runner.os }}${{ matrix.node-version }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}${{ matrix.node-version }}-node-modules-
-    - name: Install dependencies
-      if: steps.node-modules-cache.outputs.cache-hit != 'true'
-      run: yarn install --frozen-lockfile
-    - name: Run tests
-      run: yarn test
 
 
   coverage:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     needs: [prime_cache_primary]
     name: Gather coverage
     env:
@@ -126,6 +54,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        # Use a matrix as it means we get the version info in the job name
+        # which is very helpful.
         os: [ubuntu-latest]
         node-version: [14.x]
     steps:
@@ -150,4 +80,3 @@ jobs:
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        fail_ci_if_error: true
