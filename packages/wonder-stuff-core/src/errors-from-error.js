@@ -1,5 +1,6 @@
 // @flow
 import {KindError} from "./kind-error.js";
+import {Errors} from "./errors.js";
 
 export const Order = Object.freeze({
     ConsequenceFirst: "consequence-first",
@@ -22,6 +23,13 @@ export function* errorsFromError(
     error: ?Error,
     order: SequenceOrder,
 ): Iterator<Error> {
+    if (order !== Order.CauseFirst && order !== Order.ConsequenceFirst) {
+        throw new KindError("Invalid sequence order", Errors.Unknown, {
+            metadata: {
+                order,
+            },
+        });
+    }
     if (error == null) {
         return;
     }

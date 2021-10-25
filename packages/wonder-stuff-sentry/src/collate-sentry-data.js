@@ -32,9 +32,8 @@ import type {SentryData} from "./types.js";
  */
 export const collateSentryData = (error: Error): $ReadOnly<SentryData> => {
     // First, get all the errors in the stack.
-    const consquenceAndCauses: $ReadOnlyArray<Error> = Array.from(
-        errorsFromError(error, Order.ConsequenceFirst),
-    );
+    const errors = errorsFromError(error, Order.ConsequenceFirst);
+    const consquenceAndCauses: $ReadOnlyArray<Error> = Array.from(errors);
 
     // Now, we need to collate this stack as follows:
     // 1. Any sentryData they hold has to be merged into the collatedData from
@@ -42,7 +41,6 @@ export const collateSentryData = (error: Error): $ReadOnly<SentryData> => {
     //    take precedent.
     // 2. Errors, regardless of whether they have sentryData, need to be
     //    given their own context in the data.
-
     const collatedData: SentryData = consquenceAndCauses.reduceRight(
         sentryDataReducer,
         EmptySentryData,

@@ -343,6 +343,11 @@ type JestExtendedMatchersType = {
    */
   toIncludeAllMembers(members: any[]): void,
   /**
+   * Use `.toIncludeSameMembers` when checking if two arrays contain equal values, in any order.
+   * @param {Array.<*>} members
+   */
+  toIncludeSameMembers(members: any[]): void,
+  /**
    * Use `.toIncludeAnyMembers` when checking if an `Array` contains any of the members of a given set.
    * @param {Array.<*>} members
    */

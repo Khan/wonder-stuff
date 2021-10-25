@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#errorsFromError should throw if the order is invalid 1`] = `"Invalid sequence order"`;
+
+exports[`#errorsFromError should throw if the order is invalid 2`] = `"Invalid sequence order"`;
+
+exports[`#errorsFromError should throw if the order is invalid 3`] = `"Invalid sequence order"`;
+
+exports[`#errorsFromError should throw if the order is invalid 4`] = `"Invalid sequence order"`;

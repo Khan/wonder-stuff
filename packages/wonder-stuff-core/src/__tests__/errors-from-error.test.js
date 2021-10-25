@@ -3,6 +3,20 @@ import {KindError} from "../kind-error.js";
 import {errorsFromError, Order} from "../errors-from-error.js";
 
 describe("#errorsFromError", () => {
+    it.each([null, undefined, "NOT_A_GOOD_VALUE", 42])(
+        "should throw if the order is invalid",
+        (testCase) => {
+            // Arrange
+            const error = new Error("test");
+
+            // Act
+            const act = () => Array.from(errorsFromError(error, testCase));
+
+            // Assert
+            expect(act).toThrowErrorMatchingSnapshot();
+        },
+    );
+
     it.each([null, undefined])(
         "should yield an empty sequence if the error is nullish",
         (error) => {

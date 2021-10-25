@@ -15,6 +15,7 @@ module.exports = function createBabelPresets({platform, format}) {
 
         case "esm":
             targets.esmodules = true;
+            break;
     }
     return [
         "@babel/preset-flow",
