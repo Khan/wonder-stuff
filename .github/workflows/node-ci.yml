@@ -179,6 +179,7 @@ jobs:
         coverage-data-path: ./coverage/coverage-final.json
         # We don't give the GITHUB_TOKEN as that causes some odd permissions issues
     - name: Upload Coverage
+      if: ${{ github.actor != 'dependabot[bot]' }}
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
