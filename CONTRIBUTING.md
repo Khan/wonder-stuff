@@ -62,6 +62,9 @@ Anyone can create a local build of the distributed code by running `yarn build`.
 
 Publishing an updated packages is reserved for those with appropriate credentials. Coordinate with the repository owners to get your changes into a published release. The steps for publishing are:
 
+ 1. `git switch main`
+ 1. `git pull`
+ 1. `yarn`
  1. Login as the Khan Academy NPM user (you will need permissions to do this)
  1. Run `npm whoami` to verify that you are indeed logged in appropriately.
  1. Run `yarn run publish` and follow the prompts

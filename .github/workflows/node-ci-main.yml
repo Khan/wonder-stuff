@@ -1,4 +1,4 @@
-name: Node CI
+name: Node CI (landed on protected branch)
 
 on:
   push:
@@ -16,7 +16,6 @@ on:
 # checks, this just makes sure our coverage data is up-to-date.
 jobs:
   prime_cache_primary:
-    if: ${{ github.actor != 'dependabot[bot]' }}
     name: Prime node_modules cache for primary configuration
     env:
       CI: true
@@ -46,7 +45,6 @@ jobs:
 
 
   coverage:
-    if: ${{ github.actor != 'dependabot[bot]' }}
     needs: [prime_cache_primary]
     name: Gather coverage
     env:
