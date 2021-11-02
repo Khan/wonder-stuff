@@ -25,48 +25,38 @@ const createOutputConfig = (pkgName, format, targetFile) => ({
     format,
 });
 
-const createConfig = ({name, format, platform, file}) => ({
-    output: createOutputConfig(name, format, file),
-    input: makePackageBasedPath(name, "./src/index.js"),
-    plugins: [
-        replace({
-            preventAssignment: true,
-            values: {
-                "process.env.NODE_ENV": JSON.stringify(
-                    process.env.NODE_ENV || "production",
-                ),
-            },
-        }),
-        babel({
-            babelHelpers: "bundled",
-            presets: createBabelPresets({platform, format}),
-            exclude: "node_modules/**",
-        }),
-        resolve({
-            browser: platform === "browser",
-        }),
-        autoExternal({
-            packagePath: makePackageBasedPath(name, "./package.json"),
-        }),
-        terser(),
-
-        // This generates the flow import file.
-        copy({
-            copyOnce: true,
-            verbose: true,
-            targets: [
-                {
-                    // src path is relative to the package root unless started
-                    // with ./
-                    src: "build-settings/index.js.flow.template",
-                    // dest path is relative to src path.
-                    dest: makePackageBasedPath(name, "./dist"),
-                    rename: "index.js.flow",
+const createConfig = ({name, format, platform, file, plugins}) => {
+    const config = {
+        output: createOutputConfig(name, format, file),
+        input: makePackageBasedPath(name, "./src/index.js"),
+        plugins: [
+            replace({
+                preventAssignment: true,
+                values: {
+                    "process.env.NODE_ENV": JSON.stringify(
+                        process.env.NODE_ENV || "production",
+                    ),
+                    __IS_BROWSER__: platform === "browser",
                 },
-            ],
-        }),
-    ],
-});
+            }),
+            babel({
+                babelHelpers: "bundled",
+                presets: createBabelPresets({platform, format}),
+                exclude: "node_modules/**",
+            }),
+            resolve({
+                browser: platform === "browser",
+            }),
+            autoExternal({
+                packagePath: makePackageBasedPath(name, "./package.json"),
+            }),
+            terser(),
+            ...plugins,
+        ],
+    };
+
+    return config;
+};
 
 // For each package in our packages folder, generate the outputs we want.
 // To determine what those outputs are, we read the package.json file for
@@ -86,30 +76,51 @@ const getPackageInfo = (pkgName) => {
     const cjsBrowser = browser == null ? undefined : browser[cjsNode];
     const esmBrowser = browser == null ? undefined : browser[esmNode];
 
+    // This generates the flow import file.
+    // By using the same instance of it across all output configurations
+    // while using the `copyOnce` value, we ensure it only gets copied one time.
+    const flowCopy = copy({
+        copyOnce: true,
+        verbose: true,
+        targets: [
+            {
+                // src path is relative to the package root unless started
+                // with ./
+                src: "build-settings/index.js.flow.template",
+                // dest path is relative to src path.
+                dest: makePackageBasedPath(pkgName, "./dist"),
+                rename: "index.js.flow",
+            },
+        ],
+    });
     return [
         {
             name: pkgName,
             format: "esm",
             platform: "node",
             file: esmNode,
+            plugins: [flowCopy],
         },
         {
             name: pkgName,
             format: "esm",
             platform: "browser",
             file: esmBrowser,
+            plugins: [flowCopy],
         },
         {
             name: pkgName,
             format: "cjs",
             platform: "node",
             file: cjsNode,
+            plugins: [flowCopy],
         },
         {
             name: pkgName,
             format: "cjs",
             platform: "browser",
             file: cjsBrowser,
+            plugins: [flowCopy],
         },
     ].filter((i) => !!i.file);
 };
@@ -157,7 +168,7 @@ const createRollupConfig = (commandLineArgs) => {
 
     // For the packages we have determined we want, let's get more information
     // about them and  generate configurations.
-    return pkgNames.flatMap(getPackageInfo).map(createConfig);
+    return pkgNames.flatMap(getPackageInfo).map((c) => createConfig(c));
 };
 
 // eslint-disable-next-line import/no-default-export

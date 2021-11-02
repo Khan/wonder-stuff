@@ -63,6 +63,7 @@ type Options = {|
 export class KindError extends Error {
     +kind: string;
     +originalMessage: string;
+    +originalStack: string;
     +metadata: ?$ReadOnly<Metadata>;
     +cause: ?Error;
 
@@ -137,6 +138,9 @@ export class KindError extends Error {
         // The kind of error which can be used for grouping with
         // other error sources that use the same error taxonomy.
         this.kind = kind;
+
+        // Capture the original stack trace, in case we change it.
+        this.originalStack = this.stack;
 
         // The cause of this error, if there is one.
         this.cause = cause;

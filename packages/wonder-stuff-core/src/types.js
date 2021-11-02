@@ -10,5 +10,4 @@ export type Metadata = {
         | $ReadOnly<Metadata>
         | $ReadOnlyArray<?(MetadataPrimitive | Metadata)>
     ),
-    ...
 };
