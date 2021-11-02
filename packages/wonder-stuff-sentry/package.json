@@ -3,7 +3,7 @@
         "access": "public"
     },
     "name": "@khanacademy/wonder-stuff-sentry",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -12,10 +12,10 @@
         "test": "echo \"Run tests from the repository root\" && exit 1"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^0.0.1"
+        "@khanacademy/wonder-stuff-core": "^0.1.0"
     },
     "devDependencies": {
-        "ws-dev-build-settings": "^0.0.2"
+        "ws-dev-build-settings": "^0.0.3"
     },
     "browser": {
         "dist/es/index.js": "dist/es/index.browser.js",
