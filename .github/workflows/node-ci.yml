@@ -71,11 +71,6 @@ jobs:
     - name: Install dependencies
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
-    - name: Checking out base ref
-      run: |
-        # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
-        # have a ref to compare against.
-        git fetch --depth 1 origin ${GITHUB_BASE_REF}
     - name: Check Builds
       uses: preactjs/compressed-size-action@v2
       with:
@@ -85,6 +80,11 @@ jobs:
         exclude: "{**/*.map,**/node_modules/**}"
         # Clean up before a build
         clean-script: "clean"
+    - name: Checking out base ref
+      run: |
+        # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
+        # have a ref to compare against.
+        git fetch --depth 1 origin ${GITHUB_BASE_REF}
     # Linting / type checking
     - name: Run ESLint
       uses: Khan/eslint-action@v1.1.5
