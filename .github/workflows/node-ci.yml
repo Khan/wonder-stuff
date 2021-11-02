@@ -177,8 +177,7 @@ jobs:
       with:
         jest-bin: ./node_modules/.bin/jest
         coverage-data-path: ./coverage/coverage-final.json
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # We don't give the GITHUB_TOKEN as that causes some odd permissions issues
     - name: Upload Coverage
       uses: codecov/codecov-action@v2
       with:
