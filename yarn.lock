@@ -3661,9 +3661,9 @@ eslint-plugin-babel@^5.3.1:
     eslint-rule-composer "^0.3.0"
 
 eslint-plugin-disable@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-disable/-/eslint-plugin-disable-2.0.1.tgz#01762b33b4cd807cb91096047e63896e7c37cfc2"
-  integrity sha512-nM46IxpAD1Lh1ka/iQ6CTYfBaAp4EzM5chvMMiDpmfKh7JNEnzvPK4D2FSZBLXVTOR/AT7Wov51eucyNisCVBA==
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-disable/-/eslint-plugin-disable-2.0.2.tgz#412fb7fcb014e9de94371644eb4bf0a19b010a9e"
+  integrity sha512-nAix592LN/XgEpNYsusZaSKcp9mPlaUYP0Eo9WQ+ZoyGm+87Tp+aTWh027ZP5gcPNjAtSyjM3tV2QzjhyK/x/w==
   dependencies:
     eslint ">=0.16.0"
     resolve "^1.1.6"
