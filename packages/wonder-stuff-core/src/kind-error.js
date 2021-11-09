@@ -166,8 +166,9 @@ export class KindError extends Error {
         delete this.stack;
 
         if (cause == null) {
-            // If there is no cause, we can just use the normalized error.
-            this.message = normalizedError.message;
+            // If there is no cause, so we just use the normalized stack.
+            // We don't use the normalized message here as we want to retain
+            // all lines of the message in this case.
             this.stack = normalizedError.standardizedStack;
         } else {
             // We want to generate a better stack trace using the source error
