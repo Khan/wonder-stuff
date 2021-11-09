@@ -9,7 +9,7 @@
     "main": "dist/index.js",
     "source": "src/index.js",
     "scripts": {
-        "test": "echo \"Run tests from the repository root\" && exit 1"
+        "test": "bash -c 'yarn --silent --cwd \"../..\" test $PWD'"
     },
     "dependencies": {
         "@khanacademy/wonder-stuff-core": "^0.1.0"

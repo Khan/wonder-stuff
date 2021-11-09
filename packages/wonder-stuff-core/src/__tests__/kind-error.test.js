@@ -188,7 +188,7 @@ describe("KindError", () => {
             expect(error.stack).toBe(normalizedErrorInfo.standardizedStack);
         });
 
-        it("should set the message to the normalized value", () => {
+        it("should not set the message to the normalized value", () => {
             // Arrange
             const normalizedErrorInfo = new ErrorInfo(
                 "NORMALIZED_NAME",
@@ -203,7 +203,7 @@ describe("KindError", () => {
             const error = new KindError("MESSAGE", Errors.Unknown);
 
             // Assert
-            expect(error.message).toBe(normalizedErrorInfo.message);
+            expect(error.message).toBe("MESSAGE");
         });
 
         describe("when cause is non-null", () => {
