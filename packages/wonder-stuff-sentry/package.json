@@ -3,7 +3,7 @@
         "access": "public"
     },
     "name": "@khanacademy/wonder-stuff-sentry",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -12,7 +12,7 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test $PWD'"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^0.1.0"
+        "@khanacademy/wonder-stuff-core": "^0.1.1"
     },
     "devDependencies": {
         "ws-dev-build-settings": "^0.0.3"
