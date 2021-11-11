@@ -275,26 +275,6 @@ describe("KindError", () => {
                 );
             });
 
-            it("should set the stack to the combined error standardized stack", () => {
-                // Arrange
-                const cause = new Error("CAUSE_MESSAGE");
-                const combinedErrorInfo = new ErrorInfo(
-                    "COMBINED_NAME",
-                    "COMBINED_MESSAGE",
-                    ["combinedstack1", "combinedstack2"],
-                );
-                jest.spyOn(
-                    ErrorInfo,
-                    "fromConsequenceAndCause",
-                ).mockReturnValue(combinedErrorInfo);
-
-                // Act
-                const error = new KindError("MESSAGE", Errors.Unknown, {cause});
-
-                // Assert
-                expect(error.stack).toBe(combinedErrorInfo.standardizedStack);
-            });
-
             it("should set the message to the combined error info message", () => {
                 // Arrange
                 const cause = new Error("CAUSE_MESSAGE");
@@ -338,6 +318,71 @@ describe("KindError", () => {
                     		Error: CAUSE_MESSAGE"
                 `);
             });
+
+            describe("when compositeStack is true", () => {
+                it("should set the stack to the combined error standardized stack", () => {
+                    // Arrange
+                    const cause = new Error("CAUSE_MESSAGE");
+                    const combinedErrorInfo = new ErrorInfo(
+                        "COMBINED_NAME",
+                        "COMBINED_MESSAGE",
+                        ["combinedstack1", "combinedstack2"],
+                    );
+                    jest.spyOn(
+                        ErrorInfo,
+                        "fromConsequenceAndCause",
+                    ).mockReturnValue(combinedErrorInfo);
+
+                    // Act
+                    const error = new KindError("MESSAGE", Errors.Unknown, {
+                        cause,
+                        compositeStack: true,
+                    });
+
+                    // Assert
+                    expect(error.stack).toBe(
+                        combinedErrorInfo.standardizedStack,
+                    );
+                });
+            });
+
+            describe.each([undefined, null, false])(
+                "when composite stack is %s",
+                (compositeStackValue) => {
+                    it("should set the stack to the normalized stack, not the combined stack", () => {
+                        // Arrange
+                        const normalizedErrorInfo = new ErrorInfo(
+                            "NORMALIZED_NAME",
+                            "NORMALIZED_MESSAGE",
+                            ["normalizedstack1", "normalizedstack2"],
+                        );
+                        jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
+                            normalizedErrorInfo,
+                        );
+                        const cause = new Error("CAUSE_MESSAGE");
+                        const combinedErrorInfo = new ErrorInfo(
+                            "COMBINED_NAME",
+                            "COMBINED_MESSAGE",
+                            ["combinedstack1", "combinedstack2"],
+                        );
+                        jest.spyOn(
+                            ErrorInfo,
+                            "fromConsequenceAndCause",
+                        ).mockReturnValue(combinedErrorInfo);
+
+                        // Act
+                        const error = new KindError("MESSAGE", Errors.Unknown, {
+                            cause,
+                            compositeStack: compositeStackValue,
+                        });
+
+                        // Assert
+                        expect(error.stack).toBe(
+                            normalizedErrorInfo.standardizedStack,
+                        );
+                    });
+                },
+            );
         });
     });
 });

@@ -16,14 +16,18 @@ type Options = {
     cause?: ?Error,
 
     /**
-     * Data to be attached to the error that would be reported to Sentry.
+     * Sentry tags, contexts, and fingerprint information to be attached.
+     *
+     * This data will be added to the Sentry scope when using `captureError`.
      *
      * @type {?$ReadOnly<$Partial<SentryData>>}
      */
     sentryData?: ?$ReadOnly<$Partial<SentryData>>,
 
     /**
-     * Data to be attached to the error that will not get reported to Sentry.
+     * Other data to be attached to the error.
+     *
+     * This data will not be added to Sentry when using `captureError`.
      *
      * @type {?$ReadOnly<Metadata>}
      */
@@ -56,6 +60,13 @@ type Options = {
      * @type {?number}
      */
     minimumFrameCount?: ?number,
+
+    /**
+     * Should we create a composite stack from the causal error chain or not?
+     *
+     * @type {?boolean}
+     */
+    compositeStack?: ?boolean,
 };
 
 /**
@@ -68,6 +79,32 @@ type Options = {
  * @extends {KindError}
  */
 export class KindSentryError extends KindError {
+    /**
+     *Creates an instance of KindSentryError.
+
+     * @memberof KindSentryError
+     * @param {string} message The error message.
+     * @param {string} [kind] The kind of error. This will be combined with
+     * `prefix` to form the name of the error, i.e. PrefixSentryKindError.
+     * Defaults to `Errors.Unknown`.
+     * @param {Options} [options] Options for constructing the error.
+     * @param {Error} [options.cause] The error that caused this error.
+     * @param {$ReadOnly<Metadata>} [options.metadata] The metadata to attach
+     * to the error.
+     * @param {string} [options.prefix=""] A prefix to prepend the name of the
+     * error.
+     * @param {string} [options.name="Error"] The name of the error.
+     * @param {number} [options.stripStackFrames=0] The number of stack frames
+     * to remove from the error's stack. This can be used to ensure that the top
+     * call of the stack references the point at which an error is thrown which
+     * can be useful when helper functions are used to build the error being
+     * thrown.
+     * @param {number} [options.minimumFrameCount=1] The minimum number of
+     * stack frames to try and retain. This can be used to prevent stripping
+     * all stack frames from the error's stack.
+     * @param {boolean} [options.compositeStack=false] Should we build a
+     * composite stack from the causal error chain or not?
+     */
     constructor(
         message: string,
         kind: string = Errors.Unknown,
