@@ -4,7 +4,7 @@
     },
     "name": "@khanacademy/wonder-stuff-sentry",
     "version": "0.1.1",
-    "description": "",
+    "description": "Sentry integration support",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
     "source": "src/index.js",
