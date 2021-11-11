@@ -75,7 +75,7 @@ export const safeStringify: safeStringifyFn = <T>(
         return defaultValue;
     }
     try {
-        return JSON.stringify(value, null, indent ?? undefined) ?? defaultValue;
+        return JSON.stringify(value, null, indent ?? 0) ?? defaultValue;
     } catch (_) {
         return defaultValue;
     }
