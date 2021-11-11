@@ -10,7 +10,7 @@ import type {SentryData} from "./types.js";
  * @param {Error} error The error to be captured.
  */
 export const captureError = (error: Error): void => {
-    const sentryData: SentryData = collateSentryData(error);
+    const sentryData: $ReadOnly<SentryData> = collateSentryData(error);
     const sentry = getSentry();
     sentry.withScope((scope) => {
         /**

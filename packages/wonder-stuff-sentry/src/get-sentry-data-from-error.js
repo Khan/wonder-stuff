@@ -9,7 +9,9 @@ import type {SentryData} from "./types.js";
  * @returns {SentryData} The error's sentry data, or `null` if the error is not
  * a `KindSentryError` instance.
  */
-export const getSentryDataFromError = (error: Error): ?SentryData => {
+export const getSentryDataFromError = (
+    error: Error,
+): ?$ReadOnly<SentryData> => {
     if (error instanceof KindSentryError) {
         return error.sentryData;
     }

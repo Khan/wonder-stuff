@@ -19,9 +19,9 @@ type Options = {|
     /**
      * Data to be attached to the error.
      *
-     * @type {?$ReadOnly<Metadata>}
+     * @type {?Metadata}
      */
-    metadata?: ?$ReadOnly<Metadata>,
+    metadata?: ?Metadata,
 
     /**
      * A prefix for the error name.

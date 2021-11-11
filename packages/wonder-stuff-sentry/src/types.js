@@ -15,7 +15,7 @@ export type SentryTags = {
  *
  * The key of each item is the name of a field within the context.
  */
-export type SentryContext = $ReadOnly<Metadata>;
+export type SentryContext = Metadata;
 
 /**
  * Named contexts for a Sentry event.
@@ -23,21 +23,28 @@ export type SentryContext = $ReadOnly<Metadata>;
  * The key of each item is the name of the context.
  */
 export type SentryContexts = {
-    [name: string]: $ReadOnly<SentryContext>,
+    [name: string]: SentryContext,
 };
+
+/**
+ * A Sentry fingerprint.
+ *
+ * This is an array of strings.
+ */
+export type SentryFingerprint = Array<string>;
 
 /**
  * Data to be sent to sentry.
  *
  * @typedef {Object} SentryData
- * @property {?$ReadOnly<SentryTags>} tags The tags to add for the associated sentry event.
+ * @property {SentryTags} tags The tags to add for the associated sentry event.
  * This is equivalent to using the `setTag` and `setTags` APIs.
- * @property {?$ReadOnly<SentryContexts>} contexts The contexts to add for the associated
+ * @property {SentryContexts} contexts The contexts to add for the associated
  * sentry event.
  * This is equivalent to using the `setContext` API.
  * NOTE: `setExtras` is deprecated. For similar behavior, use a context keyed as
  * `"Additional Data"`.
- * @property {?$ReadOnlyArray<string>} fingerprint The fingerprint of the
+ * @property {Array<string>} fingerprint The fingerprint of the
  * associated sentry event.
  * This is equivalent to using the `setFingerprint` API.
  */
@@ -46,28 +53,28 @@ export type SentryData = {|
      * This is passed to setTags on the sentry scope.
      * Tags help categorize things.
      */
-    +tags: $ReadOnly<SentryTags>,
+    tags: SentryTags,
 
     /**
      * These are each passed to setContext on the sentry scope.
      * Contexts create a new headed section in the sentry report.
      * Useful for grouping specific context together.
      */
-    +contexts: $ReadOnly<SentryContexts>,
+    contexts: SentryContexts,
 
     /**
      * This is passed to setFingerprint on the sentry scope.
      * The fingerprint helps group like messages that otherwise would not
      * get grouped.
      */
-    +fingerprint: $ReadOnlyArray<string>,
+    fingerprint: SentryFingerprint,
 |};
 
 export type InitOptions = {
-    kindTagName: string,
-    groupByTagName: string,
-    concatenatedMessageTagName: string,
-    causalErrorContextPrefix: string,
+    +kindTagName: string,
+    +groupByTagName: string,
+    +concatenatedMessageTagName: string,
+    +causalErrorContextPrefix: string,
 };
 
 /////////////////////////////////////////////
@@ -86,7 +93,7 @@ type SentrySeverity =
 interface SentryScope {
     setTags(tags: {|[key: string]: string|}): SentryScope;
     setFingerprint(fingerprint: Array<string>): SentryScope;
-    setContext(name: string, context: {|[key: string]: mixed|}): SentryScope;
+    setContext(name: string, context: SentryContext): SentryScope;
 }
 
 /**
