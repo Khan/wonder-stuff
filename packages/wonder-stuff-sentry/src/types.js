@@ -84,12 +84,9 @@ type SentrySeverity =
     | "critical";
 
 interface SentryScope {
-    setTags(tags: $ReadOnly<{|[key: string]: string|}>): SentryScope;
-    setFingerprint(fingerprint: $ReadOnlyArray<string>): SentryScope;
-    setContext(
-        name: string,
-        context: $ReadOnly<{|[key: string]: mixed|}>,
-    ): SentryScope;
+    setTags(tags: {|[key: string]: string|}): SentryScope;
+    setFingerprint(fingerprint: Array<string>): SentryScope;
+    setContext(name: string, context: {|[key: string]: mixed|}): SentryScope;
 }
 
 /**
