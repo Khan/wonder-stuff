@@ -98,8 +98,8 @@ interface SentryScope {
  * This is the interface that Sentry implementations must expose for us to call.
  */
 export interface UnifiedSentryAPI {
-    withScope(callback: (scope: SentryScope) => void): void;
-    captureException(message: Error, severity?: SentrySeverity): void;
+    withScope(callback: (scope: SentryScope) => void): mixed;
+    captureException(message: Error, severity?: SentrySeverity): mixed;
 }
 // <- Sentry-specific types above this point.
 /////////////////////////////////////////////
