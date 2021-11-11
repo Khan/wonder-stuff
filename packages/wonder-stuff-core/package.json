@@ -15,8 +15,8 @@
         "ws-dev-build-settings": "^0.0.3"
     },
     "browser": {
-        "dist/es/index.js": "dist/es/index.browser.js",
-        "dist/index.js": "dist/index.browser.js"
+        "dist/es/index.js": "./dist/es/index.browser.js",
+        "dist/index.js": "./dist/index.browser.js"
     },
     "author": "",
     "license": "MIT"
