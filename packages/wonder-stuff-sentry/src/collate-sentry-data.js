@@ -6,9 +6,8 @@ import {
 } from "@khanacademy/wonder-stuff-core";
 import {EmptySentryData} from "./empty-sentry-data.js";
 import {sentryDataReducer} from "./sentry-data-reducer.js";
-import {getOptions} from "./init.js";
 import {KindSentryError} from "./kind-sentry-error.js";
-import type {SentryData} from "./types.js";
+import type {SentryData, KindErrorDataOptions} from "./types.js";
 
 /**
  * Collate sentry data from a given error and its causal errors into one object.
@@ -30,7 +29,10 @@ import type {SentryData} from "./types.js";
  * @returns {$ReadOnly<SentryData>} A single SentryData object combining
  * all the SentryData from this and causal errors it contains.
  */
-export const collateSentryData = (error: Error): $ReadOnly<SentryData> => {
+export const collateSentryData = (
+    options: KindErrorDataOptions,
+    error: Error,
+): $ReadOnly<SentryData> => {
     // First, get all the errors in the stack.
     const errors = errorsFromError(error, Order.ConsequenceFirst);
     const consquenceAndCauses: $ReadOnlyArray<Error> = Array.from(errors);
@@ -42,13 +44,12 @@ export const collateSentryData = (error: Error): $ReadOnly<SentryData> => {
     // 2. Errors, regardless of whether they have sentryData, need to be
     //    given their own context in the data.
     const collatedData: $ReadOnly<SentryData> = consquenceAndCauses.reduceRight(
-        sentryDataReducer,
+        (acc, value, index) => sentryDataReducer(options, acc, value, index),
         EmptySentryData,
     );
 
     // Finally, add the tags for kind, consequence, and group by.
-    const {groupByTagName, concatenatedMessageTagName, kindTagName} =
-        getOptions();
+    const {groupByTagName, concatenatedMessageTagName, kindTagName} = options;
     const kindTag = getKindFromError(error);
 
     /**

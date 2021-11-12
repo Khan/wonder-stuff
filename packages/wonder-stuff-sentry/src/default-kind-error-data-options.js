@@ -1,7 +1,7 @@
 // @flow
-import type {InitOptions} from "./types.js";
+import type {KindErrorDataOptions} from "./types.js";
 
-export const DefaultInitOptions: InitOptions = {
+export const DefaultKindErrorDataOptions: KindErrorDataOptions = {
     kindTagName: "kind",
     groupByTagName: "group_by_message",
     concatenatedMessageTagName: "concatenated_message",
