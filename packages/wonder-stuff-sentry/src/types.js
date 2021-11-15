@@ -71,10 +71,30 @@ export type SentryData = {|
 |};
 
 export type KindErrorDataOptions = {
+    /**
+     * The name to use for the Sentry tag that indicates the error kind.
+     */
     +kindTagName: string,
+
+    /**
+     * The name to use for the Sentry tag that indicates the grouping string.
+     */
     +groupByTagName: string,
+
+    /**
+     * The name to use for the Sentry tag that contains the concatenated error.
+     */
     +concatenatedMessageTagName: string,
+
+    /**
+     * The prefix to use for Sentry contexts that contain information about
+     * each error in the causal error chain.
+     * A unique number is appended to the prefix to create the context name.
+     */
     +causalErrorContextPrefix: string,
+
+    // TODO(somewhatabstract): Allow configuration of which fields we include
+    // in causal error contexts.
 };
 
 /////////////////////////////////////////////
@@ -89,22 +109,6 @@ type SentrySeverity =
     | "info"
     | "debug"
     | "critical";
-
-interface SentryScope {
-    setTags(tags: {|[key: string]: string|}): SentryScope;
-    setFingerprint(fingerprint: Array<string>): SentryScope;
-    setContext(name: string, context: SentryContext): SentryScope;
-}
-
-/**
- * The parts of the unified sentry API that we use.
- *
- * This is the interface that Sentry implementations must expose for us to call.
- */
-export interface UnifiedSentryAPI {
-    withScope(callback: (scope: SentryScope) => void): mixed;
-    captureException(message: Error, severity?: SentrySeverity): mixed;
-}
 
 export interface SentryEvent {
     event_id?: string;
