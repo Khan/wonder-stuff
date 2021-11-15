@@ -1,5 +1,6 @@
 // @flow
 import * as CollateSentryData from "../collate-sentry-data.js";
+import * as StringifyNestedContexts from "../stringify-nested-contexts.js";
 import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
 import {EmptySentryData} from "../empty-sentry-data.js";
 import {KindErrorData} from "../kind-error-data.js";
@@ -133,6 +134,51 @@ describe("KindErrorData", () => {
             expect(collateSentryDataSpy).toHaveBeenCalledWith(
                 options,
                 hint.originalException,
+            );
+        });
+
+        it("should stringify nested contexts if options specify to do so", () => {
+            // Arrange
+            const options = {
+                ...DefaultKindErrorDataOptions,
+                stringifyNestedContext: true,
+            };
+            const underTest = new KindErrorData(options);
+            const event = {
+                kind: "event",
+                event_id: "event-id",
+            };
+            const hint = {
+                event_id: "event-id",
+                originalException: new Error("original-exception"),
+            };
+            const collatedSentryData = {
+                ...EmptySentryData,
+                contexts: {
+                    context1: {
+                        pretend: "nested context stuff",
+                    },
+                },
+            };
+            jest.spyOn(CollateSentryData, "collateSentryData").mockReturnValue(
+                collatedSentryData,
+            );
+            const stringifyNestedContextsSpy = jest
+                .spyOn(StringifyNestedContexts, "stringifyNestedContexts")
+                .mockReturnValue({
+                    context1: {
+                        value1: {
+                            stringified: "stringified",
+                        },
+                    },
+                });
+
+            // Act
+            underTest.enhanceEventWithErrorData(event, hint);
+
+            // Assert
+            expect(stringifyNestedContextsSpy).toHaveBeenCalledWith(
+                collatedSentryData.contexts,
             );
         });
 

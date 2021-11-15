@@ -95,6 +95,16 @@ export type KindErrorDataOptions = {
 
     // TODO(somewhatabstract): Allow configuration of which fields we include
     // in causal error contexts.
+
+    /**
+     * Whether to stringify nested context data or not.
+     *
+     * If true, any arrays or objects that are more than one level deep in the
+     * context data hierarchy will be stringified so that they are easily
+     * readable in Sentry (it seems that Sentry doesn't expand nested data,
+     * possibly down to the plan being used).
+     */
+    +stringifyNestedContext: boolean,
 };
 
 /////////////////////////////////////////////
