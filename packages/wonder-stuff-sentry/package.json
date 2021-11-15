@@ -22,5 +22,6 @@
         "dist/index.js": "./dist/index.browser.js"
     },
     "author": "",
-    "license": "MIT"
+    "license": "MIT",
+    "peerDependencies": {}
 }

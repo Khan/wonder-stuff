@@ -1,12 +1,9 @@
 // @flow
 import {sentryDataReducer} from "../sentry-data-reducer.js";
 import {EmptySentryData} from "../empty-sentry-data.js";
-import {DefaultInitOptions} from "../default-init-options.js";
-import * as Init from "../init.js";
+import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
 import * as GetSentryDataFromError from "../get-sentry-data-from-error.js";
 import type {SentryData} from "../types.js";
-
-jest.mock("../init.js");
 
 describe("#sentryDataReducer", () => {
     describe("index is zero", () => {
@@ -14,9 +11,6 @@ describe("#sentryDataReducer", () => {
             "should return the accumulator when error has no sentry data",
             (sentryData) => {
                 // Arrange
-                jest.spyOn(Init, "getOptions").mockReturnValue(
-                    DefaultInitOptions,
-                );
                 const accumulator: SentryData = {
                     tags: {
                         tag1: "value1",
@@ -35,7 +29,12 @@ describe("#sentryDataReducer", () => {
                 ).mockReturnValue(sentryData);
 
                 // Act
-                const result = sentryDataReducer(accumulator, error, 0);
+                const result = sentryDataReducer(
+                    DefaultKindErrorDataOptions,
+                    accumulator,
+                    error,
+                    0,
+                );
 
                 // Assert
                 expect(result).toEqual(accumulator);
@@ -44,7 +43,6 @@ describe("#sentryDataReducer", () => {
 
         it("should return object matching error's sentry data if accumulator is empty", () => {
             // Arrange
-            jest.spyOn(Init, "getOptions").mockReturnValue(DefaultInitOptions);
             const accumulator: SentryData = {...EmptySentryData};
             const error = new Error("test");
             const current: SentryData = {
@@ -64,7 +62,12 @@ describe("#sentryDataReducer", () => {
             ).mockReturnValue(current);
 
             // Act
-            const result = sentryDataReducer(accumulator, error, 0);
+            const result = sentryDataReducer(
+                DefaultKindErrorDataOptions,
+                accumulator,
+                error,
+                0,
+            );
 
             // Assert
             expect(result).toEqual(current);
@@ -74,7 +77,6 @@ describe("#sentryDataReducer", () => {
     describe("index is not zero", () => {
         it("should return the accumulator with additional context for the passed error when it has no sentry data", () => {
             // Arrange
-            jest.spyOn(Init, "getOptions").mockReturnValue(DefaultInitOptions);
             const accumulator: SentryData = {
                 tags: {
                     tag1: "value1",
@@ -91,10 +93,15 @@ describe("#sentryDataReducer", () => {
                 GetSentryDataFromError,
                 "getSentryDataFromError",
             ).mockReturnValue(null);
-            const expectedContextName = `${DefaultInitOptions.causalErrorContextPrefix}1`;
+            const expectedContextName = `${DefaultKindErrorDataOptions.causalErrorContextPrefix}1`;
 
             // Act
-            const result = sentryDataReducer(accumulator, error, 1);
+            const result = sentryDataReducer(
+                DefaultKindErrorDataOptions,
+                accumulator,
+                error,
+                1,
+            );
 
             // Assert
             expect(result).toMatchObject(accumulator);
@@ -107,7 +114,6 @@ describe("#sentryDataReducer", () => {
 
         it("should return the accumulator with additional context for the passed error including its sentry data", () => {
             // Arrange
-            jest.spyOn(Init, "getOptions").mockReturnValue(DefaultInitOptions);
             const accumulator: SentryData = {
                 tags: {
                     tag1: "value1",
@@ -124,10 +130,15 @@ describe("#sentryDataReducer", () => {
                 GetSentryDataFromError,
                 "getSentryDataFromError",
             ).mockReturnValue(EmptySentryData);
-            const expectedContextName = `${DefaultInitOptions.causalErrorContextPrefix}42`;
+            const expectedContextName = `${DefaultKindErrorDataOptions.causalErrorContextPrefix}42`;
 
             // Act
-            const result = sentryDataReducer(accumulator, error, 42);
+            const result = sentryDataReducer(
+                DefaultKindErrorDataOptions,
+                accumulator,
+                error,
+                42,
+            );
 
             // Assert
             expect(result).toMatchObject(accumulator);
@@ -140,10 +151,10 @@ describe("#sentryDataReducer", () => {
 
         it("should use the context name from initialization options", () => {
             // Arrange
-            jest.spyOn(Init, "getOptions").mockReturnValue({
-                ...DefaultInitOptions,
+            const options = {
+                ...DefaultKindErrorDataOptions,
                 causalErrorContextPrefix: "custom-context-name",
-            });
+            };
             const accumulator: SentryData = {
                 tags: {
                     tag1: "value1",
@@ -163,7 +174,7 @@ describe("#sentryDataReducer", () => {
             const expectedContextName = `custom-context-name42`;
 
             // Act
-            const result = sentryDataReducer(accumulator, error, 42);
+            const result = sentryDataReducer(options, accumulator, error, 42);
 
             // Assert
             expect(result).toMatchObject(accumulator);
@@ -176,7 +187,6 @@ describe("#sentryDataReducer", () => {
 
         it("should return the error's data with additional context for the passed error", () => {
             // Arrange
-            jest.spyOn(Init, "getOptions").mockReturnValue(DefaultInitOptions);
             const accumulator: SentryData = {...EmptySentryData};
             const error = new Error("test");
             const current: SentryData = {
@@ -194,10 +204,15 @@ describe("#sentryDataReducer", () => {
                 GetSentryDataFromError,
                 "getSentryDataFromError",
             ).mockReturnValue(current);
-            const expectedContextName = `${DefaultInitOptions.causalErrorContextPrefix}12`;
+            const expectedContextName = `${DefaultKindErrorDataOptions.causalErrorContextPrefix}12`;
 
             // Act
-            const result = sentryDataReducer(accumulator, error, 12);
+            const result = sentryDataReducer(
+                DefaultKindErrorDataOptions,
+                accumulator,
+                error,
+                12,
+            );
 
             // Assert
             expect(result).toMatchObject(current);
@@ -212,7 +227,6 @@ describe("#sentryDataReducer", () => {
 
     it("should return combine and deduplicate fingerprint values between accumulator and current", () => {
         // Arrange
-        jest.spyOn(Init, "getOptions").mockReturnValue(DefaultInitOptions);
         const accumulator: SentryData = {
             tags: {},
             contexts: {},
@@ -230,7 +244,12 @@ describe("#sentryDataReducer", () => {
         ).mockReturnValue(current);
 
         // Act
-        const result = sentryDataReducer(accumulator, error, 0);
+        const result = sentryDataReducer(
+            DefaultKindErrorDataOptions,
+            accumulator,
+            error,
+            0,
+        );
 
         // Assert
         expect(result).toEqual({
@@ -242,7 +261,6 @@ describe("#sentryDataReducer", () => {
 
     it("should return a combination of accumulator and current tags and contexts, with current winning collisions", () => {
         // Arrange
-        jest.spyOn(Init, "getOptions").mockReturnValue(DefaultInitOptions);
         const accumulator: SentryData = {
             tags: {
                 tag1: "value1Accumulator",
@@ -280,7 +298,12 @@ describe("#sentryDataReducer", () => {
         ).mockReturnValue(current);
 
         // Act
-        const result = sentryDataReducer(accumulator, error, 0);
+        const result = sentryDataReducer(
+            DefaultKindErrorDataOptions,
+            accumulator,
+            error,
+            0,
+        );
 
         // Assert
         expect(result).toEqual({
@@ -306,7 +329,6 @@ describe("#sentryDataReducer", () => {
 
     it("should return object matching current if all fields overwrite or duplicate accumulator fields", () => {
         // Arrange
-        jest.spyOn(Init, "getOptions").mockReturnValue(DefaultInitOptions);
         const accumulator: SentryData = {
             tags: {
                 tag1: "accValue",
@@ -336,7 +358,12 @@ describe("#sentryDataReducer", () => {
         ).mockReturnValue(current);
 
         // Act
-        const result = sentryDataReducer(accumulator, error, 0);
+        const result = sentryDataReducer(
+            DefaultKindErrorDataOptions,
+            accumulator,
+            error,
+            0,
+        );
 
         // Assert
         expect(result).toEqual(current);

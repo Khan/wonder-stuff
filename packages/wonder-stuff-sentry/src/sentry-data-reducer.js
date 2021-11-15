@@ -4,8 +4,7 @@ import {
     getOriginalStackFromError,
 } from "@khanacademy/wonder-stuff-core";
 import {getSentryDataFromError} from "./get-sentry-data-from-error.js";
-import {getOptions} from "./init.js";
-import type {SentryData} from "./types.js";
+import type {SentryData, KindErrorDataOptions} from "./types.js";
 import {EmptySentryData} from "./empty-sentry-data.js";
 
 /**
@@ -26,11 +25,12 @@ import {EmptySentryData} from "./empty-sentry-data.js";
  * @returns {SentryData} The reduced sentry data.
  */
 export const sentryDataReducer = (
+    options: KindErrorDataOptions,
     accumulator: $ReadOnly<SentryData>,
     current: Error,
     index: number,
 ): SentryData => {
-    const {causalErrorContextPrefix} = getOptions();
+    const {causalErrorContextPrefix} = options;
 
     // Get the bits of information from the accumulator and current error.
     const {

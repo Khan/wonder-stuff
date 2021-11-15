@@ -70,11 +70,31 @@ export type SentryData = {|
     fingerprint: SentryFingerprint,
 |};
 
-export type InitOptions = {
+export type KindErrorDataOptions = {
+    /**
+     * The name to use for the Sentry tag that indicates the error kind.
+     */
     +kindTagName: string,
+
+    /**
+     * The name to use for the Sentry tag that indicates the grouping string.
+     */
     +groupByTagName: string,
+
+    /**
+     * The name to use for the Sentry tag that contains the concatenated error.
+     */
     +concatenatedMessageTagName: string,
+
+    /**
+     * The prefix to use for Sentry contexts that contain information about
+     * each error in the causal error chain.
+     * A unique number is appended to the prefix to create the context name.
+     */
     +causalErrorContextPrefix: string,
+
+    // TODO(somewhatabstract): Allow configuration of which fields we include
+    // in causal error contexts.
 };
 
 /////////////////////////////////////////////
@@ -90,20 +110,66 @@ type SentrySeverity =
     | "debug"
     | "critical";
 
-interface SentryScope {
-    setTags(tags: {|[key: string]: string|}): SentryScope;
-    setFingerprint(fingerprint: Array<string>): SentryScope;
-    setContext(name: string, context: SentryContext): SentryScope;
+export interface SentryEvent {
+    event_id?: string;
+    message?: string;
+    timestamp?: number;
+    start_timestamp?: number;
+    level?: SentrySeverity;
+    platform?: string;
+    logger?: string;
+    server_name?: string;
+    release?: string;
+    dist?: string;
+    environment?: string;
+    sdk?: $FlowFixMe;
+    request?: Request;
+    transaction?: string;
+    modules?: {[key: string]: string};
+    fingerprint?: SentryFingerprint;
+    exception?: {
+        values?: Array<$FlowFixMe>,
+    };
+    stacktrace?: $FlowFixMe;
+    breadcrumbs?: Array<$FlowFixMe>;
+    contexts?: SentryContexts;
+    tags?: SentryTags;
+    extra?: SentryContext;
+    user?: $FlowFixMe;
+    type?: $FlowFixMe;
+    spans?: Array<$FlowFixMe>;
+    measurements?: $FlowFixMe;
+    debug_meta?: $FlowFixMe;
 }
 
-/**
- * The parts of the unified sentry API that we use.
- *
- * This is the interface that Sentry implementations must expose for us to call.
- */
-export interface UnifiedSentryAPI {
-    withScope(callback: (scope: SentryScope) => void): mixed;
-    captureException(message: Error, severity?: SentrySeverity): mixed;
+export interface SentryEventHint {
+    event_id?: string;
+    captureContext?: $FlowFixMe;
+    syntheticException?: ?Error;
+    originalException?: ?(Error | string);
+    data?: $FlowFixMe;
+}
+
+export type SentryEventProcessor = (
+    event: SentryEvent,
+    hint?: SentryEventHint,
+) => Promise<?SentryEvent> | ?SentryEvent;
+
+export interface SentryHub {
+    getIntegration<T: SentryIntegration>(integration: Class<T>): ?T;
+}
+
+export interface SentryIntegration {
+    name: string;
+
+    /**
+     * Sets the integration up only once.
+     * This takes no options on purpose, options should be passed in the constructor
+     */
+    setupOnce(
+        addGlobalEventProcessor: (callback: SentryEventProcessor) => void,
+        getCurrentHub: () => SentryHub,
+    ): void;
 }
 // <- Sentry-specific types above this point.
 /////////////////////////////////////////////

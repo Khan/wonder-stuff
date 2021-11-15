@@ -1,6 +1,11 @@
 // @flow
 export {KindSentryError} from "./kind-sentry-error.js";
-export {captureError} from "./capture-error.js";
-export {init, isInitialized} from "./init.js";
+export {KindErrorData} from "./kind-error-data.js";
 
-export type {UnifiedSentryAPI, SentryData, InitOptions} from "./types.js";
+export type {
+    KindErrorDataOptions,
+    SentryData,
+    SentryTags,
+    SentryContext,
+    SentryFingerprint,
+} from "./types.js";

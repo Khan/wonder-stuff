@@ -1,26 +1,20 @@
 // @flow
 import {KindError} from "@khanacademy/wonder-stuff-core";
 import {KindSentryError} from "../kind-sentry-error.js";
-import * as Init from "../init.js";
 import {collateSentryData} from "../collate-sentry-data.js";
-import {DefaultInitOptions} from "../default-init-options.js";
+import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
 
 describe("#collateSentryData", () => {
-    beforeAll(() => {
-        const sentryAPI = {
-            withScope: jest.fn(),
-            captureException: jest.fn(),
-        };
-        Init.init(sentryAPI);
-    });
-
     describe("when root error is some other non-KindError", () => {
         it("should return the kind, group_by_message, and concatenated_message tags with empty context and fingerprint", () => {
             // Arrange
             const error = new Error("ROOT");
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(
+                DefaultKindErrorDataOptions,
+                error,
+            );
 
             // Assert
             expect(result).toMatchInlineSnapshot(`
@@ -54,7 +48,10 @@ describe("#collateSentryData", () => {
             });
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(
+                DefaultKindErrorDataOptions,
+                error,
+            );
 
             // Assert
             expect(result.tags).toMatchInlineSnapshot(`
@@ -73,15 +70,15 @@ describe("#collateSentryData", () => {
             const error = new KindError("ERROR_MESSAGE", "ERROR_KIND", {
                 cause,
             });
-            jest.spyOn(Init, "getOptions").mockReturnValue({
-                ...DefaultInitOptions,
+            const options = {
+                ...DefaultKindErrorDataOptions,
                 kindTagName: "KIND_TAG",
                 groupByTagName: "GROUP_BY_TAG",
                 concatenatedMessageTagName: "CONCATENATED_MESSAGE_TAG",
-            });
+            };
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(options, error);
 
             // Assert
             expect(result.tags).toEqual({
@@ -109,7 +106,10 @@ describe("#collateSentryData", () => {
             });
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(
+                DefaultKindErrorDataOptions,
+                error,
+            );
 
             // Assert
             expect(result.contexts).toMatchObject({
@@ -142,13 +142,13 @@ describe("#collateSentryData", () => {
             const error = new KindError("ROOT", "RootKind", {
                 cause: cause2,
             });
-            jest.spyOn(Init, "getOptions").mockReturnValue({
-                ...DefaultInitOptions,
+            const options = {
+                ...DefaultKindErrorDataOptions,
                 causalErrorContextPrefix: "CAUSE",
-            });
+            };
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(options, error);
 
             // Assert
             expect(result.contexts).toMatchObject({
@@ -186,7 +186,10 @@ describe("#collateSentryData", () => {
             });
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(
+                DefaultKindErrorDataOptions,
+                error,
+            );
 
             // Assert
             expect(result.contexts).toMatchObject({
@@ -213,7 +216,10 @@ describe("#collateSentryData", () => {
             });
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(
+                DefaultKindErrorDataOptions,
+                error,
+            );
 
             // Assert
             expect(result.fingerprint).toIncludeSameMembers([
@@ -245,7 +251,10 @@ describe("#collateSentryData", () => {
             });
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(
+                DefaultKindErrorDataOptions,
+                error,
+            );
 
             // Assert
             expect(result.tags).toMatchInlineSnapshot(`
@@ -272,15 +281,15 @@ describe("#collateSentryData", () => {
                     },
                 },
             });
-            jest.spyOn(Init, "getOptions").mockReturnValue({
-                ...DefaultInitOptions,
+            const options = {
+                ...DefaultKindErrorDataOptions,
                 kindTagName: "KIND_TAG",
                 groupByTagName: "GROUP_BY_TAG",
                 concatenatedMessageTagName: "CONCATENATED_MESSAGE_TAG",
-            });
+            };
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(options, error);
 
             // Assert
             expect(result.tags).toEqual({
@@ -320,7 +329,10 @@ describe("#collateSentryData", () => {
             });
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(
+                DefaultKindErrorDataOptions,
+                error,
+            );
 
             // Assert
             expect(result.contexts).toMatchObject({
@@ -363,13 +375,13 @@ describe("#collateSentryData", () => {
                     },
                 },
             });
-            jest.spyOn(Init, "getOptions").mockReturnValue({
-                ...DefaultInitOptions,
+            const options = {
+                ...DefaultKindErrorDataOptions,
                 causalErrorContextPrefix: "CAUSE",
-            });
+            };
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(options, error);
 
             // Assert
             expect(result.contexts).toMatchObject({
@@ -417,7 +429,10 @@ describe("#collateSentryData", () => {
             });
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(
+                DefaultKindErrorDataOptions,
+                error,
+            );
 
             // Assert
             expect(result.contexts).toMatchObject({
@@ -444,7 +459,10 @@ describe("#collateSentryData", () => {
             });
 
             // Act
-            const result = collateSentryData(error);
+            const result = collateSentryData(
+                DefaultKindErrorDataOptions,
+                error,
+            );
 
             // Assert
             expect(result.fingerprint).toIncludeSameMembers([
@@ -461,7 +479,7 @@ describe("#collateSentryData", () => {
         );
 
         // Act
-        const result = collateSentryData(error);
+        const result = collateSentryData(DefaultKindErrorDataOptions, error);
 
         // Assert
         expect(result.tags.group_by_message).toBeUndefined();
