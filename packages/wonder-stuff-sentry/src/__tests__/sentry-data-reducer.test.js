@@ -45,7 +45,7 @@ describe("#sentryDataReducer", () => {
         it("should return object matching error's sentry data if accumulator is empty", () => {
             // Arrange
             jest.spyOn(Init, "getOptions").mockReturnValue(DefaultInitOptions);
-            const accumulator: SentryData = EmptySentryData;
+            const accumulator: SentryData = {...EmptySentryData};
             const error = new Error("test");
             const current: SentryData = {
                 tags: {
@@ -177,7 +177,7 @@ describe("#sentryDataReducer", () => {
         it("should return the error's data with additional context for the passed error", () => {
             // Arrange
             jest.spyOn(Init, "getOptions").mockReturnValue(DefaultInitOptions);
-            const accumulator: SentryData = EmptySentryData;
+            const accumulator: SentryData = {...EmptySentryData};
             const error = new Error("test");
             const current: SentryData = {
                 tags: {

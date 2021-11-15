@@ -76,10 +76,10 @@ const getPackageInfo = (pkgName) => {
     const cjsBrowser = browser == null ? undefined : browser[cjsNode];
     const esmBrowser = browser == null ? undefined : browser[esmNode];
 
-    // This generates the flow import file.
+    // This generates the flow import file and a file for intellisense to work.
     // By using the same instance of it across all output configurations
     // while using the `copyOnce` value, we ensure it only gets copied one time.
-    const flowCopy = copy({
+    const typesAndDocsCopy = copy({
         copyOnce: true,
         verbose: true,
         targets: [
@@ -91,6 +91,14 @@ const getPackageInfo = (pkgName) => {
                 dest: makePackageBasedPath(pkgName, "./dist"),
                 rename: "index.js.flow",
             },
+            {
+                // src path is relative to the package root unless started
+                // with ./
+                src: "build-settings/index.js.flow.template",
+                // dest path is relative to src path.
+                dest: makePackageBasedPath(pkgName, "./dist"),
+                rename: "index.d.ts",
+            },
         ],
     });
     return [
@@ -99,28 +107,28 @@ const getPackageInfo = (pkgName) => {
             format: "esm",
             platform: "node",
             file: esmNode,
-            plugins: [flowCopy],
+            plugins: [typesAndDocsCopy],
         },
         {
             name: pkgName,
             format: "esm",
             platform: "browser",
             file: esmBrowser,
-            plugins: [flowCopy],
+            plugins: [typesAndDocsCopy],
         },
         {
             name: pkgName,
             format: "cjs",
             platform: "node",
             file: cjsNode,
-            plugins: [flowCopy],
+            plugins: [typesAndDocsCopy],
         },
         {
             name: pkgName,
             format: "cjs",
             platform: "browser",
             file: cjsBrowser,
-            plugins: [flowCopy],
+            plugins: [typesAndDocsCopy],
         },
     ].filter((i) => !!i.file);
 };

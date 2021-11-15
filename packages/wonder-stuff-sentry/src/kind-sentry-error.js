@@ -16,18 +16,22 @@ type Options = {
     cause?: ?Error,
 
     /**
-     * Data to be attached to the error that would be reported to Sentry.
+     * Sentry tags, contexts, and fingerprint information to be attached.
      *
-     * @type {?$ReadOnly<$Partial<SentryData>>}
+     * This data will be added to the Sentry scope when using `captureError`.
+     *
+     * @type {?$Partial<SentryData>}
      */
-    sentryData?: ?$ReadOnly<$Partial<SentryData>>,
+    sentryData?: ?$Partial<SentryData>,
 
     /**
-     * Data to be attached to the error that will not get reported to Sentry.
+     * Other data to be attached to the error.
      *
-     * @type {?$ReadOnly<Metadata>}
+     * This data will not be added to Sentry when using `captureError`.
+     *
+     * @type {?Metadata}
      */
-    metadata?: ?$ReadOnly<Metadata>,
+    metadata?: ?Metadata,
 
     /**
      * A prefix to be added to the error name.
@@ -56,6 +60,13 @@ type Options = {
      * @type {?number}
      */
     minimumFrameCount?: ?number,
+
+    /**
+     * Should we create a composite stack from the causal error chain or not?
+     *
+     * @type {?boolean}
+     */
+    compositeStack?: ?boolean,
 };
 
 /**
@@ -68,6 +79,32 @@ type Options = {
  * @extends {KindError}
  */
 export class KindSentryError extends KindError {
+    /**
+     *Creates an instance of KindSentryError.
+
+     * @memberof KindSentryError
+     * @param {string} message The error message.
+     * @param {string} [kind] The kind of error. This will be combined with
+     * `prefix` to form the name of the error, i.e. PrefixSentryKindError.
+     * Defaults to `Errors.Unknown`.
+     * @param {Options} [options] Options for constructing the error.
+     * @param {Error} [options.cause] The error that caused this error.
+     * @param {Metadata} [options.metadata] The metadata to attach
+     * to the error.
+     * @param {string} [options.prefix=""] A prefix to prepend the name of the
+     * error.
+     * @param {string} [options.name="Error"] The name of the error.
+     * @param {number} [options.stripStackFrames=0] The number of stack frames
+     * to remove from the error's stack. This can be used to ensure that the top
+     * call of the stack references the point at which an error is thrown which
+     * can be useful when helper functions are used to build the error being
+     * thrown.
+     * @param {number} [options.minimumFrameCount=1] The minimum number of
+     * stack frames to try and retain. This can be used to prevent stripping
+     * all stack frames from the error's stack.
+     * @param {boolean} [options.compositeStack=false] Should we build a
+     * composite stack from the causal error chain or not?
+     */
     constructor(
         message: string,
         kind: string = Errors.Unknown,
@@ -92,6 +129,28 @@ export class KindSentryError extends KindError {
             // For simplicity of implementation and ease of API use, we choose
             // option 1.
             metadata: {
+                // Flow is unhappy because:
+                // 1. metadata is of type Metadata, which can have a variety of
+                //    value types, such as string and number.
+                // 2. metadata is mutable and as such, something that is type
+                //    string could be given a value of type number at some
+                //    later point.
+                // 3. sentryData (and EmptySentryData) are of type SentryData,
+                //    and some of their types are stricter about what types
+                //    they can have, such as only string.
+                // 4. once sentryData things are part of metadata, sentryData
+                //    things could be mutated to the wrong type.
+                // 5. Flow doesn't know that we will clone and freeze the
+                //    metadata once we pass it into this super constructor here.
+                //
+                // We could mitigate by making metadata readonly for the base
+                // class, but that just pushes the problem on.
+                // And we could create a whole new object explicitly copying
+                // each bit of data into a new one of the correct type, but
+                // since we are about to clone and freeze the data in the base
+                // class, that seems like overkill, so let's just suppress
+                // flow.
+                // $FlowIgnore[incompatible-call]
                 sentry: {
                     // We set the defaults here so that we know these will be
                     // there, even if they're empty.

@@ -41,7 +41,7 @@ export const collateSentryData = (error: Error): $ReadOnly<SentryData> => {
     //    take precedent.
     // 2. Errors, regardless of whether they have sentryData, need to be
     //    given their own context in the data.
-    const collatedData: SentryData = consquenceAndCauses.reduceRight(
+    const collatedData: $ReadOnly<SentryData> = consquenceAndCauses.reduceRight(
         sentryDataReducer,
         EmptySentryData,
     );

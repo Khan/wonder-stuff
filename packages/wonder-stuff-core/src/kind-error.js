@@ -19,9 +19,9 @@ type Options = {|
     /**
      * Data to be attached to the error.
      *
-     * @type {?$ReadOnly<Metadata>}
+     * @type {?Metadata}
      */
-    metadata?: ?$ReadOnly<Metadata>,
+    metadata?: ?Metadata,
 
     /**
      * A prefix for the error name.
@@ -50,6 +50,13 @@ type Options = {|
      * @type {?number}
      */
     minimumFrameCount?: ?number,
+
+    /**
+     * Should we create a composite stack from the causal error chain or not?
+     *
+     * @type {?boolean}
+     */
+    compositeStack?: ?boolean,
 |};
 
 /**
@@ -90,6 +97,8 @@ export class KindError extends Error {
      * @param {number} [options.minimumFrameCount=1] The minimum number of
      * stack frames to try and retain. This can be used to prevent stripping
      * all stack frames from the error's stack.
+     * @param {boolean} [options.compositeStack=false] Should we build a
+     * composite stack from the causal error chain or not?
      */
     constructor(
         message: string,
@@ -101,6 +110,7 @@ export class KindError extends Error {
             metadata,
             stripStackFrames,
             minimumFrameCount,
+            compositeStack,
         }: Options = {},
     ) {
         // Validate arguments.
@@ -165,14 +175,18 @@ export class KindError extends Error {
          */
         delete this.stack;
 
-        if (cause == null) {
-            // If there is no cause, so we just use the normalized stack.
-            // We don't use the normalized message here as we want to retain
-            // all lines of the message in this case.
-            this.stack = normalizedError.standardizedStack;
-        } else {
-            // We want to generate a better stack trace using the source error
-            // and our own stack.
+        // The default is the normalized stack.
+        // This may get replaced if there is a causal error and we want to
+        // use a composite stack.
+        // We don't use the normalized message here as we want to retain
+        // all lines of the message in this case.
+        this.stack = normalizedError.standardizedStack;
+
+        if (cause != null) {
+            // We want a better error message that reflects the causal error
+            // chain, and we might also want a composite stack built from
+            // those errors instead of the stack we have.
+
             // We don't normalize the cause as this should have happened already
             // when it was, itself, created with a cause.
             const causeInfo = ErrorInfo.from(cause);
@@ -181,11 +195,16 @@ export class KindError extends Error {
                 causeInfo,
             );
 
-            // We update our message to a standardized one from the combined
-            // stacks, giving us a nice causal relationship and we set our
-            // stack to the combined one.
+            // We update our message to a standardized one, giving us a nice
+            // causal relationship in the message.
             this.message = combined.message;
-            this.stack = combined.standardizedStack;
+
+            // And if we were asked to, we replace our stack with the
+            // composite stack built from the causal errors. Otherwise, we
+            // leave it with the normalized stack.
+            if (compositeStack === true) {
+                this.stack = combined.standardizedStack;
+            }
         }
     }
 }

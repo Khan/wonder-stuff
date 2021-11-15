@@ -4,12 +4,12 @@
     },
     "name": "@khanacademy/wonder-stuff-sentry",
     "version": "0.1.1",
-    "description": "",
+    "description": "Sentry integration support",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
     "source": "src/index.js",
     "scripts": {
-        "test": "bash -c 'yarn --silent --cwd \"../..\" test $PWD'"
+        "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
         "@khanacademy/wonder-stuff-core": "^0.1.1"
@@ -18,8 +18,8 @@
         "ws-dev-build-settings": "^0.0.3"
     },
     "browser": {
-        "dist/es/index.js": "dist/es/index.browser.js",
-        "dist/index.js": "dist/index.browser.js"
+        "dist/es/index.js": "./dist/es/index.browser.js",
+        "dist/index.js": "./dist/index.browser.js"
     },
     "author": "",
     "license": "MIT"

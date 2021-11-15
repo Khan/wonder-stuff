@@ -44,8 +44,8 @@ const checkPackageEntrypoints = (pkgJson) => {
     checkPackageField(pkgJson, "main", "dist/index.js");
     if (pkgJson.browser) {
         const expectedValue = {
-            [pkgJson.main]: "dist/index.browser.js",
-            [pkgJson.module]: "dist/es/index.browser.js",
+            [pkgJson.main]: "./dist/index.browser.js",
+            [pkgJson.module]: "./dist/es/index.browser.js",
         };
 
         for (const key of Object.keys(pkgJson.browser)) {
