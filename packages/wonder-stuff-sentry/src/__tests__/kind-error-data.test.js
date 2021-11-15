@@ -50,7 +50,8 @@ describe("KindErrorData", () => {
                 const underTest = new KindErrorData();
                 const addGlobalEventProcessorMock = jest.fn();
                 const getHub = () => ({
-                    getIntegration: <T>(item: Class<T>) => underTest,
+                    // $FlowIgnore[incompatible-call]
+                    getIntegration: jest.fn().mockReturnValue(underTest),
                 });
                 const enhanceSpy = jest
                     .spyOn(underTest, "enhanceEventWithErrorData")
