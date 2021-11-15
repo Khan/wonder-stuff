@@ -17,8 +17,11 @@ export class KindErrorData implements SentryIntegration {
     name: string = KindErrorData.id;
     +_options: KindErrorDataOptions;
 
-    constructor(options: KindErrorDataOptions = DefaultKindErrorDataOptions) {
-        this._options = options;
+    constructor(options: $Partial<KindErrorDataOptions> = Object.freeze({})) {
+        this._options = {
+            ...DefaultKindErrorDataOptions,
+            ...options,
+        };
     }
 
     setupOnce(
