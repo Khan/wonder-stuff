@@ -9,6 +9,7 @@ import type {
 } from "./types.js";
 
 import {collateSentryData} from "./collate-sentry-data.js";
+import {stringifyNestedContexts} from "./stringify-nested-contexts.js";
 import {DefaultKindErrorDataOptions} from "./default-kind-error-data-options.js";
 
 export class KindErrorData implements SentryIntegration {
@@ -16,8 +17,11 @@ export class KindErrorData implements SentryIntegration {
     name: string = KindErrorData.id;
     +_options: KindErrorDataOptions;
 
-    constructor(options: KindErrorDataOptions = DefaultKindErrorDataOptions) {
-        this._options = options;
+    constructor(options: $Partial<KindErrorDataOptions> = Object.freeze({})) {
+        this._options = {
+            ...DefaultKindErrorDataOptions,
+            ...options,
+        };
     }
 
     setupOnce(
@@ -69,10 +73,18 @@ export class KindErrorData implements SentryIntegration {
          *
          * We now output all the contexts to the scope.
          */
-        event.contexts = {
+        const updatedContexts = {
             ...event.contexts,
             ...contexts,
         };
+        /**
+         * We may need to iterate our context objects and replace with
+         * a stringified version, any arrays and objects nested more than
+         * 1 level deep in each context.
+         */
+        event.contexts = this._options.stringifyNestedContext
+            ? stringifyNestedContexts(updatedContexts)
+            : updatedContexts;
 
         /**
          * Fingerprint helps group like messages that otherwise would not
