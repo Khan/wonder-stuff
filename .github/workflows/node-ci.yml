@@ -74,8 +74,8 @@ jobs:
     - name: Check Builds
       uses: preactjs/compressed-size-action@v2
       with:
-        # Any JS files anywhere within a dist directory:
-        pattern: "**/dist/**/*.js"
+        # We only care about the browser ES module size, really:
+        pattern: "**/dist/es/index.browser.js"
         # Always ignore SourceMaps and node_modules:
         exclude: "{**/*.map,**/node_modules/**}"
         # Clean up before a build
