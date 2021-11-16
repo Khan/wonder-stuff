@@ -1,8 +1,8 @@
 // @flow
 import {KindError, Errors} from "@khanacademy/wonder-stuff-core";
 import type {Metadata} from "@khanacademy/wonder-stuff-core";
-import {EmptySentryData} from "./empty-sentry-data.js";
 import type {SentryData} from "./types.js";
+import {EmptySentryData} from "./empty-sentry-data.js";
 
 /**
  * Options for constructing a `KindError`.
@@ -109,9 +109,10 @@ export class KindSentryError extends KindError {
         message: string,
         kind: string = Errors.Unknown,
         // It's perfectly valid for options to be an empty object.
-        options: Options = ({}: $Shape<Options>),
+        options: Options = Object.freeze({}),
     ) {
         const {metadata, sentryData, name, ...restOptions} = options;
+
         super(message, kind, {
             ...restOptions,
             name: name ?? "Sentry",
@@ -152,10 +153,7 @@ export class KindSentryError extends KindError {
                 // flow.
                 // $FlowIgnore[incompatible-call]
                 sentry: {
-                    // We set the defaults here so that we know these will be
-                    // there, even if they're empty.
                     ...EmptySentryData,
-                    // And we override with what was passed in.
                     ...sentryData,
                 },
                 other: metadata,

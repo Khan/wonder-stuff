@@ -7,6 +7,8 @@ import {
 import {EmptySentryData} from "./empty-sentry-data.js";
 import {sentryDataReducer} from "./sentry-data-reducer.js";
 import {KindSentryError} from "./kind-sentry-error.js";
+import {normalizeSentryData} from "./normalize-sentry-data.js";
+import {truncateTagValue} from "./truncate-tag-value.js";
 import type {SentryData, KindErrorDataOptions} from "./types.js";
 
 /**
@@ -43,10 +45,16 @@ export const collateSentryData = (
     //    take precedent.
     // 2. Errors, regardless of whether they have sentryData, need to be
     //    given their own context in the data.
-    const collatedData: $ReadOnly<SentryData> = consquenceAndCauses.reduceRight(
-        (acc, value, index) => sentryDataReducer(options, acc, value, index),
-        EmptySentryData,
-    );
+    const rawCollatedData: $ReadOnly<SentryData> =
+        consquenceAndCauses.reduceRight(
+            (acc, value, index) =>
+                sentryDataReducer(options, acc, value, index),
+            EmptySentryData,
+        );
+
+    // Before we add our additional tags, we need to ensure that the data is
+    // valid and normalized.
+    const collatedData = normalizeSentryData(options, rawCollatedData);
 
     // Finally, add the tags for kind, consequence, and group by.
     const {groupByTagName, concatenatedMessageTagName, kindTagName} = options;
@@ -71,11 +79,11 @@ export const collateSentryData = (
 
     const tags = {
         ...collatedData.tags,
-        [kindTagName]: kindTag,
-        [concatenatedMessageTagName]: concatenatedMessageTag,
+        [kindTagName]: truncateTagValue(kindTag),
+        [concatenatedMessageTagName]: truncateTagValue(concatenatedMessageTag),
     };
     if (groupByTag.length) {
-        tags[groupByTagName] = groupByTag;
+        tags[groupByTagName] = truncateTagValue(groupByTag);
     }
 
     return {

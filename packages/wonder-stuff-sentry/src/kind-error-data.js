@@ -1,4 +1,5 @@
 // @flow
+import {Errors} from "@khanacademy/wonder-stuff-core";
 import type {
     SentryEvent,
     SentryEventHint,
@@ -11,6 +12,8 @@ import type {
 import {collateSentryData} from "./collate-sentry-data.js";
 import {stringifyNestedContexts} from "./stringify-nested-contexts.js";
 import {DefaultKindErrorDataOptions} from "./default-kind-error-data-options.js";
+import {isTagKeyValid} from "./is-tag-key-valid.js";
+import {KindSentryError} from "./kind-sentry-error.js";
 
 export class KindErrorData implements SentryIntegration {
     static id: string = "KindErrorData";
@@ -22,6 +25,28 @@ export class KindErrorData implements SentryIntegration {
             ...DefaultKindErrorDataOptions,
             ...options,
         };
+
+        // Let's make sure we got valid options.
+        const invalidTagNames = {};
+        if (!isTagKeyValid(this._options.kindTagName)) {
+            invalidTagNames.invalidKindTag = this._options.kindTagName;
+        }
+        if (!isTagKeyValid(this._options.groupByTagName)) {
+            invalidTagNames.invalidGroupByTag = this._options.groupByTagName;
+        }
+        if (!isTagKeyValid(this._options.concatenatedMessageTagName)) {
+            invalidTagNames.invalidConcatenatedMessageTag =
+                this._options.concatenatedMessageTagName;
+        }
+        if (Object.keys(invalidTagNames).length) {
+            throw new KindSentryError("Invalid options", Errors.InvalidInput, {
+                sentryData: {
+                    contexts: {
+                        invalidTagNames,
+                    },
+                },
+            });
+        }
     }
 
     setupOnce(
