@@ -49,6 +49,7 @@
   },
   "scripts": {
     "build": "NODE_ENV=production rollup -c build-settings/rollup.config.js",
+    "build:prodsizecheck": "yarn run build",
     "watch": "NODE_ENV=development rollup -c build-settings/rollup.config.js --watch",
     "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules",
     "coverage": "yarn run jest --coverage",
