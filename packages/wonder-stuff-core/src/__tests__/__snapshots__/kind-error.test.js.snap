@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`KindError #constructor should throw if the kind has whitespace like K I N D 1`] = `"kind must not contain whitespace"`;
+exports[`KindError #constructor when not built for production should throw if the kind has whitespace like K I N D 1`] = `"kind must not contain whitespace"`;
 
-exports[`KindError #constructor should throw if the kind has whitespace like KI
+exports[`KindError #constructor when not built for production should throw if the kind has whitespace like KI
 ND 1`] = `"kind must not contain whitespace"`;
 
-exports[`KindError #constructor should throw if the name has whitespace like N A M E 1`] = `"name must not contain whitespace"`;
+exports[`KindError #constructor when not built for production should throw if the name has whitespace like N A M E 1`] = `"name must not contain whitespace"`;
 
-exports[`KindError #constructor should throw if the name has whitespace like NA
+exports[`KindError #constructor when not built for production should throw if the name has whitespace like NA
 ME 1`] = `"name must not contain whitespace"`;
 
-exports[`KindError #constructor should throw if the prefix has whitespace like P R E F I X 1`] = `"prefix must not contain whitespace"`;
+exports[`KindError #constructor when not built for production should throw if the prefix has whitespace like P R E F I X 1`] = `"prefix must not contain whitespace"`;
 
-exports[`KindError #constructor should throw if the prefix has whitespace like PRE
+exports[`KindError #constructor when not built for production should throw if the prefix has whitespace like PRE
 FIX 1`] = `"prefix must not contain whitespace"`;

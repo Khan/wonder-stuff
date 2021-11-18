@@ -115,22 +115,24 @@ export class ErrorInfo {
         consequence: ErrorInfo,
         cause: ErrorInfo,
     ): ErrorInfo {
-        // Verify our arguments.
-        if (!(consequence instanceof ErrorInfo)) {
-            throw new Error("consequence must be an instance of ErrorInfo");
-        }
-        if (!(cause instanceof ErrorInfo)) {
-            throw new Error("cause must be an instance of ErrorInfo");
-        }
-        if (cause === consequence) {
-            throw new Error("cause and consequence must be different");
+        if (process.env.NODE_ENV !== "production") {
+            // Verify our arguments.
+            if (!(consequence instanceof ErrorInfo)) {
+                throw new Error("consequence must be an instance of ErrorInfo");
+            }
+            if (!(cause instanceof ErrorInfo)) {
+                throw new Error("cause must be an instance of ErrorInfo");
+            }
+            if (cause === consequence) {
+                throw new Error("cause and consequence must be different");
+            }
         }
 
         // Now, let's combine the stacks. First, we dedupe the frames they
         // share.
         const combinedStackFrames = [];
         const stackFramesA = cause.stack;
-        const stackFramesB = consequence.stack;
+        const stackFramesB = consequence?.stack ?? [];
 
         // Shared stack frames will be at the bottom of each stack of frames.
         let indexA = stackFramesA.length - 1;
@@ -181,15 +183,17 @@ export class ErrorInfo {
         stripFrames: number = 0,
         minimumFrameCount: number = 1,
     ): ErrorInfo {
-        // Verify our arguments.
-        if (!(error instanceof Error)) {
-            throw new Error("Error must be an instance of Error");
-        }
-        if (stripFrames < 0) {
-            throw new Error("stripFrames must be >= 0");
-        }
-        if (minimumFrameCount < 0) {
-            throw new Error("minimumFrameCount must be >= 0");
+        if (process.env.NODE_ENV !== "production") {
+            // Verify our arguments.
+            if (!(error instanceof Error)) {
+                throw new Error("Error must be an instance of Error");
+            }
+            if (stripFrames < 0) {
+                throw new Error("stripFrames must be >= 0");
+            }
+            if (minimumFrameCount < 0) {
+                throw new Error("minimumFrameCount must be >= 0");
+            }
         }
 
         const errorMessage = error.message;
@@ -237,9 +241,11 @@ export class ErrorInfo {
      * @returns {ErrorInfo} Error information for the given error.
      */
     static from(error: Error): ErrorInfo {
-        // Verify our arguments.
-        if (!(error instanceof Error)) {
-            throw new Error("Error must be an instance of Error");
+        if (process.env.NODE_ENV !== "production") {
+            // Verify our arguments.
+            if (!(error instanceof Error)) {
+                throw new Error("Error must be an instance of Error");
+            }
         }
 
         // OK, get the stack without the error message (unless they are the same).

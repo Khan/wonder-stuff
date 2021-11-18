@@ -5,6 +5,15 @@ import {ErrorInfo} from "../error-info.js";
 jest.mock("../build-caused-by-message.js");
 
 describe("ErrorInfo", () => {
+    const NODE_ENV = process.env.NODE_ENV;
+    afterEach(() => {
+        if (NODE_ENV == null) {
+            delete process.env.NODE_ENV;
+        } else {
+            process.env.NODE_ENV = NODE_ENV;
+        }
+    });
+
     describe("@standardizedStack", () => {
         it("should combine the name, message, and stack into a string", () => {
             // Arrange
@@ -60,53 +69,112 @@ describe("ErrorInfo", () => {
     });
 
     describe("#fromConsequenceAndCause", () => {
-        it("should throw if the consequence info is not ErrorInfo", () => {
-            // Arrange
-            const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", []);
+        describe("when not built for production", () => {
+            it("should throw if the consequence info is not ErrorInfo", () => {
+                // Arrange
+                const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", []);
 
-            // Act
-            const act = () =>
-                // $FlowIgnore[incompatible-call]
-                ErrorInfo.fromConsequenceAndCause(null, cause);
+                // Act
+                const act = () =>
+                    // $FlowIgnore[incompatible-call]
+                    ErrorInfo.fromConsequenceAndCause(null, cause);
 
-            // Assert
-            expect(act).toThrowErrorMatchingInlineSnapshot(
-                `"consequence must be an instance of ErrorInfo"`,
-            );
+                // Assert
+                expect(act).toThrowErrorMatchingInlineSnapshot(
+                    `"consequence must be an instance of ErrorInfo"`,
+                );
+            });
+
+            it("should throw if the cause info is not ErrorInfo", () => {
+                // Arrange
+                const consequence = new ErrorInfo(
+                    "CONSEQUENCE_NAME",
+                    "CONSEQUENCE",
+                    [],
+                );
+
+                // Act
+                const act = () =>
+                    // $FlowIgnore[incompatible-call]
+                    ErrorInfo.fromConsequenceAndCause(consequence, null);
+
+                // Assert
+                expect(act).toThrowErrorMatchingInlineSnapshot(
+                    `"cause must be an instance of ErrorInfo"`,
+                );
+            });
+
+            it("should throw if consequence and cause are the same ErrorInfo", () => {
+                // Arrange
+                const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", []);
+                const consequence = cause;
+
+                // Act
+                const act = () =>
+                    ErrorInfo.fromConsequenceAndCause(consequence, cause);
+
+                // Assert
+                expect(act).toThrowErrorMatchingInlineSnapshot(
+                    `"cause and consequence must be different"`,
+                );
+            });
         });
 
-        it("should throw if the cause info is not ErrorInfo", () => {
-            // Arrange
-            const consequence = new ErrorInfo(
-                "CONSEQUENCE_NAME",
-                "CONSEQUENCE",
-                [],
-            );
+        describe("when built for production", () => {
+            beforeEach(() => {
+                process.env.NODE_ENV = "production";
+            });
 
-            // Act
-            const act = () =>
-                // $FlowIgnore[incompatible-call]
-                ErrorInfo.fromConsequenceAndCause(consequence, null);
+            // We filter out validation in prod with the expectation that
+            // code won't require validation by that point.
+            it("should not throw validation error if the consequence info is not ErrorInfo", () => {
+                // Arrange
+                const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", []);
 
-            // Assert
-            expect(act).toThrowErrorMatchingInlineSnapshot(
-                `"cause must be an instance of ErrorInfo"`,
-            );
-        });
+                // Act
+                const act = () =>
+                    // $FlowIgnore[incompatible-call]
+                    ErrorInfo.fromConsequenceAndCause(null, cause);
 
-        it("should throw if consequence and cause are the same ErrorInfo", () => {
-            // Arrange
-            const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", []);
-            const consequence = cause;
+                // Assert
+                expect(act).not.toThrowError(
+                    "consequence must be an instance of ErrorInfo",
+                );
+            });
 
-            // Act
-            const act = () =>
-                ErrorInfo.fromConsequenceAndCause(consequence, cause);
+            it("should not throw validation error if the cause info is not ErrorInfo", () => {
+                // Arrange
+                const consequence = new ErrorInfo(
+                    "CONSEQUENCE_NAME",
+                    "CONSEQUENCE",
+                    [],
+                );
 
-            // Assert
-            expect(act).toThrowErrorMatchingInlineSnapshot(
-                `"cause and consequence must be different"`,
-            );
+                // Act
+                const act = () =>
+                    // $FlowIgnore[incompatible-call]
+                    ErrorInfo.fromConsequenceAndCause(consequence, null);
+
+                // Assert
+                expect(act).not.toThrowError(
+                    "cause must be an instance of ErrorInfo",
+                );
+            });
+
+            it("should not throw validation error if consequence and cause are the same ErrorInfo", () => {
+                // Arrange
+                const cause = new ErrorInfo("CAUSE_NAME", "CAUSE", []);
+                const consequence = cause;
+
+                // Act
+                const act = () =>
+                    ErrorInfo.fromConsequenceAndCause(consequence, cause);
+
+                // Assert
+                expect(act).not.toThrowError(
+                    "cause and consequence must be different",
+                );
+            });
         });
 
         it("should combine messages using buildCausedByMessage", () => {
@@ -189,44 +257,90 @@ describe("ErrorInfo", () => {
     });
 
     describe("#normalize", () => {
-        it("should throw if error is not an Error", () => {
-            // Arrange
-            // $FlowIgnore[incompatible-type]
-            const error: Error = {};
+        describe("when not built for production", () => {
+            it("should throw if error is not an Error", () => {
+                // Arrange
+                // $FlowIgnore[incompatible-type]
+                const error: Error = {};
 
-            // Act
-            const act = () => ErrorInfo.normalize(error);
+                // Act
+                const act = () => ErrorInfo.normalize(error);
 
-            // Assert
-            expect(act).toThrowErrorMatchingInlineSnapshot(
-                `"Error must be an instance of Error"`,
-            );
+                // Assert
+                expect(act).toThrowErrorMatchingInlineSnapshot(
+                    `"Error must be an instance of Error"`,
+                );
+            });
+
+            it("should throw if stripFrames is < 0", () => {
+                // Arrange
+                const error = new Error("test");
+
+                // Act
+                const act = () => ErrorInfo.normalize(error, -1);
+
+                // Assert
+                expect(act).toThrowErrorMatchingInlineSnapshot(
+                    `"stripFrames must be >= 0"`,
+                );
+            });
+
+            it("should throw if minimumFrameCount is < 0", () => {
+                // Arrange
+                const error = new Error("test");
+
+                // Act
+                const act = () => ErrorInfo.normalize(error, 0, -1);
+
+                // Assert
+                expect(act).toThrowErrorMatchingInlineSnapshot(
+                    `"minimumFrameCount must be >= 0"`,
+                );
+            });
         });
 
-        it("should throw if stripFrames is < 0", () => {
-            // Arrange
-            const error = new Error("test");
+        describe("when built for production", () => {
+            beforeEach(() => {
+                process.env.NODE_ENV = "production";
+            });
 
-            // Act
-            const act = () => ErrorInfo.normalize(error, -1);
+            it("should not throw if error is not an Error", () => {
+                // Arrange
+                // $FlowIgnore[incompatible-type]
+                const error: Error = {};
 
-            // Assert
-            expect(act).toThrowErrorMatchingInlineSnapshot(
-                `"stripFrames must be >= 0"`,
-            );
-        });
+                // Act
+                const act = () => ErrorInfo.normalize(error);
 
-        it("should throw if minimumFrameCount is < 0", () => {
-            // Arrange
-            const error = new Error("test");
+                // Assert
+                expect(act).not.toThrowError(
+                    `"Cannot read property 'toString' of undefined"`,
+                );
+            });
 
-            // Act
-            const act = () => ErrorInfo.normalize(error, 0, -1);
+            it("should not throw if stripFrames is < 0", () => {
+                // Arrange
+                const error = new Error("test");
 
-            // Assert
-            expect(act).toThrowErrorMatchingInlineSnapshot(
-                `"minimumFrameCount must be >= 0"`,
-            );
+                // Act
+                const act = () => ErrorInfo.normalize(error, -1);
+
+                // Assert
+                expect(act).not.toThrowError(`"stripFrames must be >= 0"`);
+            });
+
+            it("should not throw if minimumFrameCount is < 0", () => {
+                // Arrange
+                const error = new Error("test");
+
+                // Act
+                const act = () => ErrorInfo.normalize(error, 0, -1);
+
+                // Assert
+                expect(act).not.toThrowError(
+                    `"minimumFrameCount must be >= 0"`,
+                );
+            });
         });
 
         it("should use the error.name for the name", () => {
@@ -311,18 +425,40 @@ describe("ErrorInfo", () => {
     });
 
     describe("#from", () => {
-        it("should throw if error is not an Error", () => {
-            // Arrange
-            // $FlowIgnore[incompatible-type]
-            const error: Error = {};
+        describe("when not built for production", () => {
+            it("should throw if error is not an Error", () => {
+                // Arrange
+                // $FlowIgnore[incompatible-type]
+                const error: Error = {};
 
-            // Act
-            const act = () => ErrorInfo.from(error);
+                // Act
+                const act = () => ErrorInfo.from(error);
 
-            // Assert
-            expect(act).toThrowErrorMatchingInlineSnapshot(
-                `"Error must be an instance of Error"`,
-            );
+                // Assert
+                expect(act).toThrowErrorMatchingInlineSnapshot(
+                    `"Error must be an instance of Error"`,
+                );
+            });
+        });
+
+        describe("when built for production", () => {
+            beforeEach(() => {
+                process.env.NODE_ENV = "production";
+            });
+
+            it("should not throw if error is not an Error", () => {
+                // Arrange
+                // $FlowIgnore[incompatible-type]
+                const error: Error = {};
+
+                // Act
+                const act = () => ErrorInfo.from(error);
+
+                // Assert
+                expect(act).not.toThrowError(
+                    `"Error must be an instance of Error"`,
+                );
+            });
         });
 
         it("should set the name to the error.name value", () => {

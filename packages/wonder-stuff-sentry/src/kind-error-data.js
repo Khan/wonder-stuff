@@ -25,26 +25,33 @@ export class KindErrorData implements SentryIntegration {
             ...options,
         };
 
-        // Let's make sure we got valid options.
-        const invalidTagNames = {};
-        if (!isTagKeyValid(this._options.kindTagName)) {
-            invalidTagNames.invalidKindTag = this._options.kindTagName;
-        }
-        if (!isTagKeyValid(this._options.groupByTagName)) {
-            invalidTagNames.invalidGroupByTag = this._options.groupByTagName;
-        }
-        if (!isTagKeyValid(this._options.concatenatedMessageTagName)) {
-            invalidTagNames.invalidConcatenatedMessageTag =
-                this._options.concatenatedMessageTagName;
-        }
-        if (Object.keys(invalidTagNames).length) {
-            throw new KindSentryError("Invalid options", Errors.InvalidInput, {
-                sentryData: {
-                    contexts: {
-                        invalidTagNames,
+        if (process.env.NODE_ENV !== "production") {
+            // Let's make sure we got valid options.
+            const invalidTagNames = {};
+            if (!isTagKeyValid(this._options.kindTagName)) {
+                invalidTagNames.invalidKindTag = this._options.kindTagName;
+            }
+            if (!isTagKeyValid(this._options.groupByTagName)) {
+                invalidTagNames.invalidGroupByTag =
+                    this._options.groupByTagName;
+            }
+            if (!isTagKeyValid(this._options.concatenatedMessageTagName)) {
+                invalidTagNames.invalidConcatenatedMessageTag =
+                    this._options.concatenatedMessageTagName;
+            }
+            if (Object.keys(invalidTagNames).length) {
+                throw new KindSentryError(
+                    "Invalid options",
+                    Errors.InvalidInput,
+                    {
+                        sentryData: {
+                            contexts: {
+                                invalidTagNames,
+                            },
+                        },
                     },
-                },
-            });
+                );
+            }
         }
     }
 

@@ -33,17 +33,21 @@ export function normalizeSentryData(
     };
     const invalidKeys = [];
     const usedReservedKeys = [];
+    // We want to valid tag keys and normalize tag values.
+    // However, we don't bother with the validation production.
     for (const key of Object.keys(tags)) {
-        // Tag keys must be valid (see isValidTagKey for details).
-        // Grab all the long keys and report them together; it's easier
-        // on devs then to fix all at once.
-        if (!isTagKeyValid(key)) {
-            invalidKeys.push(key);
-        }
+        if (process.env.NODE_ENV !== "production") {
+            // Tag keys must be valid (see isValidTagKey for details).
+            // Grab all the long keys and report them together; it's easier
+            // on devs then to fix all at once.
+            if (!isTagKeyValid(key)) {
+                invalidKeys.push(key);
+            }
 
-        // Some tag keys are reserved and should not be used.
-        if (isReservedTagKey(options, key)) {
-            usedReservedKeys.push(key);
+            // Some tag keys are reserved and should not be used.
+            if (isReservedTagKey(options, key)) {
+                usedReservedKeys.push(key);
+            }
         }
 
         // Tag values must be no more than the max length (see truncateTagValue
@@ -52,48 +56,51 @@ export function normalizeSentryData(
         tags[key] = truncateTagValue(tags[key]);
     }
 
-    // If the contexts contain any reserved property names, report them.
-    const reservedPropertyContexts = {};
-    if (data?.contexts != null) {
-        for (const contextName of Object.keys(data.contexts)) {
-            const context = data.contexts[contextName];
-            if (context == null) {
-                continue;
-            }
-            for (const propertyName of Object.keys(context)) {
-                if (!isReservedContextProperty(propertyName)) {
+    // If the contexts contain any reserved property names, report them, but
+    // only in production.
+    if (process.env.NODE_ENV !== "production") {
+        const reservedPropertyContexts = {};
+        if (data?.contexts != null) {
+            for (const contextName of Object.keys(data.contexts)) {
+                const context = data.contexts[contextName];
+                if (context == null) {
                     continue;
                 }
+                for (const propertyName of Object.keys(context)) {
+                    if (!isReservedContextProperty(propertyName)) {
+                        continue;
+                    }
 
-                const record = reservedPropertyContexts[contextName] || [];
-                record.push(propertyName);
-                reservedPropertyContexts[contextName] = record;
+                    const record = reservedPropertyContexts[contextName] || [];
+                    record.push(propertyName);
+                    reservedPropertyContexts[contextName] = record;
+                }
             }
         }
-    }
 
-    // If we found any error conditions, let's report them.
-    if (
-        invalidKeys.length > 0 ||
-        usedReservedKeys.length > 0 ||
-        Object.keys(reservedPropertyContexts).length > 0
-    ) {
-        throw new KindSentryError(
-            "Sentry data is not valid",
-            Errors.InvalidInput,
-            {
-                sentryData: {
-                    contexts: {
-                        "Invalid Sentry Data": {
-                            invalid_tag_keys: invalidKeys,
-                            reserved_tag_keys: usedReservedKeys,
-                            contexts_with_reserved_properties:
-                                reservedPropertyContexts,
+        // If we found any error conditions, let's report them.
+        if (
+            invalidKeys.length > 0 ||
+            usedReservedKeys.length > 0 ||
+            Object.keys(reservedPropertyContexts).length > 0
+        ) {
+            throw new KindSentryError(
+                "Sentry data is not valid",
+                Errors.InvalidInput,
+                {
+                    sentryData: {
+                        contexts: {
+                            "Invalid Sentry Data": {
+                                invalid_tag_keys: invalidKeys,
+                                reserved_tag_keys: usedReservedKeys,
+                                contexts_with_reserved_properties:
+                                    reservedPropertyContexts,
+                            },
                         },
                     },
                 },
-            },
-        );
+            );
+        }
     }
 
     return {
