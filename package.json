@@ -48,9 +48,9 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "scripts": {
-    "build": "NODE_ENV=production rollup -c build-settings/rollup.config.js",
-    "build:prodsizecheck": "yarn run build",
-    "watch": "NODE_ENV=development rollup -c build-settings/rollup.config.js --watch",
+    "build": "rollup -c build-settings/rollup.config.js",
+    "build:prodsizecheck": "rollup -c build-settings/rollup.config.js --configPlatforms='browser' --configFormats='esm' --configEnvironment='production'",
+    "watch": "rollup -c build-settings/rollup.config.js --watch",
     "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules",
     "coverage": "yarn run jest --coverage",
     "flow:ci": "flow check --max-workers 0",

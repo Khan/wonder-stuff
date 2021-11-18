@@ -80,6 +80,8 @@ jobs:
         exclude: "{**/*.map,**/node_modules/**}"
         # Clean up before a build
         clean-script: "clean"
+        # Build production
+        build-script: "build:prodsizecheck"
     - name: Checking out base ref
       run: |
         # Make sure we also fetch the base ref so that ESLint, Flow, and Jest

@@ -12,6 +12,31 @@ import filesize from "rollup-plugin-filesize";
 const createBabelPresets = require("./create-babel-presets.js");
 
 /**
+ * We support the following config args with this rollup configuration:
+ *
+ * --configPackages
+ *      A comma-delimited list of package names to build.
+ *      The "wonder-stuff-" portion can be omitted.
+ *      Default: All packages.
+ *
+ * --configFormats
+ *      A comma-delimited list of formats to build.
+ *      Valid options are "cjs" and "esm".
+ *      Default: cjs, esm
+ *
+ * --configPlatforms
+ *      A comma-delimited list of platforms to build.
+ *      Valid options are "browser" and "node".
+ *      Default: browser, node
+ *
+ * --configEnvironment
+ *      A string to use as the NODE_ENV environment variable.
+ *      Valid options are "development" and "production".
+ *      Default: We do not target an environment so that consumers can benefit
+ *               from the default behavior.
+ */
+
+/**
  * Make path to a package relative path.
  */
 const makePackageBasedPath = (pkgName, pkgRelPath) =>
@@ -26,19 +51,65 @@ const createOutputConfig = (pkgName, format, targetFile) => ({
     format,
 });
 
-const createConfig = ({name, format, platform, file, plugins}) => {
+/**
+ * Get a set of strings from a given string, returning the defaults
+ *
+ * This assumes comma-delimited strings.
+ */
+const getSetFromDelimitedString = (arg, defaults) => {
+    const values =
+        arg != null && arg.length > 0
+            ? arg
+                  .split(",")
+                  .map((p) => p.trim())
+                  .filter(Boolean)
+            : [];
+
+    return new Set(values.length ? values : defaults);
+};
+
+/**
+ * Determine what platforms we are targetting.
+ */
+const getPlatforms = ({configPlatforms}) =>
+    getSetFromDelimitedString(configPlatforms, ["browser", "node"]);
+
+/**
+ * Determine what formats we are targetting.
+ */
+const getFormats = ({configFormats}) =>
+    getSetFromDelimitedString(configFormats, ["cjs", "esm"]);
+
+/**
+ * Generate a rollup configuration.
+ */
+const createConfig = (
+    commandLineArgs,
+    {name, format, platform, file, plugins},
+) => {
+    const valueReplacementMappings = {
+        __IS_BROWSER__: platform === "browser",
+    };
+
+    // We don't normally target a specific environment, leaving that for
+    // our consumers to do, but we may want to verify environment builds during
+    // dev, so this config option lets us do that.
+    if (commandLineArgs.configEnvironment) {
+        valueReplacementMappings["process.env.NODE_ENV"] = JSON.stringify(
+            commandLineArgs.configEnvironment,
+        );
+    }
+
     const config = {
         output: createOutputConfig(name, format, file),
         input: makePackageBasedPath(name, "./src/index.js"),
         plugins: [
+            // We don't want to do process.env.NODE_ENV checks in our main
+            // builds. Our consumers should handle that. However, if we
+            // do our prod build, we do want to do this.
             replace({
                 preventAssignment: true,
-                values: {
-                    "process.env.NODE_ENV": JSON.stringify(
-                        process.env.NODE_ENV || "production",
-                    ),
-                    __IS_BROWSER__: platform === "browser",
-                },
+                values: valueReplacementMappings,
             }),
             babel({
                 babelHelpers: "bundled",
@@ -59,23 +130,38 @@ const createConfig = ({name, format, platform, file, plugins}) => {
     return config;
 };
 
-// For each package in our packages folder, generate the outputs we want.
-// To determine what those outputs are, we read the package.json file for
-// each package. If the package has a `browser` field, then we generate
-// browser and node assets. If not, we just generate the node assets.
-// Note that we also get the output paths from the package.json.
-const getPackageInfo = (pkgName) => {
+/**
+ * Get the configurations for building a package.
+ *
+ * For each package in our packages folder, generate the outputs we want.
+ *
+ * To determine what those outputs are, we read the `package.json` file for
+ * each package. If the package has a `browser` field, then we generate
+ * browser and node assets. If not, we just generate the node assets.
+ * Note that we also get the output paths from the package.json.
+ *
+ * We also can filter the outputs based on command line options:
+ * `--configPlatforms` - Comma-separated list. Valid values are "browser"
+ *                       and "node".
+ * `--configFormats`   - Comma-separated list. Valid values are "cjs" and
+ *                       "esm". If not specified, then we generate both.
+ */
+const getPackageInfo = (commandLineArgs, pkgName) => {
     const pkgJsonPath = makePackageBasedPath(pkgName, "./package.json");
     if (!fs.existsSync(pkgJsonPath)) {
         return [];
     }
     const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath));
 
+    // Determine what formats and platforms we are building.
+    const platforms = getPlatforms(commandLineArgs);
+    const formats = getFormats(commandLineArgs);
+
     // Now we have the package.json, we need to look at the main, module, and
     // browser fields and values.
     const {main: cjsNode, module: esmNode, browser} = pkgJson;
-    const cjsBrowser = browser == null ? undefined : browser[cjsNode];
-    const esmBrowser = browser == null ? undefined : browser[esmNode];
+    const cjsBrowser = browser == null ? null : browser[cjsNode];
+    const esmBrowser = browser == null ? null : browser[esmNode];
 
     // This generates the flow import file and a file for intellisense to work.
     // By using the same instance of it across all output configurations
@@ -84,6 +170,7 @@ const getPackageInfo = (pkgName) => {
         copyOnce: true,
         verbose: true,
         targets: [
+            // This is the file that provides flow types.
             {
                 // src path is relative to the package root unless started
                 // with ./
@@ -92,6 +179,7 @@ const getPackageInfo = (pkgName) => {
                 dest: makePackageBasedPath(pkgName, "./dist"),
                 rename: "index.js.flow",
             },
+            // This is the file that we use for intellisense.
             {
                 // src path is relative to the package root unless started
                 // with ./
@@ -102,70 +190,83 @@ const getPackageInfo = (pkgName) => {
             },
         ],
     });
-    return [
-        {
-            name: pkgName,
-            format: "esm",
-            platform: "node",
-            file: esmNode,
-            plugins: [typesAndDocsCopy],
-        },
-        {
-            name: pkgName,
-            format: "esm",
-            platform: "browser",
-            file: esmBrowser,
-            // We care about the file size of this one.
-            plugins: [typesAndDocsCopy, filesize()],
-        },
-        {
-            name: pkgName,
-            format: "cjs",
-            platform: "node",
-            file: cjsNode,
-            plugins: [typesAndDocsCopy],
-        },
-        {
-            name: pkgName,
-            format: "cjs",
-            platform: "browser",
-            file: cjsBrowser,
-            plugins: [typesAndDocsCopy],
-        },
-    ].filter((i) => !!i.file);
+
+    const configs = [];
+    if (platforms.has("browser")) {
+        if (formats.has("cjs") && cjsBrowser) {
+            configs.push({
+                name: pkgName,
+                format: "cjs",
+                platform: "browser",
+                file: cjsBrowser,
+                plugins: [typesAndDocsCopy],
+            });
+        }
+        if (formats.has("esm") && esmBrowser) {
+            configs.push({
+                name: pkgName,
+                format: "esm",
+                platform: "browser",
+                file: esmBrowser,
+                // We care about the file size of this one.
+                plugins: [typesAndDocsCopy, filesize()],
+            });
+        }
+    }
+    if (platforms.has("node")) {
+        if (formats.has("cjs") && cjsNode) {
+            configs.push({
+                name: pkgName,
+                format: "cjs",
+                platform: "node",
+                file: cjsNode,
+                plugins: [typesAndDocsCopy],
+            });
+        }
+        if (formats.has("esm") && esmNode) {
+            configs.push({
+                name: pkgName,
+                format: "esm",
+                platform: "node",
+                file: esmNode,
+                plugins: [typesAndDocsCopy],
+            });
+        }
+    }
+    return configs;
 };
 
+const getPkgShortName = (pkgName) => pkgName.replace("wonder-stuff-", "");
+
 /**
- * Creates the full rollup configuration for the given args.
- *
- * If the `configPackages` arg is included, we split it on commas and
- * take each as the name of a package to process. Otherwise, we process all
- * packages.
+ * Determine the packages that we want to generate outputs for.
  */
-const createRollupConfig = (commandLineArgs) => {
+const getPkgNames = (commandLineArgs) => {
     const {configPackages} = commandLineArgs;
 
     // Get the list of packages that we have in our packages folder.
     const actualPackages = fs.readdirSync("packages");
 
     // Parse the configPackages arg into an array of package names.
-    const specificPackages =
-        configPackages && configPackages.length
-            ? configPackages.split(",").map((p) => p.trim())
-            : null;
+    const specificPackages = getSetFromDelimitedString(
+        configPackages,
+        actualPackages,
+    );
 
     // Filter our list of actual packages to only those that were requested.
     const pkgNames = actualPackages.filter(
-        (p) => !specificPackages || specificPackages.some((s) => p.endsWith(s)),
+        (p) =>
+            specificPackages.has(p) || specificPackages.has(getPkgShortName(p)),
     );
 
+    // Perform some validation to help folks.
     if (
-        specificPackages != null &&
+        specificPackages.length > 0 &&
         specificPackages.length !== pkgNames.length
     ) {
         // If we were asked for specific packages but we did not match them
         // all, then let's tell the caller which ones we couldn't find.
-        const missingPackages = specificPackages.filter(
+        const missingPackages = Array.from(specificPackages).filter(
             (s) => !pkgNames.some((p) => p.endsWith(s)),
         );
         throw new Error(
@@ -176,9 +277,25 @@ const createRollupConfig = (commandLineArgs) => {
         throw new Error("No packages found in /packages folder");
     }
 
+    return pkgNames;
+};
+
+/**
+ * Creates the full rollup configuration for the given args.
+ *
+ * If the `--configPackages` arg is included, we split it on commas and
+ * take each as the name of a package to process. Otherwise, we process all
+ * packages.
+ */
+const createRollupConfig = (commandLineArgs) => {
+    // Determine what packages we are building.
+    const pkgNames = getPkgNames(commandLineArgs);
+
     // For the packages we have determined we want, let's get more information
     // about them and  generate configurations.
-    return pkgNames.flatMap(getPackageInfo).map((c) => createConfig(c));
+    return pkgNames
+        .flatMap((p) => getPackageInfo(commandLineArgs, p))
+        .map((c) => createConfig(commandLineArgs, c));
 };
 
 // eslint-disable-next-line import/no-default-export
