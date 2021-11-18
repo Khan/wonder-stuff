@@ -7,6 +7,7 @@ import {terser} from "rollup-plugin-terser";
 import copy from "rollup-plugin-copy";
 import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
+import filesize from "rollup-plugin-filesize";
 
 const createBabelPresets = require("./create-babel-presets.js");
 
@@ -114,7 +115,8 @@ const getPackageInfo = (pkgName) => {
             format: "esm",
             platform: "browser",
             file: esmBrowser,
-            plugins: [typesAndDocsCopy],
+            // We care about the file size of this one.
+            plugins: [typesAndDocsCopy, filesize()],
         },
         {
             name: pkgName,

@@ -3,6 +3,11 @@ import {KindError} from "@khanacademy/wonder-stuff-core";
 import {KindSentryError} from "../kind-sentry-error.js";
 import {collateSentryData} from "../collate-sentry-data.js";
 import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
+import * as NormalizeSentryData from "../normalize-sentry-data.js";
+
+jest.mock("../normalize-sentry-data.js", () =>
+    jest.requireActual("../normalize-sentry-data.js"),
+);
 
 describe("#collateSentryData", () => {
     describe("when root error is some other non-KindError", () => {
@@ -483,5 +488,69 @@ describe("#collateSentryData", () => {
 
         // Assert
         expect(result.tags.group_by_message).toBeUndefined();
+    });
+
+    it("should normalize the collated data", () => {
+        // Arrange
+        const error = new KindSentryError("ROOT", "RootKind", {
+            sentryData: {
+                tags: {
+                    roottag1: "ROOT_TAG_1",
+                },
+            },
+        });
+        jest.spyOn(NormalizeSentryData, "normalizeSentryData").mockReturnValue({
+            tags: {
+                normalized: "normalized",
+            },
+            contexts: {
+                normalized: {
+                    normalized: "normalized",
+                },
+            },
+            fingerprint: ["normalized"],
+        });
+
+        // Act
+        const result = collateSentryData(DefaultKindErrorDataOptions, error);
+
+        // Assert
+        expect(result).toStrictEqual({
+            tags: {
+                normalized: "normalized",
+                kind: "RootKind",
+                group_by_message: "ROOT",
+                concatenated_message: "ROOT",
+            },
+            contexts: {
+                normalized: {
+                    normalized: "normalized",
+                },
+            },
+            fingerprint: ["normalized"],
+        });
+    });
+
+    it("should throw if normalization fails", () => {
+        // Arrange
+        const error = new KindSentryError("ROOT", "RootKind", {
+            sentryData: {
+                tags: {
+                    roottag1: "ROOT_TAG_1",
+                },
+            },
+        });
+        jest.spyOn(
+            NormalizeSentryData,
+            "normalizeSentryData",
+        ).mockImplementation(() => {
+            throw new Error("Oh noes!");
+        });
+
+        // Act
+        const act = () => collateSentryData(DefaultKindErrorDataOptions, error);
+
+        // Assert
+        expect(act).toThrowErrorMatchingInlineSnapshot(`"Oh noes!"`);
     });
 });

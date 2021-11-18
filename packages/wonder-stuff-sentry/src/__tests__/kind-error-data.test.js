@@ -1,6 +1,5 @@
 // @flow
 import * as CollateSentryData from "../collate-sentry-data.js";
-import * as StringifyNestedContexts from "../stringify-nested-contexts.js";
 import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
 import {EmptySentryData} from "../empty-sentry-data.js";
 import {KindErrorData} from "../kind-error-data.js";
@@ -8,6 +7,61 @@ import {KindErrorData} from "../kind-error-data.js";
 jest.mock("../collate-sentry-data.js");
 
 describe("KindErrorData", () => {
+    const INVALID_TAG_NAME = Array(33).fill("a").join("");
+    describe("#constructor", () => {
+        it.each([
+            {kindTagName: INVALID_TAG_NAME},
+            {groupByTagName: INVALID_TAG_NAME},
+            {concatenatedMessageTagName: INVALID_TAG_NAME},
+            {
+                kindTagName: `${INVALID_TAG_NAME}-kind`,
+                groupByTagName: `${INVALID_TAG_NAME}-group-by`,
+                concatenatedMessageTagName: `${INVALID_TAG_NAME}-concatenated-message`,
+            },
+        ])("should throw if options are invalid (%s)", (badOptions) => {
+            // Arrange
+
+            // Act
+            const act = () => new KindErrorData(badOptions);
+
+            // Assert
+            expect(act).toThrowErrorMatchingSnapshot();
+        });
+
+        it("should include information when throwing about invalid options", async () => {
+            // Arrange
+            const badOptions = {
+                kindTagName: `${INVALID_TAG_NAME}-kind`,
+                groupByTagName: `${INVALID_TAG_NAME}-group-by`,
+                concatenatedMessageTagName: `${INVALID_TAG_NAME}-concatenated-message`,
+            };
+
+            // Act
+            const act = new Promise((resolve, reject) => {
+                try {
+                    // Should not resolve!
+                    resolve(new KindErrorData(badOptions));
+                } catch (e) {
+                    reject(e);
+                }
+            });
+
+            // Assert
+            await expect(act).rejects.toHaveProperty("sentryData", {
+                tags: {},
+                fingerprint: [],
+                contexts: {
+                    invalidTagNames: {
+                        invalidKindTag: badOptions.kindTagName,
+                        invalidGroupByTag: badOptions.groupByTagName,
+                        invalidConcatenatedMessageTag:
+                            badOptions.concatenatedMessageTagName,
+                    },
+                },
+            });
+        });
+    });
+
     describe("#setupOnce", () => {
         it("should register a global event processor", () => {
             // Arrange
@@ -107,6 +161,21 @@ describe("KindErrorData", () => {
             },
         );
 
+        it("should return the event if there is no hint", () => {
+            // Arrange
+            const underTest = new KindErrorData();
+            const event = {
+                kind: "event",
+                event_id: "event-id",
+            };
+
+            // Act
+            const result = underTest.enhanceEventWithErrorData(event);
+
+            // Assert
+            expect(result).toBe(event);
+        });
+
         it("should call collateSentryData with the original exception and constructed options", () => {
             // Arrange
             const options = {
@@ -134,51 +203,6 @@ describe("KindErrorData", () => {
             expect(collateSentryDataSpy).toHaveBeenCalledWith(
                 options,
                 hint.originalException,
-            );
-        });
-
-        it("should stringify nested contexts if options specify to do so", () => {
-            // Arrange
-            const options = {
-                ...DefaultKindErrorDataOptions,
-                stringifyNestedContext: true,
-            };
-            const underTest = new KindErrorData(options);
-            const event = {
-                kind: "event",
-                event_id: "event-id",
-            };
-            const hint = {
-                event_id: "event-id",
-                originalException: new Error("original-exception"),
-            };
-            const collatedSentryData = {
-                ...EmptySentryData,
-                contexts: {
-                    context1: {
-                        pretend: "nested context stuff",
-                    },
-                },
-            };
-            jest.spyOn(CollateSentryData, "collateSentryData").mockReturnValue(
-                collatedSentryData,
-            );
-            const stringifyNestedContextsSpy = jest
-                .spyOn(StringifyNestedContexts, "stringifyNestedContexts")
-                .mockReturnValue({
-                    context1: {
-                        value1: {
-                            stringified: "stringified",
-                        },
-                    },
-                });
-
-            // Act
-            underTest.enhanceEventWithErrorData(event, hint);
-
-            // Assert
-            expect(stringifyNestedContextsSpy).toHaveBeenCalledWith(
-                collatedSentryData.contexts,
             );
         });
 

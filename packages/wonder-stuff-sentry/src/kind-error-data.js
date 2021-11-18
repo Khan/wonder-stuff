@@ -1,4 +1,5 @@
 // @flow
+import {Errors} from "@khanacademy/wonder-stuff-core";
 import type {
     SentryEvent,
     SentryEventHint,
@@ -9,8 +10,9 @@ import type {
 } from "./types.js";
 
 import {collateSentryData} from "./collate-sentry-data.js";
-import {stringifyNestedContexts} from "./stringify-nested-contexts.js";
 import {DefaultKindErrorDataOptions} from "./default-kind-error-data-options.js";
+import {isTagKeyValid} from "./is-tag-key-valid.js";
+import {KindSentryError} from "./kind-sentry-error.js";
 
 export class KindErrorData implements SentryIntegration {
     static id: string = "KindErrorData";
@@ -22,6 +24,28 @@ export class KindErrorData implements SentryIntegration {
             ...DefaultKindErrorDataOptions,
             ...options,
         };
+
+        // Let's make sure we got valid options.
+        const invalidTagNames = {};
+        if (!isTagKeyValid(this._options.kindTagName)) {
+            invalidTagNames.invalidKindTag = this._options.kindTagName;
+        }
+        if (!isTagKeyValid(this._options.groupByTagName)) {
+            invalidTagNames.invalidGroupByTag = this._options.groupByTagName;
+        }
+        if (!isTagKeyValid(this._options.concatenatedMessageTagName)) {
+            invalidTagNames.invalidConcatenatedMessageTag =
+                this._options.concatenatedMessageTagName;
+        }
+        if (Object.keys(invalidTagNames).length) {
+            throw new KindSentryError("Invalid options", Errors.InvalidInput, {
+                sentryData: {
+                    contexts: {
+                        invalidTagNames,
+                    },
+                },
+            });
+        }
     }
 
     setupOnce(
@@ -78,13 +102,11 @@ export class KindErrorData implements SentryIntegration {
             ...contexts,
         };
         /**
-         * We may need to iterate our context objects and replace with
-         * a stringified version, any arrays and objects nested more than
-         * 1 level deep in each context.
+         * NOTE: If you don't see Sentry serializing the right depth in your
+         * contexts, increase the `normalizeDepth` option of the Sentry
+         * configuration; it defaults to 3, which is not always enough.
          */
-        event.contexts = this._options.stringifyNestedContext
-            ? stringifyNestedContexts(updatedContexts)
-            : updatedContexts;
+        event.contexts = updatedContexts;
 
         /**
          * Fingerprint helps group like messages that otherwise would not

@@ -24,7 +24,7 @@ export function* errorsFromError(
     order: SequenceOrder,
 ): Iterator<Error> {
     if (order !== Order.CauseFirst && order !== Order.ConsequenceFirst) {
-        throw new KindError("Invalid sequence order", Errors.Unknown, {
+        throw new KindError("Invalid sequence order", Errors.InvalidInput, {
             metadata: {
                 order,
             },

@@ -9,5 +9,4 @@ export const DefaultKindErrorDataOptions: KindErrorDataOptions = {
     groupByTagName: "group_by_message",
     concatenatedMessageTagName: "concatenated_message",
     causalErrorContextPrefix: "Source Error - ",
-    stringifyNestedContext: false,
 };
