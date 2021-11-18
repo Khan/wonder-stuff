@@ -1,4 +1,6 @@
 // @flow
+const ELLIPSIS = "...";
+
 /**
  * Truncates a string by replacing the middle with an ellipsis.
  *
@@ -14,8 +16,6 @@ export function truncateMiddle(str: string, maxLength: number): string {
     if (str.length <= maxLength) {
         return str;
     }
-
-    const ELLIPSIS = "...";
 
     // We don't quite replace the middle with an ellipsis.
     // We use the first half of the string, and then the last half of the

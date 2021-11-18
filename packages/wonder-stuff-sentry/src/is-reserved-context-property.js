@@ -1,4 +1,8 @@
 // @flow
+// From:
+// https://docs.sentry.io/platforms/python/guides/logging/enriching-events/context/
+const RESERVED_CONTEXT_PROPERTIES = new Set(["type"]);
+
 /**
  * Determine if a given string is a reserved property name for Sentry contexts.
  *
@@ -8,8 +12,5 @@
  * otherwise, `false`.
  */
 export function isReservedContextProperty(propertyName: string): boolean {
-    // From:
-    // https://docs.sentry.io/platforms/python/guides/logging/enriching-events/context/
-    const RESERVED_CONTEXT_PROPERTIES = new Set(["type"]);
     return RESERVED_CONTEXT_PROPERTIES.has(propertyName);
 }

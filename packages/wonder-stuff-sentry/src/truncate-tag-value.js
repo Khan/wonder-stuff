@@ -1,6 +1,9 @@
 // @flow
 import {truncateMiddle} from "@khanacademy/wonder-stuff-core";
 
+// Tag values must be no more than 200 characters long.
+const MAX_TAG_VALUE_LENGTH = 200;
+
 /**
  * Truncate a tag value to make sure they don't exceed the maximum length.
  *
@@ -14,7 +17,5 @@ import {truncateMiddle} from "@khanacademy/wonder-stuff-core";
  * ellipsis in the middle.
  */
 export function truncateTagValue(tagValue: string): string {
-    // Tag values must be no more than 200 characters long.
-    const MAX_TAG_VALUE_LENGTH = 200;
     return truncateMiddle(tagValue, MAX_TAG_VALUE_LENGTH);
 }
