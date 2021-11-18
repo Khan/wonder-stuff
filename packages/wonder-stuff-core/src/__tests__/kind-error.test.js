@@ -5,6 +5,15 @@ import {Errors} from "../errors.js";
 import {KindError} from "../kind-error.js";
 
 describe("KindError", () => {
+    const NODE_ENV = process.env.NODE_ENV;
+    afterEach(() => {
+        if (NODE_ENV == null) {
+            delete process.env.NODE_ENV;
+        } else {
+            process.env.NODE_ENV = NODE_ENV;
+        }
+    });
+
     describe("#constructor", () => {
         it("should set the message", () => {
             // Arrange
@@ -70,73 +79,156 @@ describe("KindError", () => {
             expect(error.name).toEndWith("CUSTOM_NAMEError");
         });
 
-        it.each(["N A M E", "NA\nME"])(
-            "should throw if the name has whitespace like %s",
-            (name) => {
-                // Arrange
+        describe("when not built for production", () => {
+            it.each(["N A M E", "NA\nME"])(
+                "should throw if the name has whitespace like %s",
+                (name) => {
+                    // Arrange
 
-                // Act
-                const act = () =>
-                    new KindError("MESSAGE", Errors.Unknown, {name});
+                    // Act
+                    const act = () =>
+                        new KindError("MESSAGE", Errors.Unknown, {name});
 
-                // Assert
-                expect(act).toThrowErrorMatchingSnapshot();
-            },
-        );
-
-        it.each(["K I N D", "KI\nND"])(
-            "should throw if the kind has whitespace like %s",
-            (kind) => {
-                // Arrange
-
-                // Act
-                const act = () => new KindError("MESSAGE", kind);
-
-                // Assert
-                expect(act).toThrowErrorMatchingSnapshot();
-            },
-        );
-
-        it.each(["P R E F I X", "PRE\nFIX"])(
-            "should throw if the prefix has whitespace like %s",
-            (prefix) => {
-                // Arrange
-
-                // Act
-                const act = () =>
-                    new KindError("MESSAGE", "CUSTOM_KIND", {prefix});
-
-                // Assert
-                expect(act).toThrowErrorMatchingSnapshot();
-            },
-        );
-
-        it("should throw if stripStackFrames is < 0", () => {
-            // Arrange
-
-            // Act
-            const act = () =>
-                new KindError("MESSAGE", "CUSTOM_KIND", {stripStackFrames: -1});
-
-            // Assert
-            expect(act).toThrowErrorMatchingInlineSnapshot(
-                `"stripStackFrames must be >= 0"`,
+                    // Assert
+                    expect(act).toThrowErrorMatchingSnapshot();
+                },
             );
+
+            it.each(["K I N D", "KI\nND"])(
+                "should throw if the kind has whitespace like %s",
+                (kind) => {
+                    // Arrange
+
+                    // Act
+                    const act = () => new KindError("MESSAGE", kind);
+
+                    // Assert
+                    expect(act).toThrowErrorMatchingSnapshot();
+                },
+            );
+
+            it.each(["P R E F I X", "PRE\nFIX"])(
+                "should throw if the prefix has whitespace like %s",
+                (prefix) => {
+                    // Arrange
+
+                    // Act
+                    const act = () =>
+                        new KindError("MESSAGE", "CUSTOM_KIND", {prefix});
+
+                    // Assert
+                    expect(act).toThrowErrorMatchingSnapshot();
+                },
+            );
+
+            it("should throw if stripStackFrames is < 0", () => {
+                // Arrange
+
+                // Act
+                const act = () =>
+                    new KindError("MESSAGE", "CUSTOM_KIND", {
+                        stripStackFrames: -1,
+                    });
+
+                // Assert
+                expect(act).toThrowErrorMatchingInlineSnapshot(
+                    `"stripStackFrames must be >= 0"`,
+                );
+            });
+
+            it("should throw if minimumFrameCount is < 0", () => {
+                // Arrange
+
+                // Act
+                const act = () =>
+                    new KindError("MESSAGE", "CUSTOM_KIND", {
+                        minimumFrameCount: -1,
+                    });
+
+                // Assert
+                expect(act).toThrowErrorMatchingInlineSnapshot(
+                    `"minimumFrameCount must be >= 0"`,
+                );
+            });
         });
 
-        it("should throw if minimumFrameCount is < 0", () => {
-            // Arrange
+        describe("when built for production", () => {
+            beforeEach(() => {
+                process.env.NODE_ENV = "production";
+            });
 
-            // Act
-            const act = () =>
-                new KindError("MESSAGE", "CUSTOM_KIND", {
-                    minimumFrameCount: -1,
-                });
+            it.each(["N A M E", "NA\nME"])(
+                "should not throw validation error if the name has whitespace like %s",
+                (name) => {
+                    // Arrange
 
-            // Assert
-            expect(act).toThrowErrorMatchingInlineSnapshot(
-                `"minimumFrameCount must be >= 0"`,
+                    // Act
+                    const act = () =>
+                        new KindError("MESSAGE", Errors.Unknown, {name});
+
+                    // Assert
+                    expect(act).not.toThrowError(
+                        "name must not contain whitespace",
+                    );
+                },
             );
+
+            it.each(["K I N D", "KI\nND"])(
+                "should not throw validation error if the kind has whitespace like %s",
+                (kind) => {
+                    // Arrange
+
+                    // Act
+                    const act = () => new KindError("MESSAGE", kind);
+
+                    // Assert
+                    expect(act).not.toThrowError(
+                        "kind must not contain whitespace",
+                    );
+                },
+            );
+
+            it.each(["P R E F I X", "PRE\nFIX"])(
+                "should not throw validation error if the prefix has whitespace like %s",
+                (prefix) => {
+                    // Arrange
+
+                    // Act
+                    const act = () =>
+                        new KindError("MESSAGE", "CUSTOM_KIND", {prefix});
+
+                    // Assert
+                    expect(act).not.toThrowError(
+                        "prefix must not contain whitespace",
+                    );
+                },
+            );
+
+            it("should not throw validation error if stripStackFrames is < 0", () => {
+                // Arrange
+
+                // Act
+                const act = () =>
+                    new KindError("MESSAGE", "CUSTOM_KIND", {
+                        stripStackFrames: -1,
+                    });
+
+                // Assert
+                expect(act).not.toThrowError("stripStackFrames must be >= 0");
+            });
+
+            it("should not throw validation error if minimumFrameCount is < 0", () => {
+                // Arrange
+
+                // Act
+                const act = () =>
+                    new KindError("MESSAGE", "CUSTOM_KIND", {
+                        minimumFrameCount: -1,
+                    });
+
+                // Assert
+                expect(act).not.toThrowError("minimumFrameCount must be >= 0");
+            });
         });
 
         it("should clone metadata", () => {
@@ -207,20 +299,44 @@ describe("KindError", () => {
         });
 
         describe("when cause is non-null", () => {
-            it("should throw if cause is  not an Error", () => {
-                // Arrange
+            describe("when not built for production", () => {
+                it("should throw if cause is not an Error", () => {
+                    // Arrange
 
-                // Act
-                const act = () =>
-                    new KindError("MESSAGE", Errors.Unknown, {
-                        // $FlowIgnore[incompatible-call]
-                        cause: "NOT_AN_ERROR",
-                    });
+                    // Act
+                    const act = () =>
+                        new KindError("MESSAGE", Errors.Unknown, {
+                            // $FlowIgnore[incompatible-call]
+                            cause: "NOT_AN_ERROR",
+                        });
 
-                // Assert
-                expect(act).toThrowErrorMatchingInlineSnapshot(
-                    `"cause must be an instance of Error"`,
-                );
+                    // Assert
+                    expect(act).toThrowErrorMatchingInlineSnapshot(
+                        `"cause must be an instance of Error"`,
+                    );
+                });
+            });
+
+            describe("when built for production", () => {
+                beforeEach(() => {
+                    process.env.NODE_ENV = "production";
+                });
+
+                it("should not throw if cause is not an Error", () => {
+                    // Arrange
+
+                    // Act
+                    const act = () =>
+                        new KindError("MESSAGE", Errors.Unknown, {
+                            // $FlowIgnore[incompatible-call]
+                            cause: "NOT_AN_ERROR",
+                        });
+
+                    // Assert
+                    expect(act).not.toThrowError(
+                        `"Error must be an instance of Error"`,
+                    );
+                });
             });
 
             it("should get error info for the cause error", () => {

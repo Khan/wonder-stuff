@@ -6,60 +6,127 @@ import * as TruncateTagValue from "../truncate-tag-value.js";
 jest.mock("../truncate-tag-value.js");
 
 describe("#normalizeSentryData", () => {
-    it("should throw if there are invalid tag keys", () => {
-        // Arrange
-        const data = {
-            tags: {
-                "": "value1",
-            },
-        };
-
-        // Act
-        const result = () =>
-            normalizeSentryData(DefaultKindErrorDataOptions, data);
-
-        // Assert
-        expect(result).toThrowErrorMatchingInlineSnapshot(
-            `"Sentry data is not valid"`,
-        );
+    const NODE_ENV = process.env.NODE_ENV;
+    afterEach(() => {
+        if (NODE_ENV == null) {
+            delete process.env.NODE_ENV;
+        } else {
+            process.env.NODE_ENV = NODE_ENV;
+        }
     });
 
-    it("should throw if there are reserved tag keys", () => {
-        // Arrange
-        const data = {
-            tags: {
-                [DefaultKindErrorDataOptions.kindTagName]: "value1",
-            },
-        };
-
-        // Act
-        const result = () =>
-            normalizeSentryData(DefaultKindErrorDataOptions, data);
-
-        // Assert
-        expect(result).toThrowErrorMatchingInlineSnapshot(
-            `"Sentry data is not valid"`,
-        );
-    });
-
-    it("should throw if there are reserved context properties", () => {
-        // Arrange
-        const data = {
-            contexts: {
-                contextOne: {
-                    type: "value1",
+    describe("when not built for production", () => {
+        it("should throw if there are invalid tag keys", () => {
+            // Arrange
+            const data = {
+                tags: {
+                    "": "value1",
                 },
-            },
-        };
+            };
 
-        // Act
-        const result = () =>
-            normalizeSentryData(DefaultKindErrorDataOptions, data);
+            // Act
+            const result = () =>
+                normalizeSentryData(DefaultKindErrorDataOptions, data);
 
-        // Assert
-        expect(result).toThrowErrorMatchingInlineSnapshot(
-            `"Sentry data is not valid"`,
-        );
+            // Assert
+            expect(result).toThrowErrorMatchingInlineSnapshot(
+                `"Sentry data is not valid"`,
+            );
+        });
+
+        it("should throw if there are reserved tag keys", () => {
+            // Arrange
+            const data = {
+                tags: {
+                    [DefaultKindErrorDataOptions.kindTagName]: "value1",
+                },
+            };
+
+            // Act
+            const result = () =>
+                normalizeSentryData(DefaultKindErrorDataOptions, data);
+
+            // Assert
+            expect(result).toThrowErrorMatchingInlineSnapshot(
+                `"Sentry data is not valid"`,
+            );
+        });
+
+        it("should throw if there are reserved context properties", () => {
+            // Arrange
+            const data = {
+                contexts: {
+                    contextOne: {
+                        type: "value1",
+                    },
+                },
+            };
+
+            // Act
+            const result = () =>
+                normalizeSentryData(DefaultKindErrorDataOptions, data);
+
+            // Assert
+            expect(result).toThrowErrorMatchingInlineSnapshot(
+                `"Sentry data is not valid"`,
+            );
+        });
+    });
+
+    describe("when built for production", () => {
+        beforeEach(() => {
+            process.env.NODE_ENV = "production";
+        });
+
+        it("should not throw if there are invalid tag keys", () => {
+            // Arrange
+            const data = {
+                tags: {
+                    "": "value1",
+                },
+            };
+
+            // Act
+            const result = () =>
+                normalizeSentryData(DefaultKindErrorDataOptions, data);
+
+            // Assert
+            expect(result).not.toThrowError(`"Sentry data is not valid"`);
+        });
+
+        it("should not throw if there are reserved tag keys", () => {
+            // Arrange
+            const data = {
+                tags: {
+                    [DefaultKindErrorDataOptions.kindTagName]: "value1",
+                },
+            };
+
+            // Act
+            const result = () =>
+                normalizeSentryData(DefaultKindErrorDataOptions, data);
+
+            // Assert
+            expect(result).not.toThrowError(`"Sentry data is not valid"`);
+        });
+
+        it("should not throw if there are reserved context properties", () => {
+            // Arrange
+            const data = {
+                contexts: {
+                    contextOne: {
+                        type: "value1",
+                    },
+                },
+            };
+
+            // Act
+            const result = () =>
+                normalizeSentryData(DefaultKindErrorDataOptions, data);
+
+            // Assert
+            expect(result).not.toThrowError(`"Sentry data is not valid"`);
+        });
     });
 
     it("should include invalid tags, reserved tags, and reserved property usage information in thrown error sentry data", async () => {

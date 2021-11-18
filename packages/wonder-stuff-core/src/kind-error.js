@@ -113,24 +113,26 @@ export class KindError extends Error {
             compositeStack,
         }: Options = {},
     ) {
-        // Validate arguments.
-        if (cause && !(cause instanceof Error)) {
-            throw new Error("cause must be an instance of Error");
-        }
-        if (name != null && /\s/g.test(name)) {
-            throw new Error("name must not contain whitespace");
-        }
-        if (/\s/g.test(kind)) {
-            throw new Error("kind must not contain whitespace");
-        }
-        if (prefix != null && /\s/g.test(prefix)) {
-            throw new Error("prefix must not contain whitespace");
-        }
-        if (stripStackFrames != null && stripStackFrames < 0) {
-            throw new Error("stripStackFrames must be >= 0");
-        }
-        if (minimumFrameCount != null && minimumFrameCount < 0) {
-            throw new Error("minimumFrameCount must be >= 0");
+        if (process.env.NODE_ENV !== "production") {
+            // Validate arguments.
+            if (cause && !(cause instanceof Error)) {
+                throw new Error("cause must be an instance of Error");
+            }
+            if (name != null && /\s/g.test(name)) {
+                throw new Error("name must not contain whitespace");
+            }
+            if (/\s/g.test(kind)) {
+                throw new Error("kind must not contain whitespace");
+            }
+            if (prefix != null && /\s/g.test(prefix)) {
+                throw new Error("prefix must not contain whitespace");
+            }
+            if (stripStackFrames != null && stripStackFrames < 0) {
+                throw new Error("stripStackFrames must be >= 0");
+            }
+            if (minimumFrameCount != null && minimumFrameCount < 0) {
+                throw new Error("minimumFrameCount must be >= 0");
+            }
         }
 
         super(message);

@@ -7,25 +7,61 @@ import {KindErrorData} from "../kind-error-data.js";
 jest.mock("../collate-sentry-data.js");
 
 describe("KindErrorData", () => {
+    const NODE_ENV = process.env.NODE_ENV;
+    afterEach(() => {
+        if (NODE_ENV == null) {
+            delete process.env.NODE_ENV;
+        } else {
+            process.env.NODE_ENV = NODE_ENV;
+        }
+    });
+
     const INVALID_TAG_NAME = Array(33).fill("a").join("");
     describe("#constructor", () => {
-        it.each([
-            {kindTagName: INVALID_TAG_NAME},
-            {groupByTagName: INVALID_TAG_NAME},
-            {concatenatedMessageTagName: INVALID_TAG_NAME},
-            {
-                kindTagName: `${INVALID_TAG_NAME}-kind`,
-                groupByTagName: `${INVALID_TAG_NAME}-group-by`,
-                concatenatedMessageTagName: `${INVALID_TAG_NAME}-concatenated-message`,
-            },
-        ])("should throw if options are invalid (%s)", (badOptions) => {
-            // Arrange
+        describe("when not built for production", () => {
+            it.each([
+                {kindTagName: INVALID_TAG_NAME},
+                {groupByTagName: INVALID_TAG_NAME},
+                {concatenatedMessageTagName: INVALID_TAG_NAME},
+                {
+                    kindTagName: `${INVALID_TAG_NAME}-kind`,
+                    groupByTagName: `${INVALID_TAG_NAME}-group-by`,
+                    concatenatedMessageTagName: `${INVALID_TAG_NAME}-concatenated-message`,
+                },
+            ])("should throw if options are invalid (%s)", (badOptions) => {
+                // Arrange
 
-            // Act
-            const act = () => new KindErrorData(badOptions);
+                // Act
+                const act = () => new KindErrorData(badOptions);
 
-            // Assert
-            expect(act).toThrowErrorMatchingSnapshot();
+                // Assert
+                expect(act).toThrowErrorMatchingSnapshot();
+            });
+        });
+
+        describe("when built for production", () => {
+            beforeEach(() => {
+                process.env.NODE_ENV = "production";
+            });
+
+            it.each([
+                {kindTagName: INVALID_TAG_NAME},
+                {groupByTagName: INVALID_TAG_NAME},
+                {concatenatedMessageTagName: INVALID_TAG_NAME},
+                {
+                    kindTagName: `${INVALID_TAG_NAME}-kind`,
+                    groupByTagName: `${INVALID_TAG_NAME}-group-by`,
+                    concatenatedMessageTagName: `${INVALID_TAG_NAME}-concatenated-message`,
+                },
+            ])("should not throw if options are invalid (%s)", (badOptions) => {
+                // Arrange
+
+                // Act
+                const act = () => new KindErrorData(badOptions);
+
+                // Assert
+                expect(act).not.toThrowError("Invalid options");
+            });
         });
 
         it("should include information when throwing about invalid options", async () => {
