@@ -3,7 +3,7 @@
         "access": "public"
     },
     "name": "@khanacademy/wonder-stuff-sentry",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "description": "Sentry integration support",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -12,16 +12,15 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^0.1.1"
+        "@khanacademy/wonder-stuff-core": "^0.1.2"
     },
     "devDependencies": {
-        "ws-dev-build-settings": "^0.0.3"
+        "ws-dev-build-settings": "^0.0.4"
     },
     "browser": {
         "dist/es/index.js": "./dist/es/index.browser.js",
         "dist/index.js": "./dist/index.browser.js"
     },
     "author": "",
-    "license": "MIT",
-    "peerDependencies": {}
+    "license": "MIT"
 }
