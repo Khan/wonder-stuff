@@ -5,6 +5,7 @@
 <PROJECT_ROOT>/bin
 
 [options]
+enums=true
 emoji=true
 exact_by_default=true
 module.use_strict=true

@@ -25,9 +25,9 @@ class LogOnFailedTestReporter extends DefaultReporter {
             // prettier-ignore
             this.log(
         `  ${TITLE_BULLET}Console\n\n${getConsoleOutput(
-          config.cwd,
-          !!this._globalConfig.verbose,
-          consoleBuffer
+          consoleBuffer,
+          config,
+          this._globalConfig,
         )}`
       );
         }

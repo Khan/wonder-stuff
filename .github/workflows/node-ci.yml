@@ -60,17 +60,19 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - uses: actions/cache@v2
-      name: Cache node_modules
+
+    - name: Cache node modules
       id: node-modules-cache # use this to check for `cache-hit` (`steps.node-modules-cache.outputs.cache-hit != 'true'`)
+      uses: actions/cache@v2
       with:
         path: node_modules
-        key: ${{ runner.os }}${{ matrix.node-version }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-${{ matrix.node-version }}-node-modules-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}${{ matrix.node-version }}-node-modules-
+          ${{ runner.os }}-${{ matrix.node-version }}-node-modules-
     - name: Install dependencies
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
+
     - name: Check Builds
       uses: preactjs/compressed-size-action@v2
       with:
@@ -89,10 +91,12 @@ jobs:
         git fetch --depth 1 origin ${GITHUB_BASE_REF}
     # Linting / type checking
     - name: Run ESLint
-      uses: Khan/eslint-action@v1.1.5
+      uses: Khan/eslint-action@v2.0.0
       with:
         eslint-lib: ./node_modules/eslint
-        run-all-if-changed: package.json,.eslintrc.js
+        run-all-if-changed: |
+          package.json
+          .eslintrc.js
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Run Flow
