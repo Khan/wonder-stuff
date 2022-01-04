@@ -1,0 +1,23 @@
+{
+    "publishConfig": {
+        "access": "public"
+    },
+    "name": "@khanacademy/wonder-stuff-testing",
+    "version": "0.0.1",
+    "description": "Utilities for use in testing",
+    "module": "dist/es/index.js",
+    "main": "dist/index.js",
+    "source": "src/index.js",
+    "scripts": {
+        "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
+    },
+    "devDependencies": {
+        "ws-dev-build-settings": "^0.0.4"
+    },
+    "browser": {
+        "dist/es/index.js": "./dist/es/index.browser.js",
+        "dist/index.js": "./dist/index.browser.js"
+    },
+    "author": "",
+    "license": "MIT"
+}
