@@ -1,0 +1,19 @@
+{
+    "publishConfig": {
+        "access": "public"
+    },
+    "name": "@khanacademy/wonder-stuff-server-google",
+    "version": "0.0.1",
+    "description": "APIs for doing useful things in node servers for Google Cloud",
+    "module": "dist/es/index.js",
+    "main": "dist/index.js",
+    "source": "src/index.js",
+    "scripts": {
+        "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
+    },
+    "devDependencies": {
+        "ws-dev-build-settings": "^0.0.4"
+    },
+    "author": "",
+    "license": "MIT"
+}
