@@ -2,6 +2,9 @@
     "publishConfig": {
         "access": "public"
     },
+    "engines": {
+        "node": ">=12"
+    },
     "name": "@khanacademy/wonder-stuff-server",
     "version": "0.0.1",
     "description": "APIs for doing useful things in node servers",
@@ -16,10 +19,8 @@
     },
     "author": "",
     "license": "MIT",
-    "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^0.1.2"
-    },
     "peerDependencies": {
+        "@khanacademy/wonder-stuff-core": "^0.1.2",
         "express": "^4.17.2",
         "winston": "^3.4.0"
     }
