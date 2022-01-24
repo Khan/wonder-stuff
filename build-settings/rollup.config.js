@@ -10,6 +10,7 @@ import replace from "@rollup/plugin-replace";
 import filesize from "rollup-plugin-filesize";
 
 const createBabelPresets = require("./create-babel-presets.js");
+const createBabelPlugins = require("./create-babel-plugins.js");
 
 /**
  * We support the following config args with this rollup configuration:
@@ -114,6 +115,7 @@ const createConfig = (
             babel({
                 babelHelpers: "bundled",
                 presets: createBabelPresets({platform, format}),
+                plugins: createBabelPlugins({platform, format}),
                 exclude: "node_modules/**",
             }),
             resolve({

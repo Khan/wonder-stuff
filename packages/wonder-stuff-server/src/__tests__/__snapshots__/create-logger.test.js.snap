@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#createLogger during development should format log messages to include metadata when present ({ other: 'metadata' }) 1`] = `
+"debug: MESSAGE {
+    \\"other\\": \\"metadata\\"
+}"
+`;
+
+exports[`#createLogger during development should format log messages to include metadata when present ({}) 1`] = `"debug: MESSAGE"`;
+
+exports[`#createLogger during development should format log messages to include metadata when present (undefined) 1`] = `"debug: MESSAGE"`;
+
+exports[`#createLogger during production should format log messages to include metadata when present ({ other: 'metadata' }) 1`] = `
+"debug: MESSAGE {
+    \\"other\\": \\"metadata\\"
+}"
+`;
+
+exports[`#createLogger during production should format log messages to include metadata when present ({}) 1`] = `"debug: MESSAGE"`;
+
+exports[`#createLogger during production should format log messages to include metadata when present (undefined) 1`] = `"debug: MESSAGE"`;

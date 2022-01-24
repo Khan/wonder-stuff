@@ -27,7 +27,7 @@ module.exports = {
         "!packages/**/types.js",
         "!packages/**/src/index.js",
         "!packages/**/*.flowtest.js",
-        "!packages/**/dist/**/*.js",
+        "!packages/**/dist/",
         "!<rootDir>/node_modules/",
         "!packages/**/node_modules/",
         "!packages/**/.babelrc.js",
