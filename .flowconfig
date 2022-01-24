@@ -13,10 +13,15 @@ module.use_strict=true
 
 [lints]
 deprecated-type=error
+deprecated-utility=error
 sketchy-null=error
 sketchy-number=error
 unclear-type=error
 untyped-import=error
 untyped-type-import=error
 
+[declarations]
+<PROJECT_ROOT>/node_modules
 
+[libs]
+flow-typed

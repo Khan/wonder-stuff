@@ -1,4 +1,5 @@
 // @flow
+import * as Express from "express";
 import {startServer} from "../start-server.js";
 import {createLogger} from "../create-logger.js";
 // TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
@@ -8,6 +9,9 @@ import {createLogger} from "../create-logger.js";
 import {Runtime} from "../types.js";
 
 jest.mock("../root-logger.js");
+jest.mock("express");
+jest.mock("../middleware/default-error-logging.js");
+jest.mock("../middleware/default-request-logging.js");
 
 describe("#start-server", () => {
     beforeEach(() => {
@@ -25,7 +29,9 @@ describe("#start-server", () => {
         };
         const pretendApp: $FlowFixMe = {
             listen: jest.fn(),
+            use: jest.fn().mockReturnThis(),
         };
+        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
 
         // Act
         await startServer(options, pretendApp);
@@ -55,9 +61,11 @@ describe("#start-server", () => {
             on: jest.fn(),
         };
         const listenMock = jest.fn().mockReturnValue(fakeServer);
-        const pretendApp = ({
+        const pretendApp: $FlowFixMe = {
             listen: listenMock,
-        }: $FlowFixMe);
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
 
         // Act
         await startServer(options, pretendApp);
@@ -96,9 +104,11 @@ describe("#start-server", () => {
             on: jest.fn(),
         };
         const listenMock = jest.fn().mockReturnValue(fakeServer);
-        const pretendApp = ({
+        const pretendApp: $FlowFixMe = {
             listen: listenMock,
-        }: $FlowFixMe);
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
         await startServer(options, pretendApp);
 
         // Act
@@ -210,9 +220,11 @@ describe("#start-server", () => {
                 mode: Runtime.Test,
             };
             const listenMock = jest.fn().mockReturnValue(null);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             await startServer(options, pretendApp);
             const errorSpy = jest.spyOn(options.logger, "error");
             const listenCallback = listenMock.mock.calls[0][2];
@@ -237,9 +249,11 @@ describe("#start-server", () => {
                 mode: Runtime.Test,
             };
             const listenMock = jest.fn().mockReturnValue(null);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             await startServer(options, pretendApp);
             const errorSpy = jest.spyOn(options.logger, "error");
             const listenCallback = listenMock.mock.calls[0][2];
@@ -270,9 +284,11 @@ describe("#start-server", () => {
                     on: jest.fn(),
                 };
                 const listenMock = jest.fn().mockReturnValue(fakeServer);
-                const pretendApp = ({
+                const pretendApp: $FlowFixMe = {
                     listen: listenMock,
-                }: $FlowFixMe);
+                    use: jest.fn().mockReturnThis(),
+                };
+                jest.spyOn(Express, "default").mockReturnValue(pretendApp);
                 await startServer(options, pretendApp);
                 const warnSpy = jest.spyOn(options.logger, "warn");
                 const listenCallback = listenMock.mock.calls[0][2];
@@ -304,9 +320,11 @@ describe("#start-server", () => {
                 on: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             await startServer(options, pretendApp);
             const infoSpy = jest.spyOn(options.logger, "info");
             const listenCallback = listenMock.mock.calls[0][2];
@@ -332,9 +350,11 @@ describe("#start-server", () => {
                 mode: Runtime.Test,
             };
             const listenMock = jest.fn().mockReturnValue(null);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processSpy = jest.spyOn(process, "on");
             await startServer(options, pretendApp);
             const infoSpy = jest.spyOn(options.logger, "info");
@@ -365,9 +385,11 @@ describe("#start-server", () => {
                 close: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processSpy = jest.spyOn(process, "on");
             await startServer(options, pretendApp);
             const infoSpy = jest.spyOn(options.logger, "info");
@@ -401,9 +423,11 @@ describe("#start-server", () => {
                 close: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
@@ -489,9 +513,11 @@ describe("#start-server", () => {
                 close: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
@@ -530,9 +556,11 @@ describe("#start-server", () => {
                 }),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
@@ -685,9 +713,11 @@ describe("#start-server", () => {
                 destroy: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             await startServer(options, pretendApp);
             const sigintCallback = processOnSpy.mock.calls[0][1];

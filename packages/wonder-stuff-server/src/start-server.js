@@ -1,5 +1,6 @@
 // @flow
 import type {$Application, $Request, $Response} from "express";
+import express from "express";
 import {setRootLogger} from "./root-logger.js";
 // TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
 // have fixed:
@@ -8,6 +9,7 @@ import {setRootLogger} from "./root-logger.js";
 import {Runtime} from "./types.js";
 import type {ServerOptions, RequestWithLog} from "./types.js";
 import {Errors} from "./errors.js";
+import * as middleware from "./middleware/index.js";
 
 /**
  * Start an application server.
@@ -20,12 +22,19 @@ export async function startServer<
     TReq: RequestWithLog<$Request>,
     TRes: $Response,
 >(
-    options: ServerOptions,
+    {
+        logger,
+        host,
+        port,
+        name,
+        mode,
+        keepAliveTimeout,
+        allowHeapDumps,
+        includeErrorMiddleware = true,
+        includeRequestMiddleware = true,
+    }: ServerOptions,
     app: $Application<TReq, TRes>,
 ): Promise<?http$Server> {
-    const {logger, host, port, name, mode, keepAliveTimeout, allowHeapDumps} =
-        options;
-
     /**
      * Setup logging.
      * We create the root logger once and then share it via a singleton.
@@ -49,6 +58,7 @@ export async function startServer<
         try {
             /* eslint-disable import/no-unassigned-import */
             // $FlowIgnore[cannot-resolve-module]
+            // $FlowIgnore[untyped-import]
             require("heapdump");
             /* eslint-enable import/no-unassigned-import */
             logger.debug(
@@ -61,12 +71,28 @@ export async function startServer<
     }
 
     /**
+     * Add middleware per options.
+     */
+    let appWithMiddleware = express<TReq, TRes>();
+    if (includeRequestMiddleware) {
+        appWithMiddleware = appWithMiddleware.use(
+            middleware.defaultRequestLogging(logger),
+        );
+    }
+    appWithMiddleware = appWithMiddleware.use(app);
+    if (includeErrorMiddleware) {
+        appWithMiddleware = appWithMiddleware.use(
+            middleware.defaultErrorLogging(logger),
+        );
+    }
+
+    /**
      * Start the server listening.
      *
      * We need the variable so we can reference it inside the error handling
      * callback. Feels a bit nasty, but it works.
      */
-    const server = app.listen(port, host, (err: ?Error) => {
+    const server = appWithMiddleware.listen(port, host, (err: ?Error) => {
         if (server == null || err != null) {
             logger.error(
                 `${name} appears not to have started: ${

@@ -6,7 +6,7 @@ import type {
     Transport,
 } from "winston";
 
-import type {$Request} from "express";
+import type {$Request, Middleware, $Response} from "express";
 
 /**
  * Describes logging metdata.
@@ -66,6 +66,40 @@ export type LoggingOptions = {
 };
 
 /**
+ * Options to configure log middleware.
+ */
+export type LogMiddlewareOptions<TReq: $Request, TRes: $Response> = {
+    /**
+     * The runtime mode to be targeted. When omitted, this will default to
+     * the current runtime mode as determined from `getRuntimeMode`.
+     */
+    mode?: Runtime,
+
+    /**
+     * The logger that the middleware should target.
+     */
+    logger: Logger,
+
+    /**
+     * Override the default request logging middleware.
+     * Defaults to express-winston's logger.
+     */
+    makeRequestMiddleware?: (
+        mode: Runtime,
+        logger: Logger,
+    ) => Promise<Middleware<TReq, TRes>>,
+
+    /**
+     * Override the default error logging middleware.
+     * Defaults to express-winston's errorLogger
+     */
+    makeErrorMiddleware?: (
+        mode: Runtime,
+        logger: Logger,
+    ) => Promise<Middleware<TReq, TRes>>,
+};
+
+/**
  * Options to configure a server.
  */
 export type ServerOptions = {
@@ -115,6 +149,18 @@ export type ServerOptions = {
      * Set explicitly to `false` to disable heap dumps in all modes.
      */
     +allowHeapDumps?: boolean,
+
+    /**
+     * When `true` or omitted, the default express-winston-based error logging
+     * middleware is included. When `false`, this is not included.
+     */
+    +includeErrorMiddleware?: boolean,
+
+    /**
+     * When `true` or omitted, the default express-winston-based request logging
+     * middleware is included. When `false`, this is not included.
+     */
+    +includeRequestMiddleware?: boolean,
 };
 
 export type RequestWithLog<TReq: $Request> = TReq & {

@@ -23,3 +23,5 @@ export {getRequestLogger} from "./get-request-logger.js";
 export {getRuntimeMode} from "./get-runtime-mode.js";
 export {startServer} from "./start-server.js";
 export {getAgentForURL} from "./get-agent-for-url.js";
+
+export * as middleware from "./middleware/index.js";
