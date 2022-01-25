@@ -55,7 +55,8 @@ jobs:
         os: [ubuntu-latest]
         node-version: [14.x]
     steps:
-    - uses: actions/checkout@v2
+    - name: Checking out latest commit
+      uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
@@ -73,25 +74,26 @@ jobs:
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
 
-    - name: Fetching base ref
-      run: |
-        # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
-        # have a ref to compare against.
-        git fetch --depth 1 origin ${GITHUB_BASE_REF}
+    - name: Get All Changed Files
+      uses: jaredly/get-changed-files@v1.0.1
+      id: changed
+      with:
+        format: space-delimited
+        absolute: true
 
     - name: Build so that inter-package references are resolved
       run: yarn build
 
     # Linting / type checking
-    - name: Run ESLint
-      uses: Khan/eslint-action@v2.0.0
-      with:
-        eslint-lib: ./node_modules/eslint
-        run-all-if-changed: |
-          package.json
-          .eslintrc.js
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Run ESLint (all files)
+      if: contains(steps.changed.outputs.added_modified, '.eslintrc.js') || contains(steps.changed.outputs.added_modified, 'yarn.lock')
+      run: |
+        yarn lint:ci .
+    - name: Run ESLint (added/changed files)
+      if: contains(steps.changed.outputs.added_modified, '.eslintrc.js') == false && contains(steps.changed.outputs.added_modified, 'yarn.lock') == false
+      run: |
+        yarn lint:ci ${{ steps.changed.outputs.added_modified }}
+
     - name: Run Flow
       uses: Khan/flow-action@v1.1.3
       with:

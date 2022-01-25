@@ -54,7 +54,8 @@
     "coverage": "yarn run jest --coverage",
     "flow:ci": "flow check --max-workers 0",
     "dry-run-publish": "yarn run publishchecks && lerna version --no-git-tag-version --no-push",
-    "lint": "eslint packages",
+    "lint": "eslint --config .eslintrc.js packages",
+    "lint:ci": "eslint --config .eslintrc.js",
     "publishchecks": "git diff --stat --exit-code HEAD && yarn build && node utils/pre-publish-check.js",
     "publish": "yarn run publishchecks && lerna publish",
     "test": "yarn jest"
