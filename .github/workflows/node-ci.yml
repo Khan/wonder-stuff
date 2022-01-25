@@ -105,6 +105,7 @@ jobs:
     - name: Run Jest with coverage
       run: yarn coverage
     - name: Upload Coverage
+      # We don't bother collecting a record of coverage for dependabot changes
       if: ${{ github.actor != 'dependabot[bot]' }}
       uses: codecov/codecov-action@v2
       with:
@@ -169,14 +170,14 @@ jobs:
       run: yarn build
 
     # Run tests for our target matrix
-    - name: Run ESLint (all files)
+    - name: Run Jest (all files)
       if: |
         contains(steps.changed.outputs.added_modified, 'jest.config.js') ||
         contains(steps.changed.outputs.added_modified, 'yarn.lock') ||
         contains(steps.changed.outputs.added_modified, 'test.config.js') ||
         contains(steps.changed.outputs.added_modified, 'test.transform.js')
       run: yarn test
-    - name: Run ESLint (added/changed files)
+    - name: Run Jest (added/changed files)
       if: |
         (contains(steps.changed.outputs.added_modified, 'jest.config.js') ||
          contains(steps.changed.outputs.added_modified, 'yarn.lock') ||
