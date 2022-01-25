@@ -80,7 +80,7 @@ jobs:
         git fetch --depth 1 origin ${GITHUB_BASE_REF}
 
     - name: Build so that inter-package references are resolved
-      run: yarn build:all
+      run: yarn build
 
     # Linting / type checking
     - name: Run ESLint
