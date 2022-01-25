@@ -73,22 +73,15 @@ jobs:
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
 
-    - name: Check Builds
-      uses: preactjs/compressed-size-action@v2
-      with:
-        # We only care about the browser ES module size, really:
-        pattern: "**/dist/es/index.browser.js"
-        # Always ignore SourceMaps and node_modules:
-        exclude: "{**/*.map,**/node_modules/**}"
-        # Clean up before a build
-        clean-script: "clean"
-        # Build production
-        build-script: "build:prodsizecheck"
-    - name: Checking out base ref
+    - name: Fetching base ref
       run: |
         # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
         # have a ref to compare against.
         git fetch --depth 1 origin ${GITHUB_BASE_REF}
+
+    - name: Build so that inter-package references are resolved
+      run: yarn build:all
+
     # Linting / type checking
     - name: Run ESLint
       uses: Khan/eslint-action@v2.0.0
@@ -105,6 +98,21 @@ jobs:
         flow-bin: ./node_modules/.bin/flow
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Make sure our packages aren't growing unexpectedly
+    # This must come last as it builds the old code last and so leaves the
+    # wrong code in place for the next job.
+    - name: Check Builds
+      uses: preactjs/compressed-size-action@v2
+      with:
+        # We only care about the browser ES module size, really:
+        pattern: "**/dist/es/index.browser.js"
+        # Always ignore SourceMaps and node_modules:
+        exclude: "{**/*.map,**/node_modules/**}"
+        # Clean up before a build
+        clean-script: "clean"
+        # Build production
+        build-script: "build:prodsizecheck"
 
 
   test:
