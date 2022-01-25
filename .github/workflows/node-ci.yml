@@ -46,7 +46,7 @@ jobs:
 
   lint:
     needs: [prime_cache_primary]
-    name: Lint and flow check
+    name: Lint, flow, and coverage check
     env:
       CI: true
     runs-on: ${{ matrix.os }}
@@ -101,6 +101,17 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # Collect and record coverage
+    - name: Run Jest with coverage
+      run: yarn coverage
+    - name: Upload Coverage
+      if: ${{ github.actor != 'dependabot[bot]' }}
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage/coverage-final.json
+        fail_ci_if_error: true
+
     # Make sure our packages aren't growing unexpectedly
     # This must come last as it builds the old code last and so leaves the
     # wrong code in place for the next job.
@@ -116,9 +127,8 @@ jobs:
         # Build production
         build-script: "build:prodsizecheck"
 
-
   test:
-    needs: [lint, coverage]
+    needs: [lint]
     name: Test
     env:
       CI: true
@@ -147,57 +157,29 @@ jobs:
     - name: Install dependencies
       if: steps.node-modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
-    - name: Checking out base ref
-      run: |
-        # Make sure we also fetch the base ref so that ESLint, Flow, and Jest
-        # have a ref to compare against.
-        git fetch --depth 1 origin ${GITHUB_BASE_REF}
-    - name: Run jest tests
-      uses: Khan/jest-action@v1.2.0
-      with:
-        run-all-if-changed: package.json,jest.config.js,babel.config.js
-        jest-bin: ./node_modules/.bin/jest
-        find-related-tests: 1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Get All Changed Files
+      uses: jaredly/get-changed-files@v1.0.1
+      id: changed
+      with:
+        format: space-delimited
+        absolute: true
 
-  coverage:
-    needs: [prime_cache_primary]
-    name: Gather coverage
-    env:
-      CI: true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [14.x]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - uses: actions/cache@v2
-      id: node-modules-cache # use this to check for `cache-hit` (`steps.node-modules-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: node_modules
-        key: ${{ runner.os }}${{ matrix.node-version }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}${{ matrix.node-version }}-node-modules-
-    - name: Install dependencies
-      if: steps.node-modules-cache.outputs.cache-hit != 'true'
-      run: yarn install --frozen-lockfile
-    - name: Run Jest with coverage
-      uses: Khan/jest-coverage-action@v1.1.3
-      with:
-        jest-bin: ./node_modules/.bin/jest
-        coverage-data-path: ./coverage/coverage-final.json
-        # We don't give the GITHUB_TOKEN as that causes some odd permissions issues
-    - name: Upload Coverage
-      if: ${{ github.actor != 'dependabot[bot]' }}
-      uses: codecov/codecov-action@v2
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage/coverage-final.json
-        fail_ci_if_error: true
+    - name: Build so that inter-package references are resolved
+      run: yarn build
+
+    # Run tests for our target matrix
+    - name: Run ESLint (all files)
+      if: |
+        contains(steps.changed.outputs.added_modified, 'jest.config.js') ||
+        contains(steps.changed.outputs.added_modified, 'yarn.lock') ||
+        contains(steps.changed.outputs.added_modified, 'test.config.js') ||
+        contains(steps.changed.outputs.added_modified, 'test.transform.js')
+      run: yarn test
+    - name: Run ESLint (added/changed files)
+      if: |
+        (contains(steps.changed.outputs.added_modified, 'jest.config.js') ||
+         contains(steps.changed.outputs.added_modified, 'yarn.lock') ||
+         contains(steps.changed.outputs.added_modified, 'test.config.js') ||
+         contains(steps.changed.outputs.added_modified, 'test.transform.js')) == false
+      run: yarn test ${{ steps.changed.outputs.added_modified }}
