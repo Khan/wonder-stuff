@@ -1,61 +1,108 @@
-/* eslint-disable no-console */
 // @flow
-import {wait} from "../wait.js";
+import {isolateModules} from "../isolate-modules.js";
+import {wait, waitForAnimationFrame} from "../wait.js";
+import * as AssertJest from "../internal/assert-jest.js";
+import * as VerifyRealTimers from "../internal/verify-real-timers.js";
+import * as UnverifiedWait from "../internal/unverified-wait.js";
 
-describe("#wait", () => {
-    it("should throw immediately when jest.useFakeTimers", () => {
+jest.mock("../internal/assert-jest.js");
+jest.mock("../internal/verify-real-timers.js");
+jest.mock("../internal/unverified-wait.js");
+
+describe("wait.js", () => {
+    it("should assert we are in jest on import", () => {
         // Arrange
-        jest.useFakeTimers();
+        const assertJestSpy = jest.spyOn(AssertJest, "assertJest");
 
         // Act
-        const underTest = () => wait();
+        isolateModules(() => jest.requireActual("../wait.js"));
 
         // Assert
-        expect(underTest).toThrowErrorMatchingInlineSnapshot(
-            `"Cannot use wait() with fake timers. Call jest.useRealTimers() in test case or in a beforeEach."`,
-        );
+        expect(assertJestSpy).toHaveBeenCalledTimes(1);
     });
 
-    it("should resolve when jest.useRealTimers", async () => {
-        // Arrange
-        jest.useRealTimers();
+    describe("#wait", () => {
+        it("should verify if jest.useRealTimers or not", () => {
+            // Arrange
+            const verifyRealTimersSpy = jest.spyOn(
+                VerifyRealTimers,
+                "verifyRealTimers",
+            );
 
-        // Act
-        const underTest = wait();
+            // Act
+            wait();
 
-        // Assert
-        await expect(underTest).resolves.toBeUndefined();
+            // Assert
+            expect(verifyRealTimersSpy).toHaveBeenCalled();
+        });
+
+        it("should wait for the given delay, count times", async () => {
+            // Arrange
+            const unverifiedWaitSpy = jest.spyOn(
+                UnverifiedWait,
+                "unverifiedWait",
+            );
+
+            // Act
+            await wait({delay: 10, count: 42});
+
+            // Assert
+            expect(unverifiedWaitSpy).toHaveBeenCalledWith(10, 42);
+        });
+
+        it("should normalize delay to always be at least 0", async () => {
+            // Arrange
+            const unverifiedWaitSpy = jest
+                .spyOn(UnverifiedWait, "unverifiedWait")
+                .mockResolvedValue();
+
+            // Act
+            await wait({delay: -1});
+
+            // Assert
+            expect(unverifiedWaitSpy).toHaveBeenCalledWith(0, 1);
+        });
+
+        it("should normalize count to always be at least 1", async () => {
+            // Arrange
+            const unverifiedWaitSpy = jest
+                .spyOn(UnverifiedWait, "unverifiedWait")
+                .mockResolvedValue();
+
+            // Act
+            await wait({count: 0});
+
+            // Assert
+            expect(unverifiedWaitSpy).toHaveBeenCalledWith(0, 1);
+        });
     });
 
-    it("should not invoke a spied on console.warn for the test case", async () => {
-        // Arrange
-        jest.useRealTimers();
-        const warnSpy = jest
-            .spyOn(console, "warn")
-            .mockImplementation(() => {});
+    describe("#waitForAnimationFrame", () => {
+        it("should verify if jest.useRealTimers or not", () => {
+            // Arrange
+            const verifyRealTimersSpy = jest.spyOn(
+                VerifyRealTimers,
+                "verifyRealTimers",
+            );
 
-        // Act
-        await wait();
+            // Act
+            waitForAnimationFrame();
 
-        // Assert
-        expect(warnSpy).not.toHaveBeenCalled();
-    });
+            // Assert
+            expect(verifyRealTimersSpy).toHaveBeenCalled();
+        });
 
-    it("should not override console.warn for the test case", async () => {
-        // Arrange
-        jest.useRealTimers();
-        const warnSpy = jest
-            .spyOn(console, "warn")
-            .mockImplementation(() => {});
+        it("should wait once for the animation frame duration", async () => {
+            // Arrange
+            const unverifiedWaitSpy = jest
+                .spyOn(UnverifiedWait, "unverifiedWait")
+                .mockResolvedValue();
 
-        // Act
-        console.warn("before");
-        await wait();
-        console.warn("after");
+            // Act
+            await waitForAnimationFrame();
 
-        // Assert
-        expect(warnSpy).toHaveBeenCalledTimes(2);
-        expect(warnSpy).toHaveBeenCalledWith("before");
-        expect(warnSpy).toHaveBeenCalledWith("after");
+            // Assert
+            expect(unverifiedWaitSpy).toHaveBeenCalledWith(17, 1);
+        });
     });
 });
