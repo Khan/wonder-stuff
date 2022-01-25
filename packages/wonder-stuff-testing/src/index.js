@@ -1,2 +1,2 @@
 // @flow
-export {isolateModules} from "./jest/isolate-modules.js";
+export * as jest from "./jest/index.js";
