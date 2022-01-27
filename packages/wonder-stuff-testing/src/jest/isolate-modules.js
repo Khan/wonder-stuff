@@ -1,8 +1,6 @@
 // @flow
 import {assertJest} from "./internal/assert-jest.js";
 
-assertJest();
-
 /**
  * Isolate imports within a given action using jest.isolateModules.
  *
@@ -16,12 +14,7 @@ assertJest();
  * jest yet.
  */
 export const isolateModules = <T>(action: () => T): T => {
-    // We can't test this inside jest, since jest will exist and it's not
-    // worth jumping through hoops to make a test work.
-    /* istanbul ignore if */
-    if (typeof jest === "undefined") {
-        throw new Error(`jest is not defined; make sure you are running jest`);
-    }
+    assertJest();
 
     let result = undefined;
     jest.isolateModules(() => {

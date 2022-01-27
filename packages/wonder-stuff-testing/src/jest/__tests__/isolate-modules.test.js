@@ -5,12 +5,12 @@ import * as AssertJest from "../internal/assert-jest.js";
 jest.mock("../internal/assert-jest.js");
 
 describe("#isolateModules", () => {
-    it("should assert we are in jest on import", () => {
+    it("should assert we are in jest", () => {
         // Arrange
         const assertJestSpy = jest.spyOn(AssertJest, "assertJest");
 
         // Act
-        isolateModules(() => jest.requireActual("../wait.js"));
+        isolateModules(() => {});
 
         // Assert
         expect(assertJestSpy).toHaveBeenCalledTimes(1);

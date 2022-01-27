@@ -1,7 +1,5 @@
 // @flow
-import {isolateModules} from "../isolate-modules.js";
 import {wait, waitForAnimationFrame} from "../wait.js";
-import * as AssertJest from "../internal/assert-jest.js";
 import * as VerifyRealTimers from "../internal/verify-real-timers.js";
 import * as UnverifiedWait from "../internal/unverified-wait.js";
 
@@ -10,17 +8,6 @@ jest.mock("../internal/verify-real-timers.js");
 jest.mock("../internal/unverified-wait.js");
 
 describe("wait.js", () => {
-    it("should assert we are in jest on import", () => {
-        // Arrange
-        const assertJestSpy = jest.spyOn(AssertJest, "assertJest");
-
-        // Act
-        isolateModules(() => jest.requireActual("../wait.js"));
-
-        // Assert
-        expect(assertJestSpy).toHaveBeenCalledTimes(1);
-    });
-
     describe("#wait", () => {
         it("should verify if jest.useRealTimers or not", () => {
             // Arrange

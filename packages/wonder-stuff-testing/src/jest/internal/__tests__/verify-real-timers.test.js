@@ -1,8 +1,20 @@
 /* eslint-disable no-console */
 // @flow
+import * as AssertJest from "../assert-jest.js";
 import {verifyRealTimers} from "../verify-real-timers.js";
 
 describe("#verifyRealTimers", () => {
+    it("should assert we are in jest", () => {
+        // Arrange
+        const assertJestSpy = jest.spyOn(AssertJest, "assertJest");
+
+        // Act
+        verifyRealTimers();
+
+        // Assert
+        expect(assertJestSpy).toHaveBeenCalledTimes(1);
+    });
+
     it("should throw when jest.useFakeTimers", () => {
         // Arrange
         jest.useFakeTimers();

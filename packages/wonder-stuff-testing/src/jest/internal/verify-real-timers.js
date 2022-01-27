@@ -1,11 +1,14 @@
 // @flow
 import {KindError} from "@khanacademy/wonder-stuff-core";
 import {Errors} from "../../errors.js";
+import {assertJest} from "./assert-jest.js";
 
 /**
  * Checks that jest is configured to use real timers.
  */
 export const verifyRealTimers = () => {
+    assertJest();
+
     // Jest may warn if calling timer methods when real timers are used.
     // We need to silence that, but without impacting folks testing, so we'll be
     // cheeky. We don't use this to detect the timers though because if they
