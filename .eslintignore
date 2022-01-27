@@ -3,3 +3,4 @@ flow-typed/**/*.js
 coverage
 **/dist
 **/*.template
+**/package.json
