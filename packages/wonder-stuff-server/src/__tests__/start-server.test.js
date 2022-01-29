@@ -111,6 +111,94 @@ describe("#start-server", () => {
         );
     });
 
+    it("should set the keepAliveTimeout on the created server to the value in the options when provided", async () => {
+        // Arrange
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger: createLogger({mode: Runtime.Test, level: "debug"}),
+            mode: Runtime.Test,
+            keepAliveTimeout: 42,
+        };
+        const fakeServer = {
+            address: jest.fn(),
+            on: jest.fn(),
+            keepAliveTimeout: 0,
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn().mockReturnValue(fakeServer),
+        };
+
+        // Act
+        await startServer(options, pretendApp);
+        const result = fakeServer.keepAliveTimeout;
+
+        // Assert
+        expect(result).toBe(42);
+    });
+
+    it("should set the keepAliveTimeout on the created server to 90000 when no value given", async () => {
+        // Arrange
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger: createLogger({mode: Runtime.Test, level: "debug"}),
+            mode: Runtime.Test,
+        };
+        const fakeServer = {
+            address: jest.fn(),
+            on: jest.fn(),
+            keepAliveTimeout: 0,
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn().mockReturnValue(fakeServer),
+        };
+
+        // Act
+        await startServer(options, pretendApp);
+        const result = fakeServer.keepAliveTimeout;
+
+        // Assert
+        expect(result).toBe(90000);
+    });
+
+    it.each`
+        keepAliveTimeout | headersTimeout
+        ${null}          | ${95000}
+        ${42}            | ${5042}
+    `(
+        "should set headersTimeout to $headersTimeout when keepAliveTimeout is $keepAliveTimeout",
+        async ({keepAliveTimeout, headersTimeout}) => {
+            // Arrange
+            const options = {
+                name: "TEST_GATEWAY",
+                port: 42,
+                host: "127.0.0.1",
+                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                mode: Runtime.Test,
+                keepAliveTimeout,
+            };
+            const fakeServer = {
+                address: jest.fn(),
+                on: jest.fn(),
+                keepAliveTimeout: 0,
+                headersTimeout: 0,
+            };
+            const pretendApp: $FlowFixMe = {
+                listen: jest.fn().mockReturnValue(fakeServer),
+            };
+
+            // Act
+            await startServer(options, pretendApp);
+            const result = fakeServer.headersTimeout;
+
+            // Assert
+            expect(result).toBe(headersTimeout);
+        },
+    );
+
     describe("listen callback", () => {
         it("should report start failure if gateway is null", async () => {
             // Arrange
@@ -339,6 +427,50 @@ describe("#start-server", () => {
             expect(processExitSpy).toHaveBeenCalledWith(1);
         });
 
+        it("should default error message when closing the server and the error message is null", async () => {
+            // Arrange
+            const options = {
+                name: "TEST_GATEWAY",
+                port: 42,
+                host: "127.0.0.1",
+                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                mode: Runtime.Test,
+            };
+            const fakeServer = {
+                address: () => ({
+                    address: "ADDRESS",
+                    port: "PORT",
+                }),
+                on: jest.fn(),
+                close: jest.fn(),
+            };
+            const listenMock = jest.fn().mockReturnValue(fakeServer);
+            const pretendApp = ({
+                listen: listenMock,
+            }: $FlowFixMe);
+            const processOnSpy = jest.spyOn(process, "on");
+            const processExitSpy = jest
+                .spyOn(process, "exit")
+                .mockReturnValue();
+            await startServer(options, pretendApp);
+            const errorSpy = jest.spyOn(options.logger, "error");
+            const processCallback = processOnSpy.mock.calls[0][1];
+            processCallback();
+            const closeCallback = fakeServer.close.mock.calls[0][0];
+
+            // Act
+            closeCallback({});
+
+            // Assert
+            expect(errorSpy).toHaveBeenCalledWith(
+                "Error shutting down server: Unknown Error",
+                {
+                    kind: "Internal",
+                },
+            );
+            expect(processExitSpy).toHaveBeenCalledWith(1);
+        });
+
         it("should close gracefully if there is no error", async () => {
             // Arrange
             const options = {
@@ -415,6 +547,96 @@ describe("#start-server", () => {
             // Assert
             expect(errorSpy).toHaveBeenCalledWith(
                 "Error closing server: CLOSE ERROR",
+                {
+                    kind: "Internal",
+                },
+            );
+            expect(processExitSpy).toHaveBeenCalledWith(1);
+        });
+
+        it("should handle .close() throwing null", async () => {
+            // Arrange
+            const options = {
+                name: "TEST_GATEWAY",
+                port: 42,
+                host: "127.0.0.1",
+                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                mode: Runtime.Test,
+            };
+            const fakeServer = {
+                address: () => ({
+                    address: "ADDRESS",
+                    port: "PORT",
+                }),
+                on: jest.fn(),
+                close: jest.fn().mockImplementation(() => {
+                    // eslint-disable-next-line no-throw-literal
+                    throw null;
+                }),
+            };
+            const listenMock = jest.fn().mockReturnValue(fakeServer);
+            const pretendApp = ({
+                listen: listenMock,
+            }: $FlowFixMe);
+            const processOnSpy = jest.spyOn(process, "on");
+            const processExitSpy = jest
+                .spyOn(process, "exit")
+                .mockReturnValue();
+            await startServer(options, pretendApp);
+            const errorSpy = jest.spyOn(options.logger, "error");
+            const processCallback = processOnSpy.mock.calls[0][1];
+
+            // Act
+            processCallback();
+
+            // Assert
+            expect(errorSpy).toHaveBeenCalledWith(
+                "Error closing server: Unknown Error",
+                {
+                    kind: "Internal",
+                },
+            );
+            expect(processExitSpy).toHaveBeenCalledWith(1);
+        });
+
+        it("should handle .close() throwing error with no message", async () => {
+            // Arrange
+            const options = {
+                name: "TEST_GATEWAY",
+                port: 42,
+                host: "127.0.0.1",
+                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                mode: Runtime.Test,
+            };
+            const fakeServer = {
+                address: () => ({
+                    address: "ADDRESS",
+                    port: "PORT",
+                }),
+                on: jest.fn(),
+                close: jest.fn().mockImplementation(() => {
+                    // eslint-disable-next-line no-throw-literal
+                    throw {};
+                }),
+            };
+            const listenMock = jest.fn().mockReturnValue(fakeServer);
+            const pretendApp = ({
+                listen: listenMock,
+            }: $FlowFixMe);
+            const processOnSpy = jest.spyOn(process, "on");
+            const processExitSpy = jest
+                .spyOn(process, "exit")
+                .mockReturnValue();
+            await startServer(options, pretendApp);
+            const errorSpy = jest.spyOn(options.logger, "error");
+            const processCallback = processOnSpy.mock.calls[0][1];
+
+            // Act
+            processCallback();
+
+            // Assert
+            expect(errorSpy).toHaveBeenCalledWith(
+                "Error closing server: Unknown Error",
                 {
                     kind: "Internal",
                 },

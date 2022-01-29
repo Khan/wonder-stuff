@@ -30,7 +30,7 @@ export const createLogger = ({
             // Let's make sure that errors reported without a taxonomic
             // label get labelled.
             if (info.level === "error" && info.kind == null) {
-                info.kind = Errors.Internal;
+                info.kind = Errors.Unknown;
             }
             return info;
         })(),

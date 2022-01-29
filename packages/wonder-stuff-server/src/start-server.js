@@ -70,7 +70,7 @@ export async function startServer<
         if (server == null || err != null) {
             logger.error(
                 `${name} appears not to have started: ${
-                    (err && err.message) || "Unknown error"
+                    err?.message || "Unknown error"
                 }`,
                 {
                     kind: Errors.Internal,
@@ -138,7 +138,7 @@ export async function startServer<
                 if (err) {
                     logger.error(
                         `Error shutting down server: ${
-                            (err && err.message) || "Unknown Error"
+                            err.message || "Unknown Error"
                         }`,
                         {
                             kind: Errors.Internal,
@@ -152,9 +152,7 @@ export async function startServer<
             closeConnections();
         } catch (err) {
             logger.error(
-                `Error closing server: ${
-                    (err && err.message) || "Unknown Error"
-                }`,
+                `Error closing server: ${err?.message || "Unknown Error"}`,
                 {
                     kind: Errors.Internal,
                 },

@@ -9,7 +9,7 @@ jest.mock("../internal/unverified-wait.js");
 
 describe("wait.js", () => {
     describe("#wait", () => {
-        it("should verify if jest.useRealTimers or not", () => {
+        it("should verify if jest.useRealTimers or not", async () => {
             // Arrange
             const verifyRealTimersSpy = jest.spyOn(
                 VerifyRealTimers,
@@ -17,7 +17,7 @@ describe("wait.js", () => {
             );
 
             // Act
-            wait();
+            await wait();
 
             // Assert
             expect(verifyRealTimersSpy).toHaveBeenCalled();
