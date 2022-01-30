@@ -2,6 +2,9 @@
     "publishConfig": {
         "access": "public"
     },
+    "engines": {
+        "node": ">=12"
+    },
     "name": "@khanacademy/wonder-stuff-server-google",
     "version": "0.0.1",
     "description": "APIs for doing useful things in node servers for Google Cloud",
