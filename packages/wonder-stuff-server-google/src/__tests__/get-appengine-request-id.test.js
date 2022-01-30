@@ -6,7 +6,7 @@ describe("#getAppEngineRequestID", () => {
         // Arrange
         const request = ({
             header: jest.fn(),
-        }: any);
+        }: $FlowFixMe);
 
         // Act
         const result = getAppEngineRequestID(request);
@@ -23,7 +23,7 @@ describe("#getAppEngineRequestID", () => {
                     ? "this-is-a-good-request-id"
                     : null,
             ),
-        }: any);
+        }: $FlowFixMe);
 
         // Act
         const result = getAppEngineRequestID(request);
@@ -40,7 +40,7 @@ describe("#getAppEngineRequestID", () => {
                     ? "this-is-a-bad-request-id-000101BD"
                     : null,
             ),
-        }: any);
+        }: $FlowFixMe);
 
         // Act
         const result = getAppEngineRequestID(request);

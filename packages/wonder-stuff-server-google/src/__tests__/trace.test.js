@@ -1,26 +1,25 @@
 // @flow
 import * as TraceAgent from "@google-cloud/trace-agent";
-import * as GetLogger from "../get-logger.js";
+import * as Server from "@khanacademy/wonder-stuff-server";
 import * as TraceImpl from "../trace-impl.js";
 
 import {trace} from "../trace.js";
 
 jest.mock("@google-cloud/trace-agent");
-jest.mock("../get-logger.js");
 jest.mock("../trace-impl.js");
 
 describe("#trace", () => {
     describe("with request", () => {
         it("should pass request to getLogger", () => {
             // Arrange
-            const fakeRequest: any = ({
+            const fakeRequest: $FlowFixMe = ({
                 url: "",
-            }: any);
-            const fakeLogger: any = ({}: any);
-            const fakeTracer: any = ({}: any);
+            }: $FlowFixMe);
+            const fakeLogger: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeTracer: $FlowFixMe = ({}: $FlowFixMe);
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
             const getLoggerSpy = jest
-                .spyOn(GetLogger, "getLogger")
+                .spyOn(Server, "getLogger")
                 .mockReturnValue(fakeLogger);
 
             // Act
@@ -32,13 +31,13 @@ describe("#trace", () => {
 
         it("should invoke the shared trace implementation with the logger and tracer", () => {
             // Arrange
-            const fakeRequest: any = ({
+            const fakeRequest: $FlowFixMe = ({
                 url: "",
-            }: any);
-            const fakeLogger: any = ({}: any);
-            const fakeTracer: any = ({}: any);
+            }: $FlowFixMe);
+            const fakeLogger: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeTracer: $FlowFixMe = ({}: $FlowFixMe);
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
-            jest.spyOn(GetLogger, "getLogger").mockReturnValue(fakeLogger);
+            jest.spyOn(Server, "getLogger").mockReturnValue(fakeLogger);
             const traceImplSpy = jest.spyOn(TraceImpl, "traceImpl");
 
             // Act
@@ -55,14 +54,14 @@ describe("#trace", () => {
 
         it("should return the trace session", () => {
             // Arrange
-            const fakeTraceSession: any = ({}: any);
-            const fakeRequest: any = ({
+            const fakeTraceSession: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeRequest: $FlowFixMe = ({
                 url: "",
-            }: any);
-            const fakeLogger: any = ({}: any);
-            const fakeTracer: any = ({}: any);
+            }: $FlowFixMe);
+            const fakeLogger: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeTracer: $FlowFixMe = ({}: $FlowFixMe);
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
-            jest.spyOn(GetLogger, "getLogger").mockReturnValue(fakeLogger);
+            jest.spyOn(Server, "getLogger").mockReturnValue(fakeLogger);
             jest.spyOn(TraceImpl, "traceImpl").mockReturnValue(
                 fakeTraceSession,
             );
@@ -78,10 +77,10 @@ describe("#trace", () => {
     describe("without logger nor request", () => {
         it("should invoke the shared trace implementation with the logger and tracer", () => {
             // Arrange
-            const fakeLogger: any = ({}: any);
-            const fakeTracer: any = ({}: any);
+            const fakeLogger: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeTracer: $FlowFixMe = ({}: $FlowFixMe);
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
-            jest.spyOn(GetLogger, "getLogger").mockReturnValue(fakeLogger);
+            jest.spyOn(Server, "getLogger").mockReturnValue(fakeLogger);
             const traceImplSpy = jest.spyOn(TraceImpl, "traceImpl");
 
             // Act
@@ -98,11 +97,11 @@ describe("#trace", () => {
 
         it("should return the trace session", () => {
             // Arrange
-            const fakeTraceSession: any = ({}: any);
-            const fakeLogger: any = ({}: any);
-            const fakeTracer: any = ({}: any);
+            const fakeTraceSession: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeLogger: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeTracer: $FlowFixMe = ({}: $FlowFixMe);
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
-            jest.spyOn(GetLogger, "getLogger").mockReturnValue(fakeLogger);
+            jest.spyOn(Server, "getLogger").mockReturnValue(fakeLogger);
             jest.spyOn(TraceImpl, "traceImpl").mockReturnValue(
                 fakeTraceSession,
             );
@@ -118,8 +117,8 @@ describe("#trace", () => {
     describe("with logger", () => {
         it("should invoke the shared trace implementation with the logger and tracer", () => {
             // Arrange
-            const fakeLogger: any = ({}: any);
-            const fakeTracer: any = ({}: any);
+            const fakeLogger: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeTracer: $FlowFixMe = ({}: $FlowFixMe);
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
             const traceImplSpy = jest.spyOn(TraceImpl, "traceImpl");
 
@@ -137,9 +136,9 @@ describe("#trace", () => {
 
         it("should return the trace session", () => {
             // Arrange
-            const fakeTraceSession: any = ({}: any);
-            const fakeLogger: any = ({}: any);
-            const fakeTracer: any = ({}: any);
+            const fakeTraceSession: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeLogger: $FlowFixMe = ({}: $FlowFixMe);
+            const fakeTracer: $FlowFixMe = ({}: $FlowFixMe);
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
             jest.spyOn(TraceImpl, "traceImpl").mockReturnValue(
                 fakeTraceSession,

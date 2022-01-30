@@ -1,11 +1,11 @@
 // @flow
 import type {Tracer} from "@google-cloud/trace-agent";
-import {getGatewayInfo} from "./get-gateway-info.js";
+import {Errors, KindError} from "@khanacademy/wonder-stuff-core";
+import type {Logger} from "@khanacademy/wonder-stuff-server";
+import {getAppEngineInfo} from "./get-app-engine-info.js";
 import {getDelta} from "./get-delta.js";
-import {getDefaultMetadata} from "./create-logger.js";
-import KAError from "./ka-error.js";
-import {Errors} from "./errors.js";
-import type {Logger, ITraceSession, TraceSessionInfo} from "./types.js";
+import {getDefaultLogMetadata} from "./get-default-log-metadata.js";
+import type {ITraceSession, TraceSessionInfo} from "./types.js";
 
 /**
  * Start tracing an event.
@@ -38,9 +38,9 @@ export const traceImpl = (
     tracer?: Tracer,
 ): ITraceSession => {
     if (!action) {
-        throw new KAError(
+        throw new KindError(
             "Must provide an action for the trace session.",
-            Errors.Internal,
+            Errors.InvalidInput,
         );
     }
     const logMessage = `${action}${message ? `: ${message}` : ""}`;
@@ -63,7 +63,7 @@ export const traceImpl = (
      */
     const profiler = logger.startTimer();
     const beforeMemory = process.memoryUsage();
-    const {name: gatewayName} = getGatewayInfo();
+    const {name: gatewayName} = getAppEngineInfo();
 
     /**
      * Next, if we were given a tracer, we start a trace section for this so
@@ -113,21 +113,21 @@ export const traceImpl = (
          * We need to build the metadata that we will be logging.
          * This is a combination of the given info, some custom things we add,
          * and any profile labels that were added.
+         *
+         * We suppress flow because we want the TraceSessionInfo to overwrite
+         * things and it's OK if we don't know what things it overwrites.
          */
+        // $FlowIgnore[cannot-spread-indexer]
         const metadata = {
             /**
              * We have to add the default metadata because winston does not
              * include this for profiler.done calls, strangely.
-             *
-             * And we have to recreate it because we might be in a worker
-             * that doesn't have access directly to the root logger that has
-             * the default data.
              */
-            ...getDefaultMetadata(),
+            level: "debug",
+            ...getDefaultLogMetadata(),
             ...profileLabels,
             ...info,
             message: `TRACED ${logMessage}`,
-            level: info?.level || "debug",
         };
 
         /**

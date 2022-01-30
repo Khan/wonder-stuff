@@ -1,8 +1,8 @@
 // @flow
 import type {$Response, $Request, Middleware, NextFunction} from "express";
+import {getRequestLogger} from "@khanacademy/wonder-stuff-server";
+import type {Logger, RequestWithLog} from "@khanacademy/wonder-stuff-server";
 import {getAppEngineRequestID} from "../get-app-engine-request-id.js";
-import {getRequestLogger} from "../get-request-logger.js";
-import type {Logger, RequestWithLog} from "../types.js";
 
 /**
  * Create a middleware that sets the log property of a request to a logger
@@ -12,7 +12,7 @@ export function makeAppEngineRequestIDMiddleware<
     TReq: RequestWithLog<$Request>,
     TRes: $Response,
 >(defaultLogger: Logger): Middleware<TReq, TRes> {
-    const middleware = <TReq: RequestWithLog<$Request>, TRes: $Response>(
+    return <TReq: RequestWithLog<$Request>, TRes: $Response>(
         req: TReq,
         res: TRes,
         next: NextFunction,
@@ -39,5 +39,4 @@ export function makeAppEngineRequestIDMiddleware<
         req.log = requestIDLog;
         next();
     };
-    return middleware;
 }

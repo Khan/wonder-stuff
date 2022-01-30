@@ -1,18 +1,25 @@
 // @flow
 import * as DebugAgent from "@google-cloud/debug-agent";
 import * as Profiler from "@google-cloud/profiler";
-import {setupStackdriver} from "../setup-stackdriver.js";
+import {Runtime} from "@khanacademy/wonder-stuff-server";
+import {setupIntegrations} from "../setup-integrations.js";
 
+// Google Profiler does some work on import, even before we mock the module,
+// which leads to a fetch attempt that ultimately is left dangling and can
+// cause wierd test output. So to stop this, we mock the google-auth-library
+// that seems to be at the root of the issue, and that solves it for us.
+jest.mock("google-auth-library");
+jest.mock("@google-cloud/profiler");
 jest.mock("@google-cloud/debug-agent");
 
-describe("#setupStackdriver", () => {
+describe("#setupIntegrations", () => {
     describe("in production", () => {
         it("should not setup @google-cloud/debug-agent if not set to", async () => {
             // Arrange
             const agentSpy = jest.spyOn(DebugAgent, "start");
 
             // Act
-            await setupStackdriver("production");
+            await setupIntegrations(Runtime.Production);
 
             // Assert
             expect(agentSpy).not.toHaveBeenCalled();
@@ -23,7 +30,7 @@ describe("#setupStackdriver", () => {
             const agentSpy = jest.spyOn(DebugAgent, "start");
 
             // Act
-            await setupStackdriver("production", {debugAgent: true});
+            await setupIntegrations(Runtime.Production, {debugAgent: true});
 
             // Assert
             expect(agentSpy).toHaveBeenCalled();
@@ -34,7 +41,7 @@ describe("#setupStackdriver", () => {
             const agentSpy = jest.spyOn(Profiler, "start");
 
             // Act
-            await setupStackdriver("production");
+            await setupIntegrations(Runtime.Production);
 
             // Assert
             expect(agentSpy).not.toHaveBeenCalled();
@@ -45,20 +52,20 @@ describe("#setupStackdriver", () => {
             const agentSpy = jest.spyOn(Profiler, "start");
 
             // Act
-            await setupStackdriver("production", {profiler: true});
+            await setupIntegrations(Runtime.Production, {profiler: true});
 
             // Assert
             expect(agentSpy).toHaveBeenCalled();
         });
     });
 
-    describe("not in production", () => {
+    describe.each([Runtime.Test, Runtime.Development])("in %s", (runtime) => {
         it("should not setup @google-cloud/debug-agent", async () => {
             // Arrange
             const agentSpy = jest.spyOn(DebugAgent, "start");
 
             // Act
-            await setupStackdriver("development");
+            await setupIntegrations(runtime);
 
             // Assert
             expect(agentSpy).not.toHaveBeenCalled();
@@ -69,7 +76,7 @@ describe("#setupStackdriver", () => {
             const agentSpy = jest.spyOn(Profiler, "start");
 
             // Act
-            await setupStackdriver("development");
+            await setupIntegrations(runtime);
 
             // Assert
             expect(agentSpy).not.toHaveBeenCalled();

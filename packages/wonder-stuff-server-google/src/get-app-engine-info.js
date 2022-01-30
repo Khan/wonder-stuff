@@ -10,8 +10,8 @@ import type {AppEngineInfo} from "./types.js";
  * @returns {AppEngineInfo} The information about the gateway.
  */
 export const getAppEngineInfo = (): AppEngineInfo => ({
-    name: process.env.GAE_SERVICE || "unknown",
-    version: process.env.GAE_VERSION || "unknown",
-    instance: process.env.GAE_INSTANCE || "unknown",
+    name: process.env.GAE_SERVICE ?? "unknown",
+    version: process.env.GAE_VERSION ?? "unknown",
+    instance: process.env.GAE_INSTANCE ?? "unknown",
     pid: process.pid,
 });

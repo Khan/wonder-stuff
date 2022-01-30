@@ -1,16 +1,16 @@
 // @flow
-import * as GetGatewayInfo from "../get-gateway-info.js";
+import * as GetAppEngineInfo from "../get-app-engine-info.js";
 import {traceImpl} from "../trace-impl.js";
 
-jest.mock("../get-gateway-info.js");
+jest.mock("../get-app-engine-info.js");
 
 describe("#trace", () => {
     it.each([[""], [null], [undefined]])(
         "should throw if the action is empty/falsy",
         (testPoint) => {
             // Arrange
-            const fakeLogger = ({}: any);
-            jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+            const fakeLogger = ({}: $FlowFixMe);
+            jest.spyOn(GetAppEngineInfo, "getAppEngineInfo").mockReturnValue({
                 name: "GATEWAY_NAME",
                 version: "GATEWAY_VERSION",
             });
@@ -28,8 +28,8 @@ describe("#trace", () => {
         const fakeLogger = ({
             silly: jest.fn(),
             startTimer: jest.fn(),
-        }: any);
-        jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+        }: $FlowFixMe);
+        jest.spyOn(GetAppEngineInfo, "getAppEngineInfo").mockReturnValue({
             name: "GATEWAY_NAME",
             version: "GATEWAY_VERSION",
         });
@@ -46,8 +46,8 @@ describe("#trace", () => {
         const fakeLogger = ({
             silly: jest.fn(),
             startTimer: jest.fn(),
-        }: any);
-        jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+        }: $FlowFixMe);
+        jest.spyOn(GetAppEngineInfo, "getAppEngineInfo").mockReturnValue({
             name: "GATEWAY_NAME",
             version: "GATEWAY_VERSION",
         });
@@ -61,14 +61,14 @@ describe("#trace", () => {
 
     it("should create a tracer span", () => {
         // Arrange
-        const fakeLogger: any = {
+        const fakeLogger: $FlowFixMe = {
             silly: jest.fn(),
             startTimer: jest.fn(),
         };
-        const fakeTracer: any = {
+        const fakeTracer: $FlowFixMe = {
             createChildSpan: jest.fn(),
         };
-        jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+        jest.spyOn(GetAppEngineInfo, "getAppEngineInfo").mockReturnValue({
             name: "GATEWAY_NAME",
             version: "GATEWAY_VERSION",
         });
@@ -84,11 +84,11 @@ describe("#trace", () => {
 
     it("should return a trace session", () => {
         // Arrange
-        const fakeLogger: any = {
+        const fakeLogger: $FlowFixMe = {
             silly: jest.fn(),
             startTimer: jest.fn(),
         };
-        jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+        jest.spyOn(GetAppEngineInfo, "getAppEngineInfo").mockReturnValue({
             name: "GATEWAY_NAME",
             version: "GATEWAY_VERSION",
         });
@@ -104,11 +104,14 @@ describe("#trace", () => {
         describe("#action", () => {
             it("should give action of the trace", () => {
                 // Arrange
-                const fakeLogger: any = {
+                const fakeLogger: $FlowFixMe = {
                     silly: jest.fn(),
                     startTimer: jest.fn(),
                 };
-                jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+                jest.spyOn(
+                    GetAppEngineInfo,
+                    "getAppEngineInfo",
+                ).mockReturnValue({
                     name: "GATEWAY_NAME",
                     version: "GATEWAY_VERSION",
                 });
@@ -123,11 +126,14 @@ describe("#trace", () => {
 
             it("should be read-only", () => {
                 // Arrange
-                const fakeLogger: any = {
+                const fakeLogger: $FlowFixMe = {
                     silly: jest.fn(),
                     startTimer: jest.fn(),
                 };
-                jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+                jest.spyOn(
+                    GetAppEngineInfo,
+                    "getAppEngineInfo",
+                ).mockReturnValue({
                     name: "GATEWAY_NAME",
                     version: "GATEWAY_VERSION",
                 });
@@ -160,7 +166,7 @@ describe("#trace", () => {
                 const fakeTimer = {
                     done: jest.fn(),
                 };
-                const fakeLogger: any = {
+                const fakeLogger: $FlowFixMe = {
                     silly: jest.fn(),
                     startTimer: jest.fn().mockReturnValue(fakeTimer),
                 };
@@ -171,7 +177,10 @@ describe("#trace", () => {
                     .mockReturnValueOnce({
                         someMemoryStuff: 50000,
                     });
-                jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+                jest.spyOn(
+                    GetAppEngineInfo,
+                    "getAppEngineInfo",
+                ).mockReturnValue({
                     name: "GATEWAY_NAME",
                     version: "GATEWAY_VERSION",
                 });
@@ -198,7 +207,7 @@ describe("#trace", () => {
                 const fakeTimer = {
                     done: jest.fn(),
                 };
-                const fakeLogger: any = {
+                const fakeLogger: $FlowFixMe = {
                     silly: jest.fn(),
                     startTimer: jest.fn().mockReturnValue(fakeTimer),
                 };
@@ -209,7 +218,10 @@ describe("#trace", () => {
                     .mockReturnValueOnce({
                         someMemoryStuff: 50000,
                     });
-                jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+                jest.spyOn(
+                    GetAppEngineInfo,
+                    "getAppEngineInfo",
+                ).mockReturnValue({
                     name: "GATEWAY_NAME",
                     version: "GATEWAY_VERSION",
                 });
@@ -236,7 +248,7 @@ describe("#trace", () => {
                 const fakeTimer = {
                     done: jest.fn(),
                 };
-                const fakeLogger: any = {
+                const fakeLogger: $FlowFixMe = {
                     silly: jest.fn(),
                     startTimer: jest.fn().mockReturnValue(fakeTimer),
                 };
@@ -247,7 +259,10 @@ describe("#trace", () => {
                     .mockReturnValueOnce({
                         someMemoryStuff: 50000,
                     });
-                jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+                jest.spyOn(
+                    GetAppEngineInfo,
+                    "getAppEngineInfo",
+                ).mockReturnValue({
                     name: "GATEWAY_NAME",
                     version: "GATEWAY_VERSION",
                 });
@@ -278,7 +293,7 @@ describe("#trace", () => {
                 const fakeTimer = {
                     done: jest.fn(),
                 };
-                const fakeLogger: any = {
+                const fakeLogger: $FlowFixMe = {
                     silly: jest.fn(),
                     startTimer: jest.fn().mockReturnValue(fakeTimer),
                 };
@@ -289,7 +304,10 @@ describe("#trace", () => {
                     .mockReturnValueOnce({
                         someMemoryStuff: 10000,
                     });
-                jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+                jest.spyOn(
+                    GetAppEngineInfo,
+                    "getAppEngineInfo",
+                ).mockReturnValue({
                     name: "GATEWAY_NAME",
                     version: "GATEWAY_VERSION",
                 });
@@ -323,7 +341,7 @@ describe("#trace", () => {
                 const fakeTimer = {
                     done: jest.fn(),
                 };
-                const fakeLogger: any = {
+                const fakeLogger: $FlowFixMe = {
                     silly: jest.fn(),
                     startTimer: jest.fn().mockReturnValue(fakeTimer),
                 };
@@ -334,7 +352,10 @@ describe("#trace", () => {
                     .mockReturnValueOnce({
                         someMemoryStuff: 50000,
                     });
-                jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+                jest.spyOn(
+                    GetAppEngineInfo,
+                    "getAppEngineInfo",
+                ).mockReturnValue({
                     name: "GATEWAY_NAME",
                     version: "GATEWAY_VERSION",
                 });
@@ -371,7 +392,7 @@ describe("#trace", () => {
                 const fakeTimer = {
                     done: jest.fn(),
                 };
-                const fakeLogger: any = {
+                const fakeLogger: $FlowFixMe = {
                     silly: jest.fn(),
                     startTimer: jest.fn().mockReturnValue(fakeTimer),
                 };
@@ -382,7 +403,10 @@ describe("#trace", () => {
                     .mockReturnValueOnce({
                         someMemoryStuff: 50000,
                     });
-                jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+                jest.spyOn(
+                    GetAppEngineInfo,
+                    "getAppEngineInfo",
+                ).mockReturnValue({
                     name: "GATEWAY_NAME",
                     version: "GATEWAY_VERSION",
                 });
@@ -412,17 +436,20 @@ describe("#trace", () => {
                     addLabel: jest.fn(),
                     endSpan: jest.fn(),
                 };
-                const fakeTracer: any = {
+                const fakeTracer: $FlowFixMe = {
                     createChildSpan: jest.fn().mockReturnValue(fakeTraceSpan),
                 };
                 const fakeTimer = {
                     done: jest.fn(),
                 };
-                const fakeLogger: any = {
+                const fakeLogger: $FlowFixMe = {
                     silly: jest.fn(),
                     startTimer: jest.fn().mockReturnValue(fakeTimer),
                 };
-                jest.spyOn(GetGatewayInfo, "getGatewayInfo").mockReturnValue({
+                jest.spyOn(
+                    GetAppEngineInfo,
+                    "getAppEngineInfo",
+                ).mockReturnValue({
                     name: "GATEWAY_NAME",
                     version: "GATEWAY_VERSION",
                 });

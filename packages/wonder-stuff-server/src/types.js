@@ -6,7 +6,7 @@ import type {
     Transport,
 } from "winston";
 
-import type {$Request, Middleware, $Response} from "express";
+import type {$Request} from "express";
 
 /**
  * Describes logging metdata.
@@ -41,10 +41,9 @@ export enum Runtime {
  */
 export type LoggingOptions = {
     /**
-     * The runtime mode to be targeted. When omitted, this will default to
-     * the current runtime mode as determined from `getRuntimeMode`.
+     * The runtime mode.
      */
-    mode?: Runtime,
+    mode: Runtime,
 
     /**
      * Log only if the level of a logged entry is less than or equal to this
@@ -59,44 +58,10 @@ export type LoggingOptions = {
     defaultMetadata?: {...} | (() => {...}),
 
     /**
-     * The transport to use for handling log entries. When not specified,
-     * this will be determined using `getLoggingTransport`.
+     * The transport to use for handling log entries. When not specified or
+     * null, this will be determined using `getLoggingTransport`.
      */
-    transport?: Transport,
-};
-
-/**
- * Options to configure log middleware.
- */
-export type LogMiddlewareOptions<TReq: $Request, TRes: $Response> = {
-    /**
-     * The runtime mode to be targeted. When omitted, this will default to
-     * the current runtime mode as determined from `getRuntimeMode`.
-     */
-    mode?: Runtime,
-
-    /**
-     * The logger that the middleware should target.
-     */
-    logger: Logger,
-
-    /**
-     * Override the default request logging middleware.
-     * Defaults to express-winston's logger.
-     */
-    makeRequestMiddleware?: (
-        mode: Runtime,
-        logger: Logger,
-    ) => Promise<Middleware<TReq, TRes>>,
-
-    /**
-     * Override the default error logging middleware.
-     * Defaults to express-winston's errorLogger
-     */
-    makeErrorMiddleware?: (
-        mode: Runtime,
-        logger: Logger,
-    ) => Promise<Middleware<TReq, TRes>>,
+    transport?: ?Transport,
 };
 
 /**

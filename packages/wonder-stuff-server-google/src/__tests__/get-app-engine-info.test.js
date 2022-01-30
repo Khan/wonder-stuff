@@ -1,5 +1,5 @@
 // @flow
-import {getGatewayInfo} from "../get-gateway-info.js";
+import {getAppEngineInfo} from "../get-app-engine-info.js";
 
 const resetEnv = (name: string, value: ?string): void => {
     if (value == null) {
@@ -9,7 +9,7 @@ const resetEnv = (name: string, value: ?string): void => {
     }
 };
 
-describe("#getGatewayInfo", () => {
+describe("#getAppEngineInfo", () => {
     const GAE_SERVICE = process.env.GAE_SERVICE;
     const GAE_VERSION = process.env.GAE_VERSION;
     const GAE_INSTANCE = process.env.GAE_INSTANCE;
@@ -26,7 +26,7 @@ describe("#getGatewayInfo", () => {
         process.env.GAE_INSTANCE = "INSTANCE";
 
         // Act
-        const result = getGatewayInfo();
+        const result = getAppEngineInfo();
 
         // Assert
         expect(result).toStrictEqual({
@@ -50,7 +50,7 @@ describe("#getGatewayInfo", () => {
         delete process.env.GAE_INSTANCE;
 
         // Act
-        const result = getGatewayInfo();
+        const result = getAppEngineInfo();
 
         // Assert
         expect(result).toStrictEqual({

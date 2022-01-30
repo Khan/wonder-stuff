@@ -1,11 +1,10 @@
 // @flow
 import * as traceAgent from "@google-cloud/trace-agent";
+import {getLogger} from "@khanacademy/wonder-stuff-server";
 import type {$Request} from "express";
-import {getLogger} from "./get-logger.js";
+import type {Logger, RequestWithLog} from "@khanacademy/wonder-stuff-server";
 import {traceImpl} from "./trace-impl.js";
-import {safeHasOwnProperty} from "./safe-has-own-property.js";
-
-import type {Logger, RequestWithLog, ITraceSession} from "./types.js";
+import type {ITraceSession} from "./types.js";
 
 interface ITrace {
     /**
@@ -52,15 +51,28 @@ interface ITrace {
     (action: string, message: string, logger: Logger): ITraceSession;
 }
 
+/**
+ * Trace an action with message.
+ */
 export const trace: ITrace = (
     action: string,
     message: string,
-    requestOrLogger: any,
+    requestOrLogger: mixed,
 ): ITraceSession => {
     const tracer = traceAgent.get();
-    if (requestOrLogger == null || safeHasOwnProperty(requestOrLogger, "url")) {
+    if (
+        requestOrLogger == null ||
+        // $FlowIgnore[method-unbinding]
+        Object.prototype.hasOwnProperty.call(requestOrLogger, "url")
+    ) {
+        // We have done a little check to make sure this is either null
+        // or a request, so just tell Flow it's OK.
+        // $FlowIgnore[incompatible-call]
         const logger = getLogger(requestOrLogger);
         return traceImpl(logger, action, message, tracer);
     }
+
+    // At this point, we can assume it's a logger.
+    // $FlowIgnore[incompatible-call]
     return traceImpl(requestOrLogger, action, message, tracer);
 };

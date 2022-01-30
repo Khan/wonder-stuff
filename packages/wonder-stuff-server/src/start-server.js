@@ -73,17 +73,13 @@ export async function startServer<
     /**
      * Add middleware per options.
      */
-    let appWithMiddleware = express<TReq, TRes>();
+    const appWithMiddleware = express<TReq, TRes>();
     if (includeRequestMiddleware) {
-        appWithMiddleware = appWithMiddleware.use(
-            middleware.defaultRequestLogging(logger),
-        );
+        appWithMiddleware.use(middleware.defaultRequestLogging(logger));
     }
-    appWithMiddleware = appWithMiddleware.use(app);
+    appWithMiddleware.use(app);
     if (includeErrorMiddleware) {
-        appWithMiddleware = appWithMiddleware.use(
-            middleware.defaultErrorLogging(logger),
-        );
+        appWithMiddleware.use(middleware.defaultErrorLogging(logger));
     }
 
     /**

@@ -1,5 +1,5 @@
 //@flow
-import * as GetRequestLogger from "../../get-request-logger.js";
+import * as Server from "@khanacademy/wonder-stuff-server";
 import {makeAppEngineRequestIDMiddleware} from "../make-app-engine-request-id-middleware.js";
 import * as GetAppEngineRequestID from "../../get-app-engine-request-id.js";
 
@@ -8,7 +8,7 @@ jest.mock("../../get-app-engine-request-id.js");
 describe("#makeAppEngineRequestIDMiddleware", () => {
     it("should return middleware function", () => {
         // Arrange
-        const pretendLogger = ({}: any);
+        const pretendLogger = ({}: $FlowFixMe);
 
         // Act
         const result = makeAppEngineRequestIDMiddleware(pretendLogger);
@@ -28,14 +28,14 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
 
             it("should not call getRequestLogger", () => {
                 // Arrange
-                const pretendDefaultLogger = ({}: any);
-                const pretendRequest = ({}: any);
-                const pretendResponse = ({}: any);
+                const pretendDefaultLogger = ({}: $FlowFixMe);
+                const pretendRequest = ({}: $FlowFixMe);
+                const pretendResponse = ({}: $FlowFixMe);
                 const mockNext = jest.fn();
                 const middleware =
                     makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
                 const getRequestLoggerSpy = jest.spyOn(
-                    GetRequestLogger,
+                    Server,
                     "getRequestLogger",
                 );
 
@@ -52,16 +52,15 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
 
             it("should not create child logger from logger", () => {
                 // Arrange
-                const pretendDefaultLogger = ({child: jest.fn()}: any);
-                const pretendRequest = ({}: any);
-                const pretendResponse = ({}: any);
+                const pretendDefaultLogger = ({child: jest.fn()}: $FlowFixMe);
+                const pretendRequest = ({}: $FlowFixMe);
+                const pretendResponse = ({}: $FlowFixMe);
                 const mockNext = jest.fn();
                 const middleware =
                     makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
-                jest.spyOn(
-                    GetRequestLogger,
-                    "getRequestLogger",
-                ).mockReturnValue(pretendDefaultLogger);
+                jest.spyOn(Server, "getRequestLogger").mockReturnValue(
+                    pretendDefaultLogger,
+                );
 
                 // Act
                 /**
@@ -76,9 +75,9 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
 
             it("should invoke next", () => {
                 // Arrange
-                const pretendDefaultLogger = ({}: any);
-                const pretendRequest = ({}: any);
-                const pretendResponse = ({}: any);
+                const pretendDefaultLogger = ({}: $FlowFixMe);
+                const pretendRequest = ({}: $FlowFixMe);
+                const pretendResponse = ({}: $FlowFixMe);
                 const mockNext = jest.fn();
                 const middleware =
                     makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
@@ -105,14 +104,14 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
 
             it("should use default logger and request with getRequestLogger to get logger", () => {
                 // Arrange
-                const pretendDefaultLogger = ({child: jest.fn()}: any);
-                const pretendRequest = ({}: any);
-                const pretendResponse = ({}: any);
+                const pretendDefaultLogger = ({child: jest.fn()}: $FlowFixMe);
+                const pretendRequest = ({}: $FlowFixMe);
+                const pretendResponse = ({}: $FlowFixMe);
                 const mockNext = jest.fn();
                 const middleware =
                     makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
                 const getRequestLoggerSpy = jest
-                    .spyOn(GetRequestLogger, "getRequestLogger")
+                    .spyOn(Server, "getRequestLogger")
                     .mockReturnValue(pretendDefaultLogger);
 
                 // Act
@@ -131,16 +130,15 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
 
             it("should create child logger from logger with requestID", () => {
                 // Arrange
-                const pretendDefaultLogger = ({child: jest.fn()}: any);
-                const pretendRequest = ({}: any);
-                const pretendResponse = ({}: any);
+                const pretendDefaultLogger = ({child: jest.fn()}: $FlowFixMe);
+                const pretendRequest = ({}: $FlowFixMe);
+                const pretendResponse = ({}: $FlowFixMe);
                 const mockNext = jest.fn();
                 const middleware =
                     makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
-                jest.spyOn(
-                    GetRequestLogger,
-                    "getRequestLogger",
-                ).mockReturnValue(pretendDefaultLogger);
+                jest.spyOn(Server, "getRequestLogger").mockReturnValue(
+                    pretendDefaultLogger,
+                );
 
                 // Act
                 /**
@@ -157,19 +155,18 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
 
             it("should attach child logger to request.log", () => {
                 // Arrange
-                const pretendChildLogger = ({}: any);
+                const pretendChildLogger = ({}: $FlowFixMe);
                 const pretendDefaultLogger = ({
                     child: () => pretendChildLogger,
-                }: any);
-                const pretendRequest = ({}: any);
-                const pretendResponse = ({}: any);
+                }: $FlowFixMe);
+                const pretendRequest = ({}: $FlowFixMe);
+                const pretendResponse = ({}: $FlowFixMe);
                 const mockNext = jest.fn();
                 const middleware =
                     makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
-                jest.spyOn(
-                    GetRequestLogger,
-                    "getRequestLogger",
-                ).mockReturnValue(pretendDefaultLogger);
+                jest.spyOn(Server, "getRequestLogger").mockReturnValue(
+                    pretendDefaultLogger,
+                );
 
                 // Act
                 /**
@@ -184,16 +181,15 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
 
             it("should invoke next", () => {
                 // Arrange
-                const pretendDefaultLogger = ({child: jest.fn()}: any);
-                const pretendRequest = ({}: any);
-                const pretendResponse = ({}: any);
+                const pretendDefaultLogger = ({child: jest.fn()}: $FlowFixMe);
+                const pretendRequest = ({}: $FlowFixMe);
+                const pretendResponse = ({}: $FlowFixMe);
                 const mockNext = jest.fn();
                 const middleware =
                     makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
-                jest.spyOn(
-                    GetRequestLogger,
-                    "getRequestLogger",
-                ).mockReturnValue(pretendDefaultLogger);
+                jest.spyOn(Server, "getRequestLogger").mockReturnValue(
+                    pretendDefaultLogger,
+                );
 
                 // Act
                 /**
