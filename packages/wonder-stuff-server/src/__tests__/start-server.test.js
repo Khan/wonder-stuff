@@ -11,6 +11,7 @@ import {Runtime} from "../types.js";
 
 import {startServer} from "../start-server.js";
 
+jest.mock("heapdump");
 jest.mock("../root-logger.js");
 jest.mock("express");
 jest.mock("../middleware/default-error-logging.js");
