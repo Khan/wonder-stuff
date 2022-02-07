@@ -3,7 +3,6 @@ module.exports = {
     extends: ["@khanacademy"],
     parser: "@babel/eslint-parser",
     parserOptions: {
-        sourceType: "module",
         babelOptions: {
             configFile: "./build-settings/babel.config.js",
         },

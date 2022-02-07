@@ -1,0 +1,27 @@
+{
+    "publishConfig": {
+        "access": "public"
+    },
+    "engines": {
+        "node": ">=12"
+    },
+    "name": "@khanacademy/wonder-stuff-server",
+    "version": "0.0.1",
+    "description": "APIs for doing useful things in node servers",
+    "module": "dist/es/index.js",
+    "main": "dist/index.js",
+    "source": "src/index.js",
+    "scripts": {
+        "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
+    },
+    "devDependencies": {
+        "ws-dev-build-settings": "^0.0.4"
+    },
+    "author": "",
+    "license": "MIT",
+    "peerDependencies": {
+        "@khanacademy/wonder-stuff-core": "^0.1.2",
+        "express": "^4.17.2",
+        "winston": "^3.4.0"
+    }
+}

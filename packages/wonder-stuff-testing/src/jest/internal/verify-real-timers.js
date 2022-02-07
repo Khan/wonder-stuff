@@ -1,6 +1,5 @@
 // @flow
-import {KindError} from "@khanacademy/wonder-stuff-core";
-import {Errors} from "../../errors.js";
+import {KindError, Errors} from "@khanacademy/wonder-stuff-core";
 import {assertJest} from "./assert-jest.js";
 
 /**

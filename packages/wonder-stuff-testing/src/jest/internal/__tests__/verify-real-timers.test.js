@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 // @flow
+import {Errors} from "@khanacademy/wonder-stuff-core";
 import * as AssertJest from "../assert-jest.js";
 import {verifyRealTimers} from "../verify-real-timers.js";
 
@@ -25,6 +26,11 @@ describe("#verifyRealTimers", () => {
         // Assert
         expect(underTest).toThrowErrorMatchingInlineSnapshot(
             `"Cannot use wait() with fake timers. Call jest.useRealTimers() in test case or in a beforeEach."`,
+        );
+        expect(underTest).toThrowError(
+            expect.objectContaining({
+                kind: Errors.InvalidUse,
+            }),
         );
     });
 

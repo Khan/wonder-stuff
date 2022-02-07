@@ -25,7 +25,7 @@ module.exports = {
     collectCoverageFrom: [
         "packages/**/*.js",
         "!packages/**/types.js",
-        "!packages/**/src/index.js",
+        "!packages/**/src/**/index.js",
         "!packages/**/*.flowtest.js",
         "!packages/**/dist/**/*.js",
         "!<rootDir>/node_modules/",
