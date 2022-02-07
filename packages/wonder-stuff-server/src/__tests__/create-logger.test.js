@@ -1,7 +1,6 @@
 // @flow
 import winston from "winston";
 import {Errors} from "@khanacademy/wonder-stuff-core";
-import * as GetRuntimeMode from "../get-runtime-mode.js";
 import * as GetLoggingTransport from "../get-logging-transport.js";
 import {createLogger} from "../create-logger.js";
 // TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
@@ -16,30 +15,6 @@ describe("#createLogger", () => {
         jest.spyOn(winston, "createLogger").mockReturnValue({
             debug: jest.fn(),
         });
-    });
-
-    it("should get runtime mode from getRuntimeMode if none provided", () => {
-        // Arrange
-        const getRuntimeModeMock = jest
-            .spyOn(GetRuntimeMode, "getRuntimeMode")
-            .mockReturnValue(Runtime.Development);
-
-        // Act
-        createLogger({level: "debug"});
-
-        // Assert
-        expect(getRuntimeModeMock).toHaveBeenCalled();
-    });
-
-    it("should not call getRuntimeMode if mode provided", () => {
-        // Arrange
-        const getRuntimeModeMock = jest.spyOn(GetRuntimeMode, "getRuntimeMode");
-
-        // Act
-        createLogger({level: "debug", mode: Runtime.Production});
-
-        // Assert
-        expect(getRuntimeModeMock).not.toHaveBeenCalled();
     });
 
     it("should get logging transport from getLoggingTransport if none provided", () => {
@@ -176,143 +151,5 @@ describe("#createLogger", () => {
             // Assert
             expect(result).not.toHaveProperty("kind");
         });
-    });
-
-    describe("during test", () => {
-        it("should write to a stream", () => {
-            // Arrange
-            const mockCreateLogger = jest.spyOn(winston, "createLogger");
-
-            // Act
-            createLogger({mode: Runtime.Test, level: "silly"});
-            const {transports} = mockCreateLogger.mock.calls[0][0];
-
-            // Assert
-            expect(transports).toBeInstanceOf(winston.transports.Stream);
-        });
-
-        it("should format log messages to include metadata", () => {
-            // Arrange
-            jest.spyOn(winston, "createLogger");
-            const fakePrintF = jest.fn();
-            jest.spyOn(winston.format, "combine", "get").mockReturnValue(
-                jest.fn(),
-            );
-            jest.spyOn(winston.format, "printf", "get").mockReturnValue(
-                fakePrintF,
-            );
-
-            // Act
-            createLogger({mode: Runtime.Test, level: "silly"});
-            const result = fakePrintF.mock.calls[0][0]({
-                level: "debug",
-                message: "MESSAGE",
-                other: "metadata",
-            });
-
-            // Assert
-            expect(result).toMatchInlineSnapshot(`
-                "debug: MESSAGE {
-                    \\"other\\": \\"metadata\\"
-                }"
-            `);
-        });
-    });
-
-    describe("unrecognised runtime mode", () => {
-        it("should write to a stream", () => {
-            // Arrange
-            const mockCreateLogger = jest.spyOn(winston, "createLogger");
-
-            // Act
-            createLogger({
-                mode: ("MADE UP RUNTIME MODE": $FlowFixMe),
-                level: "silly",
-            });
-            const {transports} = mockCreateLogger.mock.calls[0][0];
-
-            // Assert
-            expect(transports).toBeInstanceOf(winston.transports.Stream);
-        });
-    });
-
-    describe("during development", () => {
-        it("should write to the console", () => {
-            // Arrange
-            const mockCreateLogger = jest.spyOn(winston, "createLogger");
-
-            // Act
-            createLogger({mode: Runtime.Development, level: "silly"});
-            const {transports} = mockCreateLogger.mock.calls[0][0];
-
-            // Assert
-            expect(transports).toBeInstanceOf(winston.transports.Console);
-        });
-
-        it.each([undefined, {other: "metadata"}, {}])(
-            "should format log messages to include metadata when present (%s)",
-            (otherMetadata) => {
-                // Arrange
-                jest.spyOn(winston, "createLogger");
-                const fakePrintF = jest.fn();
-                jest.spyOn(winston.format, "combine", "get").mockReturnValue(
-                    jest.fn(),
-                );
-                jest.spyOn(winston.format, "printf", "get").mockReturnValue(
-                    fakePrintF,
-                );
-
-                // Act
-                createLogger({mode: Runtime.Development, level: "silly"});
-                const result = fakePrintF.mock.calls[0][0]({
-                    level: "debug",
-                    message: "MESSAGE",
-                    ...otherMetadata,
-                });
-
-                // Assert
-                expect(result).toMatchSnapshot();
-            },
-        );
-    });
-
-    describe("during production", () => {
-        it("should write to the console", () => {
-            // Arrange
-            const mockCreateLogger = jest.spyOn(winston, "createLogger");
-
-            // Act
-            createLogger({mode: Runtime.Development, level: "silly"});
-            const {transports} = mockCreateLogger.mock.calls[0][0];
-
-            // Assert
-            expect(transports).toBeInstanceOf(winston.transports.Console);
-        });
-
-        it.each([undefined, {other: "metadata"}, {}])(
-            "should format log messages to include metadata when present (%s)",
-            (otherMetadata) => {
-                // Arrange
-                jest.spyOn(winston, "createLogger");
-                const fakePrintF = jest.fn();
-                jest.spyOn(winston.format, "combine", "get").mockReturnValue(
-                    jest.fn(),
-                );
-                jest.spyOn(winston.format, "printf", "get").mockReturnValue(
-                    fakePrintF,
-                );
-
-                // Act
-                createLogger({mode: Runtime.Development, level: "silly"});
-                const result = fakePrintF.mock.calls[0][0]({
-                    level: "debug",
-                    message: "MESSAGE",
-                    ...otherMetadata,
-                });
-
-                // Assert
-                expect(result).toMatchSnapshot();
-            },
-        );
     });
 });

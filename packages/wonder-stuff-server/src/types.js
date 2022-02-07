@@ -41,10 +41,9 @@ export enum Runtime {
  */
 export type LoggingOptions = {
     /**
-     * The runtime mode to be targeted. When omitted, this will default to
-     * the current runtime mode as determined from `getRuntimeMode`.
+     * The runtime mode.
      */
-    mode?: Runtime,
+    mode: Runtime,
 
     /**
      * Log only if the level of a logged entry is less than or equal to this
@@ -59,10 +58,10 @@ export type LoggingOptions = {
     defaultMetadata?: {...} | (() => {...}),
 
     /**
-     * The transport to use for handling log entries. When not specified,
-     * this will be determined using `getLoggingTransport`.
+     * The transport to use for handling log entries. When not specified or
+     * null, this will be determined using `getLoggingTransport`.
      */
-    transport?: Transport,
+    transport?: ?Transport,
 };
 
 /**
@@ -115,6 +114,18 @@ export type ServerOptions = {
      * Set explicitly to `false` to disable heap dumps in all modes.
      */
     +allowHeapDumps?: boolean,
+
+    /**
+     * When `true` or omitted, the default express-winston-based error logging
+     * middleware is included. When `false`, this is not included.
+     */
+    +includeErrorMiddleware?: boolean,
+
+    /**
+     * When `true` or omitted, the default express-winston-based request logging
+     * middleware is included. When `false`, this is not included.
+     */
+    +includeRequestMiddleware?: boolean,
 };
 
 export type RequestWithLog<TReq: $Request> = TReq & {

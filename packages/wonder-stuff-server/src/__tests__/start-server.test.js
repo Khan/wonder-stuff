@@ -1,17 +1,316 @@
 // @flow
-import {startServer} from "../start-server.js";
-import {createLogger} from "../create-logger.js";
+import * as Express from "express";
+import * as RootLogger from "../root-logger.js";
+import * as DefaultRequestLogging from "../middleware/default-request-logging.js";
+import * as DefaultErrorLogging from "../middleware/default-error-logging.js";
 // TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
 // have fixed:
 // https://github.com/import-js/eslint-plugin-import/issues/2073
 // eslint-disable-next-line import/named
 import {Runtime} from "../types.js";
 
+import {startServer} from "../start-server.js";
+
+jest.mock("heapdump");
 jest.mock("../root-logger.js");
+jest.mock("express");
+jest.mock("../middleware/default-error-logging.js");
+jest.mock("../middleware/default-request-logging.js");
 
 describe("#start-server", () => {
     beforeEach(() => {
         jest.spyOn(process, "on").mockImplementation(() => {});
+    });
+
+    it("should set the root logger to the given logger", async () => {
+        // Arrange
+        const logger: $FlowFixMe = {
+            debug: jest.fn(),
+        };
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger,
+            mode: Runtime.Test,
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn(),
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+        const setRootLoggerSpy = jest.spyOn(RootLogger, "setRootLogger");
+
+        // Act
+        await startServer(options, pretendApp);
+
+        // Assert
+        expect(setRootLoggerSpy).toHaveBeenCalledWith(logger);
+    });
+
+    it.each(Array.from(Runtime.members()))(
+        "should import heapdumps if allowHeapDumps is true",
+        async (mode) => {
+            // Arrange
+            const logger: $FlowFixMe = {
+                debug: jest.fn(),
+            };
+            const options = {
+                name: "TEST_GATEWAY",
+                port: 42,
+                host: "127.0.0.1",
+                logger,
+                mode,
+                allowHeapDumps: true,
+            };
+            const fakeServer = {
+                address: jest.fn(),
+                on: jest.fn(),
+                keepAliveTimeout: 0,
+            };
+            const pretendApp: $FlowFixMe = {
+                listen: jest.fn().mockReturnValue(fakeServer),
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+
+            // Act
+            await startServer(options, pretendApp);
+
+            // Assert
+            expect(logger.debug).toHaveBeenCalledWith(
+                expect.stringContaining(
+                    'Heapdumps enabled. To create a heap snapshot at any time, run "kill -USR2 ',
+                ),
+            );
+        },
+    );
+
+    it("should import heapdumps if not production", async () => {
+        // Arrange
+        const logger: $FlowFixMe = {
+            debug: jest.fn(),
+        };
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger,
+            mode: Runtime.Development,
+        };
+        const fakeServer = {
+            address: jest.fn(),
+            on: jest.fn(),
+            keepAliveTimeout: 0,
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn().mockReturnValue(fakeServer),
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+
+        // Act
+        await startServer(options, pretendApp);
+
+        // Assert
+        expect(logger.debug).toHaveBeenCalledWith(
+            expect.stringContaining(
+                'Heapdumps enabled. To create a heap snapshot at any time, run "kill -USR2 ',
+            ),
+        );
+    });
+
+    it("should not import heapdumps if in production", async () => {
+        // Arrange
+        const logger: $FlowFixMe = {
+            debug: jest.fn(),
+        };
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger,
+            mode: Runtime.Production,
+        };
+        const fakeServer = {
+            address: jest.fn(),
+            on: jest.fn(),
+            keepAliveTimeout: 0,
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn().mockReturnValue(fakeServer),
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+
+        // Act
+        await startServer(options, pretendApp);
+
+        // Assert
+        expect(logger.debug).not.toHaveBeenCalled();
+    });
+
+    it("should not import heapdumps if explicitly told not to", async () => {
+        // Arrange
+        const logger: $FlowFixMe = {
+            debug: jest.fn(),
+        };
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger,
+            mode: Runtime.Development,
+            allowHeapDumps: false,
+        };
+        const fakeServer = {
+            address: jest.fn(),
+            on: jest.fn(),
+            keepAliveTimeout: 0,
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn().mockReturnValue(fakeServer),
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+
+        // Act
+        await startServer(options, pretendApp);
+
+        // Assert
+        expect(logger.debug).not.toHaveBeenCalled();
+    });
+
+    it("should add request middleware", async () => {
+        // Arrange
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger: ({
+                debug: jest.fn(),
+            }: $FlowFixMe),
+            mode: Runtime.Test,
+        };
+        const fakeServer = {
+            address: jest.fn(),
+            on: jest.fn(),
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn().mockReturnValue(fakeServer),
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+        jest.spyOn(
+            DefaultRequestLogging,
+            "defaultRequestLogging",
+        ).mockReturnValue("FAKE_REQUEST_MIDDLEWARE");
+
+        // Act
+        await startServer(options, pretendApp);
+
+        // Assert
+        expect(pretendApp.use).toHaveBeenCalledWith("FAKE_REQUEST_MIDDLEWARE");
+    });
+
+    it("should not add request middleware if asked not to", async () => {
+        // Arrange
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger: ({
+                debug: jest.fn(),
+            }: $FlowFixMe),
+            mode: Runtime.Test,
+            includeRequestMiddleware: false,
+        };
+        const fakeServer = {
+            address: jest.fn(),
+            on: jest.fn(),
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn().mockReturnValue(fakeServer),
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+        jest.spyOn(
+            DefaultRequestLogging,
+            "defaultRequestLogging",
+        ).mockReturnValue("FAKE_REQUEST_MIDDLEWARE");
+
+        // Act
+        await startServer(options, pretendApp);
+
+        // Assert
+        expect(pretendApp.use).not.toHaveBeenCalledWith(
+            "FAKE_REQUEST_MIDDLEWARE",
+        );
+    });
+
+    it("should add error middleware", async () => {
+        // Arrange
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger: ({
+                debug: jest.fn(),
+            }: $FlowFixMe),
+            mode: Runtime.Test,
+        };
+        const fakeServer = {
+            address: jest.fn(),
+            on: jest.fn(),
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn().mockReturnValue(fakeServer),
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+        jest.spyOn(DefaultErrorLogging, "defaultErrorLogging").mockReturnValue(
+            "FAKE_ERROR_MIDDLEWARE",
+        );
+
+        // Act
+        await startServer(options, pretendApp);
+
+        // Assert
+        expect(pretendApp.use).toHaveBeenCalledWith("FAKE_ERROR_MIDDLEWARE");
+    });
+
+    it("should not add error middleware if asked not to", async () => {
+        // Arrange
+        const options = {
+            name: "TEST_GATEWAY",
+            port: 42,
+            host: "127.0.0.1",
+            logger: ({
+                debug: jest.fn(),
+            }: $FlowFixMe),
+            mode: Runtime.Test,
+            includeErrorMiddleware: false,
+        };
+        const fakeServer = {
+            address: jest.fn(),
+            on: jest.fn(),
+        };
+        const pretendApp: $FlowFixMe = {
+            listen: jest.fn().mockReturnValue(fakeServer),
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+        jest.spyOn(DefaultErrorLogging, "defaultErrorLogging").mockReturnValue(
+            "FAKE_ERROR_MIDDLEWARE",
+        );
+
+        // Act
+        await startServer(options, pretendApp);
+
+        // Assert
+        expect(pretendApp.use).not.toHaveBeenCalledWith(
+            "FAKE_ERROR_MIDDLEWARE",
+        );
     });
 
     it("should listen on the configured port", async () => {
@@ -20,12 +319,16 @@ describe("#start-server", () => {
             name: "TEST_GATEWAY",
             port: 42,
             host: "127.0.0.1",
-            logger: createLogger({mode: Runtime.Test, level: "debug"}),
+            logger: ({
+                debug: jest.fn(),
+            }: $FlowFixMe),
             mode: Runtime.Test,
         };
         const pretendApp: $FlowFixMe = {
             listen: jest.fn(),
+            use: jest.fn().mockReturnThis(),
         };
+        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
 
         // Act
         await startServer(options, pretendApp);
@@ -44,7 +347,9 @@ describe("#start-server", () => {
             name: "TEST_GATEWAY",
             port: 42,
             host: "127.0.0.1",
-            logger: createLogger({mode: Runtime.Test, level: "debug"}),
+            logger: ({
+                debug: jest.fn(),
+            }: $FlowFixMe),
             mode: Runtime.Test,
         };
         const fakeServer = {
@@ -55,9 +360,11 @@ describe("#start-server", () => {
             on: jest.fn(),
         };
         const listenMock = jest.fn().mockReturnValue(fakeServer);
-        const pretendApp = ({
+        const pretendApp: $FlowFixMe = {
             listen: listenMock,
-        }: $FlowFixMe);
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
 
         // Act
         await startServer(options, pretendApp);
@@ -75,7 +382,9 @@ describe("#start-server", () => {
             name: "TEST_GATEWAY",
             port: 42,
             host: "127.0.0.1",
-            logger: createLogger({mode: Runtime.Test, level: "debug"}),
+            logger: ({
+                debug: jest.fn(),
+            }: $FlowFixMe),
             mode: Runtime.Test,
         };
         let connectionHandler;
@@ -96,9 +405,11 @@ describe("#start-server", () => {
             on: jest.fn(),
         };
         const listenMock = jest.fn().mockReturnValue(fakeServer);
-        const pretendApp = ({
+        const pretendApp: $FlowFixMe = {
             listen: listenMock,
-        }: $FlowFixMe);
+            use: jest.fn().mockReturnThis(),
+        };
+        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
         await startServer(options, pretendApp);
 
         // Act
@@ -117,7 +428,9 @@ describe("#start-server", () => {
             name: "TEST_GATEWAY",
             port: 42,
             host: "127.0.0.1",
-            logger: createLogger({mode: Runtime.Test, level: "debug"}),
+            logger: ({
+                debug: jest.fn(),
+            }: $FlowFixMe),
             mode: Runtime.Test,
             keepAliveTimeout: 42,
         };
@@ -128,7 +441,9 @@ describe("#start-server", () => {
         };
         const pretendApp: $FlowFixMe = {
             listen: jest.fn().mockReturnValue(fakeServer),
+            use: jest.fn().mockReturnThis(),
         };
+        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
 
         // Act
         await startServer(options, pretendApp);
@@ -144,7 +459,9 @@ describe("#start-server", () => {
             name: "TEST_GATEWAY",
             port: 42,
             host: "127.0.0.1",
-            logger: createLogger({mode: Runtime.Test, level: "debug"}),
+            logger: ({
+                debug: jest.fn(),
+            }: $FlowFixMe),
             mode: Runtime.Test,
         };
         const fakeServer = {
@@ -154,7 +471,9 @@ describe("#start-server", () => {
         };
         const pretendApp: $FlowFixMe = {
             listen: jest.fn().mockReturnValue(fakeServer),
+            use: jest.fn().mockReturnThis(),
         };
+        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
 
         // Act
         await startServer(options, pretendApp);
@@ -176,7 +495,9 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    debug: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
                 keepAliveTimeout,
             };
@@ -188,7 +509,9 @@ describe("#start-server", () => {
             };
             const pretendApp: $FlowFixMe = {
                 listen: jest.fn().mockReturnValue(fakeServer),
+                use: jest.fn().mockReturnThis(),
             };
+            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
 
             // Act
             await startServer(options, pretendApp);
@@ -206,13 +529,18 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    debug: jest.fn(),
+                    error: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const listenMock = jest.fn().mockReturnValue(null);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             await startServer(options, pretendApp);
             const errorSpy = jest.spyOn(options.logger, "error");
             const listenCallback = listenMock.mock.calls[0][2];
@@ -233,13 +561,17 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    error: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const listenMock = jest.fn().mockReturnValue(null);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             await startServer(options, pretendApp);
             const errorSpy = jest.spyOn(options.logger, "error");
             const listenCallback = listenMock.mock.calls[0][2];
@@ -262,7 +594,9 @@ describe("#start-server", () => {
                     name: "TEST_GATEWAY",
                     port: 42,
                     host: "127.0.0.1",
-                    logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                    logger: ({
+                        warn: jest.fn(),
+                    }: $FlowFixMe),
                     mode: Runtime.Test,
                 };
                 const fakeServer = {
@@ -270,9 +604,11 @@ describe("#start-server", () => {
                     on: jest.fn(),
                 };
                 const listenMock = jest.fn().mockReturnValue(fakeServer);
-                const pretendApp = ({
+                const pretendApp: $FlowFixMe = {
                     listen: listenMock,
-                }: $FlowFixMe);
+                    use: jest.fn().mockReturnThis(),
+                };
+                jest.spyOn(Express, "default").mockReturnValue(pretendApp);
                 await startServer(options, pretendApp);
                 const warnSpy = jest.spyOn(options.logger, "warn");
                 const listenCallback = listenMock.mock.calls[0][2];
@@ -293,7 +629,9 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const fakeServer = {
@@ -304,9 +642,11 @@ describe("#start-server", () => {
                 on: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             await startServer(options, pretendApp);
             const infoSpy = jest.spyOn(options.logger, "info");
             const listenCallback = listenMock.mock.calls[0][2];
@@ -328,13 +668,17 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const listenMock = jest.fn().mockReturnValue(null);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processSpy = jest.spyOn(process, "on");
             await startServer(options, pretendApp);
             const infoSpy = jest.spyOn(options.logger, "info");
@@ -353,7 +697,9 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const fakeServer = {
@@ -365,9 +711,11 @@ describe("#start-server", () => {
                 close: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processSpy = jest.spyOn(process, "on");
             await startServer(options, pretendApp);
             const infoSpy = jest.spyOn(options.logger, "info");
@@ -389,7 +737,10 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                    error: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const fakeServer = {
@@ -401,9 +752,11 @@ describe("#start-server", () => {
                 close: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
@@ -433,7 +786,10 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                    error: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const fakeServer = {
@@ -447,7 +803,9 @@ describe("#start-server", () => {
             const listenMock = jest.fn().mockReturnValue(fakeServer);
             const pretendApp = ({
                 listen: listenMock,
+                use: jest.fn().mockReturnThis(),
             }: $FlowFixMe);
+            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
@@ -477,7 +835,10 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                    error: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const fakeServer = {
@@ -489,9 +850,11 @@ describe("#start-server", () => {
                 close: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
@@ -516,7 +879,10 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                    error: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const fakeServer = {
@@ -530,9 +896,11 @@ describe("#start-server", () => {
                 }),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
@@ -560,7 +928,10 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                    error: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const fakeServer = {
@@ -577,7 +948,9 @@ describe("#start-server", () => {
             const listenMock = jest.fn().mockReturnValue(fakeServer);
             const pretendApp = ({
                 listen: listenMock,
+                use: jest.fn().mockReturnThis(),
             }: $FlowFixMe);
+            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
@@ -605,14 +978,14 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                    error: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             const fakeServer = {
-                address: () => ({
-                    address: "ADDRESS",
-                    port: "PORT",
-                }),
+                address: jest.fn(),
                 on: jest.fn(),
                 close: jest.fn().mockImplementation(() => {
                     // eslint-disable-next-line no-throw-literal
@@ -622,7 +995,9 @@ describe("#start-server", () => {
             const listenMock = jest.fn().mockReturnValue(fakeServer);
             const pretendApp = ({
                 listen: listenMock,
+                use: jest.fn().mockReturnThis(),
             }: $FlowFixMe);
+            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
@@ -650,15 +1025,14 @@ describe("#start-server", () => {
                 name: "TEST_GATEWAY",
                 port: 42,
                 host: "127.0.0.1",
-                logger: createLogger({mode: Runtime.Test, level: "debug"}),
+                logger: ({
+                    info: jest.fn(),
+                }: $FlowFixMe),
                 mode: Runtime.Test,
             };
             let connectionHandler;
             const fakeServer = {
-                address: () => ({
-                    address: "ADDRESS",
-                    port: "PORT",
-                }),
+                address: jest.fn(),
                 on: jest.fn().mockImplementation((event, fn) => {
                     if (event === "connection") {
                         connectionHandler = fn;
@@ -685,9 +1059,11 @@ describe("#start-server", () => {
                 destroy: jest.fn(),
             };
             const listenMock = jest.fn().mockReturnValue(fakeServer);
-            const pretendApp = ({
+            const pretendApp: $FlowFixMe = {
                 listen: listenMock,
-            }: $FlowFixMe);
+                use: jest.fn().mockReturnThis(),
+            };
+            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             await startServer(options, pretendApp);
             const sigintCallback = processOnSpy.mock.calls[0][1];
