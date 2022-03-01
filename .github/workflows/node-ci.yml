@@ -183,4 +183,4 @@ jobs:
          contains(steps.changed.outputs.added_modified, 'yarn.lock') ||
          contains(steps.changed.outputs.added_modified, 'test.config.js') ||
          contains(steps.changed.outputs.added_modified, 'test.transform.js')) == false
-      run: yarn test ${{ steps.changed.outputs.added_modified }}
+      run: yarn test --passWithNoTests ${{ steps.changed.outputs.added_modified }}
