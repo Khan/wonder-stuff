@@ -69,5 +69,8 @@
     "publishchecks": "git diff --stat --exit-code HEAD && yarn build && node utils/pre-publish-check.js",
     "publish": "yarn run publishchecks && lerna publish",
     "test": "yarn jest"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.21.0"
   }
 }
