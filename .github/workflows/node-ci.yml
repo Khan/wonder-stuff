@@ -138,7 +138,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macOS-latest]
         # We want to include all the versions we support here.
-        node-version: [12.x, 16.x]
+        node-version: [16.x]
         exclude:
           # And exclude any that our coverage job already includes.
           - os: ubuntu-latest
