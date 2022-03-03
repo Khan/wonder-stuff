@@ -25,7 +25,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [14.x]
+        node-version: [16.x]
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -53,7 +53,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [14.x]
+        node-version: [16.x]
     steps:
     - name: Checking out latest commit
       uses: actions/checkout@v2
@@ -137,11 +137,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest]
-        node-version: [12.x, 14.x]
+        # We want to include all the versions we support here.
+        node-version: [12.x, 16.x]
         exclude:
-          # The coverage job covers this configuration
+          # And exclude any that our coverage job already includes.
           - os: ubuntu-latest
-            node-version: 14.x
+            node-version: 16.x
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
