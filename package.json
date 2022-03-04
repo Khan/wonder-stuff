@@ -41,7 +41,7 @@
     "eslint-plugin-monorepo": "^0.3.2",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react": "^7.29.3",
     "express": "^4.17.2",
     "express-winston": "^4.2.0",
     "fast-glob": "^3.2.7",
