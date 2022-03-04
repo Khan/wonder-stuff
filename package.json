@@ -45,7 +45,7 @@
     "express": "^4.17.2",
     "express-winston": "^4.2.0",
     "fast-glob": "^3.2.7",
-    "flow-bin": "^0.172.0",
+    "flow-bin": "^0.173.0",
     "flow-enums-runtime": "^0.0.6",
     "heapdump": "^0.3.15",
     "jest": "^27.2.4",
