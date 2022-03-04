@@ -54,7 +54,12 @@ jobs:
         with:
           publish: yarn publish:ci
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # We use a Personal Access Token here rather than the GITHUB_TOKEN
+          # so that it will trigger our other actions. The token has to be on
+          # the account of someone with appropriate access levels and given the
+          # repo scope. Recommend setting an expiration on the token just so
+          # that it is regularly monitored and updated.
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build Slack message
