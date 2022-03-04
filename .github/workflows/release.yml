@@ -38,10 +38,12 @@ jobs:
           # generate changelogs with the correct commits
           fetch-depth: 0
 
-      - name: Setup Node.js 16.x
+      - name: Setup Node.js 12.x
         uses: actions/setup-node@master
         with:
-          node-version: 16.x
+          # This is our target Node version.
+          # This should match the engine value in the root package.json
+          node-version: 12.x
 
       - name: Install Dependencies
         run: yarn

@@ -1,9 +1,6 @@
 ---
-"@khanacademy/wonder-stuff-core": major
-"@khanacademy/wonder-stuff-sentry": major
-"@khanacademy/wonder-stuff-server": major
-"@khanacademy/wonder-stuff-server-google": major
-"@khanacademy/wonder-stuff-testing": major
+"@khanacademy/wonder-stuff-server": patch
+"@khanacademy/wonder-stuff-server-google": patch
 ---
 
-[BREAKING] Node 16 and above only
+- 🆕 wonder-stuff-server and wonder-stuff-server-google packages
