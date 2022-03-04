@@ -97,7 +97,7 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_NODECI_PRIVATE_KEY }}
     - name: Clone repository
-      run: git clone git@github.com:Khan/wonder-blocks.git .
+      run: git clone git@github.com:Khan/wonder-stuff.git .
 
       # For PRs, we can use github.head_ref to get the branch that the PR
       # is made from. We cannot use github.ref as that points to the PR, not
@@ -128,6 +128,6 @@ jobs:
         git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
         git config user.name "$GITHUB_ACTOR"
         git add dist
-        git commit -m "Updating branch with build artifacts (https://github.com/Khan/wonder-blocks/actions/runs/${{ github.run_id }})"
+        git commit -m "Updating branch with build artifacts (https://github.com/Khan/wonder-stuff/actions/runs/${{ github.run_id }})"
         git push
         exit 1
