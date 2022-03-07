@@ -52,7 +52,7 @@
     "jest-extended": "^2.0.0",
     "jest-when": "^3.4.1",
     "prettier": "^2.5.0",
-    "rollup": "^2.69.1",
+    "rollup": "^2.70.0",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-filesize": "^9.1.1",
