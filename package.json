@@ -21,7 +21,7 @@
     "@babel/preset-flow": "^7.16.7",
     "@changesets/cli": "^2.21.1",
     "@google-cloud/debug-agent": "^5.2.8",
-    "@google-cloud/logging-winston": "^4.2.0",
+    "@google-cloud/logging-winston": "^4.2.1",
     "@google-cloud/profiler": "^4.1.7",
     "@google-cloud/trace-agent": "^5.1.6",
     "@khanacademy/eslint-config": "^0.1.0",
