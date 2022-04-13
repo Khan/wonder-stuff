@@ -8,6 +8,8 @@ import copy from "rollup-plugin-copy";
 import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
 import filesize from "rollup-plugin-filesize";
+import {preserveShebangs} from "rollup-plugin-preserve-shebangs";
+import rollupExecutable from "rollup-plugin-executable-output";
 
 const createBabelPresets = require("./create-babel-presets.js");
 const createBabelPlugins = require("./create-babel-plugins.js");
@@ -86,7 +88,7 @@ const getFormats = ({configFormats}) =>
  */
 const createConfig = (
     commandLineArgs,
-    {name, format, platform, file, plugins},
+    {name, format, platform, inputFile, file, plugins},
 ) => {
     const valueReplacementMappings = {
         __IS_BROWSER__: platform === "browser",
@@ -103,7 +105,7 @@ const createConfig = (
 
     const config = {
         output: createOutputConfig(name, format, file),
-        input: makePackageBasedPath(name, "./src/index.js"),
+        input: makePackageBasedPath(name, inputFile || "./src/index.js"),
         plugins: [
             // We don't want to do process.env.NODE_ENV checks in our main
             // builds. Our consumers should handle that. However, if we
@@ -235,6 +237,24 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
             });
         }
     }
+
+    // Figure out if there are any scripts that we need to generate.
+    const binsPath = makePackageBasedPath(pkgName, "./src/bin");
+    if (fs.existsSync(binsPath)) {
+        const binFiles = fs.readdirSync(binsPath);
+
+        for (const binFile of binFiles) {
+            configs.push({
+                name: pkgName,
+                format: "cjs",
+                platform: "node",
+                file: `dist/bin/${binFile}`,
+                inputFile: `./src/bin/${binFile}`,
+                plugins: [preserveShebangs(), rollupExecutable()],
+            });
+        }
+    }
+
     return configs;
 };
 
