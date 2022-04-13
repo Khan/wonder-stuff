@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // @flow
+/* istanbul ignore file */
 /**
  * Generates a POT file containing all strings marked for translation. The POT
  * file is output to STDOUT.

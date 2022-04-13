@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // @flow
+/* istanbul ignore file */
 /* eslint-disable no-console */
 /**
  * Find newly-introduced i18n strings, when comparing two lists of strings.

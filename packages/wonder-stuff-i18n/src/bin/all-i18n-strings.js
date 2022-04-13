@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // @flow
+/* istanbul ignore file */
 /* eslint-disable no-console */
 /**
  * Extract all i18n strings from JS files.

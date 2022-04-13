@@ -126,6 +126,7 @@ export default class I18nPlugin {
         }
     }
 
+    /* istanbul ignore next */
     apply(compiler: $FlowFixMe) {
         compiler.hooks.emit.tapAsync("I18nPlugin", (options, callback) =>
             this.onEmit(options, callback),
