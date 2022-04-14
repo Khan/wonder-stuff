@@ -16,7 +16,7 @@
     },
     "dependencies": {
         "ancesdir": "^1.1.0",
-        "async": "^2.6.2",
+        "async": "^3.2.3",
         "fast-glob": "^3.2.4",
         "pofile": "^1.1.1"
     },

@@ -18,7 +18,6 @@
  *
  */
 import path from "path";
-import util from "util";
 import {eachLimit} from "async";
 
 import * as I18nUtils from "../utils/i18n-utils.js";
@@ -30,10 +29,6 @@ import {
 import {getEmojiForLocale} from "../utils/emoji-for-locale.js";
 
 import type {TranslatedLocaleStrings} from "../utils/i18n-utils.js";
-
-// NOTE(jeresig): If the NPM async module was using v3 we could just use it
-// directly, instead of having to use promisify.
-const asyncEachLimit = util.promisify(eachLimit);
 
 /**
  * Add a new asset to the Webpack compilation assets.
@@ -225,7 +220,7 @@ export default class I18nPlugin {
         }
 
         // Download the strings for each locale in parallel
-        await asyncEachLimit(locales, 4, async (locale) => {
+        await eachLimit(locales, 4, async (locale) => {
             this.log(
                 `Retreiving strings for ${locale} ${getEmojiForLocale(locale)}`,
             );
