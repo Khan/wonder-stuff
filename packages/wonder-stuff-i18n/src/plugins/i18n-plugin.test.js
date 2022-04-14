@@ -5,6 +5,50 @@ import type {TranslatedLocaleStrings} from "../utils/i18n-utils.js";
 import type {TranslatedStrings, Assets} from "./i18n-plugin.js";
 
 describe("I18nPlugin", () => {
+    describe("constructor", () => {
+        it("errors when there are no arguments", () => {
+            // Arrange
+
+            // Act
+
+            // Assert
+            expect(() => {
+                // $FlowIgnore
+                new I18nPlugin(); // eslint-disable-line no-new
+            }).toThrowErrorMatchingInlineSnapshot(
+                `"I18nPlugin requires options"`,
+            );
+        });
+
+        it("errors when there are no locales", () => {
+            // Arrange
+
+            // Act
+
+            // Assert
+            expect(() => {
+                // $FlowIgnore
+                new I18nPlugin({}); // eslint-disable-line no-new
+            }).toThrowErrorMatchingInlineSnapshot(
+                `"Must provide locales to localize to"`,
+            );
+        });
+
+        it("errors when there is no getI18nStrings", () => {
+            // Arrange
+
+            // Act
+
+            // Assert
+            expect(() => {
+                // $FlowIgnore
+                new I18nPlugin({locales: []}); // eslint-disable-line no-new
+            }).toThrowErrorMatchingInlineSnapshot(
+                `"Must provide a function to get the strings to localize"`,
+            );
+        });
+    });
+
     describe("getTranslatedString", () => {
         it("handles loading data for multiple locales", async () => {
             // Arrange

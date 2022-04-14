@@ -1,4 +1,5 @@
 // @flow
+/* istanbul ignore file */
 export {default as I18nPlugin} from "./plugins/i18n-plugin.js";
 export {extractStrings} from "./utils/extract-i18n.js";
 export {

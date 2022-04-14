@@ -100,6 +100,10 @@ export default class I18nPlugin {
     options: Options;
 
     constructor(options: IncomingOptions) {
+        if (!options) {
+            throw new Error("I18nPlugin requires options");
+        }
+
         if (!options.locales) {
             throw new Error("Must provide locales to localize to");
         }

@@ -439,6 +439,7 @@ export function* extractStrings(
     for (const match of textString.matchAll(I18N_RE)) {
         const {groups} = match;
 
+        /* istanbul ignore if */
         if (!groups) {
             // eslint-disable-next-line no-console
             console.error("i18n regex match failed.");
