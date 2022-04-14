@@ -2191,6 +2191,11 @@ ajv@^6.10.0, ajv@^6.12.3, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+ancesdir@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ancesdir/-/ancesdir-1.1.1.tgz#81a5e56abbb789345445306602d643da7f4ac232"
+  integrity sha512-P1kc/F0ISZNULTcOynPOnRgN/sAPSpsI4wH5wKo1ZDFydY9F7bt1ZBRXKJt4gpDrU5eggWWCV2V0r9uggtWkwA==
+
 ansi-align@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-3.0.1.tgz#0cdf12e111ace773a86e9a1fad1225c43cb19a59"
@@ -3831,7 +3836,7 @@ fast-diff@^1.1.2:
   resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
   integrity sha512-xJuoT5+L99XlZ8twedaRf6Ax2TgQVxvgZOYoPKqZufmJib0tL2tegPBOZb1pVNgIhlqDlA0eO0c3wBvQcmzx4w==
 
-fast-glob@^3.0.3, fast-glob@^3.2.7, fast-glob@^3.2.9:
+fast-glob@^3.0.3, fast-glob@^3.2.4, fast-glob@^3.2.7, fast-glob@^3.2.9:
   version "3.2.11"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.11.tgz#a1172ad95ceb8a16e20caa5c5e56480e5129c1d9"
   integrity sha512-xrO3+1bxSo3ZVHAnqzyuewYT6aMFHRAd4Kcs92MAonjwQZLsK9d0SF1IyQ3k5PoirxTW0Oe/RqFgMQ6TcNE5Ew==
@@ -6386,6 +6391,11 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
+pofile@^1.1.1:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/pofile/-/pofile-1.1.3.tgz#e2c0d4052b9829f171b888bfb35c87791dbea297"
+  integrity sha512-sk96pUvpNwDV6PLrnhr68Uu1S5NohsxqLKz0GuracgrDo40BdF/r1RhHnjakUk6Q4Z0OKIybOQ7GevLKGN1iYw==
+
 pprof@3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/pprof/-/pprof-3.2.0.tgz#5a60638dc51a61128a3d57c74514e8fd99e93722"
@@ -6884,6 +6894,11 @@ rollup-plugin-copy@^3.4.0:
     globby "10.0.1"
     is-plain-object "^3.0.0"
 
+rollup-plugin-executable-output@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-executable-output/-/rollup-plugin-executable-output-1.3.0.tgz#e1b90d78d90ff629d7540efa40958469a5fc9381"
+  integrity sha512-0EeXeCSqLC5L/i+XAZWMT7vydQAxrNuir8JZQVyf5kBuoQYGA6eIpQgetfEmI54WvCrpB8qnIfI9QmAP/2neYw==
+
 rollup-plugin-filesize@^9.1.1:
   version "9.1.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-filesize/-/rollup-plugin-filesize-9.1.2.tgz#958eea26880698d0bc008fa9d214657ee180b934"
@@ -6897,6 +6912,13 @@ rollup-plugin-filesize@^9.1.1:
     gzip-size "^6.0.0"
     pacote "^11.2.7"
     terser "^5.6.0"
+
+rollup-plugin-preserve-shebangs@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-preserve-shebangs/-/rollup-plugin-preserve-shebangs-0.2.0.tgz#e48894c1f68c6fd54b0de10bd26906224d5dc7cd"
+  integrity sha512-OEyTIfZwUJ7yUAVAbegac/bNvp1WJzgZcQNCFprWX42wwwOqlJwrev9lUmzZdYVgCWct+03xUPvZg4RfgkM9oQ==
+  dependencies:
+    magic-string "^0.25.7"
 
 rollup-plugin-terser@^7.0.2:
   version "7.0.2"

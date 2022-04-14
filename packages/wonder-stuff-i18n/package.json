@@ -1,0 +1,32 @@
+{
+    "publishConfig": {
+        "access": "public"
+    },
+    "engines": {
+        "node": ">=12"
+    },
+    "name": "@khanacademy/wonder-stuff-i18n",
+    "version": "0.0.1",
+    "description": "i18n tools and Webpack plugin.",
+    "module": "dist/es/index.js",
+    "main": "dist/index.js",
+    "source": "src/index.js",
+    "scripts": {
+        "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
+    },
+    "dependencies": {
+        "ancesdir": "^1.1.0",
+        "async": "^3.2.3",
+        "fast-glob": "^3.2.4",
+        "pofile": "^1.1.1"
+    },
+    "devDependencies": {
+        "ws-dev-build-settings": "^0.0.4"
+    },
+    "bin": {
+        "all-i18n-strings": "./dist/bin/all-i18n-strings.js",
+        "gen-potfile": "./dist/bin/gen-potfile.js"
+    },
+    "author": "",
+    "license": "MIT"
+}
