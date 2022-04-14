@@ -1,5 +1,12 @@
 # @khanacademy/wonder-stuff-server-google
 
+## 0.0.3
+
+### Patch Changes
+
+-   @khanacademy/wonder-stuff-core@0.1.3
+-   @khanacademy/wonder-stuff-server@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes
