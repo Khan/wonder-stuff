@@ -44,5 +44,5 @@ const LOCALE_TO_EMOJI_MAP = {
  *
  * @param {string} locale the locale string to get the emoji for
  */
-export const getEmojiForLocale: (locale: string) => string = (locale: string) =>
+export const getEmojiForLocale = (locale: string): string =>
     LOCALE_TO_EMOJI_MAP[locale] || "";

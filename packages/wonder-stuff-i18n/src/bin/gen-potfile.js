@@ -11,10 +11,10 @@
  * USAGE:
  *
  *   # Extract strings from all JS files and export to a shared POT file
- *   ./gen-potfile.js javascript/**\/*.{js,jsx} > JavaScript.pot
+ *   yarn gen-potfile "javascript/*.{js,jsx}" > JavaScript.pot
  *
  *   # Extract strings from a specific file and output to STDOUT
- *   ./gen-potfile.js javascript/about/about.jsx
+ *   yarn gen-potfile javascript/about/about.jsx
  */
 import {
     getFilesToExtractFrom,
@@ -25,5 +25,4 @@ import {
 const files = getFilesToExtractFrom(process.argv.slice(2));
 
 // Generate the POT file as a string and output it to STDOUT
-// eslint-disable-next-line no-console
 console.log(getPOTFileStringFromFiles(files));

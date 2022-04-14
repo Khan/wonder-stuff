@@ -600,7 +600,7 @@ describe("I18nPlugin", () => {
                         return 1;
                     },
                 },
-                [`chunk-map.deadbeefc0ffeec0ffe2.js`]: {
+                "chunk-map.deadbeefc0ffeec0ffe2.js": {
                     source() {
                         return "const a = require('./prod/en/runtime.deadbeefc0ffeec0ffe2.js');";
                     },
@@ -664,6 +664,8 @@ describe("I18nPlugin", () => {
                 silent: true,
                 getI18nStrings: jest.fn().mockResolvedValue({}),
                 getLocalePath,
+                shouldLocalizeManifest: (assetName, locale) =>
+                    assetName.includes(`/${locale}/`),
             });
 
             // Act
@@ -687,16 +689,16 @@ describe("I18nPlugin", () => {
                     "source": "const a = require('./prod/en/runtime.deadbeefc0ffeec0ffe2.js');",
                   },
                   "../manifests/es/webpack-manifest-1234.json": Object {
-                    "size": 1,
-                    "source": "const a = require('./prod/en/runtime.deadbeefc0ffeec0ffe2.js');",
+                    "size": 63,
+                    "source": "const a = require('./prod/es/runtime.954f8bb39a2f4b534b54.js');",
                   },
                   "../manifests/pt/webpack-manifest-1234.json": Object {
-                    "size": 1,
-                    "source": "const a = require('./prod/en/runtime.deadbeefc0ffeec0ffe2.js');",
+                    "size": 63,
+                    "source": "const a = require('./prod/pt/runtime.efba0b9130c816f63328.js');",
                   },
                   "../pages/en/page-1234.html": Object {
-                    "size": 64,
-                    "source": "<script src=\\"/prod/es/runtime.954f8bb39a2f4b534b54.js\\"></script>",
+                    "size": 1,
+                    "source": "<script src=\\"/prod/en/runtime.deadbeefc0ffeec0ffe2.js\\"></script>",
                   },
                   "../pages/es/page-1234.html": Object {
                     "size": 64,
@@ -704,7 +706,7 @@ describe("I18nPlugin", () => {
                   },
                   "../pages/pt/page-1234.html": Object {
                     "size": 64,
-                    "source": "<script src=\\"/prod/es/runtime.954f8bb39a2f4b534b54.js\\"></script>",
+                    "source": "<script src=\\"/prod/pt/runtime.efba0b9130c816f63328.js\\"></script>",
                   },
                   "chunk-map.deadbeefc0ffeec0ffe2.js": Object {
                     "size": 1,

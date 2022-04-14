@@ -67,9 +67,9 @@ export const getI18nStringsFromString = (
  * code string.
  *
  * @param {string} textString the string to translate, containing code.
- * @param {Object<string, string|Object>} translatedStrings the translated strings
+ * @param {TranslatedLocaleStrings} translatedStrings the translated strings
  * to insert into code string.
- * @param {Array<Object>} strings the strings that've been pre-extracted from the
+ * @param {Array<ExtractedString>} strings the strings that've been pre-extracted from the
  *  file, as done by extract-i18n.js. This is optional, if not provided the
  *  strings will be extracted automatically.
  * @returns {string} the translated code string

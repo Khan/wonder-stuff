@@ -32,6 +32,12 @@ module.exports = {
                 "max-lines": "off",
             },
         },
+        {
+            files: ["**/bin/**/*.js"],
+            rules: {
+                "no-console": "off",
+            },
+        },
     ],
     rules: {
         "new-cap": "off",

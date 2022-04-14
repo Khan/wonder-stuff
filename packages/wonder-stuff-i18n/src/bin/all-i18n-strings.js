@@ -7,7 +7,8 @@
  *
  * USAGE:
  *
- *   ./webpack/tools/all-i18n-strings.js
+ *   yarn all-i18n-strings file.js
+ *   yarn all-i18n-strings "src/*.js"
  */
 import {getFilesToExtractFrom, getPoItemMap} from "../utils/pofile-utils.js";
 

@@ -25,7 +25,6 @@
     },
     "bin": {
         "all-i18n-strings": "./dist/bin/all-i18n-strings.js",
-        "find-new-i18n-strings": "./dist/bin/find-new-i18n-strings.js",
         "gen-potfile": "./dist/bin/gen-potfile.js"
     },
     "author": "",

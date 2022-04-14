@@ -57,7 +57,7 @@ export type TranslatedStrings = {
     [locale: string]: TranslatedLocaleStrings,
 };
 
-type IncomingOptions = {
+type Options = {
     /**
      * The locales to build. Should be a list of strings like "pt", "es", etc.
      * Be sure to not include "en" in this list, as that is the default locale.
@@ -126,7 +126,7 @@ type IncomingOptions = {
     },
 };
 
-type Options = {
+type InternalOptions = {
     locales: Array<string>,
     silent?: boolean,
     timing?: {
@@ -151,9 +151,9 @@ export type Assets = {
     |},
 };
 export default class I18nPlugin {
-    options: Options;
+    options: InternalOptions;
 
-    constructor(options: IncomingOptions) {
+    constructor(options: Options) {
         if (!options) {
             throw new Error("I18nPlugin requires options");
         }
