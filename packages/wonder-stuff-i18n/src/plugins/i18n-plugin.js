@@ -58,18 +58,72 @@ export type TranslatedStrings = {
 };
 
 type IncomingOptions = {
+    /**
+     * The locales to build. Should be a list of strings like "pt", "es", etc.
+     * Be sure to not include "en" in this list, as that is the default locale.
+     */
     locales: Array<string>,
+
+    /**
+     * Get localized strings for a particular locale.
+     *
+     * Should return a promise that points to a JSON object in the format of:
+     *
+     * {
+     *     "english msgid": "translated msgid in locale",
+     *     "another english msgid": "another translated msgid in locale",
+     *     "plural english msgid": {
+     *         "lang": "es",
+     *         "messages": [
+     *             "translated singular msgid in locale",
+     *             "translated plural msgid in locale"
+     *         ]
+     *     },
+     *     ...
+     * }
+     */
+    getI18nStrings: (locale: string) => Promise<TranslatedLocaleStrings>,
+
+    /**
+     * Provide a partial path to the Webpack output directory that includes
+     * the locale. Defaults to: "/<locale>/".
+     */
+    getLocalePath?: (locale: string) => string,
+
+    /**
+     * Indicate if an asset should have the hashes and URLs inside of it
+     * updated to use the new locale. Defaults to handling any bundle named
+     * "runtime" (you will want to do this for any bundle that contains
+     * the runtime or has references to other JS files)
+     */
+    shouldLocalizeAsset?: (assetName: string) => boolean,
+
+    /**
+     * Determine if a file should be processed, meaning if it should be copied
+     * over to the new locale directory. Defaults to all files.
+     */
+    shouldProcessAsset?: (assetName: string) => boolean,
+
+    /**
+     * Determine if a manifest file, for a given locale should be modified to
+     * point to the new JS files or assets. Defaults to processing all '.html'
+     * files.
+     */
+    shouldLocalizeManifest?: (assetName: string, locale: string) => boolean,
+
+    /**
+     * Should the plugin log any messages to the console? Defaults to true.
+     */
     silent?: boolean,
+
+    /**
+     * Should the plugin log any timing information? None is logged by default.
+     */
     timing?: {
         start: (string) => void,
         end: (string) => void,
         ...
     },
-    getI18nStrings: (locale: string) => Promise<TranslatedLocaleStrings>,
-    getLocalePath?: (locale: string) => string,
-    shouldLocalizeAsset?: (assetName: string) => boolean,
-    shouldProcessAsset?: (assetName: string) => boolean,
-    shouldLocalizeManifest?: (assetName: string, locale: string) => boolean,
 };
 
 type Options = {

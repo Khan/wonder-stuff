@@ -4,7 +4,7 @@ import {
     localizeString,
     localizeFile,
     hashFileContents,
-} from "./localize-file.js";
+} from "../localize-file.js";
 
 describe("hashFileContents", () => {
     it("produces a 20-char hash of a string", () => {

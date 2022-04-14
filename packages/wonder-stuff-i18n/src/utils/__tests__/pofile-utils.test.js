@@ -10,8 +10,8 @@ import {
     getPoItemMap,
     getFilesToExtractFrom,
     getPOTFileStringFromFiles,
-} from "./pofile-utils.js";
-import * as I18nUtils from "./i18n-utils.js";
+} from "../pofile-utils.js";
+import * as I18nUtils from "../i18n-utils.js";
 
 describe("buildPoItem", () => {
     it("builds a PO item from an extracted string", () => {
