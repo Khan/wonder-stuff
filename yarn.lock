@@ -2191,10 +2191,10 @@ ajv@^6.10.0, ajv@^6.12.3, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ancesdir@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ancesdir/-/ancesdir-1.1.1.tgz#81a5e56abbb789345445306602d643da7f4ac232"
-  integrity sha512-P1kc/F0ISZNULTcOynPOnRgN/sAPSpsI4wH5wKo1ZDFydY9F7bt1ZBRXKJt4gpDrU5eggWWCV2V0r9uggtWkwA==
+ancesdir@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/ancesdir/-/ancesdir-3.1.0.tgz#d563f73135d94e6ffe939b5232fea00092b01e45"
+  integrity sha512-geMhDUb1xQrOWqw0mUVUJqXhDs3pqqZ8cgKC9UaBhTd76eqgfm8kLnIL9PDvYQByKEgIYpKxUItiP4XH4gLFQA==
 
 ansi-align@^3.0.0:
   version "3.0.1"
