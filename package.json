@@ -17,7 +17,7 @@
     "@babel/core": "^7.18.0",
     "@babel/eslint-parser": "^7.16.5",
     "@babel/eslint-plugin": "^7.17.7",
-    "@babel/preset-env": "^7.17.12",
+    "@babel/preset-env": "^7.18.0",
     "@babel/preset-flow": "^7.17.12",
     "@changesets/cli": "^2.22.0",
     "@google-cloud/debug-agent": "^5.2.9",
