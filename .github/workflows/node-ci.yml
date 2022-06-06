@@ -28,21 +28,10 @@ jobs:
         node-version: [16.x]
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    - name: Install & cache node_modules
+      uses: Khan/actions@shared-node-cache-v0
       with:
         node-version: ${{ matrix.node-version }}
-    - uses: actions/cache@v2
-      id: node-modules-cache # use this to check for `cache-hit` (`steps.node-modules-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: node_modules
-        key: ${{ runner.os }}${{ matrix.node-version }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}${{ matrix.node-version }}-node-modules-
-    - name: Install dependencies
-      if: steps.node-modules-cache.outputs.cache-hit != 'true'
-      run: yarn install --frozen-lockfile
-
 
   lint:
     needs: [prime_cache_primary]
@@ -57,49 +46,44 @@ jobs:
     steps:
     - name: Checking out latest commit
       uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    - name: Install & cache node_modules
+      uses: Khan/actions@shared-node-cache-v0
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Cache node modules
-      id: node-modules-cache # use this to check for `cache-hit` (`steps.node-modules-cache.outputs.cache-hit != 'true'`)
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-${{ matrix.node-version }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-${{ matrix.node-version }}-node-modules-
-    - name: Install dependencies
-      if: steps.node-modules-cache.outputs.cache-hit != 'true'
-      run: yarn install --frozen-lockfile
-
     - name: Get All Changed Files
-      uses: jaredly/get-changed-files@v1.0.1
+      uses: Khan/actions@get-changed-files-v1
       id: changed
+
+    - id: js-files
+      name: Find .js changed files
+      uses: Khan/actions@filter-files-v0
       with:
-        format: space-delimited
-        absolute: true
+        changed-files: ${{ steps.changed.outputs.files }}
+        extensions: '.js,.jsx'
+
+    - id: eslint-reset
+      uses: Khan/actions@filter-files-v0
+      name: Files that would trigger a full eslint run
+      with:
+        changed-files: ${{ steps.changed.outputs.files }}
+        files: '.eslintrc.js,yarn.lock,.eslintignore'
 
     - name: Build so that inter-package references are resolved
       run: yarn build
 
     # Linting / type checking
-    - name: Run ESLint (all files)
-      if: contains(steps.changed.outputs.added_modified, '.eslintrc.js') || contains(steps.changed.outputs.added_modified, 'yarn.lock')
-      run: |
-        yarn lint:ci packages
-    - name: Run ESLint (added/changed files)
-      if: contains(steps.changed.outputs.added_modified, '.eslintrc.js') == false && contains(steps.changed.outputs.added_modified, 'yarn.lock') == false
-      run: |
-        yarn lint:ci ${{ steps.changed.outputs.added_modified }}
+    - name: Eslint
+      uses: Khan/actions@full-or-limited-v0
+      with:
+        full-trigger: ${{ steps.eslint-reset.outputs.filtered }}
+        full: yarn lint:ci packages
+        limited-trigger: ${{ steps.js-files.outputs.filtered }}
+        limited: yarn lint:ci {}
 
     - name: Run Flow
-      uses: Khan/flow-action@v1.1.3
-      with:
-        flow-bin: ./node_modules/.bin/flow
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: steps.js-files.outputs.filtered != '[]'
+      run: yarn flow
 
     # Collect and record coverage
     - name: Run Jest with coverage
@@ -128,6 +112,11 @@ jobs:
         # Build production
         build-script: "build:prodsizecheck"
 
+      - uses: Khan/actions@check-for-changeset-v0
+        if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+        with:
+          exclude: .github/,.storybook/
+
   test:
     needs: [lint]
     name: Test
@@ -148,43 +137,33 @@ jobs:
             node-version: 16.x
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    - name: Install & cache node_modules
+      uses: Khan/actions@shared-node-cache-v0
       with:
         node-version: ${{ matrix.node-version }}
-    - uses: actions/cache@v2
-      id: node-modules-cache # use this to check for `cache-hit` (`steps.node-modules-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: node_modules
-        key: ${{ runner.os }}${{ matrix.node-version }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}${{ matrix.node-version }}-node-modules-
-    - name: Install dependencies
-      if: steps.node-modules-cache.outputs.cache-hit != 'true'
-      run: yarn install --frozen-lockfile
 
     - name: Get All Changed Files
-      uses: jaredly/get-changed-files@v1.0.1
+      uses: Khan/actions@get-changed-files-v1
       id: changed
-      with:
-        format: space-delimited
-        absolute: true
 
     - name: Build so that inter-package references are resolved
       run: yarn build
 
-    # Run tests for our target matrix
-    - name: Run Jest (all files)
-      if: |
-        contains(steps.changed.outputs.added_modified, 'jest.config.js') ||
-        contains(steps.changed.outputs.added_modified, 'yarn.lock') ||
-        contains(steps.changed.outputs.added_modified, 'test.config.js') ||
-        contains(steps.changed.outputs.added_modified, 'test.transform.js')
-      run: yarn test
-    - name: Run Jest (added/changed files)
-      if: |
-        (contains(steps.changed.outputs.added_modified, 'jest.config.js') ||
-         contains(steps.changed.outputs.added_modified, 'yarn.lock') ||
-         contains(steps.changed.outputs.added_modified, 'test.config.js') ||
-         contains(steps.changed.outputs.added_modified, 'test.transform.js')) == false
-      run: yarn test --passWithNoTests ${{ steps.changed.outputs.added_modified }}
+    - id: jest-reset
+      uses: Khan/actions@filter-files-v0
+      name: Files that would trigger a full Jest run
+      with:
+        changed-files: ${{ steps.changed.outputs.files }}
+        files: |
+          jest.config.js
+          yarn.lock
+          test.config.js
+          test.transform.js
+
+    - name: Jest
+      uses: Khan/actions@full-or-limited-v0
+      with:
+        full-trigger: ${{ steps.jest-reset.outputs.filtered }}
+        full: yarn test
+        limited-trigger: ${{ steps.changed-js.outputs.filtered }}
+        limited: yarn test --findRelatedTests --passWithNoTests {}

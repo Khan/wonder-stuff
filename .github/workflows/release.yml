@@ -37,15 +37,10 @@ jobs:
       - name: Clone repository
         run: git clone git@github.com:Khan/wonder-stuff.git .
 
-      - name: Setup Node.js 12.x
-        uses: actions/setup-node@master
+      - name: Install & cache node_modules
+        uses: Khan/actions@shared-node-cache-v0
         with:
-          # This is our target Node version.
-          # This should match the engine value in the root package.json
           node-version: 12.x
-
-      - name: Install Dependencies
-        run: yarn
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
