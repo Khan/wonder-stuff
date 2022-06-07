@@ -1,3 +1,4 @@
+/* eslint-disable import/no-commonjs */
 const OFF = "off";
 const WARN = "warn";
 const ERROR = "error";
