@@ -267,7 +267,7 @@ const getPkgNames = (commandLineArgs) => {
     const {configPackages} = commandLineArgs;
 
     // Get the list of packages that we have in our packages folder.
-    const actualPackages = fs.readdirSync("packages");
+    const actualPackages = fs.readdirSync("packages").filter(name => name.startsWith("wonder-stuff-"));
 
     // Parse the configPackages arg into an array of package names.
     const specificPackages = getSetFromDelimitedString(

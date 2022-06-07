@@ -1,0 +1,27 @@
+{
+    "name": "@khanacademy/eslint-config",
+    "version": "0.1.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "index.js",
+    "repository": "git@github.com:Khan/eslint-config-khan.git",
+    "author": "Kevin Barabash <kevinb@khanacademy.org>",
+    "license": "MIT",
+    "dependencies": {},
+    "peerDependencies": {
+        "eslint": "^7.27.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-babel": "^5.3.1",
+        "eslint-plugin-eslint-comments": "^3.2.0",
+        "eslint-plugin-ft-flow": "^5.7.2",
+        "eslint-plugin-graphql": "^4.0.0",
+        "eslint-plugin-import": "^2.23.4",
+        "eslint-plugin-jsx-a11y": "^6.4.1",
+        "eslint-plugin-prettier": "^3.4.0",
+        "eslint-plugin-react": "^7.24.0",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "eslint-plugin-react-native": "^3.11.0",
+        "eslint-plugin-react-native-animation-linter": "^0.1.2"
+    }
+}
