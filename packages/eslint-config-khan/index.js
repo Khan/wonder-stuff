@@ -5,7 +5,7 @@ const ERROR = "error";
 
 module.exports = {
     parser: "babel-eslint",
-    plugins: ["flowtype", "jsx-a11y", "prettier", "react"],
+    plugins: ["ft-flow", "jsx-a11y", "prettier", "react"],
     extends: ["eslint:recommended", "prettier"],
     env: {
         // TODO(csilvers): once we properly use node.js for node
@@ -16,7 +16,7 @@ module.exports = {
         jest: true,
     },
     settings: {
-        flowtype: {
+        "ft-flow": {
             onlyFilesWithFlowAnnotation: true,
         },
         react: {
@@ -58,7 +58,7 @@ module.exports = {
         "no-undef": ERROR,
         "no-unexpected-multiline": ERROR,
         "no-unreachable": ERROR,
-        "no-unused-expressions": OFF, // This is superseded by flowtype/no-unused-expressions.
+        "no-unused-expressions": OFF, // This is superseded by ft-flow/no-unused-expressions.
         "no-unused-vars": [ERROR, {args: "none", varsIgnorePattern: "^_*$"}],
         "no-useless-call": ERROR,
         "no-var": ERROR,
@@ -73,28 +73,28 @@ module.exports = {
         "valid-jsdoc": OFF, // TODO(kevinb): Enable this since we are using jdocs in some places.
 
         /**
-         * flowtype rules
+         * ft-flow rules
          */
-        "flowtype/boolean-style": [ERROR, "boolean"],
-        "flowtype/define-flow-type": WARN, // Suppress no-undef on flow types.
-        "flowtype/no-dupe-keys": ERROR,
-        "flowtype/no-unused-expressions": [
+        "ft-flow/boolean-style": [ERROR, "boolean"],
+        "ft-flow/define-flow-type": WARN, // Suppress no-undef on flow types.
+        "ft-flow/no-dupe-keys": ERROR,
+        "ft-flow/no-unused-expressions": [
             ERROR,
             {allowShortCircuit: true, allowTernary: true},
         ],
-        "flowtype/no-weak-types": OFF, // Allow any, Object, and Function for now.
-        "flowtype/require-parameter-type": OFF, // Flow may still require parameter types in certain situations.
-        "flowtype/require-return-type": OFF,
-        "flowtype/require-valid-file-annotation": [
+        "ft-flow/no-weak-types": OFF, // Allow any, Object, and Function for now.
+        "ft-flow/require-parameter-type": OFF, // Flow may still require parameter types in certain situations.
+        "ft-flow/require-return-type": OFF,
+        "ft-flow/require-valid-file-annotation": [
             ERROR,
             "always",
             {
                 annotationStyle: "line",
             },
         ],
-        "flowtype/sort": OFF,
-        "flowtype/type-id-match": OFF,
-        "flowtype/use-flow-type": WARN, // Suppress no-unused-vars on flow types.
+        "ft-flow/sort": OFF,
+        "ft-flow/type-id-match": OFF,
+        "ft-flow/use-flow-type": WARN, // Suppress no-unused-vars on flow types.
 
         /**
          * jsx-a11y rules

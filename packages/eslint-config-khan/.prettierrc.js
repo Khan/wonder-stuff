@@ -1,3 +1,5 @@
+/* eslint-disable import/no-commonjs */
+// @flow
 module.exports = {
     printWidth: 80,
     tabWidth: 4,
