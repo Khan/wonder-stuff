@@ -22,7 +22,7 @@ fg(path.join(__dirname, "..", "packages", "**", "package.json")).then(
 
             if (!checkPrivate(pkgJson)) {
                 if (pkgJson.nobuild) {
-                    checkMainPathExists(pkgJson);
+                    checkMainPathExists(pkgPath);
                 } else {
                     checkPublishConfig(pkgJson);
                     checkEntrypoints(pkgJson);

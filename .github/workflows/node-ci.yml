@@ -120,6 +120,10 @@ jobs:
         # Build production
         build-script: "build:prodsizecheck"
 
+    #
+    # Do not place any steps after "Check Builds"
+    #
+
   test:
     needs: [lint]
     name: Test
