@@ -156,6 +156,10 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
         return [];
     }
     const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath));
+    // Filter out packages that don't require a build step.
+    if (pkgJson.nobuild) {
+        return [];
+    }
 
     // Determine what formats and platforms we are building.
     const platforms = getPlatforms(commandLineArgs);
@@ -267,9 +271,7 @@ const getPkgNames = (commandLineArgs) => {
     const {configPackages} = commandLineArgs;
 
     // Get the list of packages that we have in our packages folder.
-    const actualPackages = fs
-        .readdirSync("packages")
-        .filter((name) => name.startsWith("wonder-stuff-"));
+    const actualPackages = fs.readdirSync("packages");
 
     // Parse the configPackages arg into an array of package names.
     const specificPackages = getSetFromDelimitedString(

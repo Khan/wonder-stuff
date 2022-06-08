@@ -5,6 +5,7 @@
         "access": "public"
     },
     "main": "index.js",
+    "nobuild": true,
     "repository": "git@github.com:Khan/eslint-config-khan.git",
     "author": "Kevin Barabash <kevinb@khanacademy.org>",
     "license": "MIT",
