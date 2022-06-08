@@ -156,6 +156,10 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
         return [];
     }
     const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath));
+    // Filter out packages that don't require a build step.
+    if (pkgJson.nobuild) {
+        return [];
+    }
 
     // Determine what formats and platforms we are building.
     const platforms = getPlatforms(commandLineArgs);

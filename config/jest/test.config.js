@@ -31,6 +31,7 @@ module.exports = {
         "!<rootDir>/node_modules/",
         "!packages/**/node_modules/",
         "!packages/**/.babelrc.js",
+        "!packages/eslint-config-khan/**",
     ],
     // Only output log messages on test failure. From:
     // https://github.com/facebook/jest/issues/4156#issuecomment-490764080

@@ -111,7 +111,7 @@ export class KindError extends Error {
             stripStackFrames,
             minimumFrameCount,
             compositeStack,
-        }: Options = {},
+        }: Options = Object.freeze({}),
     ) {
         if (process.env.NODE_ENV !== "production") {
             // Validate arguments.

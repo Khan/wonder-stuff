@@ -1,6 +1,6 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
-    extends: ["@khanacademy"],
+    extends: ["./packages/eslint-config-khan/index.js"],
     parser: "@babel/eslint-parser",
     parserOptions: {
         babelOptions: {
@@ -48,8 +48,8 @@ module.exports = {
         "@babel/no-invalid-this": "error",
         "@babel/object-curly-spacing": "error",
         "@babel/semi": "error",
-        "flowtype/no-types-missing-file-annotation": "error",
-        "flowtype/no-existential-type": "error",
+        "ft-flow/no-types-missing-file-annotation": "error",
+        "ft-flow/no-existential-type": "error",
         "import/no-default-export": "error",
         "import/no-unresolved": "error",
         "import/named": "error",
