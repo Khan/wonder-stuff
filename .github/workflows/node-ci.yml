@@ -117,6 +117,9 @@ jobs:
       with:
         exclude: .github/,.storybook/
 
+    - name: Pre-publish check
+      run: node utils/pre-publish-check-ci.js
+
   test:
     needs: [lint]
     name: Test
@@ -174,27 +177,3 @@ jobs:
         full: yarn test
         limited-trigger: ${{ steps.js-files.outputs.filtered }}
         limited: yarn test --findRelatedTests --passWithNoTests {}
-
-  pre_publish_check:
-    needs: [prime_cache_primary]
-    name: Pre-publish check
-    env:
-      CI: true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [16.x]
-    steps:
-    - name: Checking out latest commit
-      uses: actions/checkout@v2
-    - name: Install & cache node_modules
-      uses: Khan/actions@shared-node-cache-v0
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Build so that dist files will exist
-      run: yarn build
-
-    - name: Pre-publish check
-      run: node utils/pre-publish-check-ci.js

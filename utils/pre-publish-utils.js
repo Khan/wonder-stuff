@@ -3,6 +3,8 @@
 /**
  * Pre-publish utilities to verify that our publish will go smoothly.
  */
+const fs = require("fs");
+const path = require("path");
 
 const checkPublishConfig = ({name, publishConfig, private: isPrivate}) => {
     // first check if is marked as public and there's access to publish the current package
@@ -82,9 +84,22 @@ const checkEntrypoints = (pkgJson) => {
     checkBrowser(pkgJson);
 };
 
+const checkMainPathExists = (pkgPath) => {
+    const pkgJson = require(path.relative(__dirname, pkgPath));
+    const mainPath = path.join(path.dirname(pkgPath), pkgJson.main);
+    if (!fs.existsSync(mainPath)) {
+        const {name, main} = pkgJson;
+        console.error(
+            `ERROR: ${name}'s "main" field is set to ${main}, but no file exists at that path.`,
+        );
+        process.exit(1);
+    }
+};
+
 module.exports = {
     checkPublishConfig,
     checkEntrypoints,
     checkSource,
     checkPrivate,
+    checkMainPathExists,
 };
