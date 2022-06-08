@@ -71,6 +71,7 @@
     "lint": "eslint --config .eslintrc.js packages",
     "lint:ci": "eslint --config .eslintrc.js",
     "publish:ci": "node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && yarn build && changeset publish",
-    "test": "yarn jest"
+    "test": "yarn jest",
+    "nochangeset": "yarn changeset add --empty"
   }
 }

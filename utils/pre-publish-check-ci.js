@@ -10,6 +10,7 @@ const {
     checkEntrypoints,
     checkSource,
     checkPublishConfig,
+    checkMainPathExists,
 } = require("./pre-publish-utils.js");
 
 // eslint-disable-next-line promise/catch-or-return
@@ -20,9 +21,13 @@ fg(path.join(__dirname, "..", "packages", "**", "package.json")).then(
             const pkgJson = require(path.relative(__dirname, pkgPath));
 
             if (!checkPrivate(pkgJson)) {
-                checkPublishConfig(pkgJson);
-                checkEntrypoints(pkgJson);
-                checkSource(pkgJson);
+                if (pkgJson.nobuild) {
+                    checkMainPathExists(pkgPath);
+                } else {
+                    checkPublishConfig(pkgJson);
+                    checkEntrypoints(pkgJson);
+                    checkSource(pkgJson);
+                }
             }
         }
     },
