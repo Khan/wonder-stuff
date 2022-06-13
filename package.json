@@ -19,7 +19,7 @@
     "@babel/eslint-plugin": "^7.17.7",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-flow": "^7.17.12",
-    "@changesets/cli": "^2.22.0",
+    "@changesets/cli": "^2.23.0",
     "@google-cloud/debug-agent": "^5.2.9",
     "@google-cloud/logging-winston": "^4.2.4",
     "@google-cloud/profiler": "^4.2.0",
