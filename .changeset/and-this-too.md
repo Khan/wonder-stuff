@@ -1,5 +1,5 @@
 ---
-"@khanacademy/wonder-stuff-core": major
+"@khanacademy/wonder-stuff-core": minor
 ---
 
 Add `entries` method as strongly-typed alternative to `Object.entries`
