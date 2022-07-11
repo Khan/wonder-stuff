@@ -1,5 +1,6 @@
 // @flow
 export {clone} from "./clone.js";
+export {keys} from "./keys.js";
 export {values} from "./values.js";
 export {Errors} from "./errors.js";
 export {errorsFromError, Order} from "./errors-from-error.js";
