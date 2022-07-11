@@ -1,5 +1,14 @@
 # @khanacademy/wonder-stuff-testing
 
+## 1.0.0
+
+### Patch Changes
+
+-   Updated dependencies [4a2bca5]
+-   Updated dependencies [0a7b461]
+-   Updated dependencies [e7e3b5f]
+    -   @khanacademy/wonder-stuff-core@0.2.0
+
 ## 0.0.4
 
 ### Patch Changes
