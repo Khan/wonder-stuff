@@ -25,12 +25,12 @@ describe("#values", () => {
             b: "2",
             c: [3, 4],
         };
-        jest.spyOn(Object, "values").mockReturnValue([1, 2, 3]);
+        jest.spyOn(Object, "values").mockReturnValue("THE RESULT");
 
         // Act
         const result = values(obj);
 
         // Assert
-        expect(result).toEqual([1, 2, 3]);
+        expect(result).toEqual("THE RESULT");
     });
 });
