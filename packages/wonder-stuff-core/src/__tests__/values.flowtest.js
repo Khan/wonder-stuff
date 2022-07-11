@@ -20,6 +20,30 @@ import {values} from "../values.js";
 }
 
 {
+    // should work with explicit object-as-map types
+    const map1: {|[string]: number|} = {
+        a: 1,
+        b: 2,
+        c: 3,
+    };
+    const map1Values = values(map1);
+
+    // This works because the variable is typed to number.
+    const _: number = map1Values[0];
+
+    // This errors because the variable is typed to string, and that is not
+    // a number.
+    // $FlowExpectedError[incompatible-type]
+    const __: string = map1Values[1];
+}
+
+{
+    // should return type Array<empty> for empty object
+    const emptyObj = {};
+    const _: Array<empty> = values(emptyObj);
+}
+
+{
     // should error if passed object values do not match parameterized type
     const obj2 = {
         a: 1,
