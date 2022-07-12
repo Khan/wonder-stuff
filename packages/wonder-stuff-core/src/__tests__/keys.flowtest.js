@@ -32,3 +32,14 @@ import {keys} from "../keys.js";
     const keys2bad = keys(obj2);
     const __: "a" = keys2bad[0];
 }
+
+{
+    // should work with more specific object types
+    const obj3: {|[string]: string|} = {
+        a: "1",
+        b: "2",
+    };
+
+    // This should not be erroring.
+    const _ = keys(obj3);
+}
