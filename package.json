@@ -11,7 +11,7 @@
     "build-settings"
   ],
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

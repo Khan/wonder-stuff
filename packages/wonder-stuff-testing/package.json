@@ -2,6 +2,9 @@
     "publishConfig": {
         "access": "public"
     },
+    "engines": {
+        "node": ">=16"
+    },
     "name": "@khanacademy/wonder-stuff-testing",
     "version": "1.0.0",
     "description": "Utilities for use in testing",
