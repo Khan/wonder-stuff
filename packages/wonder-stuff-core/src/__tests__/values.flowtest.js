@@ -58,3 +58,15 @@ import {values} from "../values.js";
     // $FlowExpectedError[incompatible-call]
     const __ = values<number>(obj2);
 }
+
+{
+    // should work with class instances
+    class Foo {
+        a: string;
+        b: string;
+    }
+    const foo = new Foo();
+
+    // This should not be erroring.
+    const _ = values(foo);
+}
