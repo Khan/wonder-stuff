@@ -51,3 +51,15 @@ import {entries} from "../entries.js";
     // $FlowExpectedError[incompatible-type]
     const [___, ____]: [string, number] = entries1[0];
 }
+
+{
+    // should work with class instances
+    class Foo {
+        a: string;
+        b: string;
+    }
+    const foo = new Foo();
+
+    // This should not be erroring.
+    const _ = entries(foo);
+}

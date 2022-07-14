@@ -43,3 +43,15 @@ import {keys} from "../keys.js";
     // This should not be erroring.
     const _ = keys(obj3);
 }
+
+{
+    // should work with class instances
+    class Foo {
+        a: string;
+        b: string;
+    }
+    const foo = new Foo();
+
+    // This should not be erroring.
+    const _ = keys(foo);
+}
