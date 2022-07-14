@@ -1,5 +1,18 @@
 # @khanacademy/wonder-stuff-server-google
 
+## 2.0.0
+
+### Major Changes
+
+-   99abd47: Drop Node 12, target Node 16
+
+### Patch Changes
+
+-   Updated dependencies [1ec0968]
+-   Updated dependencies [99abd47]
+    -   @khanacademy/wonder-stuff-core@1.0.0
+    -   @khanacademy/wonder-stuff-server@2.0.0
+
 ## 1.0.0
 
 ### Patch Changes

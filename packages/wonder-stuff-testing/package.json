@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-testing",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Utilities for use in testing",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -18,7 +18,7 @@
         "ws-dev-build-settings": "^0.0.5"
     },
     "peerDependencies": {
-        "@khanacademy/wonder-stuff-core": "^0.2.0"
+        "@khanacademy/wonder-stuff-core": "^1.0.0"
     },
     "browser": {
         "dist/es/index.js": "./dist/es/index.browser.js",
