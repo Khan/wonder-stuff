@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.0.1
+
+### Patch Changes
+
+-   753b193: Broaden typing for keys/values/entries methods
+
 ## 1.0.0
 
 ### Major Changes

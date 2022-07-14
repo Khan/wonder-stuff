@@ -1,5 +1,12 @@
 # @khanacademy/wonder-stuff-sentry
 
+## 1.0.1
+
+### Patch Changes
+
+-   Updated dependencies [753b193]
+    -   @khanacademy/wonder-stuff-core@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
