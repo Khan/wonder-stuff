@@ -60,9 +60,10 @@ export function normalizeSentryData(
     // only in production.
     if (process.env.NODE_ENV !== "production") {
         const reservedPropertyContexts = {};
-        if (data?.contexts != null) {
-            for (const contextName of Object.keys(data.contexts)) {
-                const context = data.contexts[contextName];
+        const contexts = data?.contexts;
+        if (contexts != null) {
+            for (const contextName of Object.keys(contexts)) {
+                const context = contexts[contextName];
                 if (context == null) {
                     continue;
                 }

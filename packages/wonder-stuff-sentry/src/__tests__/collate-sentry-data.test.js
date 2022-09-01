@@ -23,10 +23,10 @@ describe("#collateSentryData", () => {
 
             // Assert
             expect(result).toMatchInlineSnapshot(`
-                Object {
-                  "contexts": Object {},
-                  "fingerprint": Array [],
-                  "tags": Object {
+                {
+                  "contexts": {},
+                  "fingerprint": [],
+                  "tags": {
                     "concatenated_message": "ROOT",
                     "group_by_message": "ROOT",
                     "kind": "Unknown",
@@ -60,7 +60,7 @@ describe("#collateSentryData", () => {
 
             // Assert
             expect(result.tags).toMatchInlineSnapshot(`
-                Object {
+                {
                   "causetag1": "CAUSE_TAG_1",
                   "concatenated_message": "ROOT",
                   "group_by_message": "ROOT",
@@ -263,14 +263,14 @@ describe("#collateSentryData", () => {
 
             // Assert
             expect(result.tags).toMatchInlineSnapshot(`
-                            Object {
-                              "causetag1": "CAUSE_TAG_1",
-                              "concatenated_message": "ROOT caused by OtherKindSentryError: CAUSE2 caused by Error: CAUSE",
-                              "group_by_message": "ROOT",
-                              "kind": "RootKind",
-                              "roottag1": "ROOT_TAG_1",
-                            }
-                    `);
+                {
+                  "causetag1": "CAUSE_TAG_1",
+                  "concatenated_message": "ROOT caused by OtherKindSentryError: CAUSE2 caused by Error: CAUSE",
+                  "group_by_message": "ROOT",
+                  "kind": "RootKind",
+                  "roottag1": "ROOT_TAG_1",
+                }
+            `);
         });
 
         it("should use the configured tag names", () => {

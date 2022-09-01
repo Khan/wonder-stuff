@@ -117,275 +117,275 @@ describe("extractStrings", () => {
 
         // Assert
         expect(results).toMatchInlineSnapshot(`
-            Array [
-              Object {
-                "comments": Array [
+            [
+              {
+                "comments": [
                   "This is a single line comment",
                 ],
                 "endOffset": 124,
                 "linePos": 5,
-                "msgids": Array [
+                "msgids": [
                   "Single line",
                 ],
                 "startOffset": 111,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "This is a multi-line comment. But line two differs from line two in j2.js.",
                 ],
                 "endOffset": 323,
                 "linePos": 11,
-                "msgids": Array [
+                "msgids": [
                   "I am living in javascript-land",
                   "we are living in javascript-land",
                 ],
                 "startOffset": 251,
                 "type": "ngettext",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "This line is used as ngettext in j2.js",
                 ],
                 "endOffset": 441,
                 "linePos": 18,
-                "msgids": Array [
+                "msgids": [
                   "Am I singular or plural?",
                 ],
                 "startOffset": 415,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 529,
                 "linePos": 21,
-                "msgids": Array [
+                "msgids": [
                   "This line has %(vbl)s",
                 ],
                 "startOffset": 506,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "this content occurs in no other file.",
                   "but this comment occurs a lot.  I repeat myself:",
                 ],
                 "endOffset": 803,
                 "linePos": 28,
-                "msgids": Array [
+                "msgids": [
                   "I am a unique snowflake!",
                 ],
                 "startOffset": 777,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "Include this and also this",
                 ],
                 "endOffset": 908,
                 "linePos": 35,
-                "msgids": Array [
+                "msgids": [
                   "Comment test 1",
                 ],
                 "startOffset": 892,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "Include this and also this",
                   "This is also a comment.",
                 ],
                 "endOffset": 1046,
                 "linePos": 43,
-                "msgids": Array [
+                "msgids": [
                   "Comment test 2",
                 ],
                 "startOffset": 1030,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "Multi 1.",
                 ],
                 "endOffset": 1099,
                 "linePos": 46,
-                "msgids": Array [
+                "msgids": [
                   "Multi 1.",
                 ],
                 "startOffset": 1089,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "Multi 2.",
                 ],
                 "endOffset": 1153,
                 "linePos": 49,
-                "msgids": Array [
+                "msgids": [
                   "Multi 2.",
                 ],
                 "startOffset": 1143,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "Multi 3.",
                 ],
                 "endOffset": 1211,
                 "linePos": 54,
-                "msgids": Array [
+                "msgids": [
                   "Multi 3.",
                 ],
                 "startOffset": 1201,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "Multi 4.",
                 ],
                 "endOffset": 1272,
                 "linePos": 60,
-                "msgids": Array [
+                "msgids": [
                   "Multi 4.",
                 ],
                 "startOffset": 1262,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "I'm way above the code.",
                 ],
                 "endOffset": 1391,
                 "linePos": 66,
-                "msgids": Array [
+                "msgids": [
                   "I'm documented above.",
                 ],
                 "startOffset": 1368,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 1462,
                 "linePos": 69,
-                "msgids": Array [
-                  "Escaped \\"quotes\\" work ok 1.",
+                "msgids": [
+                  "Escaped "quotes" work ok 1.",
                 ],
                 "startOffset": 1431,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 1534,
                 "linePos": 72,
-                "msgids": Array [
+                "msgids": [
                   "Escaped 'quotes' work ok 2.",
                 ],
                 "startOffset": 1503,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 1603,
                 "linePos": 75,
-                "msgids": Array [
-                  "1 Escaped last character\\\\",
+                "msgids": [
+                  "1 Escaped last character\\",
                 ],
                 "startOffset": 1575,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 1672,
                 "linePos": 78,
-                "msgids": Array [
-                  "2 Escaped last character\\\\",
+                "msgids": [
+                  "2 Escaped last character\\",
                 ],
                 "startOffset": 1644,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 1727,
                 "linePos": 81,
-                "msgids": Array [
+                "msgids": [
                   "Ignore empty comments.",
                 ],
                 "startOffset": 1703,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 1852,
                 "linePos": 84,
-                "msgids": Array [
+                "msgids": [
                   "Testing correct single-line comment parsing.",
                 ],
                 "startOffset": 1806,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "One comment",
                 ],
                 "endOffset": 1901,
                 "linePos": 87,
-                "msgids": Array [
+                "msgids": [
                   "foo",
                 ],
                 "startOffset": 1896,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "Should exist",
                 ],
                 "endOffset": 1976,
                 "linePos": 89,
-                "msgids": Array [
+                "msgids": [
                   "bar",
                 ],
                 "startOffset": 1971,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "Handlebars comment.",
                 ],
                 "endOffset": 2084,
                 "linePos": 93,
-                "msgids": Array [
+                "msgids": [
                   "Handlebars i18n string 1.",
                 ],
                 "startOffset": 2057,
                 "type": "_",
               },
-              Object {
-                "comments": Array [
+              {
+                "comments": [
                   "Handlebars comment trailing !.",
                 ],
                 "endOffset": 2214,
                 "linePos": 98,
-                "msgids": Array [
+                "msgids": [
                   "Handlebars i18n string 2.",
                 ],
                 "startOffset": 2187,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 2262,
                 "linePos": 101,
-                "msgids": Array [
+                "msgids": [
                   "Doesn't use i18n.",
                 ],
                 "startOffset": 2243,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 2321,
                 "linePos": 102,
-                "msgids": Array [
+                "msgids": [
                   "Doesn't even use a variable.",
                 ],
                 "startOffset": 2291,
@@ -406,32 +406,32 @@ describe("extractStrings", () => {
 
         // Assert
         expect(results).toMatchInlineSnapshot(`
-            Array [
-              "\\"Single line\\"",
-              "\\"I am living in javascript-land\\",
-                \\"we are living in javascript-land\\"",
-              "\\"Am I singular or plural?\\"",
-              "\\"This line has %(vbl)s\\"",
-              "\\"I am a unique snowflake!\\"",
-              "\\"Comment test 1\\"",
-              "\\"Comment test 2\\"",
-              "\\"Multi 1.\\"",
-              "\\"Multi 2.\\"",
-              "\\"Multi 3.\\"",
-              "\\"Multi 4.\\"",
-              "\\"I'm documented above.\\"",
-              "\\"Escaped \\\\\\"quotes\\\\\\" work ok 1.\\"",
-              "'Escaped \\\\'quotes\\\\' work ok 2.'",
-              "\\"1 Escaped last character\\\\\\\\\\"",
-              "'2 Escaped last character\\\\\\\\'",
-              "\\"Ignore empty comments.\\"",
-              "\\"Testing correct single-line comment parsing.\\"",
-              "\\"foo\\"",
-              "\\"bar\\"",
-              "\\"Handlebars i18n string 1.\\"",
-              "\\"Handlebars i18n string 2.\\"",
-              "\\"Doesn't use i18n.\\"",
-              "\\"Doesn't even use a variable.\\"",
+            [
+              ""Single line"",
+              ""I am living in javascript-land",
+                "we are living in javascript-land"",
+              ""Am I singular or plural?"",
+              ""This line has %(vbl)s"",
+              ""I am a unique snowflake!"",
+              ""Comment test 1"",
+              ""Comment test 2"",
+              ""Multi 1."",
+              ""Multi 2."",
+              ""Multi 3."",
+              ""Multi 4."",
+              ""I'm documented above."",
+              ""Escaped \\"quotes\\" work ok 1."",
+              "'Escaped \\'quotes\\' work ok 2.'",
+              ""1 Escaped last character\\\\"",
+              "'2 Escaped last character\\\\'",
+              ""Ignore empty comments."",
+              ""Testing correct single-line comment parsing."",
+              ""foo"",
+              ""bar"",
+              ""Handlebars i18n string 1."",
+              ""Handlebars i18n string 2."",
+              ""Doesn't use i18n."",
+              ""Doesn't even use a variable."",
             ]
         `);
     });

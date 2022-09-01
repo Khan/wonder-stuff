@@ -31,17 +31,17 @@ describe("buildPoItem", () => {
 
         // Assert
         expect(result).toMatchInlineSnapshot(`
-            Object {
-              "comments": Array [],
-              "extractedComments": Array [],
-              "flags": Object {},
+            {
+              "comments": [],
+              "extractedComments": [],
+              "flags": {},
               "msgctxt": null,
               "msgid": "an extracted english string",
               "msgid_plural": null,
-              "msgstr": Array [],
+              "msgstr": [],
               "nplurals": 2,
               "obsolete": false,
-              "references": Array [
+              "references": [
                 "test/some-file.js:10",
               ],
             }
@@ -65,19 +65,19 @@ describe("buildPoItem", () => {
 
         // Assert
         expect(result).toMatchInlineSnapshot(`
-            Object {
-              "comments": Array [],
-              "extractedComments": Array [],
-              "flags": Object {
+            {
+              "comments": [],
+              "extractedComments": [],
+              "flags": {
                 "python-format": true,
               },
               "msgctxt": null,
               "msgid": "%(num)s english string",
               "msgid_plural": "%(num)s plural string",
-              "msgstr": Array [],
+              "msgstr": [],
               "nplurals": 2,
               "obsolete": false,
-              "references": Array [
+              "references": [
                 "test/some-file.js:10",
               ],
             }
@@ -101,19 +101,19 @@ describe("buildPoItem", () => {
 
         // Assert
         expect(result).toMatchInlineSnapshot(`
-            Object {
-              "comments": Array [],
-              "extractedComments": Array [],
-              "flags": Object {
+            {
+              "comments": [],
+              "extractedComments": [],
+              "flags": {
                 "python-format": true,
               },
               "msgctxt": null,
               "msgid": "an extracted english string %(name)s",
               "msgid_plural": null,
-              "msgstr": Array [],
+              "msgstr": [],
               "nplurals": 2,
               "obsolete": false,
-              "references": Array [
+              "references": [
                 "test/some-file.js:10",
               ],
             }
@@ -137,19 +137,19 @@ describe("buildPoItem", () => {
 
         // Assert
         expect(result).toMatchInlineSnapshot(`
-            Object {
-              "comments": Array [],
-              "extractedComments": Array [
+            {
+              "comments": [],
+              "extractedComments": [
                 "a simple comment",
               ],
-              "flags": Object {},
+              "flags": {},
               "msgctxt": null,
               "msgid": "an extracted english string",
               "msgid_plural": null,
-              "msgstr": Array [],
+              "msgstr": [],
               "nplurals": 2,
               "obsolete": false,
-              "references": Array [
+              "references": [
                 "test/some-file.js:10",
               ],
             }
@@ -185,17 +185,17 @@ describe("mergePoItem", () => {
 
         // Assert
         expect(item1).toMatchInlineSnapshot(`
-            Object {
-              "comments": Array [],
-              "extractedComments": Array [],
-              "flags": Object {},
+            {
+              "comments": [],
+              "extractedComments": [],
+              "flags": {},
               "msgctxt": null,
               "msgid": "an extracted english string",
               "msgid_plural": null,
-              "msgstr": Array [],
+              "msgstr": [],
               "nplurals": 2,
               "obsolete": false,
-              "references": Array [
+              "references": [
                 "test/some-file1.js:10 test/some-file2.js:12",
               ],
             }
@@ -229,20 +229,20 @@ describe("mergePoItem", () => {
 
         // Assert
         expect(item1).toMatchInlineSnapshot(`
-            Object {
-              "comments": Array [],
-              "extractedComments": Array [
+            {
+              "comments": [],
+              "extractedComments": [
                 "comment 2",
                 "comment 1",
               ],
-              "flags": Object {},
+              "flags": {},
               "msgctxt": null,
               "msgid": "an extracted english string",
               "msgid_plural": null,
-              "msgstr": Array [],
+              "msgstr": [],
               "nplurals": 2,
               "obsolete": false,
-              "references": Array [
+              "references": [
                 "test/some-file1.js:10 test/some-file2.js:12",
               ],
             }
@@ -276,17 +276,17 @@ describe("mergePoItem", () => {
 
         // Assert
         expect(item1).toMatchInlineSnapshot(`
-            Object {
-              "comments": Array [],
-              "extractedComments": Array [],
-              "flags": Object {},
+            {
+              "comments": [],
+              "extractedComments": [],
+              "flags": {},
               "msgctxt": null,
               "msgid": "a singular string",
               "msgid_plural": "a plural string",
-              "msgstr": Array [],
+              "msgstr": [],
               "nplurals": 2,
               "obsolete": false,
-              "references": Array [
+              "references": [
                 "test/some-file1.js:10 test/some-file2.js:12",
               ],
             }
@@ -363,52 +363,52 @@ i18n.ngettext("%(num)s singular string.", "%(num)s plural string.", num);`;
         // Assert
         expect(result).toMatchInlineSnapshot(`
             Map {
-              "A singular string." => Object {
-                "comments": Array [],
-                "extractedComments": Array [
+              "A singular string." => {
+                "comments": [],
+                "extractedComments": [
                   "A different i18n comment",
                   "An i18n comment",
                 ],
-                "flags": Object {},
+                "flags": {},
                 "msgctxt": null,
                 "msgid": "A singular string.",
                 "msgid_plural": null,
-                "msgstr": Array [],
+                "msgstr": [],
                 "nplurals": 2,
                 "obsolete": false,
-                "references": Array [
+                "references": [
                   "test1.js:3 test2.js:5",
                 ],
               },
-              "%(num)s singular string." => Object {
-                "comments": Array [],
-                "extractedComments": Array [
+              "%(num)s singular string." => {
+                "comments": [],
+                "extractedComments": [
                   "Another comment.",
                 ],
-                "flags": Object {
+                "flags": {
                   "python-format": true,
                 },
                 "msgctxt": null,
                 "msgid": "%(num)s singular string.",
                 "msgid_plural": "%(num)s plural string.",
-                "msgstr": Array [],
+                "msgstr": [],
                 "nplurals": 2,
                 "obsolete": false,
-                "references": Array [
+                "references": [
                   "test1.js:5 test2.js:8",
                 ],
               },
-              "Another string." => Object {
-                "comments": Array [],
-                "extractedComments": Array [],
-                "flags": Object {},
+              "Another string." => {
+                "comments": [],
+                "extractedComments": [],
+                "flags": {},
                 "msgctxt": null,
                 "msgid": "Another string.",
                 "msgid_plural": null,
-                "msgstr": Array [],
+                "msgstr": [],
                 "nplurals": 2,
                 "obsolete": false,
-                "references": Array [
+                "references": [
                   "test2.js:2",
                 ],
               },
@@ -432,7 +432,7 @@ describe("getFilesToExtractFrom", () => {
 
         // Assert
         expect(result).toMatchInlineSnapshot(`
-            Array [
+            [
               "a1.fixture.js",
               "a1.js",
               "a1_test.js",
@@ -473,26 +473,26 @@ i18n.ngettext("%(num)s singular string.", "%(num)s plural string.", num);`;
 
         // Assert
         expect(result).toMatchInlineSnapshot(`
-            "msgid \\"\\"
-            msgstr \\"\\"
+            "msgid ""
+            msgstr ""
 
             #. A different i18n comment
             #. An i18n comment
             #: test1.js:3 test2.js:5
-            msgid \\"A singular string.\\"
-            msgstr \\"\\"
+            msgid "A singular string."
+            msgstr ""
 
             #. Another comment.
             #: test1.js:5 test2.js:8
             #, python-format
-            msgid \\"%(num)s singular string.\\"
-            msgid_plural \\"%(num)s plural string.\\"
-            msgstr[0] \\"\\"
-            msgstr[1] \\"\\"
+            msgid "%(num)s singular string."
+            msgid_plural "%(num)s plural string."
+            msgstr[0] ""
+            msgstr[1] ""
 
             #: test2.js:2
-            msgid \\"Another string.\\"
-            msgstr \\"\\"
+            msgid "Another string."
+            msgstr ""
             "
         `);
     });
