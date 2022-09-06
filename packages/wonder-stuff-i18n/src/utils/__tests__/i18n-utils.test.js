@@ -75,22 +75,22 @@ describe("getI18nStringsFromString", () => {
 
         // Assert
         expect(strings).toMatchInlineSnapshot(`
-            Array [
-              Object {
-                "comments": Array [],
+            [
+              {
+                "comments": [],
                 "endOffset": 31,
                 "linePos": 2,
-                "msgids": Array [
+                "msgids": [
                   "World",
                 ],
                 "startOffset": 24,
                 "type": "_",
               },
-              Object {
-                "comments": Array [],
+              {
+                "comments": [],
                 "endOffset": 14,
                 "linePos": 1,
-                "msgids": Array [
+                "msgids": [
                   "Hello",
                 ],
                 "startOffset": 7,

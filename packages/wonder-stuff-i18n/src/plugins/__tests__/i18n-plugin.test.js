@@ -182,12 +182,12 @@ describe("I18nPlugin", () => {
 
             // Assert
             expect(hashMap).toMatchInlineSnapshot(`
-                Object {
-                  "es": Object {
+                {
+                  "es": {
                     "deadbeefc0ffeec0ffe2": "d7faf1cad41c4309243e",
                     "deadbeefc0ffeec0ffee": "61f400bdaa4a195c4a75",
                   },
-                  "pt": Object {
+                  "pt": {
                     "deadbeefc0ffeec0ffe2": "589f3c441f0d1b0bc9ee",
                     "deadbeefc0ffeec0ffee": "7d2fd638ebd4e80b7611",
                   },
@@ -205,30 +205,30 @@ describe("I18nPlugin", () => {
             }
 
             expect(stringAssets).toMatchInlineSnapshot(`
-                Object {
-                  "../es/test-pluralonly.d7faf1cad41c4309243e.js": Object {
+                {
+                  "../es/test-pluralonly.d7faf1cad41c4309243e.js": {
                     "size": 83,
-                    "source": "i18n.ngettext({\\"lang\\":\\"es\\",\\"messages\\":[\\"%(num)s gato\\",\\"%(num)s gatos\\"]}, {num: 1});",
+                    "source": "i18n.ngettext({"lang":"es","messages":["%(num)s gato","%(num)s gatos"]}, {num: 1});",
                   },
-                  "../es/test.61f400bdaa4a195c4a75.js": Object {
+                  "../es/test.61f400bdaa4a195c4a75.js": {
                     "size": 99,
-                    "source": "i18n._(\\"hola\\");
-                i18n.ngettext({\\"lang\\":\\"es\\",\\"messages\\":[\\"%(num)s gato\\",\\"%(num)s gatos\\"]}, {num: 1});",
+                    "source": "i18n._("hola");
+                i18n.ngettext({"lang":"es","messages":["%(num)s gato","%(num)s gatos"]}, {num: 1});",
                   },
-                  "../pt/test-pluralonly.589f3c441f0d1b0bc9ee.js": Object {
+                  "../pt/test-pluralonly.589f3c441f0d1b0bc9ee.js": {
                     "size": 89,
-                    "source": "i18n.ngettext({\\"lang\\":\\"pt\\",\\"messages\\":[\\"%(num)s gato-pt\\",\\"%(num)s gatos-pt\\"]}, {num: 1});",
+                    "source": "i18n.ngettext({"lang":"pt","messages":["%(num)s gato-pt","%(num)s gatos-pt"]}, {num: 1});",
                   },
-                  "../pt/test.7d2fd638ebd4e80b7611.js": Object {
+                  "../pt/test.7d2fd638ebd4e80b7611.js": {
                     "size": 108,
-                    "source": "i18n._(\\"hola-pt\\");
-                i18n.ngettext({\\"lang\\":\\"pt\\",\\"messages\\":[\\"%(num)s gato-pt\\",\\"%(num)s gatos-pt\\"]}, {num: 1});",
+                    "source": "i18n._("hola-pt");
+                i18n.ngettext({"lang":"pt","messages":["%(num)s gato-pt","%(num)s gatos-pt"]}, {num: 1});",
                   },
-                  "test-pluralonly.deadbeefc0ffeec0ffe2.js": Object {
+                  "test-pluralonly.deadbeefc0ffeec0ffe2.js": {
                     "size": 1,
                     "source": "i18n.ngettext('%(num)s cat', '%(num)s cats', {num: 1});",
                   },
-                  "test.deadbeefc0ffeec0ffee.js": Object {
+                  "test.deadbeefc0ffeec0ffee.js": {
                     "size": 1,
                     "source": "i18n._('hello');
                 i18n.ngettext('%(num)s cat', '%(num)s cats', {num: 1});",
@@ -314,28 +314,28 @@ describe("I18nPlugin", () => {
             }
 
             expect(stringAssets).toMatchInlineSnapshot(`
-                Object {
-                  "../es/font.woff2": Object {
+                {
+                  "../es/font.woff2": {
                     "size": 4,
                     "source": "FONT",
                   },
-                  "../es/test.css": Object {
+                  "../es/test.css": {
                     "size": 25,
                     "source": "body { background: red; }",
                   },
-                  "../pt/font.woff2": Object {
+                  "../pt/font.woff2": {
                     "size": 4,
                     "source": "FONT",
                   },
-                  "../pt/test.css": Object {
+                  "../pt/test.css": {
                     "size": 25,
                     "source": "body { background: red; }",
                   },
-                  "font.woff2": Object {
+                  "font.woff2": {
                     "size": 1,
                     "source": "FONT",
                   },
-                  "test.css": Object {
+                  "test.css": {
                     "size": 1,
                     "source": "body { background: red; }",
                   },
@@ -416,32 +416,32 @@ describe("I18nPlugin", () => {
             }
 
             expect(stringAssets).toMatchInlineSnapshot(`
-                Object {
-                  "../es/chunk-map.762229792cee567e752a.js": Object {
+                {
+                  "../es/chunk-map.762229792cee567e752a.js": {
                     "size": 63,
                     "source": "const a = require('./prod/es/runtime.4ae449f863c7368929c1.js');",
                   },
-                  "../es/runtime.4ae449f863c7368929c1.js": Object {
+                  "../es/runtime.4ae449f863c7368929c1.js": {
                     "size": 60,
                     "source": "const a = require('./prod/es/test.deadbeefc0ffeec0ffee.js');",
                   },
-                  "../pt/chunk-map.c514d24bb60c80085da1.js": Object {
+                  "../pt/chunk-map.c514d24bb60c80085da1.js": {
                     "size": 63,
                     "source": "const a = require('./prod/pt/runtime.e89080547a41feb7e5d2.js');",
                   },
-                  "../pt/runtime.e89080547a41feb7e5d2.js": Object {
+                  "../pt/runtime.e89080547a41feb7e5d2.js": {
                     "size": 60,
                     "source": "const a = require('./prod/pt/test.deadbeefc0ffeec0ffee.js');",
                   },
-                  "chunk-map.deadbeefc0ffeec0ffe2.js": Object {
+                  "chunk-map.deadbeefc0ffeec0ffe2.js": {
                     "size": 1,
                     "source": "const a = require('./prod/en/runtime.deadbeefc0ffeec0ffe2.js');",
                   },
-                  "runtime.deadbeefc0ffeec0ffe2.js": Object {
+                  "runtime.deadbeefc0ffeec0ffe2.js": {
                     "size": 1,
                     "source": "const a = require('./prod/en/test.deadbeefc0ffeec0ffee.js');",
                   },
-                  "test.deadbeefc0ffeec0ffee.js": Object {
+                  "test.deadbeefc0ffeec0ffee.js": {
                     "size": 1,
                     "source": "i18n._('hello');
                 i18n.ngettext('%(num)s cat', '%(num)s cats', {num: 1});",
@@ -683,40 +683,40 @@ describe("I18nPlugin", () => {
             }
 
             expect(stringAssets).toMatchInlineSnapshot(`
-                Object {
-                  "../manifests/en/webpack-manifest-1234.json": Object {
+                {
+                  "../manifests/en/webpack-manifest-1234.json": {
                     "size": 1,
                     "source": "const a = require('./prod/en/runtime.deadbeefc0ffeec0ffe2.js');",
                   },
-                  "../manifests/es/webpack-manifest-1234.json": Object {
+                  "../manifests/es/webpack-manifest-1234.json": {
                     "size": 63,
                     "source": "const a = require('./prod/es/runtime.954f8bb39a2f4b534b54.js');",
                   },
-                  "../manifests/pt/webpack-manifest-1234.json": Object {
+                  "../manifests/pt/webpack-manifest-1234.json": {
                     "size": 63,
                     "source": "const a = require('./prod/pt/runtime.efba0b9130c816f63328.js');",
                   },
-                  "../pages/en/page-1234.html": Object {
+                  "../pages/en/page-1234.html": {
                     "size": 1,
-                    "source": "<script src=\\"/prod/en/runtime.deadbeefc0ffeec0ffe2.js\\"></script>",
+                    "source": "<script src="/prod/en/runtime.deadbeefc0ffeec0ffe2.js"></script>",
                   },
-                  "../pages/es/page-1234.html": Object {
+                  "../pages/es/page-1234.html": {
                     "size": 64,
-                    "source": "<script src=\\"/prod/es/runtime.954f8bb39a2f4b534b54.js\\"></script>",
+                    "source": "<script src="/prod/es/runtime.954f8bb39a2f4b534b54.js"></script>",
                   },
-                  "../pages/pt/page-1234.html": Object {
+                  "../pages/pt/page-1234.html": {
                     "size": 64,
-                    "source": "<script src=\\"/prod/pt/runtime.efba0b9130c816f63328.js\\"></script>",
+                    "source": "<script src="/prod/pt/runtime.efba0b9130c816f63328.js"></script>",
                   },
-                  "chunk-map.deadbeefc0ffeec0ffe2.js": Object {
+                  "chunk-map.deadbeefc0ffeec0ffe2.js": {
                     "size": 1,
                     "source": "const a = require('./prod/en/runtime.deadbeefc0ffeec0ffe2.js');",
                   },
-                  "runtime.deadbeefc0ffeec0ffe2.js": Object {
+                  "runtime.deadbeefc0ffeec0ffe2.js": {
                     "size": 1,
                     "source": "const a = require('./prod/en/test.deadbeefc0ffeec0ffee.js');",
                   },
-                  "test.deadbeefc0ffeec0ffee.js": Object {
+                  "test.deadbeefc0ffeec0ffee.js": {
                     "size": 1,
                     "source": "i18n._('hello');
                 i18n.ngettext('%(num)s cat', '%(num)s cats', {num: 1});",

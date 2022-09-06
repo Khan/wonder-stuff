@@ -147,6 +147,7 @@ describe("KindErrorData", () => {
                 const enhanceSpy = jest
                     .spyOn(underTest, "enhanceEventWithErrorData")
                     .mockReturnValue("ENHANCED");
+                // $FlowIgnore[escaped-generic]
                 underTest.setupOnce(addGlobalEventProcessorMock, getHub);
                 const registeredProcessor =
                     addGlobalEventProcessorMock.mock.calls[0][0];

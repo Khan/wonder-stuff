@@ -41,7 +41,7 @@ describe("#getLoggingTransport", () => {
             // Assert
             expect(result).toMatchInlineSnapshot(`
                 "debug: MESSAGE {
-                    \\"other\\": \\"metadata\\"
+                    "other": "metadata"
                 }"
             `);
         });
@@ -52,10 +52,8 @@ describe("#getLoggingTransport", () => {
             // Arrange
 
             // Act
-            const result = getLoggingTransport(
-                ("MADE UP RUNTIME MODE": $FlowFixMe),
-                "silly",
-            );
+            // $FlowIgnore[incompatible-call]
+            const result = getLoggingTransport("MADE UP RUNTIME MODE", "silly");
 
             // Assert
             expect(result).toBeInstanceOf(winston.transports.Stream);

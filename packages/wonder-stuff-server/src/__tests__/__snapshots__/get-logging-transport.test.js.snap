@@ -2,7 +2,7 @@
 
 exports[`#getLoggingTransport during development should format log messages to include metadata when present ({ other: 'metadata' }) 1`] = `
 "debug: MESSAGE {
-    \\"other\\": \\"metadata\\"
+    "other": "metadata"
 }"
 `;
 
@@ -12,7 +12,7 @@ exports[`#getLoggingTransport during development should format log messages to i
 
 exports[`#getLoggingTransport during production should format log messages to include metadata when present ({ other: 'metadata' }) 1`] = `
 "debug: MESSAGE {
-    \\"other\\": \\"metadata\\"
+    "other": "metadata"
 }"
 `;
 

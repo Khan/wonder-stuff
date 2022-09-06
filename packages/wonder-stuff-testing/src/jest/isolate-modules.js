@@ -13,10 +13,10 @@ import {assertJest} from "./internal/assert-jest.js";
  * discourage dynamic `import` use, which doesn't play well with standard
  * jest yet.
  */
-export const isolateModules = <T>(action: () => T): T => {
+export const isolateModules = <T>(action: () => ?T): ?T => {
     assertJest();
 
-    let result = undefined;
+    let result: ?T = undefined;
     jest.isolateModules(() => {
         result = action();
     });
