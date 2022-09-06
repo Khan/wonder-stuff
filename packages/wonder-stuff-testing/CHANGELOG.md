@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-testing
 
+## 2.1.0
+
+### Minor Changes
+
+-   ad80baa: Fix up type definitions for isolateModules
+
 ## 2.0.1
 
 ### Patch Changes
