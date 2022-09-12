@@ -29,7 +29,7 @@
     "@rollup/plugin-replace": "^4.0.0",
     "babel-jest": "29.0.2",
     "babel-plugin-transform-flow-enums": "^0.0.2",
-    "eslint": "^8.23.0",
+    "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-disable": "^2.0.3",
     "eslint-plugin-eslint-comments": "^3.2.0",
