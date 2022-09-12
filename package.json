@@ -25,7 +25,7 @@
     "@google-cloud/profiler": "^4.2.0",
     "@google-cloud/trace-agent": "^5.1.6",
     "@rollup/plugin-babel": "^5.3.0",
-    "@rollup/plugin-node-resolve": "^14.0.1",
+    "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-replace": "^4.0.0",
     "babel-jest": "29.0.2",
     "babel-plugin-transform-flow-enums": "^0.0.2",
