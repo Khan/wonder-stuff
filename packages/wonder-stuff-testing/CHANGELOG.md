@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-testing
 
+## 2.2.0
+
+### Minor Changes
+
+-   792686a: Add 'dataFactoryFor' function to help generate mock data
+
 ## 2.1.0
 
 ### Minor Changes
