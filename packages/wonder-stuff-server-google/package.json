@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-server-google",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "APIs for doing useful things in node servers for Google Cloud",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -24,8 +24,8 @@
         "@google-cloud/logging-winston": "^4.1.1",
         "@google-cloud/profiler": "^4.1.7",
         "@google-cloud/trace-agent": "^5.1.6",
-        "@khanacademy/wonder-stuff-core": "^1.0.1",
-        "@khanacademy/wonder-stuff-server": "^2.0.1",
+        "@khanacademy/wonder-stuff-core": "^1.0.2",
+        "@khanacademy/wonder-stuff-server": "^2.0.2",
         "express": "^4.17.2",
         "express-winston": "^4.2.0",
         "winston": "^3.4.0"

@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-testing
 
+## 2.2.1
+
+### Patch Changes
+
+-   ddd526c: Fix typing of isolateModules
+-   Updated dependencies [ddd526c]
+    -   @khanacademy/wonder-stuff-core@1.0.2
+
 ## 2.2.0
 
 ### Minor Changes

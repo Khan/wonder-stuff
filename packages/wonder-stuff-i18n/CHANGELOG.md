@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 2.0.1
+
+### Patch Changes
+
+-   ddd526c: Fix typing of isolateModules
+
 ## 2.0.0
 
 ### Major Changes
