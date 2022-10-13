@@ -8,7 +8,7 @@ import type {Metadata} from "./types.js";
 /**
  * Options for constructing a `KindError`.
  */
-type Options = {|
+export type Options = {|
     /**
      * An error responsible for the error being created.
      *

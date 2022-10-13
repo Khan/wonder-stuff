@@ -320,7 +320,7 @@ const stripJSComments = (jsCode: string, keep: ?string = null) =>
  * This helps to clean up the strings somewhat, avoids escaping things that
  * don't need to be escaped.
  */
-const convertEscapes = (textString) =>
+const convertEscapes = (textString: string) =>
     textString
         .replace(/\\n/g, "\n")
         .replace(/\\"/g, '"')
