@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.0.2
+
+### Patch Changes
+
+-   ddd526c: Fix typing of isolateModules
+
 ## 1.0.1
 
 ### Patch Changes

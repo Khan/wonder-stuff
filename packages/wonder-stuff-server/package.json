@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-server",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "APIs for doing useful things in node servers",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -20,7 +20,7 @@
     "author": "",
     "license": "MIT",
     "peerDependencies": {
-        "@khanacademy/wonder-stuff-core": "^1.0.1",
+        "@khanacademy/wonder-stuff-core": "^1.0.2",
         "express": "^4.17.2",
         "express-winston": "^4.2.0",
         "winston": "^3.4.0"
