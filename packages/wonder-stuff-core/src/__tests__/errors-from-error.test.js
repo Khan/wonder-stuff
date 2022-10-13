@@ -2,6 +2,8 @@
 import {KindError} from "../kind-error.js";
 import {errorsFromError, Order} from "../errors-from-error.js";
 
+import type {Options as KindErrorOptions} from "../kind-error.js";
+
 describe("#errorsFromError", () => {
     it.each([null, undefined, "NOT_A_GOOD_VALUE", 42])(
         "should throw if the order is invalid",
@@ -49,7 +51,7 @@ describe("#errorsFromError", () => {
         it("should yield errors in the order of the root error down to the lowermost cause", () => {
             // Arrange
             class MyError extends KindError {
-                constructor(message, options) {
+                constructor(message: string, options: KindErrorOptions) {
                     super(message, "CustomKind", {...options});
                 }
             }
@@ -74,7 +76,7 @@ describe("#errorsFromError", () => {
         it("should yield errors in the order of the lowermost causal error up to the root consequence", () => {
             // Arrange
             class MyError extends KindError {
-                constructor(message, options) {
+                constructor(message: string, options: KindErrorOptions) {
                     super(message, "CustomKind", {...options});
                 }
             }

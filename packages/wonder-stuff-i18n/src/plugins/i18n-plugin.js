@@ -33,11 +33,11 @@ import type {TranslatedLocaleStrings} from "../utils/i18n-utils.js";
 /**
  * Add a new asset to the Webpack compilation assets.
  *
- * @param {Object} assets the compilation assets object from Webpack
+ * @param {Assets} assets the compilation assets object from Webpack
  * @param {string} relFilePath a file path relative to the Webpack output
  *   directory.
  */
-const addAsset = (assets, relFilePath, data) => {
+const addAsset = (assets: Assets, relFilePath: string, data: string) => {
     assets[relFilePath] = {
         source() {
             return data;
@@ -139,12 +139,15 @@ type InternalOptions = {
 type LocaleHashMap = {[oldHash: string]: string};
 type HashMaps = {[locale: string]: LocaleHashMap};
 
+type Asset = {|
+    source: () => string,
+    size: () => number,
+|};
+
 export type Assets = {
-    [assetName: string]: {|
-        source: () => string,
-        size: () => number,
-    |},
+    [assetName: string]: Asset,
 };
+
 export default class I18nPlugin {
     options: InternalOptions;
 

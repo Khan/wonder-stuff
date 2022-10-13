@@ -71,7 +71,7 @@ describe("localizeString", () => {
         const locale = "es";
         const content = "A simple path: /genwebpack/prod/en/foo.js";
         const hashMap = {};
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const newContent = localizeString({
@@ -90,7 +90,7 @@ describe("localizeString", () => {
         const locale = "es";
         const content = "/genwebpack/prod/en/a.js /genwebpack/prod/en/b.js";
         const hashMap = {};
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const newContent = localizeString({
@@ -111,7 +111,7 @@ describe("localizeString", () => {
         const locale = "es";
         const content = "/genwebpack/prod/pt/a.js /genwebpack/prod/hu/b.js";
         const hashMap = {};
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const newContent = localizeString({
@@ -134,7 +134,7 @@ describe("localizeString", () => {
         const hashMap = {
             "3e083afe95f447481cad": "593cff1d8e1e383f2471",
         };
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const newContent = localizeString({
@@ -159,7 +159,7 @@ describe("localizeString", () => {
             "3e083afe95f447481cad": "593cff1d8e1e383f2471",
             "29d70669460257a74073": "9e0f5e0d0704dd61ee2f",
         };
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const newContent = localizeString({
@@ -184,7 +184,7 @@ describe("localizeString", () => {
             "3e083afe95f447481cad": "593cff1d8e1e383f2471",
             "29d70669460257a74073": "9e0f5e0d0704dd61ee2f",
         };
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const newContent = localizeString({
@@ -209,7 +209,7 @@ describe("localizeString", () => {
             "3e083afe95f447481cad": "593cff1d8e1e383f2471",
             "29d70669460257a74073": "9e0f5e0d0704dd61ee2f",
         };
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const newContent = localizeString({
@@ -229,7 +229,7 @@ describe("localizeString", () => {
         // Arrange
         const locale = "es";
         const content = "/genwebpack/prod/en/foo.3e083afe95f447481cad.js";
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const newContent = localizeString({locale, content, getLocalePath});
@@ -248,7 +248,7 @@ describe("localizeFile", () => {
         const oldHash = "3e083afe95f447481cad";
         const locale = "es";
         const hashMap = {"2e083afe95f447481cad": "4e083afe95f447481cad"};
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const results = localizeFile({
@@ -275,7 +275,7 @@ describe("localizeFile", () => {
         const oldHash = "3e083afe95f447481cad";
         const locale = "es";
         const hashMap = {"2e083afe95f447481cad": "4e083afe95f447481cad"};
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const result = localizeFile({
@@ -305,7 +305,7 @@ describe("localizeFile", () => {
             "2e083afe95f447481cad": "4e083afe95f447481cad",
             c0ffee: "3e083afe95f447481cad",
         };
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const result = localizeFile({
@@ -333,7 +333,7 @@ describe("localizeFile", () => {
         const oldHash = null;
         const locale = "es";
         const hashMap = {"2e083afe95f447481cad": "4e083afe95f447481cad"};
-        const getLocalePath = (locale) => `/prod/${locale}/`;
+        const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
         const result = localizeFile({

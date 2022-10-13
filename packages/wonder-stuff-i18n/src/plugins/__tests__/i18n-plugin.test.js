@@ -657,7 +657,7 @@ describe("I18nPlugin", () => {
                     },
                 },
             };
-            const getLocalePath = (locale) => `/prod/${locale}`;
+            const getLocalePath = (locale: string) => `/prod/${locale}`;
             const locales = ["es", "pt"];
             const plugin = new I18nPlugin({
                 locales,
@@ -774,7 +774,7 @@ describe("I18nPlugin", () => {
                     },
                 },
             };
-            const getLocalePath = (locale) => `/prod/${locale}`;
+            const getLocalePath = (locale: string) => `/prod/${locale}`;
             const locales = ["es", "pt"];
             const plugin = new I18nPlugin({
                 locales,
