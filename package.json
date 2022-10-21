@@ -24,7 +24,7 @@
     "@google-cloud/logging-winston": "^4.2.4",
     "@google-cloud/profiler": "^4.2.0",
     "@google-cloud/trace-agent": "^5.1.6",
-    "@rollup/plugin-babel": "^6.0.0",
+    "@rollup/plugin-babel": "^6.0.2",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-replace": "^5.0.0",
     "babel-jest": "29.2.1",
