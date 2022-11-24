@@ -4,7 +4,7 @@ import {EmptySentryData} from "./empty-sentry-data.js";
 import {KindSentryError} from "./kind-sentry-error.js";
 import {truncateTagValue} from "./truncate-tag-value.js";
 import {isTagKeyValid} from "./is-tag-key-valid.js";
-import type {SentryData, KindErrorDataOptions} from "./types.js";
+import type {SentryTags, SentryData, KindErrorDataOptions} from "./types.js";
 import {isReservedTagKey} from "./is-reserved-tag-key.js";
 import {isReservedContextProperty} from "./is-reserved-context-property.js";
 
@@ -28,7 +28,7 @@ export function normalizeSentryData(
     data: ?$ReadOnly<$Partial<SentryData>>,
 ): SentryData {
     // https://docs.sentry.io/platforms/python/guides/logging/enriching-events/tags/
-    const tags = {
+    const tags: SentryTags = {
         ...data?.tags,
     };
     const invalidKeys = [];
@@ -59,7 +59,9 @@ export function normalizeSentryData(
     // If the contexts contain any reserved property names, report them, but
     // only in production.
     if (process.env.NODE_ENV !== "production") {
-        const reservedPropertyContexts = {};
+        const reservedPropertyContexts: {|
+            [string]: Array<string>,
+        |} = {};
         const contexts = data?.contexts;
         if (contexts != null) {
             for (const contextName of Object.keys(contexts)) {
@@ -95,7 +97,7 @@ export function normalizeSentryData(
                                 invalid_tag_keys: invalidKeys,
                                 reserved_tag_keys: usedReservedKeys,
                                 contexts_with_reserved_properties:
-                                    reservedPropertyContexts,
+                                    (reservedPropertyContexts: $FlowFixMe),
                             },
                         },
                     },

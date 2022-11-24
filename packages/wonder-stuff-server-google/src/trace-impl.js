@@ -75,7 +75,9 @@ export const traceImpl = (
      */
     const span = tracer?.createChildSpan({name: `${gatewayName}.${action}`});
 
-    const profileLabels = {};
+    const profileLabels: {|
+        [string]: mixed,
+    |} = {};
     const addLabel = <T>(name: string, value: T): void => {
         /**
          * Track this so we can also include it in our logging info.

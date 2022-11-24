@@ -88,29 +88,35 @@ export async function startServer<
      * We need the variable so we can reference it inside the error handling
      * callback. Feels a bit nasty, but it works.
      */
-    const server = appWithMiddleware.listen(port, host, (err: ?Error) => {
-        if (server == null || err != null) {
-            logger.error(
-                `${name} appears not to have started: ${
-                    err?.message || "Unknown error"
-                }`,
-                {
-                    kind: Errors.Internal,
-                },
-            );
-            return;
-        }
+    const server: ?http$Server = appWithMiddleware.listen(
+        port,
+        host,
+        (err: ?Error) => {
+            if (server == null || err != null) {
+                logger.error(
+                    `${name} appears not to have started: ${
+                        err?.message || "Unknown error"
+                    }`,
+                    {
+                        kind: Errors.Internal,
+                    },
+                );
+                return;
+            }
 
-        const address = server.address();
-        if (address == null || typeof address === "string") {
-            logger.warn(`${name} may not have started properly: ${address}`);
-            return;
-        }
+            const address = server.address();
+            if (address == null || typeof address === "string") {
+                logger.warn(
+                    `${name} may not have started properly: ${address}`,
+                );
+                return;
+            }
 
-        const host = address.address;
-        const port = address.port;
-        logger.info(`${name} running at http://${host}:${port}`);
-    });
+            const host = address.address;
+            const port = address.port;
+            logger.info(`${name} running at http://${host}:${port}`);
+        },
+    );
 
     /**
      * We use keep-alive connections with other resources. These can prevent
@@ -118,7 +124,9 @@ export async function startServer<
      * trying to close. So, let's track them and provide a means for us to\
      * destroy them.
      */
-    const connections = {};
+    const connections: {|
+        [string]: net$Socket,
+    |} = {};
     const closeConnections = () => {
         for (const connection of Object.values(connections)) {
             // Connection is type mixed, so we need to tell flow this is OK.
@@ -126,8 +134,10 @@ export async function startServer<
             connection.destroy();
         }
     };
-    server?.on("connection", (connection) => {
-        const key = `${connection.remoteAddress}:${connection.remotePort}`;
+    server?.on("connection", (connection: net$Socket) => {
+        const key = `${connection.remoteAddress ?? ""}:${
+            connection.remotePort
+        }`;
         connections[key] = connection;
         connection.on("close", () => {
             delete connections[key];
