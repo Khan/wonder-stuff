@@ -27,7 +27,7 @@ jobs:
         os: [ubuntu-latest]
         node-version: [16.x]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Install & cache node_modules
       uses: Khan/actions@shared-node-cache-v0
       with:
@@ -45,7 +45,7 @@ jobs:
         node-version: [16.x]
     steps:
     - name: Checking out latest commit
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Install & cache node_modules
       uses: Khan/actions@shared-node-cache-v0
       with:
@@ -91,7 +91,7 @@ jobs:
     - name: Upload Coverage
       # We don't bother collecting a record of coverage for dependabot changes
       if: ${{ github.actor != 'dependabot[bot]' }}
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: ./coverage/coverage-final.json
@@ -132,7 +132,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest]
+        os: [ubuntu-latest, macos-latest]
         # We want to include all the versions we support here.
         node-version: [16.x]
         exclude:
@@ -141,7 +141,7 @@ jobs:
           - os: ubuntu-latest
             node-version: 16.x
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Install & cache node_modules
       uses: Khan/actions@shared-node-cache-v0
       with:
