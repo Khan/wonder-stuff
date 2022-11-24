@@ -142,6 +142,13 @@ jobs:
             node-version: 16.x
     steps:
     - uses: actions/checkout@v3
+
+    - name: Setup Python 2.7
+      if: matrix.os == 'macos-latest'
+      uses: actions/setup-python@v4
+      with:
+        python-version: 2.7
+
     - name: Install & cache node_modules
       uses: Khan/actions@shared-node-cache-v0
       with:
