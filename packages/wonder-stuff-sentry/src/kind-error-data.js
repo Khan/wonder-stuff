@@ -14,6 +14,12 @@ import {DefaultKindErrorDataOptions} from "./default-kind-error-data-options.js"
 import {isTagKeyValid} from "./is-tag-key-valid.js";
 import {KindSentryError} from "./kind-sentry-error.js";
 
+type InvalidTags = {|
+    invalidKindTag?: string,
+    invalidGroupByTag?: string,
+    invalidConcatenatedMessageTag?: string,
+|};
+
 export class KindErrorData implements SentryIntegration {
     static id: string = "KindErrorData";
     name: string = KindErrorData.id;
@@ -27,7 +33,7 @@ export class KindErrorData implements SentryIntegration {
 
         if (process.env.NODE_ENV !== "production") {
             // Let's make sure we got valid options.
-            const invalidTagNames = {};
+            const invalidTagNames: InvalidTags = {};
             if (!isTagKeyValid(this._options.kindTagName)) {
                 invalidTagNames.invalidKindTag = this._options.kindTagName;
             }
@@ -46,7 +52,9 @@ export class KindErrorData implements SentryIntegration {
                     {
                         sentryData: {
                             contexts: {
-                                invalidTagNames,
+                                invalidTagNames: {
+                                    ...invalidTagNames,
+                                },
                             },
                         },
                     },

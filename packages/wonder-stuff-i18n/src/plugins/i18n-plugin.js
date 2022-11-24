@@ -279,7 +279,7 @@ export default class I18nPlugin {
 
         // Initialize the map of old hashes to new hashes for each locale
         if (!hashMap) {
-            hashMap = {};
+            hashMap = ({}: HashMaps);
 
             for (const locale of locales) {
                 hashMap[locale] = {};

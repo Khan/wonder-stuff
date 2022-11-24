@@ -4,6 +4,15 @@ import I18nPlugin from "../i18n-plugin.js";
 import type {TranslatedLocaleStrings} from "../../utils/i18n-utils.js";
 import type {TranslatedStrings, Assets} from "../i18n-plugin.js";
 
+type ResolvedAssets = {|
+    [string]: ResolvedAsset,
+|};
+
+type ResolvedAsset = {|
+    source: string,
+    size: number,
+|};
+
 describe("I18nPlugin", () => {
     describe("constructor", () => {
         it("errors when there are no arguments", () => {
@@ -196,7 +205,7 @@ describe("I18nPlugin", () => {
 
             // We need to convert the assets into a form so that we can
             // more easily compare the output.
-            const stringAssets = {};
+            const stringAssets: ResolvedAssets = {};
             for (const assetName of Object.keys(assets)) {
                 stringAssets[assetName] = {
                     source: assets[assetName].source(),
@@ -305,7 +314,7 @@ describe("I18nPlugin", () => {
             // Assert
             // We need to convert the assets into a form so that we can
             // more easily compare the output.
-            const stringAssets = {};
+            const stringAssets: ResolvedAssets = {};
             for (const assetName of Object.keys(assets)) {
                 stringAssets[assetName] = {
                     source: assets[assetName].source(),
@@ -407,7 +416,7 @@ describe("I18nPlugin", () => {
             // Assert
             // We need to convert the assets into a form so that we can
             // more easily compare the output.
-            const stringAssets = {};
+            const stringAssets: ResolvedAssets = {};
             for (const assetName of Object.keys(assets)) {
                 stringAssets[assetName] = {
                     source: assets[assetName].source(),
@@ -674,7 +683,7 @@ describe("I18nPlugin", () => {
             // Assert
             // We need to convert the assets into a form so that we can
             // more easily compare the output.
-            const stringAssets = {};
+            const stringAssets: ResolvedAssets = {};
             for (const assetName of Object.keys(assets)) {
                 stringAssets[assetName] = {
                     source: assets[assetName].source(),
