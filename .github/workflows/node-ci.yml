@@ -143,12 +143,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Setup Python 3.10
-      if: matrix.os == 'macos-latest'
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.10
-
     - name: Install & cache node_modules
       uses: Khan/actions@shared-node-cache-v0
       with:
