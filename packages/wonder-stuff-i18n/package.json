@@ -18,7 +18,7 @@
         "ancesdir": "^4.0.0",
         "async": "^3.2.4",
         "fast-glob": "^3.2.12",
-        "pofile": "^1.1.1"
+        "pofile": "^1.1.4"
     },
     "devDependencies": {
         "ws-dev-build-settings": "^0.0.5"
