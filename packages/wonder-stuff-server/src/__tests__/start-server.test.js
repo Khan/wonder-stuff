@@ -1,5 +1,6 @@
 // @flow
 import * as Express from "express";
+import {values} from "@khanacademy/wonder-stuff-core";
 import * as RootLogger from "../root-logger";
 import * as DefaultRequestLogging from "../middleware/default-request-logging";
 import * as DefaultErrorLogging from "../middleware/default-error-logging";
@@ -48,7 +49,7 @@ describe("#start-server", () => {
         expect(setRootLoggerSpy).toHaveBeenCalledWith(logger);
     });
 
-    it.each(Array.from(Runtime.members()))(
+    it.each(Array.from(values(Runtime)))(
         "should import heapdumps if allowHeapDumps is true",
         async (mode) => {
             // Arrange

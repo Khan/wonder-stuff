@@ -8,7 +8,7 @@ import type {GoogleCloudIntegrations} from "./types";
  * These integrations help debug production services.
  */
 export const setupIntegrations = async (
-    mode: Runtime,
+    mode: $Values<typeof Runtime>,
     {debugAgent, profiler}: GoogleCloudIntegrations = {
         debugAgent: false,
         profiler: false,

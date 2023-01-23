@@ -28,7 +28,7 @@ const devFormatter = ({level, message, ...metadata}: Info): string => {
 /**
  * Build the formatters to give us some nice dev output.
  */
-const getFormatters = (mode: Runtime): Format => {
+const getFormatters = (mode: $Values<typeof Runtime>): Format => {
     const formatters: Array<Format> = [
         winston.format.splat(), // Allows for %s style substitutions
     ];
@@ -49,7 +49,7 @@ const getFormatters = (mode: Runtime): Format => {
  * Gets the logging transport for the given mode.
  */
 export const getLoggingTransport = (
-    mode: Runtime,
+    mode: $Values<typeof Runtime>,
     logLevel: LogLevel,
 ): Transport => {
     switch (mode) {

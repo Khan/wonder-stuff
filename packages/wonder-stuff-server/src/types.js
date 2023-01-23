@@ -26,15 +26,15 @@ export type Logger = WinstonLogger<NpmLogLevels>;
 /**
  * The runtime modes that a gateway can run under.
  */
-export enum Runtime {
+export const Runtime = {
     // TODO(somewhatabstract, FEI-4172): Update eslint-plugin-flowtype when
     // they've fixed https://github.com/gajus/eslint-plugin-flowtype/issues/502
     /* eslint-disable no-undef */
-    Production = "production",
-    Development = "development",
-    Test = "test",
+    Production: ("production": "production"),
+    Development: ("development": "development"),
+    Test: ("test": "test"),
     /* eslint-enable no-undef */
-}
+};
 
 /**
  * Options to configure logging.
@@ -43,7 +43,7 @@ export type LoggingOptions = {
     /**
      * The runtime mode.
      */
-    mode: Runtime,
+    mode: $Values<typeof Runtime>,
 
     /**
      * Log only if the level of a logged entry is less than or equal to this
@@ -91,7 +91,7 @@ export type ServerOptions = {
     /**
      * What runtime mode the server is running under.
      */
-    +mode: Runtime,
+    +mode: $Values<typeof Runtime>,
 
     /**
      * Optional value in milliseconds for keepalive timeout of the server.
