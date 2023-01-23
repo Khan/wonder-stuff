@@ -27,13 +27,9 @@ export type Logger = WinstonLogger<NpmLogLevels>;
  * The runtime modes that a gateway can run under.
  */
 export const Runtime = {
-    // TODO(somewhatabstract, FEI-4172): Update eslint-plugin-flowtype when
-    // they've fixed https://github.com/gajus/eslint-plugin-flowtype/issues/502
-    /* eslint-disable no-undef */
     Production: ("production": "production"),
     Development: ("development": "development"),
     Test: ("test": "test"),
-    /* eslint-enable no-undef */
 };
 
 /**
