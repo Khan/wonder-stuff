@@ -1,21 +1,21 @@
 // @flow
 import * as Express from "express";
-import * as RootLogger from "../root-logger.js";
-import * as DefaultRequestLogging from "../middleware/default-request-logging.js";
-import * as DefaultErrorLogging from "../middleware/default-error-logging.js";
+import * as RootLogger from "../root-logger";
+import * as DefaultRequestLogging from "../middleware/default-request-logging";
+import * as DefaultErrorLogging from "../middleware/default-error-logging";
 // TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
 // have fixed:
 // https://github.com/import-js/eslint-plugin-import/issues/2073
 // eslint-disable-next-line import/named
-import {Runtime} from "../types.js";
+import {Runtime} from "../types";
 
-import {startServer} from "../start-server.js";
+import {startServer} from "../start-server";
 
 jest.mock("heapdump");
-jest.mock("../root-logger.js");
+jest.mock("../root-logger");
 jest.mock("express");
-jest.mock("../middleware/default-error-logging.js");
-jest.mock("../middleware/default-request-logging.js");
+jest.mock("../middleware/default-error-logging");
+jest.mock("../middleware/default-request-logging");
 
 describe("#start-server", () => {
     beforeEach(() => {

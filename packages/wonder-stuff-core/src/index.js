@@ -1,14 +1,14 @@
 // @flow
-export {clone} from "./clone.js";
-export {entries} from "./entries.js";
-export {keys} from "./keys.js";
-export {values} from "./values.js";
-export {Errors} from "./errors.js";
-export {errorsFromError, Order} from "./errors-from-error.js";
-export {getKindFromError} from "./get-kind-from-error.js";
-export {getOriginalStackFromError} from "./get-original-stack-from-error.js";
-export {KindError} from "./kind-error.js";
-export {safeStringify} from "./safe-stringify.js";
-export {truncateMiddle} from "./truncate-middle.js";
+export {clone} from "./clone";
+export {entries} from "./entries";
+export {keys} from "./keys";
+export {values} from "./values";
+export {Errors} from "./errors";
+export {errorsFromError, Order} from "./errors-from-error";
+export {getKindFromError} from "./get-kind-from-error";
+export {getOriginalStackFromError} from "./get-original-stack-from-error";
+export {KindError} from "./kind-error";
+export {safeStringify} from "./safe-stringify";
+export {truncateMiddle} from "./truncate-middle";
 
-export type {Metadata} from "./types.js";
+export type {Metadata} from "./types";

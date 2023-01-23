@@ -1,8 +1,8 @@
 // @flow
-import * as BuildCausedByMessage from "../build-caused-by-message.js";
-import {ErrorInfo} from "../error-info.js";
+import * as BuildCausedByMessage from "../build-caused-by-message";
+import {ErrorInfo} from "../error-info";
 
-jest.mock("../build-caused-by-message.js");
+jest.mock("../build-caused-by-message");
 
 describe("ErrorInfo", () => {
     const NODE_ENV = process.env.NODE_ENV;

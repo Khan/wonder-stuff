@@ -1,9 +1,9 @@
 //@flow
 import * as Server from "@khanacademy/wonder-stuff-server";
-import {makeAppEngineRequestIDMiddleware} from "../make-app-engine-request-id-middleware.js";
-import * as GetAppEngineRequestID from "../../get-app-engine-request-id.js";
+import {makeAppEngineRequestIDMiddleware} from "../make-app-engine-request-id-middleware";
+import * as GetAppEngineRequestID from "../../get-app-engine-request-id";
 
-jest.mock("../../get-app-engine-request-id.js");
+jest.mock("../../get-app-engine-request-id");
 
 describe("#makeAppEngineRequestIDMiddleware", () => {
     it("should return middleware function", () => {

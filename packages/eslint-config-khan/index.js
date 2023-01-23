@@ -107,7 +107,7 @@ module.exports = {
         /**
          * prettier rules
          */
-        "prettier/prettier": ["error", require("./.prettierrc.js")],
+        "prettier/prettier": ["error", require("./.prettierrc")],
 
         /**
          * react rules

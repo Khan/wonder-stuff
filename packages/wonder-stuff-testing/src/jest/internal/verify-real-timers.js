@@ -1,6 +1,6 @@
 // @flow
 import {KindError, Errors} from "@khanacademy/wonder-stuff-core";
-import {assertJest} from "./assert-jest.js";
+import {assertJest} from "./assert-jest";
 
 /**
  * Checks that jest is configured to use real timers.

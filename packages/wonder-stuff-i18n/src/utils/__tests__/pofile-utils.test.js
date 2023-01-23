@@ -10,13 +10,13 @@ import {
     getPoItemMap,
     getFilesToExtractFrom,
     getPOTFileStringFromFiles,
-} from "../pofile-utils.js";
-import * as I18nUtils from "../i18n-utils.js";
+} from "../pofile-utils";
+import * as I18nUtils from "../i18n-utils";
 
 describe("buildPoItem", () => {
     it("builds a PO item from an extracted string", () => {
         // Arrange
-        const fileName = "test/some-file.js";
+        const fileName = "test/some-file";
         const extractedString = {
             linePos: 10,
             startOffset: 100,
@@ -50,7 +50,7 @@ describe("buildPoItem", () => {
 
     it("builds a PO item from an extracted plural string", () => {
         // Arrange
-        const fileName = "test/some-file.js";
+        const fileName = "test/some-file";
         const extractedString = {
             linePos: 10,
             startOffset: 100,
@@ -86,7 +86,7 @@ describe("buildPoItem", () => {
 
     it("builds a PO item from an extracted string with variable", () => {
         // Arrange
-        const fileName = "test/some-file.js";
+        const fileName = "test/some-file";
         const extractedString = {
             linePos: 10,
             startOffset: 100,
@@ -122,7 +122,7 @@ describe("buildPoItem", () => {
 
     it("builds a PO item with comments", () => {
         // Arrange
-        const fileName = "test/some-file.js";
+        const fileName = "test/some-file";
         const extractedString = {
             linePos: 10,
             startOffset: 100,
@@ -160,7 +160,7 @@ describe("buildPoItem", () => {
 describe("mergePoItem", () => {
     it("merges two PO items", () => {
         // Arrange
-        const fileName1 = "test/some-file1.js";
+        const fileName1 = "test/some-file1";
         const extractedString1 = {
             linePos: 10,
             startOffset: 100,
@@ -170,7 +170,7 @@ describe("mergePoItem", () => {
             comments: [],
         };
         const item1 = buildPoItem(fileName1, extractedString1);
-        const fileName2 = "test/some-file2.js";
+        const fileName2 = "test/some-file2";
         const extractedString2 = {
             linePos: 12,
             startOffset: 200,
@@ -204,7 +204,7 @@ describe("mergePoItem", () => {
 
     it("merges two PO items with comments", () => {
         // Arrange
-        const fileName1 = "test/some-file1.js";
+        const fileName1 = "test/some-file1";
         const extractedString1 = {
             linePos: 10,
             startOffset: 100,
@@ -214,7 +214,7 @@ describe("mergePoItem", () => {
             comments: ["comment 1"],
         };
         const item1 = buildPoItem(fileName1, extractedString1);
-        const fileName2 = "test/some-file2.js";
+        const fileName2 = "test/some-file2";
         const extractedString2 = {
             linePos: 12,
             startOffset: 100,
@@ -251,7 +251,7 @@ describe("mergePoItem", () => {
 
     it("merges two plural PO items", () => {
         // Arrange
-        const fileName1 = "test/some-file1.js";
+        const fileName1 = "test/some-file1";
         const extractedString1 = {
             linePos: 10,
             startOffset: 100,
@@ -261,7 +261,7 @@ describe("mergePoItem", () => {
             comments: [],
         };
         const item1 = buildPoItem(fileName1, extractedString1);
-        const fileName2 = "test/some-file2.js";
+        const fileName2 = "test/some-file2";
         const extractedString2 = {
             linePos: 12,
             startOffset: 200,
@@ -295,7 +295,7 @@ describe("mergePoItem", () => {
 
     it("errors out when attempting to merge a plural and a singular string", () => {
         // Arrange
-        const fileName1 = "test/some-file1.js";
+        const fileName1 = "test/some-file1";
         const extractedString1 = {
             linePos: 10,
             startOffset: 100,
@@ -305,7 +305,7 @@ describe("mergePoItem", () => {
             comments: [],
         };
         const item1 = buildPoItem(fileName1, extractedString1);
-        const fileName2 = "test/some-file2.js";
+        const fileName2 = "test/some-file2";
         const extractedString2 = {
             linePos: 12,
             startOffset: 200,
@@ -353,8 +353,8 @@ i18n.ngettext("%(num)s singular string.", "%(num)s plural string.", num);`;
             .mockReturnValueOnce(file2);
 
         const files = [
-            path.join(process.cwd(), "test1.js"),
-            path.join(process.cwd(), "test2.js"),
+            path.join(process.cwd(), "test1"),
+            path.join(process.cwd(), "test2"),
         ];
 
         // Act
@@ -422,20 +422,20 @@ describe("getFilesToExtractFrom", () => {
         // Arrange
         jest.spyOn(I18nUtils, "getIgnoreGlobs").mockReturnValue([]);
         jest.spyOn(fglob, "sync").mockReturnValue([
-            "a1.js",
-            "a1_test.js",
-            "a1.fixture.js",
+            "a1",
+            "a1_test",
+            "a1.fixture",
         ]);
 
         // Act
-        const result = getFilesToExtractFrom(["a1*.js"]);
+        const result = getFilesToExtractFrom(["a1*"]);
 
         // Assert
         expect(result).toMatchInlineSnapshot(`
             [
-              "a1.fixture.js",
-              "a1.js",
-              "a1_test.js",
+              "a1.fixture",
+              "a1",
+              "a1_test",
             ]
         `);
     });
@@ -464,8 +464,8 @@ i18n.ngettext("%(num)s singular string.", "%(num)s plural string.", num);`;
             .mockReturnValueOnce(file2);
 
         const files = [
-            path.join(process.cwd(), "test1.js"),
-            path.join(process.cwd(), "test2.js"),
+            path.join(process.cwd(), "test1"),
+            path.join(process.cwd(), "test2"),
         ];
 
         // Act

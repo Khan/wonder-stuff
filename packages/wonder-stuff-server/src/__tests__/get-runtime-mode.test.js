@@ -3,8 +3,8 @@
 // have fixed:
 // https://github.com/import-js/eslint-plugin-import/issues/2073
 // eslint-disable-next-line import/named
-import {Runtime} from "../types.js";
-import {getRuntimeMode} from "../get-runtime-mode.js";
+import {Runtime} from "../types";
+import {getRuntimeMode} from "../get-runtime-mode";
 
 describe("#getRuntimeMode", () => {
     const NODE_ENV = process.env.NODE_ENV;

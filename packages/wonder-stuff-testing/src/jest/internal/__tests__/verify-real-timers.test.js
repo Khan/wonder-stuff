@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 // @flow
 import {Errors} from "@khanacademy/wonder-stuff-core";
-import * as AssertJest from "../assert-jest.js";
-import {verifyRealTimers} from "../verify-real-timers.js";
+import * as AssertJest from "../assert-jest";
+import {verifyRealTimers} from "../verify-real-timers";
 
 describe("#verifyRealTimers", () => {
     it("should assert we are in jest", () => {

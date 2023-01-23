@@ -1,13 +1,13 @@
 // @flow
-import {wait, waitForAnimationFrame} from "../wait.js";
-import * as VerifyRealTimers from "../internal/verify-real-timers.js";
-import * as UnverifiedWait from "../internal/unverified-wait.js";
+import {wait, waitForAnimationFrame} from "../wait";
+import * as VerifyRealTimers from "../internal/verify-real-timers";
+import * as UnverifiedWait from "../internal/unverified-wait";
 
-jest.mock("../internal/assert-jest.js");
-jest.mock("../internal/verify-real-timers.js");
-jest.mock("../internal/unverified-wait.js");
+jest.mock("../internal/assert-jest");
+jest.mock("../internal/verify-real-timers");
+jest.mock("../internal/unverified-wait");
 
-describe("wait.js", () => {
+describe("wait", () => {
     describe("#wait", () => {
         it("should verify if jest.useRealTimers or not", async () => {
             // Arrange

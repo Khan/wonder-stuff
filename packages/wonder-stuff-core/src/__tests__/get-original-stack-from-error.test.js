@@ -1,6 +1,6 @@
 // @flow
-import {getOriginalStackFromError} from "../get-original-stack-from-error.js";
-import {KindError} from "../kind-error.js";
+import {getOriginalStackFromError} from "../get-original-stack-from-error";
+import {KindError} from "../kind-error";
 
 describe("#getOriginalStackFromError", () => {
     it("should return the stack of the error for a non-KindError value", () => {

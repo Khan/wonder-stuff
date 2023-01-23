@@ -1,5 +1,5 @@
 // @flow
-import {clone} from "../clone.js";
+import {clone} from "../clone";
 
 describe("#clone", () => {
     it.each([undefined, null])(

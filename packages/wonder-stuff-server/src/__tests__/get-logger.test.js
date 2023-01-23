@@ -1,15 +1,15 @@
 // @flow
-import * as RootLogger from "../root-logger.js";
-import {getLogger} from "../get-logger.js";
+import * as RootLogger from "../root-logger";
+import {getLogger} from "../get-logger";
 
 /**
  * We have to mock like this, otherwise, we cannot setup spies.
  * This is because the object imported above is read-only and resists our
  * spy setting.
  */
-jest.mock("../root-logger.js");
+jest.mock("../root-logger");
 
-describe("get-logger.js", () => {
+describe("get-logger", () => {
     describe("#getLogger", () => {
         it("should return the root logger when there is no request", async () => {
             // Arrange

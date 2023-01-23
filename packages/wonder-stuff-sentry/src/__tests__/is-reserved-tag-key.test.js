@@ -1,6 +1,6 @@
 // @flow
-import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
-import {isReservedTagKey} from "../is-reserved-tag-key.js";
+import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options";
+import {isReservedTagKey} from "../is-reserved-tag-key";
 
 describe("#isReservedTagKey", () => {
     it("should return false if a key is not reserved", () => {

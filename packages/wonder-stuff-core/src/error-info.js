@@ -1,5 +1,5 @@
 // @flow
-import {buildCausedByMessage} from "./build-caused-by-message.js";
+import {buildCausedByMessage} from "./build-caused-by-message";
 
 /**
  * Information about an error.

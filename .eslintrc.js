@@ -74,10 +74,7 @@ module.exports = {
         "import/no-named-default": "error",
         "import/extensions": [
             "error",
-            "always",
-            {
-                ignorePackages: true,
-            },
+            {js: "never", jsx: "never", json: "always"},
         ],
         "jest/no-focused-tests": "error",
         "promise/always-return": "error",

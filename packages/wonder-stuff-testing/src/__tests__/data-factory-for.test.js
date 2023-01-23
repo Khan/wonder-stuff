@@ -1,5 +1,5 @@
 // @flow
-import {dataFactoryFor} from "../data-factory-for.js";
+import {dataFactoryFor} from "../data-factory-for";
 
 describe("dataFactoryFor", () => {
     describe("returns a function that", () => {

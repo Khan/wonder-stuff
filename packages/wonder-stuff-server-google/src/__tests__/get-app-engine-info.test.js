@@ -1,5 +1,5 @@
 // @flow
-import {getAppEngineInfo} from "../get-app-engine-info.js";
+import {getAppEngineInfo} from "../get-app-engine-info";
 
 const resetEnv = (name: string, value: ?string): void => {
     if (value == null) {

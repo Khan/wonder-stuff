@@ -11,7 +11,7 @@ const {
     checkSource,
     checkPublishConfig,
     checkMainPathExists,
-} = require("./pre-publish-utils.js");
+} = require("./pre-publish-utils");
 
 // eslint-disable-next-line promise/catch-or-return
 fg(path.join(__dirname, "..", "packages", "**", "package.json")).then(

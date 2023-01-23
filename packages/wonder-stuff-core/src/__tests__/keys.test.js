@@ -1,5 +1,5 @@
 // @flow
-import {keys} from "../keys.js";
+import {keys} from "../keys";
 
 describe("#keys", () => {
     it("should call Object.keys with the given object", () => {

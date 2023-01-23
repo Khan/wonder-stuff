@@ -1,5 +1,5 @@
 // @flow
-import {getEmojiForLocale} from "../emoji-for-locale.js";
+import {getEmojiForLocale} from "../emoji-for-locale";
 
 describe("getEmojiForLocale", () => {
     it("returns an emoji for boxes", () => {

@@ -1,5 +1,5 @@
 // @flow
-import {keys} from "../keys.js";
+import {keys} from "../keys";
 
 {
     // should type returned array element as subtype of string

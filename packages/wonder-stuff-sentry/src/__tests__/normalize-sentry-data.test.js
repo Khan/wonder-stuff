@@ -1,9 +1,9 @@
 // @flow
-import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
-import {normalizeSentryData} from "../normalize-sentry-data.js";
-import * as TruncateTagValue from "../truncate-tag-value.js";
+import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options";
+import {normalizeSentryData} from "../normalize-sentry-data";
+import * as TruncateTagValue from "../truncate-tag-value";
 
-jest.mock("../truncate-tag-value.js");
+jest.mock("../truncate-tag-value");
 
 describe("#normalizeSentryData", () => {
     const NODE_ENV = process.env.NODE_ENV;

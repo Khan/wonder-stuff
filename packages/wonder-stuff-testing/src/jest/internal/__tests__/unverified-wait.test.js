@@ -1,5 +1,5 @@
 // @flow
-import {unverifiedWait} from "../unverified-wait.js";
+import {unverifiedWait} from "../unverified-wait";
 
 describe("#unverifiedWait", () => {
     const RealPromise = global.Promise;

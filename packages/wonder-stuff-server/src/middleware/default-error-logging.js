@@ -2,7 +2,7 @@
 import expressWinston from "express-winston";
 
 import type {Middleware, $Request, $Response} from "express";
-import type {Logger} from "../types.js";
+import type {Logger} from "../types";
 
 /**
  * Create middleware for reporting errors.

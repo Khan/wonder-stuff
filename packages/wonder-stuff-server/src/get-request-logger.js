@@ -1,8 +1,8 @@
 // @flow
 import type {$Request} from "express";
 import {KindError} from "@khanacademy/wonder-stuff-core";
-import {Errors} from "./errors.js";
-import type {Logger, RequestWithLog} from "./types.js";
+import {Errors} from "./errors";
+import type {Logger, RequestWithLog} from "./types";
 
 /**
  * Get the logger associated with the given request.

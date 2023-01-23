@@ -1,5 +1,5 @@
 // @flow
-import {getRequestLogger} from "../get-request-logger.js";
+import {getRequestLogger} from "../get-request-logger";
 
 describe("#getRequestLogger", () => {
     it("should throw if both arguments are null/undefined", () => {

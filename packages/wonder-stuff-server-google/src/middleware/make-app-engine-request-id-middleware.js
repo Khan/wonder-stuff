@@ -2,7 +2,7 @@
 import type {$Response, $Request, Middleware, NextFunction} from "express";
 import {getRequestLogger} from "@khanacademy/wonder-stuff-server";
 import type {Logger, RequestWithLog} from "@khanacademy/wonder-stuff-server";
-import {getAppEngineRequestID} from "../get-app-engine-request-id.js";
+import {getAppEngineRequestID} from "../get-app-engine-request-id";
 
 /**
  * Create a middleware that sets the log property of a request to a logger

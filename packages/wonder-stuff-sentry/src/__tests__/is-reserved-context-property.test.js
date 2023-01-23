@@ -1,5 +1,5 @@
 // @flow
-import {isReservedContextProperty} from "../is-reserved-context-property.js";
+import {isReservedContextProperty} from "../is-reserved-context-property";
 
 describe("#isReservedContextProperty", () => {
     it("should return false if a property is not reserved", () => {

@@ -5,14 +5,14 @@ import {
     getIgnoreGlobs,
     getI18nStringsFromString,
     translateString,
-} from "../i18n-utils.js";
+} from "../i18n-utils";
 
 jest.mock("ancesdir");
 
 describe("getIgnoreGlobs", () => {
     it("reads from a .i18nignore file", () => {
         // Arrange
-        const expectedGlobs = ["foo.js", "bar.js", "*_test.js"];
+        const expectedGlobs = ["foo", "bar", "*_test"];
         const ancesdir = require("ancesdir");
         ancesdir.mockReturnValue(__dirname);
         jest.spyOn(fs, "readFileSync").mockReturnValue(
@@ -43,7 +43,7 @@ describe("getIgnoreGlobs", () => {
 
     it("removes whitespace, empty lines, and comments", () => {
         // Arrange
-        const expectedGlobs = ["foo.js", "bar.js", "*_test.js"];
+        const expectedGlobs = ["foo", "bar", "*_test"];
         const ancesdir = require("ancesdir");
         ancesdir.mockReturnValue(__dirname);
         jest.spyOn(fs, "readFileSync").mockReturnValue(`

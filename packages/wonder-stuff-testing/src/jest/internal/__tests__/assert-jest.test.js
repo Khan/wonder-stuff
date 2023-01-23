@@ -1,8 +1,8 @@
 // @flow
-import {assertJest} from "../assert-jest.js";
-import * as IsRunningInJest from "../is-running-in-jest.js";
+import {assertJest} from "../assert-jest";
+import * as IsRunningInJest from "../is-running-in-jest";
 
-jest.mock("../is-running-in-jest.js");
+jest.mock("../is-running-in-jest");
 
 describe("#assertJest", () => {
     it("should throw if we are not in jest", () => {

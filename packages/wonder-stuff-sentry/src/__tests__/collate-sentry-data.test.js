@@ -1,12 +1,12 @@
 // @flow
 import {KindError} from "@khanacademy/wonder-stuff-core";
-import {KindSentryError} from "../kind-sentry-error.js";
-import {collateSentryData} from "../collate-sentry-data.js";
-import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
-import * as NormalizeSentryData from "../normalize-sentry-data.js";
+import {KindSentryError} from "../kind-sentry-error";
+import {collateSentryData} from "../collate-sentry-data";
+import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options";
+import * as NormalizeSentryData from "../normalize-sentry-data";
 
-jest.mock("../normalize-sentry-data.js", () =>
-    jest.requireActual("../normalize-sentry-data.js"),
+jest.mock("../normalize-sentry-data", () =>
+    jest.requireActual("../normalize-sentry-data"),
 );
 
 describe("#collateSentryData", () => {
@@ -275,7 +275,7 @@ describe("#collateSentryData", () => {
 
         it("should use the configured tag names", () => {
             // Arrange
-            const {KindSentryError} = require("../kind-sentry-error.js");
+            const {KindSentryError} = require("../kind-sentry-error");
 
             const cause = new Error("CAUSE");
             const error = new KindSentryError("ERROR_MESSAGE", "ERROR_KIND", {

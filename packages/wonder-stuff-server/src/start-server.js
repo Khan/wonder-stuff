@@ -1,15 +1,15 @@
 // @flow
 import type {$Application, $Request, $Response} from "express";
 import express from "express";
-import {setRootLogger} from "./root-logger.js";
+import {setRootLogger} from "./root-logger";
 // TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
 // have fixed:
 // https://github.com/import-js/eslint-plugin-import/issues/2073
 // eslint-disable-next-line import/named
-import {Runtime} from "./types.js";
-import type {ServerOptions, RequestWithLog} from "./types.js";
-import {Errors} from "./errors.js";
-import * as middleware from "./middleware/index.js";
+import {Runtime} from "./types";
+import type {ServerOptions, RequestWithLog} from "./types";
+import {Errors} from "./errors";
+import * as middleware from "./middleware/index";
 
 /**
  * Start an application server.

@@ -1,7 +1,7 @@
 // @flow
-import {verifyRealTimers} from "./internal/verify-real-timers.js";
-import {unverifiedWait} from "./internal/unverified-wait.js";
-import {assertJest} from "./internal/assert-jest.js";
+import {verifyRealTimers} from "./internal/verify-real-timers";
+import {unverifiedWait} from "./internal/unverified-wait";
+import {assertJest} from "./internal/assert-jest";
 
 assertJest();
 

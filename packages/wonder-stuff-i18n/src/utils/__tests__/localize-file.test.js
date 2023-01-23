@@ -4,7 +4,7 @@ import {
     localizeString,
     localizeFile,
     hashFileContents,
-} from "../localize-file.js";
+} from "../localize-file";
 
 describe("hashFileContents", () => {
     it("produces a 20-char hash of a string", () => {
@@ -22,7 +22,7 @@ describe("hashFileContents", () => {
 describe("extractHashFromFileName", () => {
     it("extracts a hash from the filename", () => {
         // Arrange
-        const fileName = "runtime.deadbeefc0ffeec0ffee.js";
+        const fileName = "runtime.deadbeefc0ffeec0ffee";
 
         // Act
         const hash = extractHashFromFileName(fileName);
@@ -33,7 +33,7 @@ describe("extractHashFromFileName", () => {
 
     it("ignores shorter hashes in the filename", () => {
         // Arrange
-        const fileName = "runtime.deadbeef.js";
+        const fileName = "runtime.deadbeef";
 
         // Act
         const hash = extractHashFromFileName(fileName);
@@ -44,7 +44,7 @@ describe("extractHashFromFileName", () => {
 
     it("ignores longer hashes in the filename", () => {
         // Arrange
-        const fileName = "runtime.deadbeefc0ffeec0ffeec0ffee.js";
+        const fileName = "runtime.deadbeefc0ffeec0ffeec0ffee";
 
         // Act
         const hash = extractHashFromFileName(fileName);
@@ -55,7 +55,7 @@ describe("extractHashFromFileName", () => {
 
     it("ignores files with no hash in them", () => {
         // Arrange
-        const fileName = "runtime.js";
+        const fileName = "runtime";
 
         // Act
         const hash = extractHashFromFileName(fileName);
@@ -69,7 +69,7 @@ describe("localizeString", () => {
     it("replaces /prod/en", () => {
         // Arrange
         const locale = "es";
-        const content = "A simple path: /genwebpack/prod/en/foo.js";
+        const content = "A simple path: /genwebpack/prod/en/foo";
         const hashMap = {};
         const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
@@ -82,13 +82,13 @@ describe("localizeString", () => {
         });
 
         // Assert
-        expect(newContent).toEqual("A simple path: /genwebpack/prod/es/foo.js");
+        expect(newContent).toEqual("A simple path: /genwebpack/prod/es/foo");
     });
 
     it("replaces multiple /prod/en", () => {
         // Arrange
         const locale = "es";
-        const content = "/genwebpack/prod/en/a.js /genwebpack/prod/en/b.js";
+        const content = "/genwebpack/prod/en/a.js /genwebpack/prod/en/b";
         const hashMap = {};
         const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
@@ -102,14 +102,14 @@ describe("localizeString", () => {
 
         // Assert
         expect(newContent).toEqual(
-            "/genwebpack/prod/es/a.js /genwebpack/prod/es/b.js",
+            "/genwebpack/prod/es/a.js /genwebpack/prod/es/b",
         );
     });
 
     it("leaves other prod paths intact", () => {
         // Arrange
         const locale = "es";
-        const content = "/genwebpack/prod/pt/a.js /genwebpack/prod/hu/b.js";
+        const content = "/genwebpack/prod/pt/a.js /genwebpack/prod/hu/b";
         const hashMap = {};
         const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
@@ -123,14 +123,14 @@ describe("localizeString", () => {
 
         // Assert
         expect(newContent).toEqual(
-            "/genwebpack/prod/pt/a.js /genwebpack/prod/hu/b.js",
+            "/genwebpack/prod/pt/a.js /genwebpack/prod/hu/b",
         );
     });
 
     it("updates a hash in a file name and updates locale", () => {
         // Arrange
         const locale = "es";
-        const content = "/genwebpack/prod/en/foo.3e083afe95f447481cad.js";
+        const content = "/genwebpack/prod/en/foo.3e083afe95f447481cad";
         const hashMap = {
             "3e083afe95f447481cad": "593cff1d8e1e383f2471",
         };
@@ -146,7 +146,7 @@ describe("localizeString", () => {
 
         // Assert
         expect(newContent).toEqual(
-            "/genwebpack/prod/es/foo.593cff1d8e1e383f2471.js",
+            "/genwebpack/prod/es/foo.593cff1d8e1e383f2471",
         );
     });
 
@@ -154,7 +154,7 @@ describe("localizeString", () => {
         // Arrange
         const locale = "es";
         const content =
-            "/genwebpack/prod/en/foo.3e083afe95f447481cad.js /genwebpack/prod/en/foo.29d70669460257a74073.js";
+            "/genwebpack/prod/en/foo.3e083afe95f447481cad.js /genwebpack/prod/en/foo.29d70669460257a74073";
         const hashMap = {
             "3e083afe95f447481cad": "593cff1d8e1e383f2471",
             "29d70669460257a74073": "9e0f5e0d0704dd61ee2f",
@@ -171,7 +171,7 @@ describe("localizeString", () => {
 
         // Assert
         expect(newContent).toEqual(
-            "/genwebpack/prod/es/foo.593cff1d8e1e383f2471.js /genwebpack/prod/es/foo.9e0f5e0d0704dd61ee2f.js",
+            "/genwebpack/prod/es/foo.593cff1d8e1e383f2471.js /genwebpack/prod/es/foo.9e0f5e0d0704dd61ee2f",
         );
     });
 
@@ -179,7 +179,7 @@ describe("localizeString", () => {
         // Arrange
         const locale = "es";
         const content =
-            "/genwebpack/prod/en/foo.ae083afe95f447481cad.js /genwebpack/prod/en/foo.a9d70669460257a74073.js";
+            "/genwebpack/prod/en/foo.ae083afe95f447481cad.js /genwebpack/prod/en/foo.a9d70669460257a74073";
         const hashMap = {
             "3e083afe95f447481cad": "593cff1d8e1e383f2471",
             "29d70669460257a74073": "9e0f5e0d0704dd61ee2f",
@@ -196,7 +196,7 @@ describe("localizeString", () => {
 
         // Assert
         expect(newContent).toEqual(
-            "/genwebpack/prod/es/foo.ae083afe95f447481cad.js /genwebpack/prod/es/foo.a9d70669460257a74073.js",
+            "/genwebpack/prod/es/foo.ae083afe95f447481cad.js /genwebpack/prod/es/foo.a9d70669460257a74073",
         );
     });
 
@@ -204,7 +204,7 @@ describe("localizeString", () => {
         // Arrange
         const locale = "es";
         const content =
-            "/genwebpack/prod/en/foo.a3e083afe95f447481cad.js /genwebpack/prod/en/foo.29d70669460257a74073b.js";
+            "/genwebpack/prod/en/foo.a3e083afe95f447481cad.js /genwebpack/prod/en/foo.29d70669460257a74073b";
         const hashMap = {
             "3e083afe95f447481cad": "593cff1d8e1e383f2471",
             "29d70669460257a74073": "9e0f5e0d0704dd61ee2f",
@@ -221,14 +221,14 @@ describe("localizeString", () => {
 
         // Assert
         expect(newContent).toEqual(
-            "/genwebpack/prod/es/foo.a3e083afe95f447481cad.js /genwebpack/prod/es/foo.29d70669460257a74073b.js",
+            "/genwebpack/prod/es/foo.a3e083afe95f447481cad.js /genwebpack/prod/es/foo.29d70669460257a74073b",
         );
     });
 
     it("updates locale but leaves hashes if no hashMap is provided", () => {
         // Arrange
         const locale = "es";
-        const content = "/genwebpack/prod/en/foo.3e083afe95f447481cad.js";
+        const content = "/genwebpack/prod/en/foo.3e083afe95f447481cad";
         const getLocalePath = (locale: string) => `/prod/${locale}/`;
 
         // Act
@@ -236,7 +236,7 @@ describe("localizeString", () => {
 
         // Assert
         expect(newContent).toEqual(
-            "/genwebpack/prod/es/foo.3e083afe95f447481cad.js",
+            "/genwebpack/prod/es/foo.3e083afe95f447481cad",
         );
     });
 });
@@ -244,7 +244,7 @@ describe("localizeString", () => {
 describe("localizeFile", () => {
     it("localizes the runtime file contents and updates the hashMap", () => {
         // Arrange
-        const content = "genwebpack/prod/en/file.2e083afe95f447481cad.js";
+        const content = "genwebpack/prod/en/file.2e083afe95f447481cad";
         const oldHash = "3e083afe95f447481cad";
         const locale = "es";
         const hashMap = {"2e083afe95f447481cad": "4e083afe95f447481cad"};
@@ -260,9 +260,7 @@ describe("localizeFile", () => {
         });
 
         // Assert
-        expect(results).toEqual(
-            "genwebpack/prod/es/file.4e083afe95f447481cad.js",
-        );
+        expect(results).toEqual("genwebpack/prod/es/file.4e083afe95f447481cad");
         expect(hashMap).toEqual({
             "2e083afe95f447481cad": "4e083afe95f447481cad",
             "3e083afe95f447481cad": "b4a6a6e27adba7babb17",
@@ -271,7 +269,7 @@ describe("localizeFile", () => {
 
     it("localizes the chunk-map file contents and updates the hashMap", () => {
         // Arrange
-        const content = "genwebpack/prod/en/file.2e083afe95f447481cad.js";
+        const content = "genwebpack/prod/en/file.2e083afe95f447481cad";
         const oldHash = "3e083afe95f447481cad";
         const locale = "es";
         const hashMap = {"2e083afe95f447481cad": "4e083afe95f447481cad"};
@@ -287,9 +285,7 @@ describe("localizeFile", () => {
         });
 
         // Assert
-        expect(result).toEqual(
-            "genwebpack/prod/es/file.4e083afe95f447481cad.js",
-        );
+        expect(result).toEqual("genwebpack/prod/es/file.4e083afe95f447481cad");
         expect(hashMap).toEqual({
             "2e083afe95f447481cad": "4e083afe95f447481cad",
             "3e083afe95f447481cad": "b4a6a6e27adba7babb17",
@@ -298,7 +294,7 @@ describe("localizeFile", () => {
 
     it("localizes the runtime file contents and updates the hashMap w/ an existing hashMap mapping", () => {
         // Arrange
-        const content = "genwebpack/prod/en/file.2e083afe95f447481cad.js";
+        const content = "genwebpack/prod/en/file.2e083afe95f447481cad";
         const oldHash = "3e083afe95f447481cad";
         const locale = "es";
         const hashMap = {
@@ -317,9 +313,7 @@ describe("localizeFile", () => {
         });
 
         // Assert
-        expect(result).toEqual(
-            "genwebpack/prod/es/file.4e083afe95f447481cad.js",
-        );
+        expect(result).toEqual("genwebpack/prod/es/file.4e083afe95f447481cad");
         expect(hashMap).toEqual({
             "2e083afe95f447481cad": "4e083afe95f447481cad",
             "3e083afe95f447481cad": "b4a6a6e27adba7babb17",
@@ -329,7 +323,7 @@ describe("localizeFile", () => {
 
     it("localizes the manifest file contents", () => {
         // Arrange
-        const content = "genwebpack/prod/en/file.2e083afe95f447481cad.js";
+        const content = "genwebpack/prod/en/file.2e083afe95f447481cad";
         const oldHash = null;
         const locale = "es";
         const hashMap = {"2e083afe95f447481cad": "4e083afe95f447481cad"};
@@ -345,9 +339,7 @@ describe("localizeFile", () => {
         });
 
         // Assert
-        expect(result).toEqual(
-            "genwebpack/prod/es/file.4e083afe95f447481cad.js",
-        );
+        expect(result).toEqual("genwebpack/prod/es/file.4e083afe95f447481cad");
         expect(hashMap).toEqual({
             "2e083afe95f447481cad": "4e083afe95f447481cad",
         });

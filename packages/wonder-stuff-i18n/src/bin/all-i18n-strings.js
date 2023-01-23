@@ -8,9 +8,9 @@
  * USAGE:
  *
  *   yarn all-i18n-strings file.js
- *   yarn all-i18n-strings "src/*.js"
+ *   yarn all-i18n-strings "src/*"
  */
-import {getFilesToExtractFrom, getPoItemMap} from "../utils/pofile-utils.js";
+import {getFilesToExtractFrom, getPoItemMap} from "../utils/pofile-utils";
 
 // Get the files that we want to process.
 const files = getFilesToExtractFrom(process.argv.slice(2));

@@ -4,7 +4,7 @@ import type {$Application, $Request, $Response} from "express";
 import {Runtime} from "@khanacademy/wonder-stuff-server";
 import type {Logger} from "@khanacademy/wonder-stuff-server";
 import * as lw from "@google-cloud/logging-winston";
-import {makeAppEngineRequestIDMiddleware} from "./middleware/make-app-engine-request-id-middleware.js";
+import {makeAppEngineRequestIDMiddleware} from "./middleware/make-app-engine-request-id-middleware";
 
 /**
  * Apply the middleware that we want to use with Google App Engine (GAE).

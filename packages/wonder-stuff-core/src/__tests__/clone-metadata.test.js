@@ -1,5 +1,5 @@
 // @flow
-import {cloneMetadata} from "../clone-metadata.js";
+import {cloneMetadata} from "../clone-metadata";
 
 describe("#cloneMetadata", () => {
     it.each([undefined, null])(

@@ -3,7 +3,7 @@ import type {URL} from "url";
 import type {Agent as HttpAgent} from "http";
 import type {Agent as HttpsAgent} from "https";
 import {KindError} from "@khanacademy/wonder-stuff-core";
-import {Errors} from "./errors.js";
+import {Errors} from "./errors";
 
 /**
  * When making requests from one Node service to other services, we have seen

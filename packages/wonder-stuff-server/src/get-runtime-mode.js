@@ -3,7 +3,7 @@
 // have fixed:
 // https://github.com/import-js/eslint-plugin-import/issues/2073
 // eslint-disable-next-line import/named
-import {Runtime} from "./types.js";
+import {Runtime} from "./types";
 
 /**
  * Determine the node runtime mode.

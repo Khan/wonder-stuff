@@ -1,5 +1,5 @@
 // @flow
-import {extractStrings} from "../extract-i18n.js";
+import {extractStrings} from "../extract-i18n";
 
 const TEST_FILE = `
 const explanation = "I am a happy javascript file!";
@@ -145,7 +145,7 @@ describe("extractStrings", () => {
               },
               {
                 "comments": [
-                  "This line is used as ngettext in j2.js",
+                  "This line is used as ngettext in j2",
                 ],
                 "endOffset": 441,
                 "linePos": 18,

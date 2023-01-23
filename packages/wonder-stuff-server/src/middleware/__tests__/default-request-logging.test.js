@@ -1,6 +1,6 @@
 // @flow
 import * as ExpressWinston from "express-winston";
-import {defaultRequestLogging} from "../default-request-logging.js";
+import {defaultRequestLogging} from "../default-request-logging";
 
 jest.mock("express-winston");
 
