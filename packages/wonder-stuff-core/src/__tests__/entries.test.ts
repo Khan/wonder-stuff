@@ -1,4 +1,3 @@
-// @ts-expect-error - TS7016 - Could not find a declaration file for module '../entries'. '/Users/kevinbarabash/khan/wonder-stuff/packages/wonder-stuff-core/src/entries.js' implicitly has an 'any' type.
 import {entries} from "../entries";
 
 describe("#entries", () => {
