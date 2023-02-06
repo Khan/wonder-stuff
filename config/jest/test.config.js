@@ -33,6 +33,9 @@ module.exports = {
         "!packages/**/.babelrc.js",
         "!packages/eslint-config-khan/**",
     ],
+    // Provides more accurate coverage reports by instrumenting more lines
+    // than the default provider.
+    coverageProvider: "v8",
     // Only output log messages on test failure. From:
     // https://github.com/facebook/jest/issues/4156#issuecomment-490764080
     reporters: ["<rootDir>/config/jest/log-on-fail-reporter.js"],
