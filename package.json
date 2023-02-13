@@ -31,7 +31,6 @@
     "@types/express-winston": "^4.0.0",
     "@types/jest": "^29.4.0",
     "@types/jest-when": "^3.5.2",
-    "@types/winston": "^2.4.4",
     "babel-jest": "29.4.2",
     "babel-plugin-transform-flow-enums": "^0.0.2",
     "eslint": "^8.34.0",
