@@ -1,5 +1,5 @@
 // @flow
-import {safeStringify} from "../safe-stringify.js";
+import {safeStringify} from "../safe-stringify";
 
 describe("#safeStringify", () => {
     describe("without options or default value argument", () => {

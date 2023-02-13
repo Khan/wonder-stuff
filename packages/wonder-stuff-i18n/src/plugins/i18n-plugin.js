@@ -20,15 +20,15 @@
 import path from "path";
 import {eachLimit} from "async";
 
-import * as I18nUtils from "../utils/i18n-utils.js";
+import * as I18nUtils from "../utils/i18n-utils";
 import {
     hashFileContents,
     extractHashFromFileName,
     localizeFile,
-} from "../utils/localize-file.js";
-import {getEmojiForLocale} from "../utils/emoji-for-locale.js";
+} from "../utils/localize-file";
+import {getEmojiForLocale} from "../utils/emoji-for-locale";
 
-import type {TranslatedLocaleStrings} from "../utils/i18n-utils.js";
+import type {TranslatedLocaleStrings} from "../utils/i18n-utils";
 
 /**
  * Add a new asset to the Webpack compilation assets.

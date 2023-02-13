@@ -5,7 +5,7 @@ import {
     getIgnoreGlobs,
     getI18nStringsFromString,
     translateString,
-} from "../i18n-utils.js";
+} from "../i18n-utils";
 
 jest.mock("ancesdir");
 

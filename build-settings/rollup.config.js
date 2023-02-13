@@ -11,8 +11,8 @@ import filesize from "rollup-plugin-filesize";
 import {preserveShebangs} from "rollup-plugin-preserve-shebangs";
 import rollupExecutable from "rollup-plugin-executable-output";
 
-const createBabelPresets = require("./create-babel-presets.js");
-const createBabelPlugins = require("./create-babel-plugins.js");
+const createBabelPresets = require("./create-babel-presets");
+const createBabelPlugins = require("./create-babel-plugins");
 
 /**
  * We support the following config args with this rollup configuration:

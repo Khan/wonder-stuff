@@ -7,8 +7,8 @@ import type {Transport, Format} from "winston";
 // have fixed:
 // https://github.com/import-js/eslint-plugin-import/issues/2073
 // eslint-disable-next-line import/named
-import {Runtime} from "./types.js";
-import type {LogLevel, Info} from "./types.js";
+import {Runtime} from "./types";
+import type {LogLevel, Info} from "./types";
 
 /**
  * This is how the log message gets formatted.

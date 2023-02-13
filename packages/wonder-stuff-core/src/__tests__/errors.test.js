@@ -1,5 +1,5 @@
 // @flow
-import {Errors} from "../errors.js";
+import {Errors} from "../errors";
 
 describe("Errors", () => {
     it("should be frozen", () => {

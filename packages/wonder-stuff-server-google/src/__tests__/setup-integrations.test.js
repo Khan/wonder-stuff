@@ -2,7 +2,7 @@
 import * as DebugAgent from "@google-cloud/debug-agent";
 import * as Profiler from "@google-cloud/profiler";
 import {Runtime} from "@khanacademy/wonder-stuff-server";
-import {setupIntegrations} from "../setup-integrations.js";
+import {setupIntegrations} from "../setup-integrations";
 
 // Google Profiler does some work on import, even before we mock the module,
 // which leads to a fetch attempt that ultimately is left dangling and can

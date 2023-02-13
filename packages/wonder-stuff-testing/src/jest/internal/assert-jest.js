@@ -1,6 +1,6 @@
 // @flow
 import {KindError, Errors} from "@khanacademy/wonder-stuff-core";
-import {isRunningInJest} from "./is-running-in-jest.js";
+import {isRunningInJest} from "./is-running-in-jest";
 
 /**
  * Assert that we're running in jest.

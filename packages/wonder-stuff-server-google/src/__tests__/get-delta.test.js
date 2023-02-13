@@ -1,5 +1,5 @@
 // @flow
-import {getDelta} from "../get-delta.js";
+import {getDelta} from "../get-delta";
 
 describe("#getDelta", () => {
     it("should return the difference of two objects", () => {

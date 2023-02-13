@@ -1,5 +1,5 @@
 // @flow
-import {getAppEngineRequestID} from "../get-app-engine-request-id.js";
+import {getAppEngineRequestID} from "../get-app-engine-request-id";
 
 describe("#getAppEngineRequestID", () => {
     it("should return null when header is absent", () => {

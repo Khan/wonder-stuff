@@ -1,8 +1,8 @@
 // @flow
-import {KindError} from "../kind-error.js";
-import {errorsFromError, Order} from "../errors-from-error.js";
+import {KindError} from "../kind-error";
+import {errorsFromError, Order} from "../errors-from-error";
 
-import type {Options as KindErrorOptions} from "../kind-error.js";
+import type {Options as KindErrorOptions} from "../kind-error";
 
 describe("#errorsFromError", () => {
     it.each([null, undefined, "NOT_A_GOOD_VALUE", 42])(

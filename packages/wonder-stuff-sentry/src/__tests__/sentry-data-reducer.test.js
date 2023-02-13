@@ -1,9 +1,9 @@
 // @flow
-import {sentryDataReducer} from "../sentry-data-reducer.js";
-import {EmptySentryData} from "../empty-sentry-data.js";
-import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
-import * as GetSentryDataFromError from "../get-sentry-data-from-error.js";
-import type {SentryData} from "../types.js";
+import {sentryDataReducer} from "../sentry-data-reducer";
+import {EmptySentryData} from "../empty-sentry-data";
+import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options";
+import * as GetSentryDataFromError from "../get-sentry-data-from-error";
+import type {SentryData} from "../types";
 
 describe("#sentryDataReducer", () => {
     describe("index is zero", () => {

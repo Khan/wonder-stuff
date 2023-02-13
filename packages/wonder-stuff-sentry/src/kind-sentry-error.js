@@ -1,8 +1,8 @@
 // @flow
 import {KindError, Errors} from "@khanacademy/wonder-stuff-core";
 import type {Metadata} from "@khanacademy/wonder-stuff-core";
-import type {SentryData} from "./types.js";
-import {EmptySentryData} from "./empty-sentry-data.js";
+import type {SentryData} from "./types";
+import {EmptySentryData} from "./empty-sentry-data";
 
 /**
  * Options for constructing a `KindError`.

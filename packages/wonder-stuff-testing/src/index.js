@@ -1,3 +1,3 @@
 // @flow
-export * as jest from "./jest/index.js";
-export {dataFactoryFor} from "./data-factory-for.js";
+export * as jest from "./jest/index";
+export {dataFactoryFor} from "./data-factory-for";

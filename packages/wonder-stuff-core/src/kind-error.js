@@ -1,9 +1,9 @@
 // @flow
-import {Errors} from "./errors.js";
-import {ErrorInfo} from "./error-info.js";
-import {cloneMetadata} from "./clone-metadata.js";
+import {Errors} from "./errors";
+import {ErrorInfo} from "./error-info";
+import {cloneMetadata} from "./clone-metadata";
 
-import type {Metadata} from "./types.js";
+import type {Metadata} from "./types";
 
 /**
  * Options for constructing a `KindError`.

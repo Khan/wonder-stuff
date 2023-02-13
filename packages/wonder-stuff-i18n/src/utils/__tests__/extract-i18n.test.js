@@ -1,5 +1,5 @@
 // @flow
-import {extractStrings} from "../extract-i18n.js";
+import {extractStrings} from "../extract-i18n";
 
 const TEST_FILE = `
 const explanation = "I am a happy javascript file!";

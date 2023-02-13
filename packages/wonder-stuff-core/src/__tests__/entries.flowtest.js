@@ -1,5 +1,5 @@
 // @flow
-import {entries} from "../entries.js";
+import {entries} from "../entries";
 
 {
     // should type returned array element as tuples of keys as string subtype

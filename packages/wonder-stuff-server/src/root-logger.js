@@ -1,7 +1,7 @@
 // @flow
 import {KindError} from "@khanacademy/wonder-stuff-core";
-import {Errors} from "./errors.js";
-import type {Logger} from "./types.js";
+import {Errors} from "./errors";
+import type {Logger} from "./types";
 
 let rootLogger: ?Logger = null;
 

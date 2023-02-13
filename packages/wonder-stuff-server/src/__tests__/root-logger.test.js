@@ -7,7 +7,7 @@ describe("root-logger.js", () => {
     describe("#setRootLogger", () => {
         it("should throw if called more than once", () => {
             // Arrange
-            const {setRootLogger} = require("../root-logger.js");
+            const {setRootLogger} = require("../root-logger");
             setRootLogger(({}: $FlowFixMe));
 
             // Act
@@ -24,7 +24,7 @@ describe("root-logger.js", () => {
         it("should return the value passed to setRootLogger", () => {
             // Arrange
             const fakeLogger: $FlowFixMe = {};
-            const {getRootLogger, setRootLogger} = require("../root-logger.js");
+            const {getRootLogger, setRootLogger} = require("../root-logger");
             setRootLogger(fakeLogger);
 
             // Act

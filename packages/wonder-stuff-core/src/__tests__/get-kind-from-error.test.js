@@ -1,7 +1,7 @@
 // @flow
-import {Errors} from "../errors.js";
-import {getKindFromError} from "../get-kind-from-error.js";
-import {KindError} from "../kind-error.js";
+import {Errors} from "../errors";
+import {getKindFromError} from "../get-kind-from-error";
+import {KindError} from "../kind-error";
 
 describe("#getKindFromError", () => {
     it.each([null, undefined, new Error("test")])(

@@ -1,8 +1,8 @@
 // @flow
-import * as CloneMetadata from "../clone-metadata.js";
-import {ErrorInfo} from "../error-info.js";
-import {Errors} from "../errors.js";
-import {KindError} from "../kind-error.js";
+import * as CloneMetadata from "../clone-metadata";
+import {ErrorInfo} from "../error-info";
+import {Errors} from "../errors";
+import {KindError} from "../kind-error";
 
 describe("KindError", () => {
     const NODE_ENV = process.env.NODE_ENV;

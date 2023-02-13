@@ -1,6 +1,6 @@
 // @flow
-export {KindSentryError} from "./kind-sentry-error.js";
-export {KindErrorData} from "./kind-error-data.js";
+export {KindSentryError} from "./kind-sentry-error";
+export {KindErrorData} from "./kind-error-data";
 
 export type {
     KindErrorDataOptions,
@@ -8,4 +8,4 @@ export type {
     SentryTags,
     SentryContext,
     SentryFingerprint,
-} from "./types.js";
+} from "./types";

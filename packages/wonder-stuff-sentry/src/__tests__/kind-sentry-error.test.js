@@ -1,8 +1,8 @@
 // @flow
 import {Errors} from "@khanacademy/wonder-stuff-core";
 import type {Metadata} from "@khanacademy/wonder-stuff-core";
-import {KindSentryError} from "../kind-sentry-error.js";
-import type {SentryData} from "../types.js";
+import {KindSentryError} from "../kind-sentry-error";
+import type {SentryData} from "../types";
 
 describe("KindSentryError", () => {
     describe("#constructor", () => {

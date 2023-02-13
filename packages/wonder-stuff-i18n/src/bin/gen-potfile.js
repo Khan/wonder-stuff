@@ -19,7 +19,7 @@
 import {
     getFilesToExtractFrom,
     getPOTFileStringFromFiles,
-} from "../utils/pofile-utils.js";
+} from "../utils/pofile-utils";
 
 // Get the files that we want to process.
 const files = getFilesToExtractFrom(process.argv.slice(2));

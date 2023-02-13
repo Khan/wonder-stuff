@@ -1,14 +1,14 @@
 // @flow
 import * as Server from "@khanacademy/wonder-stuff-server";
 import * as LoggingWinston from "@google-cloud/logging-winston";
-import * as AddAppEngineMiddleware from "../add-app-engine-middleware.js";
-import * as GetDefaultLogMetadata from "../get-default-log-metadata.js";
-import * as SetupIntegrations from "../setup-integrations.js";
+import * as AddAppEngineMiddleware from "../add-app-engine-middleware";
+import * as GetDefaultLogMetadata from "../get-default-log-metadata";
+import * as SetupIntegrations from "../setup-integrations";
 
-import {startServer} from "../start-server.js";
+import {startServer} from "../start-server";
 
-jest.mock("../setup-integrations.js");
-jest.mock("../add-app-engine-middleware.js");
+jest.mock("../setup-integrations");
+jest.mock("../add-app-engine-middleware");
 jest.mock("@google-cloud/logging-winston");
 
 describe("#start-server", () => {

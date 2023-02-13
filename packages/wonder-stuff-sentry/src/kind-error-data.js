@@ -7,12 +7,12 @@ import type {
     SentryHub,
     SentryIntegration,
     KindErrorDataOptions,
-} from "./types.js";
+} from "./types";
 
-import {collateSentryData} from "./collate-sentry-data.js";
-import {DefaultKindErrorDataOptions} from "./default-kind-error-data-options.js";
-import {isTagKeyValid} from "./is-tag-key-valid.js";
-import {KindSentryError} from "./kind-sentry-error.js";
+import {collateSentryData} from "./collate-sentry-data";
+import {DefaultKindErrorDataOptions} from "./default-kind-error-data-options";
+import {isTagKeyValid} from "./is-tag-key-valid";
+import {KindSentryError} from "./kind-sentry-error";
 
 type InvalidTags = {|
     invalidKindTag?: string,

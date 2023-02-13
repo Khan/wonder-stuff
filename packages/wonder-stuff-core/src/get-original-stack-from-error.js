@@ -1,5 +1,5 @@
 // @flow
-import {KindError} from "./kind-error.js";
+import {KindError} from "./kind-error";
 
 /**
  * Get the original stack trace for the given error.

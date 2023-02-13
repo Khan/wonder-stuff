@@ -1,12 +1,12 @@
 // @flow
 import * as TraceAgent from "@google-cloud/trace-agent";
 import * as Server from "@khanacademy/wonder-stuff-server";
-import * as TraceImpl from "../trace-impl.js";
+import * as TraceImpl from "../trace-impl";
 
-import {trace} from "../trace.js";
+import {trace} from "../trace";
 
 jest.mock("@google-cloud/trace-agent");
-jest.mock("../trace-impl.js");
+jest.mock("../trace-impl");
 
 describe("#trace", () => {
     describe("with request", () => {

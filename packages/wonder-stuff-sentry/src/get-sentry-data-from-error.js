@@ -1,6 +1,6 @@
 // @flow
-import {KindSentryError} from "./kind-sentry-error.js";
-import type {SentryData} from "./types.js";
+import {KindSentryError} from "./kind-sentry-error";
+import type {SentryData} from "./types";
 
 /**
  * Get the sentry data for a given error, if it has any.
