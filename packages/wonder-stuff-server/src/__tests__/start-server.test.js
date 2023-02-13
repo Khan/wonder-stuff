@@ -48,7 +48,7 @@ describe("#start-server", () => {
         expect(setRootLoggerSpy).toHaveBeenCalledWith(logger);
     });
 
-    it.each(Array.from(Runtime.members()))(
+    it.each(Array.from(Object.values(Runtime)))(
         "should import heapdumps if allowHeapDumps is true",
         async (mode) => {
             // Arrange

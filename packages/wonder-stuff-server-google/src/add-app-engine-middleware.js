@@ -11,7 +11,7 @@ import {makeAppEngineRequestIDMiddleware} from "./middleware/make-app-engine-req
  */
 export async function addAppEngineMiddleware<TReq: $Request, TRes: $Response>(
     app: $Application<TReq, TRes>,
-    mode: Runtime,
+    mode: $Values<typeof Runtime>,
     logger: Logger,
 ): Promise<$Application<TReq, TRes>> {
     const middlewareApp = express<TReq, TRes>();
