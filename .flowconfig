@@ -13,7 +13,6 @@ module.use_strict=true
 
 [lints]
 deprecated-type=error
-deprecated-utility=error
 sketchy-null=error
 sketchy-number=error
 unclear-type=error
