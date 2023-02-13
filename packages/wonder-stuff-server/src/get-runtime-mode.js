@@ -13,7 +13,9 @@ import {Runtime} from "./types";
  *
  * @returns {Runtime} The runtime mode of production, development, or test.
  */
-export const getRuntimeMode = (defaultMode: Runtime): Runtime => {
+export const getRuntimeMode = (
+    defaultMode: $Values<typeof Runtime>,
+): $Values<typeof Runtime> => {
     switch (process.env.NODE_ENV) {
         case "test":
             return Runtime.Test;
