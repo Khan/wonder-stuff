@@ -1,4 +1,3 @@
-// @ts-expect-error [FEI-5011] - TS2307 - Cannot find module '../values' or its corresponding type declarations.
 import {values} from "../values";
 
 describe("#values", () => {

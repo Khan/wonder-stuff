@@ -1,4 +1,3 @@
-// @ts-expect-error [FEI-5011] - TS2307 - Cannot find module '../entries' or its corresponding type declarations.
 import {entries} from "../entries";
 
 describe("#entries", () => {
