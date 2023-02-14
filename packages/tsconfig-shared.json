@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "incremental": true,
+
+    "declaration": true,
+    "emitDeclarationOnly": true,
+
+    "target": "ES2016",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+
+    "strict": true,
+
+    "paths": {
+      "@khanacademy/*": [
+        "./packages/*/src"
+      ]
+    },
+  },
+}

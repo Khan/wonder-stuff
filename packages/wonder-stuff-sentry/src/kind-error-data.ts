@@ -72,7 +72,6 @@ export class KindErrorData implements SentryIntegration {
                 if (!self) {
                     return event;
                 }
-                // @ts-expect-error [FEI-5011] - TS2339 - Property 'enhanceEventWithErrorData' does not exist on type 'SentryIntegration'.
                 return self.enhanceEventWithErrorData(event, hint);
             },
         );

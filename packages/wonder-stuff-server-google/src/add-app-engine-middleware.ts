@@ -12,14 +12,11 @@ export async function addAppEngineMiddleware<
     TReq extends Request,
     TRes extends Response,
 >(
-    // @ts-expect-error [FEI-5011] - TS2315 - Type 'Application' is not generic.
-    app: Application<TReq, TRes>,
+    app: Application,
     mode: (typeof Runtime)[keyof typeof Runtime],
     logger: Logger,
-    // @ts-expect-error [FEI-5011] - TS2315 - Type 'Application' is not generic.
-): Promise<Application<TReq, TRes>> {
-    // @ts-expect-error [FEI-5011] - TS2558 - Expected 0 type arguments, but got 2.
-    const middlewareApp = express<TReq, TRes>();
+): Promise<Application> {
+    const middlewareApp = express();
 
     /**
      * If we're in production, we use the logging-winston middleware from

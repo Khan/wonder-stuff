@@ -75,7 +75,7 @@
     "build": "rollup -c build-settings/rollup.config.js",
     "build:prodsizecheck": "rollup -c build-settings/rollup.config.js --configPlatforms='browser' --configFormats='esm' --configEnvironment='production'",
     "watch": "rollup -c build-settings/rollup.config.js --watch",
-    "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules",
+    "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules && rm -f packages/*/tsconfig.tsbuildinfo",
     "coverage": "yarn run jest --coverage",
     "format": "prettier --write .",
     "lint": "eslint --config .eslintrc.js packages",
@@ -83,6 +83,7 @@
     "publish:ci": "node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && yarn build && changeset publish",
     "test": "yarn jest",
     "typecheck": "tsc --noEmit",
+    "build:types": "yarn tsc -b -v tsconfig.json",
     "nochangeset": "yarn changeset add --empty"
   }
 }
