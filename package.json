@@ -76,12 +76,12 @@
     "watch": "rollup -c build-settings/rollup.config.js --watch",
     "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules",
     "coverage": "yarn run jest --coverage",
-    "flow:ci": "flow check --max-workers 0",
     "format": "prettier --write .",
     "lint": "eslint --config .eslintrc.js packages",
     "lint:ci": "eslint --config .eslintrc.js",
     "publish:ci": "node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && yarn build && changeset publish",
     "test": "yarn jest",
+    "typecheck": "tsc --noEmit",
     "nochangeset": "yarn changeset add --empty"
   }
 }

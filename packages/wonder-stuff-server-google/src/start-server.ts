@@ -1,3 +1,4 @@
+import * as http from "http";
 import type {Application, Request, Response} from "express";
 import {
     startServer as startServerCore,
@@ -23,7 +24,7 @@ export async function startServer<
     TRes extends Response,
 >(
     options: ServerOptions,
-    app: Application<TReq, TRes>,
+    app: Application,
 ): Promise<http.Server | null | undefined> {
     const {integrations, logLevel, ...restOptions} = options;
 
@@ -46,7 +47,6 @@ export async function startServer<
             // In production, we use the Google Cloud logging winston transport.
             restOptions.mode === Runtime.Production
                 ? new lw.LoggingWinston({
-                      // @ts-expect-error [FEI-5011] - TS2322 - Type 'string | number | symbol' is not assignable to type 'string | undefined'.
                       level: logLevel,
                   })
                 : null,

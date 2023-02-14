@@ -35,7 +35,7 @@ jobs:
 
   lint:
     needs: [prime_cache_primary]
-    name: Lint, flow, and coverage check
+    name: Lint, typecheck, and coverage check
     env:
       CI: true
     runs-on: ${{ matrix.os }}
@@ -81,9 +81,9 @@ jobs:
         limited-trigger: ${{ steps.js-files.outputs.filtered }}
         limited: yarn lint:ci {}
 
-    - name: Run Flow
+    - name: Typecheck
       if: steps.js-files.outputs.filtered != '[]'
-      run: yarn flow
+      run: yarn typecheck
 
     # Collect and record coverage
     - name: Run Jest with coverage

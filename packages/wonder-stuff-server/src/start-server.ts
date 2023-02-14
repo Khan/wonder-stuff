@@ -1,3 +1,5 @@
+import * as http from "http";
+import * as net from "net";
 import type {Application, Request, Response} from "express";
 import express from "express";
 import {setRootLogger} from "./root-logger";
@@ -164,7 +166,6 @@ export async function startServer<
         logger.info("SIGINT received, shutting down server.");
 
         try {
-            // @ts-expect-error [FEI-5011] - TS7006 - Parameter 'err' implicitly has an 'any' type.
             server.close((err) => {
                 if (err) {
                     logger.error(

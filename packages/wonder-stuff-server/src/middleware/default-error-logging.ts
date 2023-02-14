@@ -12,10 +12,10 @@ export const defaultErrorLogging = <
     TRes extends Response,
 >(
     logger: Logger,
-): Middleware<TReq, TRes>
-/**
- * Express-winston types aren't parameterized, so we suppress the error.
- */ =>
+): Middleware<TReq, TRes> =>
+    /**
+     * Express-winston types aren't parameterized, so we suppress the error.
+     */
     expressWinston.errorLogger({
         level: "error",
         winstonInstance: logger,

@@ -13,6 +13,7 @@ describe("get-logger.js", () => {
         it("should return the root logger when there is no request", async () => {
             // Arrange
             const fakeLogger: Record<string, any> = {};
+            // @ts-expect-error: mock is not a valid winston Logger
             jest.spyOn(RootLogger, "getRootLogger").mockReturnValue(fakeLogger);
 
             // Act
@@ -25,6 +26,7 @@ describe("get-logger.js", () => {
         it("should return the root logger when the request has no log", async () => {
             // Arrange
             const fakeLogger: Record<string, any> = {};
+            // @ts-expect-error: mock is not a valid winston Logger
             jest.spyOn(RootLogger, "getRootLogger").mockReturnValue(fakeLogger);
 
             // Act
@@ -38,6 +40,7 @@ describe("get-logger.js", () => {
         it("should return the request logger when the request has a log", async () => {
             // Arrange
             const fakeLogger: Record<string, any> = {};
+            // @ts-expect-error: mock is not a valid winston Logger
             jest.spyOn(RootLogger, "getRootLogger").mockReturnValue(fakeLogger);
             const pretendRequestLogger: Record<string, any> = {};
             const pretendRequest = {

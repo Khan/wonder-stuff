@@ -13,4 +13,4 @@ export {KindError} from "./kind-error";
 export {safeStringify} from "./safe-stringify";
 export {truncateMiddle} from "./truncate-middle";
 
-export type {Metadata} from "./types";
+export type {Metadata, MetadataPrimitive, MetadataArray} from "./types";

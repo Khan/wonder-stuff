@@ -32,7 +32,6 @@ export const createLogger = ({
     });
 
     winstonLogger.debug(
-        // @ts-expect-error [FEI-5011] - TS2731 - Implicit conversion of a 'symbol' to a 'string' will fail at runtime. Consider wrapping this expression in 'String(...)'.
         `Created logger (Level=${level} Mode=${mode as string})`,
     );
 

@@ -1,4 +1,9 @@
 import {Errors} from "@khanacademy/wonder-stuff-core";
+import type {
+    Metadata,
+    MetadataPrimitive,
+    MetadataArray,
+} from "@khanacademy/wonder-stuff-core";
 import {EmptySentryData} from "./empty-sentry-data";
 import {KindSentryError} from "./kind-sentry-error";
 import {truncateTagValue} from "./truncate-tag-value";

@@ -1,5 +1,5 @@
-type MetadataPrimitive = string | number | boolean | null | undefined;
-type MetadataArray<T> = Array<T | MetadataArray<T>>;
+export type MetadataPrimitive = string | number | boolean | null | undefined;
+export type MetadataArray<T> = Array<T | MetadataArray<T>>;
 
 /**
  * A collection of data.
