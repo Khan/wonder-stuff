@@ -72,6 +72,9 @@ jobs:
     - name: Build so that inter-package references are resolved
       run: yarn build
 
+    - name: Build Types
+      run: yarn build:types
+
     # Linting / type checking
     - name: Eslint
       uses: Khan/actions@full-or-limited-v0
