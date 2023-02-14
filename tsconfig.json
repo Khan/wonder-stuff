@@ -1,11 +1,14 @@
+/* Visit https://aka.ms/tsconfig to read more about this file */
 {
-    "files": [],
-    "references": [
-      {"path": "./packages/wonder-stuff-core"},
-      {"path": "./packages/wonder-stuff-i18n"},
-      {"path": "./packages/wonder-stuff-sentry"},
-      {"path": "./packages/wonder-stuff-server"},
-      {"path": "./packages/wonder-stuff-server-google"},
-      {"path": "./packages/wonder-stuff-testing"},
-    ]
-  }
+  // Intentionally empty, all files are covered by tsconfig.json files
+  // in each package directory.
+  "files": [],
+  "references": [
+    {"path": "./packages/wonder-stuff-core"},
+    {"path": "./packages/wonder-stuff-i18n"},
+    {"path": "./packages/wonder-stuff-sentry"},
+    {"path": "./packages/wonder-stuff-server"},
+    {"path": "./packages/wonder-stuff-server-google"},
+    {"path": "./packages/wonder-stuff-testing"},
+  ]
+}

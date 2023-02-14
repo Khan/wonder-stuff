@@ -1,19 +1,21 @@
+/* Visit https://aka.ms/tsconfig to read more about this file */
 {
   "compilerOptions": {
     "composite": true,
-    "incremental": true,
+    "incremental": true, // Required for composite projects
 
+    // We use rollup + babel to compile our bundles so we
+    // only need tsc to output .d.ts files
     "declaration": true,
     "emitDeclarationOnly": true,
 
     "target": "ES2016",
-    "module": "CommonJS",
     "esModuleInterop": true,
-
     "resolveJsonModule": true,
     "moduleResolution": "node",
 
     "strict": true,
+    "noImplicitAny": true,
 
     "paths": {
       "@khanacademy/*": [

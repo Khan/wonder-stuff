@@ -182,6 +182,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 format: "cjs",
                 platform: "browser",
                 file: cjsBrowser,
+                plugins: [],
             });
         }
         if (formats.has("esm") && esmBrowser) {
@@ -202,6 +203,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 format: "cjs",
                 platform: "node",
                 file: cjsNode,
+                plugins: [],
             });
         }
         if (formats.has("esm") && esmNode) {
@@ -210,6 +212,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 format: "esm",
                 platform: "node",
                 file: esmNode,
+                plugins: [],
             });
         }
     }
