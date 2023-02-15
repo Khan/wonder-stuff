@@ -1,11 +1,10 @@
 import * as http from "http";
-import type {Application, Request, Response} from "express";
+import type {Application} from "express";
 import {
     startServer as startServerCore,
     Runtime,
     createLogger,
 } from "@khanacademy/wonder-stuff-server";
-import type {RequestWithLog} from "@khanacademy/wonder-stuff-server";
 import * as lw from "@google-cloud/logging-winston";
 import {addAppEngineMiddleware} from "./add-app-engine-middleware";
 import {setupIntegrations} from "./setup-integrations";
@@ -19,10 +18,7 @@ import {getDefaultLogMetadata} from "./get-default-log-metadata";
  * This takes a server application definition and attaches Goole Cloud
  * middleware before listening on the appropriate port per the passed options.
  */
-export async function startServer<
-    TReq extends RequestWithLog<Request>,
-    TRes extends Response,
->(
+export async function startServer(
     options: ServerOptions,
     app: Application,
 ): Promise<http.Server | null | undefined> {
@@ -56,7 +52,7 @@ export async function startServer<
     await setupIntegrations(restOptions.mode, integrations);
 
     // Add GAE middleware to the app.
-    const appWithMiddleware = await addAppEngineMiddleware<TReq, TRes>(
+    const appWithMiddleware = await addAppEngineMiddleware(
         app,
         restOptions.mode,
         logger,

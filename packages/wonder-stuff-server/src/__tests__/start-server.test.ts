@@ -204,6 +204,7 @@ describe("#start-server", () => {
         jest.spyOn(
             DefaultRequestLogging,
             "defaultRequestLogging",
+            // @ts-expect-error: mock is not a valid Logger
         ).mockReturnValue("FAKE_REQUEST_MIDDLEWARE");
 
         // Act
@@ -237,6 +238,7 @@ describe("#start-server", () => {
         jest.spyOn(
             DefaultRequestLogging,
             "defaultRequestLogging",
+            // @ts-expect-error: mock is not a valid Logger
         ).mockReturnValue("FAKE_REQUEST_MIDDLEWARE");
 
         // Act
@@ -269,6 +271,7 @@ describe("#start-server", () => {
         };
         jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
         jest.spyOn(DefaultErrorLogging, "defaultErrorLogging").mockReturnValue(
+            // @ts-expect-error: mock is not a valid Logger
             "FAKE_ERROR_MIDDLEWARE",
         );
 
@@ -301,6 +304,7 @@ describe("#start-server", () => {
         };
         jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
         jest.spyOn(DefaultErrorLogging, "defaultErrorLogging").mockReturnValue(
+            // @ts-expect-error: mock is not a valid Logger
             "FAKE_ERROR_MIDDLEWARE",
         );
 
