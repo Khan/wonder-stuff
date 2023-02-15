@@ -73,11 +73,10 @@ jobs:
       run: yarn build
 
     - name: Build Types
-      # There isn't an easy way for us to type check our tests without
-      # also including them in dist folder when we build the .d.ts files
-      # so we have to manually remove them.
-      # TODO(kevin): Figure out how to have the `build:types` script do this.
-      run: yarn build:types && rm -rf packages/*/dist/**/__tests__
+      run: yarn build:types
+
+    - name: Build Flow Types
+      run: yarn build:flowtypes
 
     # Linting / type checking
     - name: Eslint
