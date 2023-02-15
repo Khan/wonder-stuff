@@ -1,6 +1,7 @@
+// This file is used by the tsconfig.json files in each package.
 /* Visit https://aka.ms/tsconfig to read more about this file */
 {
-  "exclude": ["dist"],
+  "extends": "../tsconfig-common.json",
   "compilerOptions": {
     "composite": true,
     "incremental": true, // Required for composite projects
@@ -10,20 +11,9 @@
     "declaration": true,
     "emitDeclarationOnly": true,
 
-    "target": "ES2016",
-    // Required for dynamic imports even though we aren't using
-    // tsc to output any modules.
-    "module": "esnext",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-
-    "strict": true,
-    "noImplicitAny": true,
-
     "paths": {
       "@khanacademy/*": [
-        "./packages/*/src"
+        "./*/src"
       ]
     },
   },

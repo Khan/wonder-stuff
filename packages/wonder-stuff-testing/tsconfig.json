@@ -1,5 +1,6 @@
 {
-  "exclude": ["dist"],
+  "exclude": ["dist", "**/*.flowtest.ts"],
+  "extends": "../tsconfig-shared.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
