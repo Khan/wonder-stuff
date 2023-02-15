@@ -1,14 +1,33 @@
-/* Visit https://aka.ms/tsconfig to read more about this file */
 {
-  // Intentionally empty, all files are covered by tsconfig.json files
-  // in each package directory.
-  "files": [],
-  "references": [
-    {"path": "./packages/wonder-stuff-core"},
-    {"path": "./packages/wonder-stuff-i18n"},
-    {"path": "./packages/wonder-stuff-sentry"},
-    {"path": "./packages/wonder-stuff-server"},
-    {"path": "./packages/wonder-stuff-server-google"},
-    {"path": "./packages/wonder-stuff-testing"},
-  ]
+  "exclude": ["**/dist", "**/*.flowtest.ts"],
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig to read more about this file */
+
+    /* Language and Environment */
+    "target": "ES2016",
+
+    /* Modules */
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "paths": {
+      "@khanacademy/*": ["./packages/*/src/index.ts"],
+    },
+
+    /* Emit */
+    "noEmit": true,
+
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+    "noImplicitAny": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+
+    /* Completeness */
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": false
+  }
 }

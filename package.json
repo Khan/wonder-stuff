@@ -73,7 +73,7 @@
   "scripts": {
     "build": "rollup -c build-settings/rollup.config.js",
     "build:prodsizecheck": "rollup -c build-settings/rollup.config.js --configPlatforms='browser' --configFormats='esm' --configEnvironment='production'",
-    "build:types": "yarn tsc -b -v tsconfig.json",
+    "build:types": "yarn tsc --build --verbose tsconfig-build.json",
     "watch": "rollup -c build-settings/rollup.config.js --watch",
     "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules && rm -f packages/*/tsconfig.tsbuildinfo",
     "coverage": "yarn run jest --coverage",

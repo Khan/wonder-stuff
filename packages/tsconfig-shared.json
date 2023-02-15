@@ -1,5 +1,6 @@
 /* Visit https://aka.ms/tsconfig to read more about this file */
 {
+  "exclude": ["dist"],
   "compilerOptions": {
     "composite": true,
     "incremental": true, // Required for composite projects
