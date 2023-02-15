@@ -115,9 +115,6 @@ export const traceImpl = (
          * We need to build the metadata that we will be logging.
          * This is a combination of the given info, some custom things we add,
          * and any profile labels that were added.
-         *
-         * We suppress flow because we want the TraceSessionInfo to overwrite
-         * things and it's OK if we don't know what things it overwrites.
          */
         const metadata = {
             /**

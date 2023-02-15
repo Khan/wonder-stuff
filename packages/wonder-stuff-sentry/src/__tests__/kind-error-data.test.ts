@@ -146,7 +146,6 @@ describe("KindErrorData", () => {
                 const underTest = new KindErrorData();
                 const addGlobalEventProcessorMock = jest.fn();
                 const getHub = () => ({
-                    // $FlowIgnore[incompatible-call]
                     getIntegration: jest.fn().mockReturnValue(underTest),
                 });
                 const enhanceSpy = jest

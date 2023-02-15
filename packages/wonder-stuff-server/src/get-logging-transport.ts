@@ -50,12 +50,6 @@ export const getLoggingTransport = (
     logLevel: LogLevel,
 ): Transport => {
     switch (mode) {
-        /**
-         * Our flow types guard against misuse as long as someone is using them.
-         * Let's be defensive and cope with a bad value. In that case, we'll
-         * assume our test mode as it's the most inert.
-         */
-        // $FlowIgnore[invalid-exhaustive-check]
         default:
         case Runtime.Test:
             /**
@@ -71,8 +65,6 @@ export const getLoggingTransport = (
             /**
              * This is a hack to make our writable stream work
              */
-            // $FlowFixMe[cannot-write]
-            // $FlowFixMe[method-unbinding]
             sink._write = sink.write;
             return new winston.transports.Stream({
                 format: getFormatters(Runtime.Test),

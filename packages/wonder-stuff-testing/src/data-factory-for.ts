@@ -46,10 +46,7 @@ import {clone} from "@khanacademy/wonder-stuff-core";
  */
 export const dataFactoryFor =
     <T>(baseObject: T): ((partialObject?: Partial<T>) => T) =>
-    <T>(
-        // $FlowIgnore[incompatible-type]: Flow thinks that {} can't be assigned to Partial<T>
-        partialObject: Partial<T> = Object.freeze({}),
-    ): T => {
+    <T>(partialObject: Partial<T> = Object.freeze({})): T => {
         // NOTE: we clone the result to prevent tests from modifying
         // either `defaultObject` or `partialObject` when performing
         // deep updates on the return object returned by the factory.
