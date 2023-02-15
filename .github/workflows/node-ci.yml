@@ -83,7 +83,7 @@ jobs:
       uses: Khan/actions@full-or-limited-v0
       with:
         full-trigger: ${{ steps.eslint-reset.outputs.filtered }}
-        full: yarn lint:ci packages
+        full: yarn lint:ci
         limited-trigger: ${{ steps.js-files.outputs.filtered }}
         limited: yarn lint:ci {}
 

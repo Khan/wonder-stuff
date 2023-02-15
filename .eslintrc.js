@@ -42,7 +42,6 @@ module.exports = {
             files: ["**/__tests__/**/*.test.ts"],
             rules: {
                 "max-lines": "off",
-                "@typescript-eslint/no-var-requires": "off",
                 "@typescript-eslint/no-empty-function": "off",
             },
         },
@@ -50,6 +49,17 @@ module.exports = {
             files: ["**/bin/**/*.ts", "build-scripts/*.ts"],
             rules: {
                 "no-console": "off",
+            },
+        },
+        {
+            files: [
+                "**/__tests__/**/*.test.ts",
+                "utils/*.js",
+                "config/**",
+                "build-settings/**",
+            ],
+            rules: {
+                "@typescript-eslint/no-var-requires": "off",
             },
         },
     ],
