@@ -13,11 +13,12 @@ export const verifyRealTimers = () => {
     // change this behavior we would silently start just working.
     // eslint-disable-next-line no-console
     const oldWarn = console.warn;
-    console.warn = () => {}; // eslint-disable-line no-console
+    // eslint-disable-next-line no-console, @typescript-eslint/no-empty-function
+    console.warn = () => {};
 
     try {
         const timerCount = jest.getTimerCount();
-        // eslint-disable-next-line no-restricted-syntax
+        // eslint-disable-next-line no-restricted-syntax, @typescript-eslint/no-empty-function
         const timeoutID = setTimeout(() => {}, 0);
         const newTimerCount = jest.getTimerCount();
         // eslint-disable-next-line no-restricted-syntax

@@ -2,6 +2,7 @@ export const unverifiedWait = (delay: number, count: number): Promise<void> =>
     new Promise(
         (
             resolve: (result: Promise<undefined> | undefined) => void,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             reject: (error?: any) => void,
         ) => {
             // eslint-disable-next-line no-restricted-syntax

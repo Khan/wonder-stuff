@@ -1,7 +1,6 @@
 import stream from "stream";
-import winston from "winston";
-// @ts-expect-error [FEI-5011] - TS2724 - '"winston"' has no exported member named 'Transport'. Did you mean 'transport'? | TS2724 - '"winston"' has no exported member named 'Format'. Did you mean 'format'?
-import type {Transport, Format} from "winston";
+import * as winston from "winston";
+import type {transport as Transport, Logform} from "winston";
 
 import {Runtime} from "./types";
 import type {LogLevel, Info} from "./types";
@@ -26,8 +25,8 @@ const devFormatter = ({level, message, ...metadata}: Info): string => {
  */
 const getFormatters = (
     mode: (typeof Runtime)[keyof typeof Runtime],
-): Format => {
-    const formatters: Array<Format> = [
+): Logform.Format => {
+    const formatters: Array<Logform.Format> = [
         winston.format.splat(), // Allows for %s style substitutions
     ];
     if (mode === Runtime.Development) {
@@ -47,6 +46,7 @@ const getFormatters = (
  */
 export const getLoggingTransport = (
     mode: (typeof Runtime)[keyof typeof Runtime],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     logLevel: LogLevel,
 ): Transport => {
     switch (mode) {
@@ -61,6 +61,7 @@ export const getLoggingTransport = (
              * If you want to test logging, you can jest.spy on the logger's
              * log method, or any other of its more specific logging methods.
              */
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             const sink = new stream.Writable({write: () => {}});
             /**
              * This is a hack to make our writable stream work

@@ -143,6 +143,7 @@ export type Assets = {
     [assetName: string]: Asset;
 };
 
+// eslint-disable-next-line import/no-default-export
 export default class I18nPlugin {
     options: InternalOptions;
 

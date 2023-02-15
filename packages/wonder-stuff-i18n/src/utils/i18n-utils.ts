@@ -22,9 +22,7 @@ export type TranslatedLocaleStrings = {
  * @param {string} ignoreFile The file to read the glob strings from.
  * @returns {Array<string>} a list of glob strings to ignore
  */
-export const getIgnoreGlobs = (
-    ignoreFile: string = ".i18nignore",
-): Array<string> => {
+export const getIgnoreGlobs = (ignoreFile = ".i18nignore"): Array<string> => {
     try {
         // Find the ignore file, if it exists
         // If it doesn't exist then ancesdir throws an exception.

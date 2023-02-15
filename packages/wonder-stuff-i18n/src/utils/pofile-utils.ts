@@ -1,7 +1,7 @@
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 
-import fglob from "fast-glob";
+import * as fg from "fast-glob";
 import PO from "pofile";
 
 import {extractStrings} from "./extract-i18n";
@@ -145,7 +145,7 @@ export const getFilesToExtractFrom = (
 ): Array<string> => {
     // If any files are passed in on the command-line, run them through fast-glob
     // to match any patterns and make sure they actually exist.
-    const cliFiles = fglob.sync(userSpecifiedFiles, {
+    const cliFiles = fg.sync(userSpecifiedFiles, {
         dot: true,
         ignore: getIgnoreGlobs(),
     });

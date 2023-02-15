@@ -1,4 +1,4 @@
-import winston from "winston";
+import * as winston from "winston";
 import {Errors} from "@khanacademy/wonder-stuff-core";
 import * as GetLoggingTransport from "../get-logging-transport";
 import {createLogger} from "../create-logger";
@@ -21,6 +21,7 @@ describe("#createLogger", () => {
         // Arrange
         const getLoggingTransportMock = jest
             .spyOn(GetLoggingTransport, "getLoggingTransport")
+            // @ts-expect-error: mock value is not a valid Transport
             .mockReturnValue("FAKE_TRANSPORT");
 
         // Act

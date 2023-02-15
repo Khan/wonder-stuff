@@ -20,7 +20,7 @@ type InvalidTags = {
 };
 
 export class KindErrorData implements SentryIntegration {
-    static id: string = "KindErrorData";
+    static id = "KindErrorData";
     name: string = KindErrorData.id;
     readonly _options: KindErrorDataOptions;
 
