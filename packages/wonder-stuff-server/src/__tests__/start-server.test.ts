@@ -2,10 +2,6 @@ import * as Express from "express";
 import * as RootLogger from "../root-logger";
 import * as DefaultRequestLogging from "../middleware/default-request-logging";
 import * as DefaultErrorLogging from "../middleware/default-error-logging";
-// TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
-// have fixed:
-// https://github.com/import-js/eslint-plugin-import/issues/2073
-// eslint-disable-next-line import/named
 import {Runtime} from "../types";
 
 import {startServer} from "../start-server";

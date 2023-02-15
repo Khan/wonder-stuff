@@ -1,8 +1,4 @@
 import * as winston from "winston";
-// TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
-// have fixed:
-// https://github.com/import-js/eslint-plugin-import/issues/2073
-// eslint-disable-next-line import/named
 import {Runtime} from "../types";
 
 import {getLoggingTransport} from "../get-logging-transport";
