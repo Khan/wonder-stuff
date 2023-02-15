@@ -8,6 +8,14 @@ import {createLogger} from "../create-logger";
 // eslint-disable-next-line import/named
 import {Runtime} from "../types";
 
+jest.mock("winston", () => {
+    const original = jest.requireActual("winston");
+    return {
+        __esModule: true,
+        ...original,
+    };
+});
+
 describe("#createLogger", () => {
     beforeEach(() => {
         // We silence winston's console output.

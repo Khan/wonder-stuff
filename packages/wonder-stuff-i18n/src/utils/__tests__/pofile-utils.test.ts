@@ -1,7 +1,7 @@
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 
-import fglob from "fast-glob";
+import * as fglob from "fast-glob";
 
 import {
     buildPoItem,
@@ -11,6 +11,22 @@ import {
     getPOTFileStringFromFiles,
 } from "../pofile-utils";
 import * as I18nUtils from "../i18n-utils";
+
+jest.mock("fs", () => {
+    const original = jest.requireActual("fs");
+    return {
+        __esModule: true,
+        ...original,
+    };
+});
+
+jest.mock("fast-glob", () => {
+    const original = jest.requireActual("fast-glob");
+    return {
+        __esModule: true,
+        ...original,
+    };
+});
 
 describe("buildPoItem", () => {
     it("builds a PO item from an extracted string", () => {
@@ -361,6 +377,7 @@ i18n._("A singular string.");
 i18n.ngettext("%(num)s singular string.", "%(num)s plural string.", num);`;
 
         jest.spyOn(fs, "readFileSync")
+            .mockImplementation()
             .mockReturnValueOnce(file1)
             .mockReturnValueOnce(file2);
 

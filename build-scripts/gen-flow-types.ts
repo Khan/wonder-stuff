@@ -1,9 +1,11 @@
 import {execSync} from "child_process";
-import * as fg from "fast-glob";
 import * as path from "path";
+import * as fglob from "fast-glob";
 
 const rootDir = path.join(__dirname, "..");
-const files = fg.sync("packages/wonder-stuff-*/dist/**/*.d.ts", {cwd: rootDir});
+const files = fglob.sync("packages/wonder-stuff-*/dist/**/*.d.ts", {
+    cwd: rootDir,
+});
 
 for (const inFile of files) {
     const outFile = inFile.replace(".d.ts", ".js.flow");
