@@ -1,0 +1,12 @@
+{
+  "exclude": ["dist", "**/*.flowtest.ts"],
+  "extends": "../tsconfig-shared.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+  },
+  "references": [
+    {"path": "../wonder-stuff-core"},
+    {"path": "../wonder-stuff-server"}
+  ]
+}

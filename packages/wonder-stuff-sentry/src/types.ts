@@ -1,6 +1,8 @@
-// @ts-expect-error [FEI-5011] - TS2307 - Cannot find module 'flow-to-typescript-codemod' or its corresponding type declarations.
-import {Flow} from "flow-to-typescript-codemod";
 import type {Metadata} from "@khanacademy/wonder-stuff-core";
+
+namespace Flow {
+    export type Class<T> = new (...args: any[]) => T;
+}
 
 /**
  * Tags for a Sentry event.

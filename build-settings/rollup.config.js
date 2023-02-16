@@ -4,7 +4,6 @@ import path from "path";
 import autoExternal from "rollup-plugin-auto-external";
 import {babel} from "@rollup/plugin-babel";
 import {terser} from "rollup-plugin-terser";
-import copy from "rollup-plugin-copy";
 import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
 import filesize from "rollup-plugin-filesize";
@@ -175,34 +174,6 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
     const cjsBrowser = browser == null ? null : browser[cjsNode];
     const esmBrowser = browser == null ? null : browser[esmNode];
 
-    // This generates the flow import file and a file for intellisense to work.
-    // By using the same instance of it across all output configurations
-    // while using the `copyOnce` value, we ensure it only gets copied one time.
-    const typesAndDocsCopy = copy({
-        copyOnce: true,
-        verbose: true,
-        targets: [
-            // This is the file that provides flow types.
-            {
-                // src path is relative to the package root unless started
-                // with ./
-                src: "build-settings/index.js.flow.template",
-                // dest path is relative to src path.
-                dest: makePackageBasedPath(pkgName, "./dist"),
-                rename: "index.js.flow",
-            },
-            // This is the file that we use for intellisense.
-            {
-                // src path is relative to the package root unless started
-                // with ./
-                src: "build-settings/index.js.flow.template",
-                // dest path is relative to src path.
-                dest: makePackageBasedPath(pkgName, "./dist"),
-                rename: "index.d.ts",
-            },
-        ],
-    });
-
     const configs = [];
     if (platforms.has("browser")) {
         if (formats.has("cjs") && cjsBrowser) {
@@ -211,7 +182,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 format: "cjs",
                 platform: "browser",
                 file: cjsBrowser,
-                plugins: [typesAndDocsCopy],
+                plugins: [],
             });
         }
         if (formats.has("esm") && esmBrowser) {
@@ -221,7 +192,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 platform: "browser",
                 file: esmBrowser,
                 // We care about the file size of this one.
-                plugins: [typesAndDocsCopy, filesize()],
+                plugins: [filesize()],
             });
         }
     }
@@ -232,7 +203,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 format: "cjs",
                 platform: "node",
                 file: cjsNode,
-                plugins: [typesAndDocsCopy],
+                plugins: [],
             });
         }
         if (formats.has("esm") && esmNode) {
@@ -241,7 +212,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 format: "esm",
                 platform: "node",
                 file: esmNode,
-                plugins: [typesAndDocsCopy],
+                plugins: [],
             });
         }
     }

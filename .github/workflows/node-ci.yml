@@ -72,6 +72,13 @@ jobs:
     - name: Build so that inter-package references are resolved
       run: yarn build
 
+    - name: Build Types
+      # There isn't an easy way for us to type check our tests without
+      # also including them in dist folder when we build the .d.ts files
+      # so we have to manually remove them.
+      # TODO(kevin): Figure out how to have the `build:types` script do this.
+      run: yarn build:types && rm -rf packages/*/dist/**/__tests__
+
     # Linting / type checking
     - name: Eslint
       uses: Khan/actions@full-or-limited-v0

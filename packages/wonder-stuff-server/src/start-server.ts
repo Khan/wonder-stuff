@@ -34,8 +34,7 @@ export async function startServer<
         includeErrorMiddleware = true,
         includeRequestMiddleware = true,
     }: ServerOptions,
-    // @ts-expect-error [FEI-5011] - TS2315 - Type 'Application' is not generic.
-    app: Application<TReq, TRes>,
+    app: Application,
 ): Promise<http.Server | null | undefined> {
     /**
      * Setup logging.
