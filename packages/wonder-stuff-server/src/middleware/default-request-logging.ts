@@ -12,10 +12,10 @@ export const defaultRequestLogging = <
     TRes extends Response,
 >(
     logger: Logger,
-): Middleware<TReq, TRes>
-/**
- * We use express-winston to log requests for us.
- */ =>
+): Middleware<TReq, TRes> =>
+    /**
+     * We use express-winston to log requests for us.
+     */
     expressWinston.logger({
         /**
          * Specify the level that this logger logs at.

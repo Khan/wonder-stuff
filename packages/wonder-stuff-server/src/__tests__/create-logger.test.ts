@@ -44,6 +44,7 @@ describe("#createLogger", () => {
         createLogger({
             level: "debug",
             mode: Runtime.Test,
+            // @ts-expect-error: mock is not a valid winston Transport
             transport: "FAKE_TRANSPORT",
         });
 

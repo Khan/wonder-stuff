@@ -103,9 +103,11 @@ const createConfig = (
         );
     }
 
+    const extensions = [".js", ".jsx", ".ts", ".tsx"];
+
     const config = {
         output: createOutputConfig(name, format, file),
-        input: makePackageBasedPath(name, inputFile || "./src/index.js"),
+        input: makePackageBasedPath(name, inputFile || "./src/index.ts"),
         plugins: [
             // We don't want to do process.env.NODE_ENV checks in our main
             // builds. Our consumers should handle that. However, if we
@@ -119,9 +121,11 @@ const createConfig = (
                 presets: createBabelPresets({platform, format}),
                 plugins: createBabelPlugins({platform, format}),
                 exclude: "node_modules/**",
+                extensions,
             }),
             resolve({
                 browser: platform === "browser",
+                extensions,
             }),
             autoExternal({
                 packagePath: makePackageBasedPath(name, "./package.json"),

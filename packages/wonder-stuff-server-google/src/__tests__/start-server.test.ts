@@ -27,6 +27,7 @@ describe("#start-server", () => {
 
     it("should set GAE_SERVICE if it is not set", async () => {
         // Arrange
+        // @ts-expect-error: mock is not a valid http.Server
         jest.spyOn(Server, "startServer").mockResolvedValue("FAKE_SERVER");
         delete process.env.GAE_SERVICE;
         const options = {
@@ -51,6 +52,7 @@ describe("#start-server", () => {
 
     it("should not set GAE_SERVICE if it is already set", async () => {
         // Arrange
+        // @ts-expect-error: mock is not a valid http.Server
         jest.spyOn(Server, "startServer").mockResolvedValue("FAKE_SERVER");
         process.env.GAE_SERVICE = "GAE_SERVICE_NAME";
         const options = {
@@ -75,6 +77,7 @@ describe("#start-server", () => {
 
     it("should setup integrations", async () => {
         // Arrange
+        // @ts-expect-error: mock is not a valid http.Server
         jest.spyOn(Server, "startServer").mockResolvedValue("FAKE_SERVER");
         const options = {
             integrations: {
@@ -108,9 +111,11 @@ describe("#start-server", () => {
 
     it("should create a logger with default metadata", async () => {
         // Arrange
+        // @ts-expect-error: mock is not a valid http.Server
         jest.spyOn(Server, "startServer").mockResolvedValue("FAKE_SERVER");
         const createLoggerSpy = jest
             .spyOn(Server, "createLogger")
+            // @ts-expect-error: mock is not a valid winston Logger
             .mockReturnValue("FAKE_LOGGER");
         const options = {
             name: "TEST_GATEWAY",
@@ -148,9 +153,11 @@ describe("#start-server", () => {
 
     it("should set a custom transport for the logger when in production", async () => {
         // Arrange
+        // @ts-expect-error: mock is not a valid http.Server
         jest.spyOn(Server, "startServer").mockResolvedValue("FAKE_SERVER");
         const createLoggerSpy = jest
             .spyOn(Server, "createLogger")
+            // @ts-expect-error: mock is not a valid winston Logger
             .mockReturnValue("FAKE_LOGGER");
         const options = {
             name: "TEST_GATEWAY",
@@ -196,7 +203,9 @@ describe("#start-server", () => {
 
     it("should add GAE middleware", async () => {
         // Arrange
+        // @ts-expect-error: mock is not a valid http.Server
         jest.spyOn(Server, "startServer").mockResolvedValue("FAKE_SERVER");
+        // @ts-expect-error: mock is not a valid winston Logger
         jest.spyOn(Server, "createLogger").mockReturnValue("FAKE_LOGGER");
         const options = {
             name: "TEST_GATEWAY",
@@ -225,7 +234,9 @@ describe("#start-server", () => {
         // Arrange
         const startServerSpy = jest
             .spyOn(Server, "startServer")
+            // @ts-expect-error: mock is not a valid http.Server
             .mockResolvedValue("FAKE_SERVER");
+        // @ts-expect-error: mock is not a valid winston Logger
         jest.spyOn(Server, "createLogger").mockReturnValue("FAKE_LOGGER");
         const options = {
             name: "TEST_GATEWAY",

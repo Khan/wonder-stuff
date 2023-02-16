@@ -3,7 +3,7 @@
  *
  * This is primarily used by i18n-plugin.js to provide nice output.
  */
-const LOCALE_TO_EMOJI_MAP = {
+const LOCALE_TO_EMOJI_MAP: Record<string, string> = {
     accents: "✨", // Accents
     bg: "🇧🇬", // Bulgarian --Bulgaria
     bn: "🇮🇳", // Bengali -- India
@@ -36,13 +36,12 @@ const LOCALE_TO_EMOJI_MAP = {
     ta: "🇱🇰", // Tamil -- Sri Lanka
     tr: "🇹🇷", // Turkish -- Turkey
     "zh-hans": "🇹🇼", // Mandarin -- Taiwan
-} as const;
+};
 
 /**
  * Given a locale, get an emoji representing that locale.
  *
  * @param {string} locale the locale string to get the emoji for
  */
-// @ts-expect-error [FEI-5011] - TS7053 - Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ readonly accents: "✨"; readonly bg: "🇧🇬"; readonly bn: "🇮🇳"; readonly boxes: "📦"; readonly cs: "🇨🇿"; readonly da: "🇩🇰"; readonly de: "🇩🇪"; readonly en: "🇬🇧"; readonly "en-pt": "☠️"; ... 22 more ...; readonly "zh-hans": "🇹🇼"; }'.
 export const getEmojiForLocale = (locale: string): string =>
     LOCALE_TO_EMOJI_MAP[locale] || "";

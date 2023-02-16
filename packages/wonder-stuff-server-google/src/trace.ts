@@ -70,6 +70,6 @@ export const trace: ITrace = (
         return traceImpl(logger, action, message, tracer);
     }
 
-    // At this point, we can assume it's a logger.
+    // @ts-expect-error: At this point, we can assume it's a logger.
     return traceImpl(requestOrLogger, action, message, tracer);
 };

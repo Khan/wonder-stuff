@@ -1,9 +1,7 @@
-// @ts-expect-error [FEI-5011] - TS2305 - Module '"winston"' has no exported member 'NpmLogLevels'. | TS2724 - '"winston"' has no exported member named 'Info'. Did you mean 'info'? | TS2724 - '"winston"' has no exported member named 'Transport'. Did you mean 'transport'?
 import type {
-    NpmLogLevels,
     Logger as WinstonLogger,
-    Info as WinstonInfo,
-    Transport,
+    LogEntry,
+    transport as Transport,
 } from "winston";
 
 import type {Request} from "express";
@@ -11,18 +9,17 @@ import type {Request} from "express";
 /**
  * Describes logging metdata.
  */
-export type Info = WinstonInfo<NpmLogLevels>;
+export type Info = LogEntry;
 
 /**
  * Defines the different log levels.
  */
-export type LogLevel = keyof NpmLogLevels;
+export type LogLevel = string;
 
 /**
  * Describes the interface for logging gateway activity.
  */
-// @ts-expect-error [FEI-5011] - TS2315 - Type 'Logger' is not generic.
-export type Logger = WinstonLogger<NpmLogLevels>;
+export type Logger = WinstonLogger;
 
 /**
  * The runtime modes that a gateway can run under.

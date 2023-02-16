@@ -8,26 +8,26 @@ const path = require("path");
 module.exports = {
     rootDir: path.join(__dirname, "../../"),
     transform: {
-        "^.+\\.jsx?$": "<rootDir>/config/jest/test.transform.js",
+        "^.+\\.(j|t)sx?$": "<rootDir>/config/jest/test.transform.js",
     },
     restoreMocks: true,
     resetMocks: true,
     testEnvironment: "jest-environment-node",
-    testMatch: ["<rootDir>/**/*.test.js"],
+    testMatch: ["<rootDir>/**/*.test.ts"],
     setupFilesAfterEnv: [
         "jest-extended/all",
         "<rootDir>/config/jest/test-setup.js",
     ],
     moduleNameMapper: {
         "^@khanacademy/wonder-stuff-(.*)$":
-            "<rootDir>/packages/wonder-stuff-$1/src/index.js",
+            "<rootDir>/packages/wonder-stuff-$1/src/index.ts",
     },
     collectCoverageFrom: [
-        "packages/**/*.js",
-        "!packages/**/types.js",
-        "!packages/**/src/**/index.js",
-        "!packages/**/*.flowtest.js",
-        "!packages/**/dist/**/*.js",
+        "packages/**/*.ts",
+        "!packages/**/types.ts",
+        "!packages/**/src/**/index.ts",
+        "!packages/**/*.flowtest.ts",
+        "!packages/**/dist/**/*.ts",
         "!<rootDir>/node_modules/",
         "!packages/**/node_modules/",
         "!packages/**/.babelrc.js",

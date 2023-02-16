@@ -1,4 +1,3 @@
-// @ts-expect-error [FEI-5011] - TS2307 - Cannot find module '../keys' or its corresponding type declarations.
 import {keys} from "../keys";
 
 describe("#keys", () => {
