@@ -1,5 +1,5 @@
 // @flow
-import {truncateTagValue} from "../truncate-tag-value.js";
+import {truncateTagValue} from "../truncate-tag-value";
 
 describe("#truncateTagValue", () => {
     it.each(["", "ABCDEFGHIJK", Array(200).fill("a").join("")])(

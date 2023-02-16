@@ -1,12 +1,12 @@
 // @flow
 import {Errors} from "@khanacademy/wonder-stuff-core";
-import {EmptySentryData} from "./empty-sentry-data.js";
-import {KindSentryError} from "./kind-sentry-error.js";
-import {truncateTagValue} from "./truncate-tag-value.js";
-import {isTagKeyValid} from "./is-tag-key-valid.js";
-import type {SentryTags, SentryData, KindErrorDataOptions} from "./types.js";
-import {isReservedTagKey} from "./is-reserved-tag-key.js";
-import {isReservedContextProperty} from "./is-reserved-context-property.js";
+import {EmptySentryData} from "./empty-sentry-data";
+import {KindSentryError} from "./kind-sentry-error";
+import {truncateTagValue} from "./truncate-tag-value";
+import {isTagKeyValid} from "./is-tag-key-valid";
+import type {SentryTags, SentryData, KindErrorDataOptions} from "./types";
+import {isReservedTagKey} from "./is-reserved-tag-key";
+import {isReservedContextProperty} from "./is-reserved-context-property";
 
 /**
  * Validate sentry data, normalizing tag values as necessary.

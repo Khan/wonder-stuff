@@ -1,5 +1,5 @@
 // @flow
-import type {SentryData} from "./types.js";
+import type {SentryData} from "./types";
 
 /**
  * An empty sentry data object.

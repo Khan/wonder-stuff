@@ -1,5 +1,5 @@
 // @flow
-import {assertJest} from "./internal/assert-jest.js";
+import {assertJest} from "./internal/assert-jest";
 
 /**
  * Isolate imports within a given action using jest.isolateModules.

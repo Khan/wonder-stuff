@@ -1,1 +1,1 @@
-module.exports = require("./packages/eslint-config-khan/.prettierrc.js");
+module.exports = require("./packages/eslint-config-khan/.prettierrc");

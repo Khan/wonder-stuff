@@ -2,10 +2,10 @@
 import winston from "winston";
 import type {NpmLogLevels} from "winston";
 
-import {Errors} from "./errors.js";
-import type {LoggingOptions, Logger} from "./types.js";
+import {Errors} from "./errors";
+import type {LoggingOptions, Logger} from "./types";
 
-import {getLoggingTransport} from "./get-logging-transport.js";
+import {getLoggingTransport} from "./get-logging-transport";
 
 /**
  * Create a logger with the given options.

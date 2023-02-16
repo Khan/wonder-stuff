@@ -1,10 +1,10 @@
 // @flow
-import * as CollateSentryData from "../collate-sentry-data.js";
-import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options.js";
-import {EmptySentryData} from "../empty-sentry-data.js";
-import {KindErrorData} from "../kind-error-data.js";
+import * as CollateSentryData from "../collate-sentry-data";
+import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options";
+import {EmptySentryData} from "../empty-sentry-data";
+import {KindErrorData} from "../kind-error-data";
 
-jest.mock("../collate-sentry-data.js");
+jest.mock("../collate-sentry-data");
 
 describe("KindErrorData", () => {
     const NODE_ENV = process.env.NODE_ENV;

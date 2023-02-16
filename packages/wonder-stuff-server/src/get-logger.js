@@ -1,8 +1,8 @@
 // @flow
 import type {$Request} from "express";
-import {getRequestLogger} from "./get-request-logger.js";
-import {getRootLogger} from "./root-logger.js";
-import type {Logger, RequestWithLog} from "./types.js";
+import {getRequestLogger} from "./get-request-logger";
+import {getRootLogger} from "./root-logger";
+import type {Logger, RequestWithLog} from "./types";
 
 /**
  * Get the logger to use in the current context.

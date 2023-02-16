@@ -3,9 +3,9 @@ import {
     safeStringify,
     getOriginalStackFromError,
 } from "@khanacademy/wonder-stuff-core";
-import {getSentryDataFromError} from "./get-sentry-data-from-error.js";
-import type {SentryData, KindErrorDataOptions} from "./types.js";
-import {EmptySentryData} from "./empty-sentry-data.js";
+import {getSentryDataFromError} from "./get-sentry-data-from-error";
+import type {SentryData, KindErrorDataOptions} from "./types";
+import {EmptySentryData} from "./empty-sentry-data";
 
 /**
  * Reduces an Error down into sentry data.

@@ -1,8 +1,8 @@
 // @flow
-import I18nPlugin from "../i18n-plugin.js";
+import I18nPlugin from "../i18n-plugin";
 
-import type {TranslatedLocaleStrings} from "../../utils/i18n-utils.js";
-import type {TranslatedStrings, Assets} from "../i18n-plugin.js";
+import type {TranslatedLocaleStrings} from "../../utils/i18n-utils";
+import type {TranslatedStrings, Assets} from "../i18n-plugin";
 
 type ResolvedAssets = {|
     [string]: ResolvedAsset,

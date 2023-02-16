@@ -1,6 +1,6 @@
 // @flow
-import {clone} from "./clone.js";
-import type {Metadata} from "./types.js";
+import {clone} from "./clone";
+import type {Metadata} from "./types";
 
 /**
  * Clone the given metadata.

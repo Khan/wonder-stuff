@@ -1,5 +1,5 @@
 // @flow
-import type {AppEngineInfo} from "./types.js";
+import type {AppEngineInfo} from "./types";
 
 /**
  * Get info about the running gateway.

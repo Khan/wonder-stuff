@@ -1,6 +1,6 @@
 // @flow
-import {KindSentryError} from "../kind-sentry-error.js";
-import {getSentryDataFromError} from "../get-sentry-data-from-error.js";
+import {KindSentryError} from "../kind-sentry-error";
+import {getSentryDataFromError} from "../get-sentry-data-from-error";
 
 describe("#getSentryDataFromError", () => {
     it.each([null, undefined, new Error("test")])(

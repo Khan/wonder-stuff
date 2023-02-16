@@ -5,10 +5,10 @@ import path from "path";
 import fglob from "fast-glob";
 import PO from "pofile";
 
-import {extractStrings} from "./extract-i18n.js";
-import {getIgnoreGlobs} from "./i18n-utils.js";
+import {extractStrings} from "./extract-i18n";
+import {getIgnoreGlobs} from "./i18n-utils";
 
-import type {ExtractedString} from "./extract-i18n.js";
+import type {ExtractedString} from "./extract-i18n";
 
 type POItem = {|
     msgid: string,

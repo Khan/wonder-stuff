@@ -1,6 +1,6 @@
 // @flow
-import {KindError} from "./kind-error.js";
-import {Errors} from "./errors.js";
+import {KindError} from "./kind-error";
+import {Errors} from "./errors";
 
 export const Order = Object.freeze({
     ConsequenceFirst: "consequence-first",

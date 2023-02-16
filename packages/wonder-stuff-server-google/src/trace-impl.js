@@ -2,10 +2,10 @@
 import type {Tracer} from "@google-cloud/trace-agent";
 import {Errors, KindError} from "@khanacademy/wonder-stuff-core";
 import type {Logger} from "@khanacademy/wonder-stuff-server";
-import {getAppEngineInfo} from "./get-app-engine-info.js";
-import {getDelta} from "./get-delta.js";
-import {getDefaultLogMetadata} from "./get-default-log-metadata.js";
-import type {ITraceSession, TraceSessionInfo} from "./types.js";
+import {getAppEngineInfo} from "./get-app-engine-info";
+import {getDelta} from "./get-delta";
+import {getDefaultLogMetadata} from "./get-default-log-metadata";
+import type {ITraceSession, TraceSessionInfo} from "./types";
 
 /**
  * Start tracing an event.

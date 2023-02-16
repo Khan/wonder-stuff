@@ -1,5 +1,5 @@
 // @flow
-import {isTagKeyValid} from "../is-tag-key-valid.js";
+import {isTagKeyValid} from "../is-tag-key-valid";
 
 describe("#isTagKeyValid", () => {
     it.each([undefined, "", Array(33).fill("a").join("")])(

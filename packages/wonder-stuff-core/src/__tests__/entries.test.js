@@ -1,5 +1,5 @@
 // @flow
-import {entries} from "../entries.js";
+import {entries} from "../entries";
 
 describe("#entries", () => {
     it("should call Object.entries with the given object", () => {

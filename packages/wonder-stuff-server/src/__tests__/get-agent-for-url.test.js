@@ -33,7 +33,7 @@ describe("#getAgentForURL", () => {
     it("should create new HTTP agent", () => {
         // Arrange
         const Http = require("http");
-        const {getAgentForURL} = require("../get-agent-for-url.js");
+        const {getAgentForURL} = require("../get-agent-for-url");
         const httpSpy = jest.spyOn(Http, "Agent");
 
         // Act
@@ -47,7 +47,7 @@ describe("#getAgentForURL", () => {
 
     it("should not import HTTPS for HTTP url", () => {
         // Arrange
-        const {getAgentForURL} = require("../get-agent-for-url.js");
+        const {getAgentForURL} = require("../get-agent-for-url");
         jest.mock("https", () => {
             throw new Error("Naughty! Should not import HTTPS for an HTTP URL");
         });
@@ -63,7 +63,7 @@ describe("#getAgentForURL", () => {
     it("should create new HTTPS agent", () => {
         // Arrange
         const Https = require("https");
-        const {getAgentForURL} = require("../get-agent-for-url.js");
+        const {getAgentForURL} = require("../get-agent-for-url");
         const httpSpy = jest.spyOn(Https, "Agent");
 
         // Act
@@ -77,7 +77,7 @@ describe("#getAgentForURL", () => {
 
     it("should not import HTTP for HTTPS url", () => {
         // Arrange
-        const {getAgentForURL} = require("../get-agent-for-url.js");
+        const {getAgentForURL} = require("../get-agent-for-url");
         jest.mock("http", () => {
             throw new Error("Naughty! Should not import HTTP for an HTTPS URL");
         });
@@ -92,7 +92,7 @@ describe("#getAgentForURL", () => {
 
     it("should throw for a protocol other than HTTP or HTTPS", () => {
         // Arrange
-        const {getAgentForURL} = require("../get-agent-for-url.js");
+        const {getAgentForURL} = require("../get-agent-for-url");
 
         // Act
         const underTest = () =>

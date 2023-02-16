@@ -1,5 +1,5 @@
 // @flow
-import {values} from "../values.js";
+import {values} from "../values";
 
 {
     // should type returned array element with union of value types of passed object

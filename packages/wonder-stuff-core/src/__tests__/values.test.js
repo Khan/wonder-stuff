@@ -1,5 +1,5 @@
 // @flow
-import {values} from "../values.js";
+import {values} from "../values";
 
 describe("#values", () => {
     it("should call Object.values with the given object", () => {

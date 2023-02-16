@@ -1,8 +1,8 @@
 // @flow
-import * as GetAppEngineInfo from "../get-app-engine-info.js";
-import {traceImpl} from "../trace-impl.js";
+import * as GetAppEngineInfo from "../get-app-engine-info";
+import {traceImpl} from "../trace-impl";
 
-jest.mock("../get-app-engine-info.js");
+jest.mock("../get-app-engine-info");
 
 describe("#trace", () => {
     it.each([[""], [null], [undefined]])(

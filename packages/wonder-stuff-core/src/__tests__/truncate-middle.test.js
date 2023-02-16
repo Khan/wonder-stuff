@@ -1,5 +1,5 @@
 // @flow
-import {truncateMiddle} from "../truncate-middle.js";
+import {truncateMiddle} from "../truncate-middle";
 
 describe("#truncateMiddle", () => {
     it.each(["", "ABCDE", "ABCDEFGH"])(

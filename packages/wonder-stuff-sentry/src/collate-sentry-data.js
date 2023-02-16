@@ -4,12 +4,12 @@ import {
     Order,
     getKindFromError,
 } from "@khanacademy/wonder-stuff-core";
-import {EmptySentryData} from "./empty-sentry-data.js";
-import {sentryDataReducer} from "./sentry-data-reducer.js";
-import {KindSentryError} from "./kind-sentry-error.js";
-import {normalizeSentryData} from "./normalize-sentry-data.js";
-import {truncateTagValue} from "./truncate-tag-value.js";
-import type {SentryData, KindErrorDataOptions} from "./types.js";
+import {EmptySentryData} from "./empty-sentry-data";
+import {sentryDataReducer} from "./sentry-data-reducer";
+import {KindSentryError} from "./kind-sentry-error";
+import {normalizeSentryData} from "./normalize-sentry-data";
+import {truncateTagValue} from "./truncate-tag-value";
+import type {SentryData, KindErrorDataOptions} from "./types";
 
 /**
  * Collate sentry data from a given error and its causal errors into one object.

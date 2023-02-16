@@ -1,3 +1,3 @@
 // @flow
-export {isolateModules} from "./isolate-modules.js";
-export {wait} from "./wait.js";
+export {isolateModules} from "./isolate-modules";
+export {wait} from "./wait";

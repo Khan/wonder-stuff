@@ -4,9 +4,9 @@ import winston from "winston";
 // have fixed:
 // https://github.com/import-js/eslint-plugin-import/issues/2073
 // eslint-disable-next-line import/named
-import {Runtime} from "../types.js";
+import {Runtime} from "../types";
 
-import {getLoggingTransport} from "../get-logging-transport.js";
+import {getLoggingTransport} from "../get-logging-transport";
 
 describe("#getLoggingTransport", () => {
     describe("during test", () => {

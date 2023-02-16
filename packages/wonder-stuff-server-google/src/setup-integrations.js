@@ -1,6 +1,6 @@
 // @flow
 import {Runtime} from "@khanacademy/wonder-stuff-server";
-import type {GoogleCloudIntegrations} from "./types.js";
+import type {GoogleCloudIntegrations} from "./types";
 
 /**
  * Setup Google Cloud integrations debug-agent and profiler.

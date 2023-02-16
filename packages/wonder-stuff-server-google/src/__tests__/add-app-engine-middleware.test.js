@@ -2,8 +2,8 @@
 import * as Express from "express";
 import {Runtime} from "@khanacademy/wonder-stuff-server";
 import * as LoggingWinston from "@google-cloud/logging-winston";
-import * as MakeAppEngineRequestIDMiddleware from "../middleware/make-app-engine-request-id-middleware.js";
-import {addAppEngineMiddleware} from "../add-app-engine-middleware.js";
+import * as MakeAppEngineRequestIDMiddleware from "../middleware/make-app-engine-request-id-middleware";
+import {addAppEngineMiddleware} from "../add-app-engine-middleware";
 
 jest.mock("express");
 jest.mock("@google-cloud/logging-winston");

@@ -7,11 +7,11 @@ import {
 } from "@khanacademy/wonder-stuff-server";
 import type {RequestWithLog} from "@khanacademy/wonder-stuff-server";
 import * as lw from "@google-cloud/logging-winston";
-import {addAppEngineMiddleware} from "./add-app-engine-middleware.js";
-import {setupIntegrations} from "./setup-integrations.js";
+import {addAppEngineMiddleware} from "./add-app-engine-middleware";
+import {setupIntegrations} from "./setup-integrations";
 
-import type {ServerOptions} from "./types.js";
-import {getDefaultLogMetadata} from "./get-default-log-metadata.js";
+import type {ServerOptions} from "./types";
+import {getDefaultLogMetadata} from "./get-default-log-metadata";
 
 /**
  * Start a Google Cloud app engine server.

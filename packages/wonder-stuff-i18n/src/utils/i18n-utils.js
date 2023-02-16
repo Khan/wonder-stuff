@@ -4,9 +4,9 @@ import path from "path";
 
 import ancesdir from "ancesdir";
 
-import {extractStrings} from "./extract-i18n.js";
+import {extractStrings} from "./extract-i18n";
 
-import type {ExtractedString} from "./extract-i18n.js";
+import type {ExtractedString} from "./extract-i18n";
 
 export type TranslatedLocaleStrings = {
     [msgid: string]: string | {|lang: string, messages: Array<string>|},

@@ -1,5 +1,5 @@
 // @flow
-import type {KindErrorDataOptions} from "./types.js";
+import type {KindErrorDataOptions} from "./types";
 
 /**
  * Default values for the `KindErrorDataOptions` type.
