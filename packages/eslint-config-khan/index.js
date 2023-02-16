@@ -24,6 +24,24 @@ module.exports = {
         react: {
             version: "16.4",
         },
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx"],
+        },
+        "import/resolver": {
+            typescript: {
+                project: [
+                    "packages/*/tsconfig.json",
+                    "packages/tsconfig-shared.json",
+                ],
+            },
+            node: {
+                project: [
+                    "packages/*/tsconfig.json",
+                    "packages/tsconfig-shared.json",
+                ],
+            },
+        },
+        "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     },
     rules: {
         /**
@@ -61,11 +79,7 @@ module.exports = {
         "no-unexpected-multiline": ERROR,
         "no-unreachable": ERROR,
         "no-unused-expressions": ERROR,
-        "no-unused-vars": OFF,
-        "@typescript-eslint/no-unused-vars": [
-            ERROR,
-            {args: "none", varsIgnorePattern: "^_*$"},
-        ],
+        "no-unused-vars": OFF, // Superseded by @typescript-eslint/no-unused-vars
         "no-useless-call": ERROR,
         "no-var": ERROR,
         "no-with": ERROR,
@@ -121,5 +135,14 @@ module.exports = {
         "react/sort-prop-types": OFF, // We tried this, but there wasn't much benefit.
         "react/no-unsafe": WARN,
         "react/no-deprecated": WARN,
+
+        /**
+         * typescript rules
+         */
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": [
+            ERROR,
+            {args: "none", varsIgnorePattern: "^_*$"},
+        ],
     },
 };
