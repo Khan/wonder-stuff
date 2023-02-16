@@ -9,6 +9,20 @@ module.exports = {
                 "jsx-a11y": ["./*.js", "src/*.js"],
             },
         },
+        "import/resolver": {
+            typescript: {
+                project: [
+                    "packages/*/tsconfig.json",
+                    "packages/tsconfig-shared.json",
+                ],
+            },
+            node: {
+                project: [
+                    "packages/*/tsconfig.json",
+                    "packages/tsconfig-shared.json",
+                ],
+            },
+        },
     },
     globals: {
         __IS_BROWSER__: "readonly",

@@ -27,20 +27,6 @@ module.exports = {
         "import/parsers": {
             "@typescript-eslint/parser": [".ts", ".tsx"],
         },
-        "import/resolver": {
-            typescript: {
-                project: [
-                    "packages/*/tsconfig.json",
-                    "packages/tsconfig-shared.json",
-                ],
-            },
-            node: {
-                project: [
-                    "packages/*/tsconfig.json",
-                    "packages/tsconfig-shared.json",
-                ],
-            },
-        },
         "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     },
     rules: {
