@@ -1,4 +1,4 @@
-import {execSync} from "child_process";
+import {execFileSync} from "child_process";
 import * as path from "path";
 import * as fglob from "fast-glob";
 
@@ -9,10 +9,10 @@ const files = fglob.sync("packages/wonder-stuff-*/dist/**/*.d.ts", {
 
 for (const inFile of files) {
     const outFile = inFile.replace(".d.ts", ".js.flow");
-    const command = `yarn flowgen ${inFile} -o ${outFile} --add-flow-header`;
+    const args = ["flowgen", inFile, "-o", outFile, "--add-flow-header"];
 
     try {
-        execSync(command, {cwd: rootDir});
+        execFileSync("yarn", args, {cwd: rootDir});
         console.log(`✅ wrote: ${outFile}`);
     } catch (e) {
         console.log(`❌ error processing: ${inFile}: ${e}`);
