@@ -11,17 +11,14 @@
     "license": "MIT",
     "dependencies": {},
     "peerDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.52.0",
+        "@typescript-eslint/parser": "^5.52.0",
         "eslint": "^7.27.0",
         "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-babel": "^5.3.1",
-        "eslint-plugin-eslint-comments": "^3.2.0",
-        "eslint-plugin-graphql": "^4.0.0",
         "eslint-plugin-import": "^2.23.4",
         "eslint-plugin-jsx-a11y": "^6.4.1",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-react": "^7.24.0",
-        "eslint-plugin-react-hooks": "^4.2.0",
-        "eslint-plugin-react-native": "^3.11.0",
-        "eslint-plugin-react-native-animation-linter": "^0.1.2"
+        "eslint-import-resolver-typescript": "^3.5.3"
     }
 }

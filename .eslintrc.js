@@ -9,9 +9,6 @@ module.exports = {
                 "jsx-a11y": ["./*.js", "src/*.js"],
             },
         },
-        "import/parsers": {
-            "@typescript-eslint/parser": [".ts", ".tsx"],
-        },
         "import/resolver": {
             typescript: {
                 project: [
@@ -26,7 +23,6 @@ module.exports = {
                 ],
             },
         },
-        "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     },
     globals: {
         __IS_BROWSER__: "readonly",
@@ -64,14 +60,25 @@ module.exports = {
         },
     ],
     rules: {
+        /**
+         * built-in rules
+         */
         "new-cap": "off",
         "no-invalid-this": "off",
         "object-curly-spacing": "off",
         semi: "off",
+
+        /**
+         * @babel rules
+         */
         "@babel/new-cap": "error",
         "@babel/no-invalid-this": "error",
         "@babel/object-curly-spacing": "error",
         "@babel/semi": "error",
+
+        /**
+         * import rules
+         */
         "import/no-default-export": "error",
         "import/no-unresolved": "error",
         "import/named": "error",
@@ -101,14 +108,6 @@ module.exports = {
                 ignorePackages: true,
             },
         ],
-        "jest/no-focused-tests": "error",
-        "promise/always-return": "error",
-        "promise/no-return-wrap": "error",
-        "promise/param-names": "error",
-        "promise/catch-or-return": "error",
-        "promise/no-new-statics": "error",
-        "promise/no-return-in-finally": "error",
-        "monorepo/no-internal-import": "error",
         // NOTE: This rule reports false positives for cross-module imports using
         // `@khanacademy/wonder-stuff-*`.  This is likely due to a bad interaction
         // with the settings we're using for `import/resolver`.
@@ -125,6 +124,24 @@ module.exports = {
             },
         ],
 
-        "@typescript-eslint/no-explicit-any": "off",
+        /**
+         * jest rules
+         */
+        "jest/no-focused-tests": "error",
+
+        /**
+         * promise rules
+         */
+        "promise/always-return": "error",
+        "promise/no-return-wrap": "error",
+        "promise/param-names": "error",
+        "promise/catch-or-return": "error",
+        "promise/no-new-statics": "error",
+        "promise/no-return-in-finally": "error",
+
+        /**
+         * monorepo rules
+         */
+        "monorepo/no-internal-import": "error",
     },
 };
