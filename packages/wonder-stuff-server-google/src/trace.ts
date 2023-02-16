@@ -60,7 +60,6 @@ export const trace: ITrace = (
     const tracer = traceAgent.get();
     if (
         requestOrLogger == null ||
-        // $FlowIgnore[method-unbinding]
         Object.prototype.hasOwnProperty.call(requestOrLogger, "url")
     ) {
         // We have done a little check to make sure this is either null

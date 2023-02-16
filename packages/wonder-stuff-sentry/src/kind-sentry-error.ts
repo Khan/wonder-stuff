@@ -122,28 +122,6 @@ export class KindSentryError extends KindError {
             // For simplicity of implementation and ease of API use, we choose
             // option 1.
             metadata: {
-                // Flow is unhappy because:
-                // 1. metadata is of type Metadata, which can have a variety of
-                //    value types, such as string and number.
-                // 2. metadata is mutable and as such, something that is type
-                //    string could be given a value of type number at some
-                //    later point.
-                // 3. sentryData (and EmptySentryData) are of type SentryData,
-                //    and some of their types are stricter about what types
-                //    they can have, such as only string.
-                // 4. once sentryData things are part of metadata, sentryData
-                //    things could be mutated to the wrong type.
-                // 5. Flow doesn't know that we will clone and freeze the
-                //    metadata once we pass it into this super constructor here.
-                //
-                // We could mitigate by making metadata readonly for the base
-                // class, but that just pushes the problem on.
-                // And we could create a whole new object explicitly copying
-                // each bit of data into a new one of the correct type, but
-                // since we are about to clone and freeze the data in the base
-                // class, that seems like overkill, so let's just suppress
-                // flow.
-                // $FlowIgnore[incompatible-call]
                 sentry: {
                     ...EmptySentryData,
                     ...sentryData,

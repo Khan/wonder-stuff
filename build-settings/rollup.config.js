@@ -11,7 +11,6 @@ import {preserveShebangs} from "rollup-plugin-preserve-shebangs";
 import rollupExecutable from "rollup-plugin-executable-output";
 
 const createBabelPresets = require("./create-babel-presets");
-const createBabelPlugins = require("./create-babel-plugins");
 
 /**
  * We support the following config args with this rollup configuration:
@@ -118,7 +117,6 @@ const createConfig = (
             babel({
                 babelHelpers: "bundled",
                 presets: createBabelPresets({platform, format}),
-                plugins: createBabelPlugins({platform, format}),
                 exclude: "node_modules/**",
                 extensions,
             }),

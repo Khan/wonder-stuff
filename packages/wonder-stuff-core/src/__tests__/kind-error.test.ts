@@ -308,7 +308,6 @@ describe("KindError", () => {
                     // Act
                     const act = () =>
                         new KindError("MESSAGE", Errors.Unknown, {
-                            // $FlowIgnore[incompatible-call]
                             // @ts-expect-error [FEI-5011] - TS2322 - Type 'string' is not assignable to type 'Error | null | undefined'.
                             cause: "NOT_AN_ERROR",
                         });
@@ -331,7 +330,6 @@ describe("KindError", () => {
                     // Act
                     const act = () =>
                         new KindError("MESSAGE", Errors.Unknown, {
-                            // $FlowIgnore[incompatible-call]
                             // @ts-expect-error [FEI-5011] - TS2322 - Type 'string' is not assignable to type 'Error | null | undefined'.
                             cause: "NOT_AN_ERROR",
                         });

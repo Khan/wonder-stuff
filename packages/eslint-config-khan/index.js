@@ -5,7 +5,7 @@ const ERROR = "error";
 
 module.exports = {
     parser: "babel-eslint",
-    plugins: ["ft-flow", "jsx-a11y", "prettier", "react"],
+    plugins: ["jsx-a11y", "prettier", "react"],
     extends: ["eslint:recommended", "prettier"],
     env: {
         // TODO(csilvers): once we properly use node.js for node
@@ -16,9 +16,6 @@ module.exports = {
         jest: true,
     },
     settings: {
-        "ft-flow": {
-            onlyFilesWithFlowAnnotation: true,
-        },
         react: {
             version: "16.4",
         },
@@ -58,7 +55,7 @@ module.exports = {
         "no-undef": ERROR,
         "no-unexpected-multiline": ERROR,
         "no-unreachable": ERROR,
-        "no-unused-expressions": OFF, // This is superseded by ft-flow/no-unused-expressions.
+        "no-unused-expressions": ERROR,
         "no-unused-vars": [ERROR, {args: "none", varsIgnorePattern: "^_*$"}],
         "no-useless-call": ERROR,
         "no-var": ERROR,
@@ -71,30 +68,6 @@ module.exports = {
         "require-jsdoc": OFF, // Adding jsdocs to everything is overly burdensome.
         "template-curly-spacing": OFF, // TODO(kevinb): enable this
         "valid-jsdoc": OFF, // TODO(kevinb): Enable this since we are using jdocs in some places.
-
-        /**
-         * ft-flow rules
-         */
-        "ft-flow/boolean-style": [ERROR, "boolean"],
-        "ft-flow/define-flow-type": WARN, // Suppress no-undef on flow types.
-        "ft-flow/no-dupe-keys": ERROR,
-        "ft-flow/no-unused-expressions": [
-            ERROR,
-            {allowShortCircuit: true, allowTernary: true},
-        ],
-        "ft-flow/no-weak-types": OFF, // Allow any, Object, and Function for now.
-        "ft-flow/require-parameter-type": OFF, // Flow may still require parameter types in certain situations.
-        "ft-flow/require-return-type": OFF,
-        "ft-flow/require-valid-file-annotation": [
-            ERROR,
-            "always",
-            {
-                annotationStyle: "line",
-            },
-        ],
-        "ft-flow/sort": OFF,
-        "ft-flow/type-id-match": OFF,
-        "ft-flow/use-flow-type": WARN, // Suppress no-unused-vars on flow types.
 
         /**
          * jsx-a11y rules

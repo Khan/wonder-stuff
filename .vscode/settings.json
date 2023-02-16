@@ -2,7 +2,6 @@
     "editor.renderWhitespace": "boundary",
     "eslint.codeActionsOnSave.mode": "all",
     "files.trimTrailingWhitespace": true,
-    "flow.useNPMPackagedFlow": true,
     "typescript.format.enable": false,
     "typescript.validate.enable": true,
     "javascript.validate.enable": true,
@@ -11,6 +10,5 @@
     },
     "todo-tree.filtering.excludeGlobs": [
         "**/dist/**",
-        "**/flow-typed/**"
     ]
 }

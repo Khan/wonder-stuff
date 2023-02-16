@@ -1,7 +1,4 @@
 export {clone} from "./clone";
-export {entries} from "./entries";
-export {keys} from "./keys";
-export {values} from "./values";
 export {Errors} from "./errors";
 export {errorsFromError, Order} from "./errors-from-error";
 export {getKindFromError} from "./get-kind-from-error";

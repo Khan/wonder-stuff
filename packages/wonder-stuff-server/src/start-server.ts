@@ -129,7 +129,6 @@ export async function startServer<
     } = {};
     const closeConnections = () => {
         for (const connection of Object.values(connections)) {
-            // Connection is type mixed, so we need to tell flow this is OK.
             connection.destroy();
         }
     };

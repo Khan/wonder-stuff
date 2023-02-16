@@ -75,7 +75,6 @@ describe("ErrorInfo", () => {
 
                 // Act
                 const act = () =>
-                    // $FlowIgnore[incompatible-call]
                     // @ts-expect-error [FEI-5011] - TS2345 - Argument of type 'null' is not assignable to parameter of type 'ErrorInfo'.
                     ErrorInfo.fromConsequenceAndCause(null, cause);
 
@@ -95,7 +94,6 @@ describe("ErrorInfo", () => {
 
                 // Act
                 const act = () =>
-                    // $FlowIgnore[incompatible-call]
                     // @ts-expect-error [FEI-5011] - TS2345 - Argument of type 'null' is not assignable to parameter of type 'ErrorInfo'.
                     ErrorInfo.fromConsequenceAndCause(consequence, null);
 
@@ -134,7 +132,6 @@ describe("ErrorInfo", () => {
 
                 // Act
                 const act = () =>
-                    // $FlowIgnore[incompatible-call]
                     // @ts-expect-error [FEI-5011] - TS2345 - Argument of type 'null' is not assignable to parameter of type 'ErrorInfo'.
                     ErrorInfo.fromConsequenceAndCause(null, cause);
 
@@ -154,7 +151,6 @@ describe("ErrorInfo", () => {
 
                 // Act
                 const act = () =>
-                    // $FlowIgnore[incompatible-call]
                     // @ts-expect-error [FEI-5011] - TS2345 - Argument of type 'null' is not assignable to parameter of type 'ErrorInfo'.
                     ErrorInfo.fromConsequenceAndCause(consequence, null);
 
