@@ -26,7 +26,7 @@ module.exports = {
         "packages/**/*.ts",
         "!packages/**/types.ts",
         "!packages/**/src/**/index.ts",
-        "!packages/**/*.flowtest.ts",
+        "!packages/**/*.typestest.ts",
         "!packages/**/dist/**/*.ts",
         "!<rootDir>/node_modules/",
         "!packages/**/node_modules/",
