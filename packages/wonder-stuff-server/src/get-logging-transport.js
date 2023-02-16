@@ -3,10 +3,6 @@ import stream from "stream";
 import winston from "winston";
 import type {Transport, Format} from "winston";
 
-// TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
-// have fixed:
-// https://github.com/import-js/eslint-plugin-import/issues/2073
-// eslint-disable-next-line import/named
 import {Runtime} from "./types";
 import type {LogLevel, Info} from "./types";
 
@@ -28,7 +24,7 @@ const devFormatter = ({level, message, ...metadata}: Info): string => {
 /**
  * Build the formatters to give us some nice dev output.
  */
-const getFormatters = (mode: Runtime): Format => {
+const getFormatters = (mode: $Values<typeof Runtime>): Format => {
     const formatters: Array<Format> = [
         winston.format.splat(), // Allows for %s style substitutions
     ];
@@ -49,7 +45,7 @@ const getFormatters = (mode: Runtime): Format => {
  * Gets the logging transport for the given mode.
  */
 export const getLoggingTransport = (
-    mode: Runtime,
+    mode: $Values<typeof Runtime>,
     logLevel: LogLevel,
 ): Transport => {
     switch (mode) {
