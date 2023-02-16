@@ -1,6 +1,4 @@
-import winston from "winston";
-// @ts-expect-error [FEI-5011] - TS2305 - Module '"winston"' has no exported member 'NpmLogLevels'.
-import type {NpmLogLevels} from "winston";
+import * as winston from "winston";
 
 import {Errors} from "./errors";
 import type {LoggingOptions, Logger} from "./types";
@@ -16,8 +14,7 @@ export const createLogger = ({
     defaultMetadata,
     transport,
 }: LoggingOptions): Logger => {
-    // @ts-expect-error [FEI-5011] - TS2558 - Expected 0 type arguments, but got 1.
-    const winstonLogger = winston.createLogger<NpmLogLevels>({
+    const winstonLogger = winston.createLogger({
         level,
         transports: transport ?? getLoggingTransport(mode, level),
         format: winston.format((info) => {

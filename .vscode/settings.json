@@ -1,6 +1,12 @@
 {
     "editor.renderWhitespace": "boundary",
     "eslint.codeActionsOnSave.mode": "all",
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+    ],
     "files.trimTrailingWhitespace": true,
     "typescript.format.enable": false,
     "typescript.validate.enable": true,

@@ -1,18 +1,12 @@
-import expressWinston from "express-winston";
+import * as expressWinston from "express-winston";
 
-// @ts-expect-error [FEI-5011] - TS2305 - Module '"express"' has no exported member 'Middleware'.
-import type {Middleware, Request, Response} from "express";
+import type {Handler} from "express";
 import type {Logger} from "../types";
 
 /**
- * Create middleware for tracking requests.
+ * Create a logger for tracking requests.
  */
-export const defaultRequestLogging = <
-    TReq extends Request,
-    TRes extends Response,
->(
-    logger: Logger,
-): Middleware<TReq, TRes> =>
+export const defaultRequestLogging = (logger: Logger): Handler =>
     /**
      * We use express-winston to log requests for us.
      */

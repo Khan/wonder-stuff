@@ -1,5 +1,5 @@
 import express from "express";
-import type {Application, Request, Response} from "express";
+import type {Application} from "express";
 import {Runtime} from "@khanacademy/wonder-stuff-server";
 import type {Logger} from "@khanacademy/wonder-stuff-server";
 import * as lw from "@google-cloud/logging-winston";
@@ -8,10 +8,7 @@ import {makeAppEngineRequestIDMiddleware} from "./middleware/make-app-engine-req
 /**
  * Apply the middleware that we want to use with Google App Engine (GAE).
  */
-export async function addAppEngineMiddleware<
-    TReq extends Request,
-    TRes extends Response,
->(
+export async function addAppEngineMiddleware(
     app: Application,
     mode: (typeof Runtime)[keyof typeof Runtime],
     logger: Logger,

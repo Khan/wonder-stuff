@@ -1,12 +1,16 @@
-import winston from "winston";
+import * as winston from "winston";
 import {Errors} from "@khanacademy/wonder-stuff-core";
 import * as GetLoggingTransport from "../get-logging-transport";
 import {createLogger} from "../create-logger";
-// TODO(somewhatabstract, FEI-4174): Update eslint-plugin-import when they
-// have fixed:
-// https://github.com/import-js/eslint-plugin-import/issues/2073
-// eslint-disable-next-line import/named
 import {Runtime} from "../types";
+
+jest.mock("winston", () => {
+    const original = jest.requireActual("winston");
+    return {
+        __esModule: true,
+        ...original,
+    };
+});
 
 describe("#createLogger", () => {
     beforeEach(() => {
@@ -21,6 +25,7 @@ describe("#createLogger", () => {
         // Arrange
         const getLoggingTransportMock = jest
             .spyOn(GetLoggingTransport, "getLoggingTransport")
+            // @ts-expect-error: mock value is not a valid Transport
             .mockReturnValue("FAKE_TRANSPORT");
 
         // Act

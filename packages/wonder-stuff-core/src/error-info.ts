@@ -179,8 +179,8 @@ export class ErrorInfo {
      */
     static normalize(
         error: Error,
-        stripFrames: number = 0,
-        minimumFrameCount: number = 1,
+        stripFrames = 0,
+        minimumFrameCount = 1,
     ): ErrorInfo {
         if (process.env.NODE_ENV !== "production") {
             // Verify our arguments.

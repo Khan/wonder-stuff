@@ -1,12 +1,6 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
     extends: ["./packages/eslint-config-khan/index.js"],
-    parser: "@babel/eslint-parser",
-    parserOptions: {
-        babelOptions: {
-            configFile: "./build-settings/babel.config.js",
-        },
-    },
     plugins: ["@babel", "import", "jest", "promise", "monorepo", "disable"],
     settings: {
         "eslint-plugin-disable": {
@@ -15,6 +9,24 @@ module.exports = {
                 "jsx-a11y": ["./*.js", "src/*.js"],
             },
         },
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx"],
+        },
+        "import/resolver": {
+            typescript: {
+                project: [
+                    "packages/*/tsconfig.json",
+                    "packages/tsconfig-shared.json",
+                ],
+            },
+            node: {
+                project: [
+                    "packages/*/tsconfig.json",
+                    "packages/tsconfig-shared.json",
+                ],
+            },
+        },
+        "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     },
     globals: {
         __IS_BROWSER__: "readonly",
@@ -27,15 +39,27 @@ module.exports = {
             },
         },
         {
-            files: ["**/__tests__/**/*.test.js"],
+            files: ["**/__tests__/**/*.test.ts"],
             rules: {
                 "max-lines": "off",
+                "@typescript-eslint/no-empty-function": "off",
             },
         },
         {
-            files: ["**/bin/**/*.js"],
+            files: ["**/bin/**/*.ts", "build-scripts/*.ts"],
             rules: {
                 "no-console": "off",
+            },
+        },
+        {
+            files: [
+                "**/__tests__/**/*.test.ts",
+                "utils/*.js",
+                "config/**",
+                "build-settings/**",
+            ],
+            rules: {
+                "@typescript-eslint/no-var-requires": "off",
             },
         },
     ],
@@ -85,7 +109,10 @@ module.exports = {
         "promise/no-new-statics": "error",
         "promise/no-return-in-finally": "error",
         "monorepo/no-internal-import": "error",
-        "monorepo/no-relative-import": "error",
+        // NOTE: This rule reports false positives for cross-module imports using
+        // `@khanacademy/wonder-stuff-*`.  This is likely due to a bad interaction
+        // with the settings we're using for `import/resolver`.
+        // "monorepo/no-relative-import": "error",
         "import/no-restricted-paths": [
             "error",
             {
@@ -97,5 +124,7 @@ module.exports = {
                 ],
             },
         ],
+
+        "@typescript-eslint/no-explicit-any": "off",
     },
 };

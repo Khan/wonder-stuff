@@ -4,9 +4,14 @@ const WARN = "warn";
 const ERROR = "error";
 
 module.exports = {
-    parser: "babel-eslint",
-    plugins: ["jsx-a11y", "prettier", "react"],
-    extends: ["eslint:recommended", "prettier"],
+    parser: "@typescript-eslint/parser",
+    plugins: ["@typescript-eslint", "jsx-a11y", "prettier", "react"],
+    extends: [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "prettier",
+        "plugin:@typescript-eslint/recommended",
+    ],
     env: {
         // TODO(csilvers): once we properly use node.js for node
         // files, get rid of this next line.
@@ -56,7 +61,9 @@ module.exports = {
         "no-unexpected-multiline": ERROR,
         "no-unreachable": ERROR,
         "no-unused-expressions": ERROR,
-        "no-unused-vars": [ERROR, {args: "none", varsIgnorePattern: "^_*$"}],
+        "no-unused-vars": OFF,
+        "@typescript-eslint/no-unused-vars": WARN,
+        //  {args: "none", varsIgnorePattern: "^_*$"}],
         "no-useless-call": ERROR,
         "no-var": ERROR,
         "no-with": ERROR,

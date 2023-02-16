@@ -1,8 +1,7 @@
 import type {Metadata} from "@khanacademy/wonder-stuff-core";
 
-namespace Flow {
-    export type Class<T> = new (...args: any[]) => T;
-}
+// Copied from https://github.com/Khan/flow-to-typescript-codemod/blob/main/flow.d.ts
+type Class<T> = new (...args: any[]) => T;
 
 /**
  * Tags for a Sentry event.
@@ -157,7 +156,7 @@ export type SentryEventProcessor = (
 
 export interface SentryHub {
     getIntegration<T extends SentryIntegration>(
-        integration: Flow.Class<T>,
+        integration: Class<T>,
     ): T | null | undefined;
 }
 
