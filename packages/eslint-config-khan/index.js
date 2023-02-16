@@ -62,8 +62,10 @@ module.exports = {
         "no-unreachable": ERROR,
         "no-unused-expressions": ERROR,
         "no-unused-vars": OFF,
-        "@typescript-eslint/no-unused-vars": WARN,
-        //  {args: "none", varsIgnorePattern: "^_*$"}],
+        "@typescript-eslint/no-unused-vars": [
+            ERROR,
+            {args: "none", varsIgnorePattern: "^_*$"},
+        ],
         "no-useless-call": ERROR,
         "no-var": ERROR,
         "no-with": ERROR,
