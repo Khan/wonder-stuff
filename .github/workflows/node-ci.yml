@@ -55,12 +55,12 @@ jobs:
       uses: Khan/actions@get-changed-files-v1
       id: changed
 
-    - id: js-files
-      name: Find .js changed files
+    - id: js-ts-files
+      name: Find .js/.ts changed files
       uses: Khan/actions@filter-files-v0
       with:
         changed-files: ${{ steps.changed.outputs.files }}
-        extensions: '.js,.jsx'
+        extensions: '.js,.jsx,.ts,.tsx'
 
     - id: eslint-reset
       uses: Khan/actions@filter-files-v0
@@ -84,11 +84,11 @@ jobs:
       with:
         full-trigger: ${{ steps.eslint-reset.outputs.filtered }}
         full: yarn lint:ci
-        limited-trigger: ${{ steps.js-files.outputs.filtered }}
+        limited-trigger: ${{ steps.js-ts-files.outputs.filtered }}
         limited: yarn lint:ci {}
 
     - name: Typecheck
-      if: steps.js-files.outputs.filtered != '[]'
+      if: steps.js-ts-files.outputs.filtered != '[]'
       run: yarn typecheck
 
     # Collect and record coverage
@@ -172,17 +172,17 @@ jobs:
           test.config.js
           test.transform.js
 
-    - id: js-files
-      name: Find .js changed files
+    - id: js-ts-files
+      name: Find .js/.ts changed files
       uses: Khan/actions@filter-files-v0
       with:
         changed-files: ${{ steps.changed.outputs.files }}
-        extensions: '.js,.jsx'
+        extensions: '.js,.jsx,.ts,.tsx'
 
     - name: Jest
       uses: Khan/actions@full-or-limited-v0
       with:
         full-trigger: ${{ steps.jest-reset.outputs.filtered }}
         full: yarn test
-        limited-trigger: ${{ steps.js-files.outputs.filtered }}
+        limited-trigger: ${{ steps.js-ts-files.outputs.filtered }}
         limited: yarn test --findRelatedTests --passWithNoTests {}
