@@ -14,11 +14,11 @@
     "scripts": {
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
+    "dependencies": {
+        "@khanacademy/wonder-stuff-core": "^1.0.2"
+    },
     "devDependencies": {
         "ws-dev-build-settings": "^0.0.5"
-    },
-    "peerDependencies": {
-        "@khanacademy/wonder-stuff-core": "^1.0.2"
     },
     "browser": {
         "dist/es/index.js": "./dist/es/index.browser.js",
