@@ -1,5 +1,15 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 2.1.0
+
+### Minor Changes
+
+-   4538fa2: Migrate to TypeScript
+
+### Patch Changes
+
+-   035e345: Generate Flow types from TypeScript types
+
 ## 2.0.1
 
 ### Patch Changes

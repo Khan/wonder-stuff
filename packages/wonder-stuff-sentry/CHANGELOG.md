@@ -1,5 +1,19 @@
 # @khanacademy/wonder-stuff-sentry
 
+## 1.1.0
+
+### Minor Changes
+
+-   4538fa2: Migrate to TypeScript
+
+### Patch Changes
+
+-   035e345: Generate Flow types from TypeScript types
+-   Updated dependencies [4538fa2]
+-   Updated dependencies [5c50724]
+-   Updated dependencies [035e345]
+    -   @khanacademy/wonder-stuff-core@1.1.0
+
 ## 1.0.2
 
 ### Patch Changes

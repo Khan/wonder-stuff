@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-i18n",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "description": "i18n tools and Webpack plugin.",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -21,7 +21,7 @@
         "pofile": "^1.1.4"
     },
     "devDependencies": {
-        "ws-dev-build-settings": "^0.0.5"
+        "ws-dev-build-settings": "^0.1.0"
     },
     "bin": {
         "all-i18n-strings": "./dist/bin/all-i18n-strings.js",
