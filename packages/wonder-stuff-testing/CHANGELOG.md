@@ -1,5 +1,20 @@
 # @khanacademy/wonder-stuff-testing
 
+## 2.3.0
+
+### Minor Changes
+
+-   4538fa2: Migrate to TypeScript
+
+### Patch Changes
+
+-   c38fc71: Convert wonder-stuff-\* peer dependencies to be real dependencies.
+-   035e345: Generate Flow types from TypeScript types
+-   Updated dependencies [4538fa2]
+-   Updated dependencies [5c50724]
+-   Updated dependencies [035e345]
+    -   @khanacademy/wonder-stuff-core@1.1.0
+
 ## 2.2.1
 
 ### Patch Changes

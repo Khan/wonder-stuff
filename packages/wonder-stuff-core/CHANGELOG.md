@@ -1,5 +1,16 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.1.0
+
+### Minor Changes
+
+-   4538fa2: Migrate to TypeScript
+-   5c50724: Re-add entries, keys, and values wrappers
+
+### Patch Changes
+
+-   035e345: Generate Flow types from TypeScript types
+
 ## 1.0.2
 
 ### Patch Changes

@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-sentry",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "Sentry integration support",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -15,10 +15,10 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^1.0.2"
+        "@khanacademy/wonder-stuff-core": "^1.1.0"
     },
     "devDependencies": {
-        "ws-dev-build-settings": "^0.0.5"
+        "ws-dev-build-settings": "^0.1.0"
     },
     "browser": {
         "dist/es/index.js": "./dist/es/index.browser.js",

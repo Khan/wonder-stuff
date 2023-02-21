@@ -1,5 +1,22 @@
 # @khanacademy/wonder-stuff-server-google
 
+## 2.1.0
+
+### Minor Changes
+
+-   4538fa2: Migrate to TypeScript
+
+### Patch Changes
+
+-   c38fc71: Convert wonder-stuff-\* peer dependencies to be real dependencies.
+-   035e345: Generate Flow types from TypeScript types
+-   Updated dependencies [dd0682c]
+-   Updated dependencies [4538fa2]
+-   Updated dependencies [5c50724]
+-   Updated dependencies [035e345]
+    -   @khanacademy/wonder-stuff-server@2.1.0
+    -   @khanacademy/wonder-stuff-core@1.1.0
+
 ## 2.0.2
 
 ### Patch Changes

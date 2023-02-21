@@ -1,5 +1,17 @@
 # @khanacademy/eslint-config
 
+## 1.1.0
+
+### Minor Changes
+
+-   3d0c41c: Remove Flow eslint rules
+-   4538fa2: Migrate to TypeScript
+-   56baa4a: Update eslint-khan-config and .eslintrc.js to lint .ts files
+
+### Patch Changes
+
+-   501b381: Add missing settings
+
 ## 1.0.0
 
 ### Major Changes
