@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.2.0
+
+### Minor Changes
+
+-   74dc263: Export 'entries', 'keys', and 'values' wrappers
+
 ## 1.1.0
 
 ### Minor Changes
