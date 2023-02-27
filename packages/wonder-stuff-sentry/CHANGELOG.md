@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-sentry
 
+## 1.1.2
+
+### Patch Changes
+
+-   cfadf15: Update generate flow types to use 'extends' instead of 'mixins'
+-   Updated dependencies [cfadf15]
+    -   @khanacademy/wonder-stuff-core@1.2.1
+
 ## 1.1.1
 
 ### Patch Changes

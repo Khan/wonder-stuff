@@ -1,5 +1,12 @@
 # @khanacademy/wonder-stuff-testing
 
+## 2.3.2
+
+### Patch Changes
+
+-   Updated dependencies [cfadf15]
+    -   @khanacademy/wonder-stuff-core@1.2.1
+
 ## 2.3.1
 
 ### Patch Changes
