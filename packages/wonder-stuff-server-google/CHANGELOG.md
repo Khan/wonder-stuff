@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-server-google
 
+## 2.1.2
+
+### Patch Changes
+
+-   Updated dependencies [cfadf15]
+    -   @khanacademy/wonder-stuff-core@1.2.1
+    -   @khanacademy/wonder-stuff-server@2.1.2
+
 ## 2.1.1
 
 ### Patch Changes
