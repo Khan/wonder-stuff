@@ -8,7 +8,7 @@ const fg = require("fast-glob");
 const {
     checkPrivate,
     checkEntrypoints,
-    checkSource,
+    checkTypes,
     checkPublishConfig,
     checkMainPathExists,
 } = require("./pre-publish-utils");
@@ -26,7 +26,7 @@ fg(path.join(__dirname, "..", "packages", "**", "package.json")).then(
                 } else {
                     checkPublishConfig(pkgJson);
                     checkEntrypoints(pkgJson);
-                    checkSource(pkgJson);
+                    checkTypes(pkgJson);
                 }
             }
         }

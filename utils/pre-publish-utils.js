@@ -42,7 +42,7 @@ const checkMain = (pkgJson) => checkField(pkgJson, "main", "dist/index.js");
 const checkModule = (pkgJson) =>
     checkField(pkgJson, "module", "dist/es/index.js");
 
-const checkSource = (pkgJson) => checkField(pkgJson, "source", "src/index.js");
+const checkTypes = (pkgJson) => checkField(pkgJson, "types", "dist/index.d.ts");
 
 const checkPrivate = (pkgJson) => {
     if (pkgJson.private) {
@@ -99,7 +99,7 @@ const checkMainPathExists = (pkgPath) => {
 module.exports = {
     checkPublishConfig,
     checkEntrypoints,
-    checkSource,
+    checkTypes,
     checkPrivate,
     checkMainPathExists,
 };
