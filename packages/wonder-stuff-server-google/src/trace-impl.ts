@@ -146,7 +146,6 @@ export const traceImpl = (
     };
 
     return {
-        // @ts-expect-error [FEI-5011] - TS2322 - Type 'string' is not assignable to type '() => string'.
         get action() {
             return action;
         },

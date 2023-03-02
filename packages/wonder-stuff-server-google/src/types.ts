@@ -114,7 +114,7 @@ export interface ITraceSession {
     /**
      * The name of the action being traced as provided when it was started.
      */
-    action(): string;
+    get action(): string;
     /**
      * Add a label to the trace session.
      *
