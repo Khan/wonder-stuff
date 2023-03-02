@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-testing
 
+## 2.3.3
+
+### Patch Changes
+
+-   298b871: Update package.json files to use 'types' instead of 'source'
+-   Updated dependencies [298b871]
+    -   @khanacademy/wonder-stuff-core@1.2.2
+
 ## 2.3.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 2.1.1
+
+### Patch Changes
+
+-   298b871: Update package.json files to use 'types' instead of 'source'
+
 ## 2.1.0
 
 ### Minor Changes
