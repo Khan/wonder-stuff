@@ -57,6 +57,7 @@
     "jest": "^29.4.3",
     "jest-extended": "^3.2.4",
     "jest-when": "^3.5.2",
+    "npm-package-json-lint": "^6.4.0",
     "prettier": "^2.8.4",
     "rollup": "^2.79.1",
     "rollup-plugin-auto-external": "^2.0.0",
@@ -81,7 +82,8 @@
     "format": "prettier --write .",
     "lint": "yarn lint:ci .",
     "lint:ci": "eslint --config .eslintrc.js --ext .ts --ext .js",
-    "publish:ci": "node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && yarn build && yarn build:types && yarn build:flowtypes && changeset publish",
+    "lint:pkg-json": "yarn npmPkgJsonLint ./packages/wonder-stuff-*",
+    "publish:ci": "yarn run lint:pkg-json && node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && yarn build && yarn build:types && yarn build:flowtypes && changeset publish",
     "test": "yarn jest",
     "typecheck": "tsc --project tsconfig-check.json",
     "nochangeset": "yarn changeset add --empty"

@@ -10,7 +10,7 @@
     "description": "APIs for doing useful things in node servers for Google Cloud",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
-    "source": "src/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
