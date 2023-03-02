@@ -1,5 +1,15 @@
 # @khanacademy/wonder-stuff-server-google
 
+## 2.1.3
+
+### Patch Changes
+
+-   298b871: Update package.json files to use 'types' instead of 'source'
+-   769f3d5: Fix ITraceSession interface
+-   Updated dependencies [298b871]
+    -   @khanacademy/wonder-stuff-server@2.1.3
+    -   @khanacademy/wonder-stuff-core@1.2.2
+
 ## 2.1.2
 
 ### Patch Changes
