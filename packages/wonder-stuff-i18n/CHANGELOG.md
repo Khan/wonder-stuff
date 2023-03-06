@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 2.1.2
+
+### Patch Changes
+
+-   522b091: Fix build script to output bin files using .js as their extension
+
 ## 2.1.1
 
 ### Patch Changes

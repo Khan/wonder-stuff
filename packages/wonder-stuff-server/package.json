@@ -18,7 +18,7 @@
         "@khanacademy/wonder-stuff-core": "^1.2.2"
     },
     "devDependencies": {
-        "ws-dev-build-settings": "^0.1.0"
+        "ws-dev-build-settings": "^0.1.1"
     },
     "author": "",
     "license": "MIT",

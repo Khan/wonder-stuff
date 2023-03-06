@@ -19,7 +19,7 @@
         "@khanacademy/wonder-stuff-server": "^2.1.3"
     },
     "devDependencies": {
-        "ws-dev-build-settings": "^0.1.0"
+        "ws-dev-build-settings": "^0.1.1"
     },
     "author": "",
     "license": "MIT",
