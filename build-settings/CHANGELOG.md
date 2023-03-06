@@ -1,5 +1,11 @@
 # ws-dev-build-settings
 
+## 0.1.1
+
+### Patch Changes
+
+-   522b091: Fix build script to output bin files using .js as their extension
+
 ## 0.1.0
 
 ### Minor Changes
