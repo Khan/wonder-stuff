@@ -8,19 +8,13 @@ import type {GoogleCloudIntegrations} from "./types";
  */
 export const setupIntegrations = async (
     mode: (typeof Runtime)[keyof typeof Runtime],
-    {debugAgent, profiler}: GoogleCloudIntegrations = {
-        debugAgent: false,
+    {profiler}: GoogleCloudIntegrations = {
         profiler: false,
     },
 ): Promise<void> => {
     if (mode !== Runtime.Production) {
         // We don't support these agents outside of production.
         return;
-    }
-
-    if (debugAgent ?? false) {
-        const debugAgent = await import("@google-cloud/debug-agent");
-        debugAgent.start({allowExpressions: true});
     }
 
     if (profiler ?? false) {

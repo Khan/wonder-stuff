@@ -24,17 +24,6 @@ describe("#setupIntegrations", () => {
             expect(agentSpy).not.toHaveBeenCalled();
         });
 
-        it("should setup @google-cloud/debug-agent when options say so", async () => {
-            // Arrange
-            const agentSpy = jest.spyOn(DebugAgent, "start");
-
-            // Act
-            await setupIntegrations(Runtime.Production, {debugAgent: true});
-
-            // Assert
-            expect(agentSpy).toHaveBeenCalled();
-        });
-
         it("should not setup @google-cloud/profiler when not set to", async () => {
             // Arrange
             const agentSpy = jest.spyOn(Profiler, "start");

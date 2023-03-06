@@ -10,6 +10,9 @@
     "description": "APIs for doing useful things in node servers for Google Cloud",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
+    "files": [
+        "dist"
+    ],
     "types": "dist/index.d.ts",
     "scripts": {
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
@@ -24,7 +27,6 @@
     "author": "",
     "license": "MIT",
     "peerDependencies": {
-        "@google-cloud/debug-agent": "^5.2.8",
         "@google-cloud/logging-winston": "^4.1.1",
         "@google-cloud/profiler": "^4.1.7",
         "@google-cloud/trace-agent": "^5.1.6",

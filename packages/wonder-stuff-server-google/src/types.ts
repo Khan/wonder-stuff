@@ -8,11 +8,6 @@ import type {
  */
 export type GoogleCloudIntegrations = {
     /**
-     * Enable the debug agent.
-     * Defaults to false.
-     */
-    readonly debugAgent?: boolean;
-    /**
      * Enable the profiler.
      * Defaults to false.
      */
