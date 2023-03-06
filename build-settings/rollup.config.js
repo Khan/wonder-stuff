@@ -225,7 +225,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 name: pkgName,
                 format: "cjs",
                 platform: "node",
-                file: `dist/bin/${binFile}`,
+                file: `dist/bin/${binFile.replace(/\.ts$/, ".js")}`,
                 inputFile: `./src/bin/${binFile}`,
                 plugins: [preserveShebangs(), rollupExecutable()],
             });
