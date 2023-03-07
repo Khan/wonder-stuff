@@ -1,3 +1,4 @@
+import type {Request} from "express";
 import type {
     LogLevel,
     ServerOptions as BaseServerOptions,
@@ -132,4 +133,11 @@ export interface ITraceSession {
      * @returns {void}
      */
     end(info?: TraceSessionInfo): void;
+}
+
+export interface WarmUpHandlerFn {
+    /**
+     * Warm up a new instance of the server.
+     */
+    (headers: Request["headers"]): Promise<void>;
 }
