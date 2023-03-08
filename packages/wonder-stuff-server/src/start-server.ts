@@ -7,7 +7,7 @@ import {createLogger} from "./create-logger";
 import {Runtime} from "./types";
 import type {ServerOptions} from "./types";
 import {Errors} from "./errors";
-import {wrapWithMiddleware} from "./middleware/wrap-with-middleware.js";
+import {wrapWithMiddleware} from "./middleware/wrap-with-middleware";
 import {getDefaultLogMetadata} from "./get-default-log-metadata";
 import {setupGoogleCloudIntegrations} from "./setup-google-cloud-integrations";
 
