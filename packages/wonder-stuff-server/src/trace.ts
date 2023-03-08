@@ -1,9 +1,8 @@
 import * as traceAgent from "@google-cloud/trace-agent";
-import {getLogger} from "@khanacademy/wonder-stuff-server";
 import type {Request} from "express";
-import type {Logger, RequestWithLog} from "@khanacademy/wonder-stuff-server";
+import {getLogger} from "./get-logger";
+import type {Logger, RequestWithLog, ITraceSession} from "./types";
 import {traceImpl} from "./trace-impl";
-import type {ITraceSession} from "./types";
 
 interface ITrace {
     /**

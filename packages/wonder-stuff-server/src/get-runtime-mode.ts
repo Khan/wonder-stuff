@@ -8,9 +8,7 @@ import {Runtime} from "./types";
  *
  * @returns {Runtime} The runtime mode of production, development, or test.
  */
-export const getRuntimeMode = (
-    defaultMode: (typeof Runtime)[keyof typeof Runtime],
-): (typeof Runtime)[keyof typeof Runtime] => {
+export const getRuntimeMode = (): (typeof Runtime)[keyof typeof Runtime] => {
     switch (process.env.NODE_ENV) {
         case "test":
             return Runtime.Test;
@@ -19,11 +17,9 @@ export const getRuntimeMode = (
         case "prod":
             return Runtime.Production;
 
+        default:
         case "development":
         case "dev":
             return Runtime.Development;
-
-        default:
-            return defaultMode;
     }
 };

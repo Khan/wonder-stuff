@@ -1,16 +1,16 @@
-import * as Server from "@khanacademy/wonder-stuff-server";
-import {makeAppEngineRequestIDMiddleware} from "../make-app-engine-request-id-middleware";
+import {attachAppEngineRequestID} from "../attach-app-engine-request-id";
 import * as GetAppEngineRequestID from "../../get-app-engine-request-id";
+import * as GetRequestLogger from "../../get-request-logger";
 
 jest.mock("../../get-app-engine-request-id");
 
-describe("#makeAppEngineRequestIDMiddleware", () => {
+describe("#attachAppEngineRequestID", () => {
     it("should return middleware function", () => {
         // Arrange
         const pretendLogger = {} as any;
 
         // Act
-        const result = makeAppEngineRequestIDMiddleware(pretendLogger);
+        const result = attachAppEngineRequestID(pretendLogger);
 
         // Assert
         // @ts-expect-error [FEI-5011] - TS2339 - Property 'toBeFunction' does not exist on type 'JestMatchers<Middleware<TReq, TRes>>'.
@@ -33,9 +33,9 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
                 const pretendResponse = {} as any;
                 const mockNext = jest.fn();
                 const middleware =
-                    makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
+                    attachAppEngineRequestID(pretendDefaultLogger);
                 const getRequestLoggerSpy = jest.spyOn(
-                    Server,
+                    GetRequestLogger,
                     "getRequestLogger",
                 );
 
@@ -53,10 +53,11 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
                 const pretendResponse = {} as any;
                 const mockNext = jest.fn();
                 const middleware =
-                    makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
-                jest.spyOn(Server, "getRequestLogger").mockReturnValue(
-                    pretendDefaultLogger,
-                );
+                    attachAppEngineRequestID(pretendDefaultLogger);
+                jest.spyOn(
+                    GetRequestLogger,
+                    "getRequestLogger",
+                ).mockReturnValue(pretendDefaultLogger);
 
                 // Act
                 middleware(pretendRequest, pretendResponse, mockNext);
@@ -72,7 +73,7 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
                 const pretendResponse = {} as any;
                 const mockNext = jest.fn();
                 const middleware =
-                    makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
+                    attachAppEngineRequestID(pretendDefaultLogger);
 
                 // Act
                 middleware(pretendRequest, pretendResponse, mockNext);
@@ -97,9 +98,9 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
                 const pretendResponse = {} as any;
                 const mockNext = jest.fn();
                 const middleware =
-                    makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
+                    attachAppEngineRequestID(pretendDefaultLogger);
                 const getRequestLoggerSpy = jest
-                    .spyOn(Server, "getRequestLogger")
+                    .spyOn(GetRequestLogger, "getRequestLogger")
                     .mockReturnValue(pretendDefaultLogger);
 
                 // Act
@@ -119,10 +120,11 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
                 const pretendResponse = {} as any;
                 const mockNext = jest.fn();
                 const middleware =
-                    makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
-                jest.spyOn(Server, "getRequestLogger").mockReturnValue(
-                    pretendDefaultLogger,
-                );
+                    attachAppEngineRequestID(pretendDefaultLogger);
+                jest.spyOn(
+                    GetRequestLogger,
+                    "getRequestLogger",
+                ).mockReturnValue(pretendDefaultLogger);
 
                 // Act
                 middleware(pretendRequest, pretendResponse, mockNext);
@@ -143,10 +145,11 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
                 const pretendResponse = {} as any;
                 const mockNext = jest.fn();
                 const middleware =
-                    makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
-                jest.spyOn(Server, "getRequestLogger").mockReturnValue(
-                    pretendDefaultLogger,
-                );
+                    attachAppEngineRequestID(pretendDefaultLogger);
+                jest.spyOn(
+                    GetRequestLogger,
+                    "getRequestLogger",
+                ).mockReturnValue(pretendDefaultLogger);
 
                 // Act
                 middleware(pretendRequest, pretendResponse, mockNext);
@@ -162,10 +165,11 @@ describe("#makeAppEngineRequestIDMiddleware", () => {
                 const pretendResponse = {} as any;
                 const mockNext = jest.fn();
                 const middleware =
-                    makeAppEngineRequestIDMiddleware(pretendDefaultLogger);
-                jest.spyOn(Server, "getRequestLogger").mockReturnValue(
-                    pretendDefaultLogger,
-                );
+                    attachAppEngineRequestID(pretendDefaultLogger);
+                jest.spyOn(
+                    GetRequestLogger,
+                    "getRequestLogger",
+                ).mockReturnValue(pretendDefaultLogger);
 
                 // Act
                 middleware(pretendRequest, pretendResponse, mockNext);

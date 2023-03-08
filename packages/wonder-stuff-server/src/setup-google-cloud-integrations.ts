@@ -1,4 +1,4 @@
-import {Runtime} from "@khanacademy/wonder-stuff-server";
+import {Runtime} from "./types";
 import type {GoogleCloudIntegrations} from "./types";
 
 /**
@@ -6,7 +6,7 @@ import type {GoogleCloudIntegrations} from "./types";
  *
  * These integrations help debug production services.
  */
-export const setupIntegrations = async (
+export const setupGoogleCloudIntegrations = async (
     mode: (typeof Runtime)[keyof typeof Runtime],
     {profiler}: GoogleCloudIntegrations = {
         profiler: false,

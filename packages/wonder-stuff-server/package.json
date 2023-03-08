@@ -23,6 +23,10 @@
     "author": "",
     "license": "MIT",
     "peerDependencies": {
+        "@google-cloud/kms": "^3.4.0",
+        "@google-cloud/logging-winston": "^4.1.1",
+        "@google-cloud/profiler": "^4.1.7",
+        "@google-cloud/trace-agent": "^5.1.6",
         "express": "^4.17.2",
         "express-winston": "^4.2.0",
         "winston": "^3.4.0"

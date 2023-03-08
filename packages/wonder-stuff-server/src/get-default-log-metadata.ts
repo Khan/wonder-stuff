@@ -1,5 +1,5 @@
-import type {AppEngineInfo} from "./types";
 import {getAppEngineInfo} from "./get-app-engine-info";
+import type {AppEngineInfo} from "./types";
 
 /**
  * Get the default log metadata for a Google Cloud app engine server.

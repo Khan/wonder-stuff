@@ -1,9 +1,17 @@
 import * as Express from "express";
-import {makeCommonServiceRouter} from "../make-common-service-router";
+import * as GetAppEngineInfo from "../../get-app-engine-info";
+import {commonServiceRoutes} from "../common-service-routes";
 
 jest.mock("express");
+jest.mock("../../get-app-engine-info");
 
-describe("#makeCommonServiceRouter", () => {
+describe("#commonServiceRoutes", () => {
+    beforeEach(() => {
+        jest.spyOn(GetAppEngineInfo, "getAppEngineInfo").mockReturnValue({
+            version: "THE_VERSION",
+        } as any);
+    });
+
     describe("route /_api/ping", () => {
         it("should be defined", () => {
             // Arrange
@@ -13,7 +21,7 @@ describe("#makeCommonServiceRouter", () => {
             jest.spyOn(Express, "Router").mockReturnValue(mockRouter);
 
             // Act
-            makeCommonServiceRouter("THE_VERSION");
+            commonServiceRoutes();
 
             // Assert
             expect(mockRouter.get).toHaveBeenCalledWith(
@@ -33,7 +41,7 @@ describe("#makeCommonServiceRouter", () => {
             };
             jest.spyOn(Express, "Router").mockReturnValue(mockRouter);
             const getSpy = jest.spyOn(mockRouter, "get");
-            makeCommonServiceRouter("THE_VERSION");
+            commonServiceRoutes();
             const routeArgs =
                 getSpy.mock.calls.find((c) => c[0] === "/_api/ping") || [];
             const routeHandler: any = routeArgs[1];
@@ -55,39 +63,13 @@ describe("#makeCommonServiceRouter", () => {
             jest.spyOn(Express, "Router").mockReturnValue(mockRouter);
 
             // Act
-            makeCommonServiceRouter("THE_VERSION");
+            commonServiceRoutes();
 
             // Assert
             expect(mockRouter.get).toHaveBeenCalledWith(
                 "/_ah/warmup",
                 expect.any(Function),
             );
-        });
-
-        it("should invoke the warm up handler, when present", async () => {
-            // Arrange
-            const fakeRequest = {
-                headers: "FAKE_HEADERS",
-            };
-            const fakeResponse = {
-                send: jest.fn(),
-            };
-            const mockRouter: any = {
-                get: jest.fn().mockReturnThis(),
-            };
-            const warmUpHandler = jest.fn().mockResolvedValue(undefined);
-            jest.spyOn(Express, "Router").mockReturnValue(mockRouter);
-            const getSpy = jest.spyOn(mockRouter, "get");
-            makeCommonServiceRouter("THE_VERSION", warmUpHandler as any);
-            const routeArgs =
-                getSpy.mock.calls.find((c) => c[0] === "/_ah/warmup") || [];
-            const routeHandler: any = routeArgs[1];
-
-            // Act
-            await routeHandler(fakeRequest, fakeResponse);
-
-            // Assert
-            expect(warmUpHandler).toHaveBeenCalledWith("FAKE_HEADERS");
         });
 
         it("should send OK", async () => {
@@ -101,7 +83,7 @@ describe("#makeCommonServiceRouter", () => {
             };
             jest.spyOn(Express, "Router").mockReturnValue(mockRouter);
             const getSpy = jest.spyOn(mockRouter, "get");
-            makeCommonServiceRouter("THE_VERSION");
+            commonServiceRoutes();
             const routeArgs =
                 getSpy.mock.calls.find((c) => c[0] === "/_ah/warmup") || [];
             const routeHandler: any = routeArgs[1];
@@ -123,7 +105,7 @@ describe("#makeCommonServiceRouter", () => {
             jest.spyOn(Express, "Router").mockReturnValue(mockRouter);
 
             // Act
-            makeCommonServiceRouter("THE_VERSION");
+            commonServiceRoutes();
 
             // Assert
             expect(mockRouter.get).toHaveBeenCalledWith(
@@ -143,7 +125,7 @@ describe("#makeCommonServiceRouter", () => {
             };
             jest.spyOn(Express, "Router").mockReturnValue(mockRouter);
             const getSpy = jest.spyOn(mockRouter, "get");
-            makeCommonServiceRouter("THE_VERSION");
+            commonServiceRoutes();
             const routeArgs =
                 getSpy.mock.calls.find((c) => c[0] === "/_api/version") || [];
             const routeHandler: any = routeArgs[1];

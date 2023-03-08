@@ -1,6 +1,6 @@
 import * as Profiler from "@google-cloud/profiler";
-import {Runtime} from "@khanacademy/wonder-stuff-server";
-import {setupIntegrations} from "../setup-integrations";
+import {Runtime} from "../types";
+import {setupGoogleCloudIntegrations} from "../setup-google-cloud-integrations";
 
 // Google Profiler does some work on import, even before we mock the module,
 // which leads to a fetch attempt that ultimately is left dangling and can
@@ -9,14 +9,14 @@ import {setupIntegrations} from "../setup-integrations";
 jest.mock("google-auth-library");
 jest.mock("@google-cloud/profiler");
 
-describe("#setupIntegrations", () => {
+describe("#setupGoogleCloudIntegrations", () => {
     describe("in production", () => {
         it("should not setup @google-cloud/profiler when not set to", async () => {
             // Arrange
             const agentSpy = jest.spyOn(Profiler, "start");
 
             // Act
-            await setupIntegrations(Runtime.Production);
+            await setupGoogleCloudIntegrations(Runtime.Production);
 
             // Assert
             expect(agentSpy).not.toHaveBeenCalled();
@@ -27,7 +27,9 @@ describe("#setupIntegrations", () => {
             const agentSpy = jest.spyOn(Profiler, "start");
 
             // Act
-            await setupIntegrations(Runtime.Production, {profiler: true});
+            await setupGoogleCloudIntegrations(Runtime.Production, {
+                profiler: true,
+            });
 
             // Assert
             expect(agentSpy).toHaveBeenCalled();
@@ -42,7 +44,7 @@ describe("#setupIntegrations", () => {
                 const agentSpy = jest.spyOn(Profiler, "start");
 
                 // Act
-                await setupIntegrations(runtime);
+                await setupGoogleCloudIntegrations(runtime);
 
                 // Assert
                 expect(agentSpy).not.toHaveBeenCalled();

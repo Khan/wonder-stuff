@@ -1,5 +1,5 @@
 import * as TraceAgent from "@google-cloud/trace-agent";
-import * as Server from "@khanacademy/wonder-stuff-server";
+import * as GetLogger from "../get-logger";
 import * as TraceImpl from "../trace-impl";
 
 import {trace} from "../trace";
@@ -18,7 +18,7 @@ describe("#trace", () => {
             const fakeTracer: any = {} as any;
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
             const getLoggerSpy = jest
-                .spyOn(Server, "getLogger")
+                .spyOn(GetLogger, "getLogger")
                 .mockReturnValue(fakeLogger);
 
             // Act
@@ -36,7 +36,7 @@ describe("#trace", () => {
             const fakeLogger: any = {} as any;
             const fakeTracer: any = {} as any;
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
-            jest.spyOn(Server, "getLogger").mockReturnValue(fakeLogger);
+            jest.spyOn(GetLogger, "getLogger").mockReturnValue(fakeLogger);
             const traceImplSpy = jest.spyOn(TraceImpl, "traceImpl");
 
             // Act
@@ -60,7 +60,7 @@ describe("#trace", () => {
             const fakeLogger: any = {} as any;
             const fakeTracer: any = {} as any;
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
-            jest.spyOn(Server, "getLogger").mockReturnValue(fakeLogger);
+            jest.spyOn(GetLogger, "getLogger").mockReturnValue(fakeLogger);
             jest.spyOn(TraceImpl, "traceImpl").mockReturnValue(
                 fakeTraceSession,
             );
@@ -79,7 +79,7 @@ describe("#trace", () => {
             const fakeLogger: any = {} as any;
             const fakeTracer: any = {} as any;
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
-            jest.spyOn(Server, "getLogger").mockReturnValue(fakeLogger);
+            jest.spyOn(GetLogger, "getLogger").mockReturnValue(fakeLogger);
             const traceImplSpy = jest.spyOn(TraceImpl, "traceImpl");
 
             // Act
@@ -100,7 +100,7 @@ describe("#trace", () => {
             const fakeLogger: any = {} as any;
             const fakeTracer: any = {} as any;
             jest.spyOn(TraceAgent, "get").mockReturnValue(fakeTracer);
-            jest.spyOn(Server, "getLogger").mockReturnValue(fakeLogger);
+            jest.spyOn(GetLogger, "getLogger").mockReturnValue(fakeLogger);
             jest.spyOn(TraceImpl, "traceImpl").mockReturnValue(
                 fakeTraceSession,
             );
