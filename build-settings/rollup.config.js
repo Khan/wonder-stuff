@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import autoExternal from "rollup-plugin-auto-external";
 import {babel} from "@rollup/plugin-babel";
-import {terser} from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
 import filesize from "rollup-plugin-filesize";
