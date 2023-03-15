@@ -1,4 +1,4 @@
-import {Runtime} from "@khanacademy/wonder-stuff-server";
+import {Runtime} from "./types";
 import type {GoogleCloudIntegrations} from "./types";
 
 /**
@@ -6,21 +6,15 @@ import type {GoogleCloudIntegrations} from "./types";
  *
  * These integrations help debug production services.
  */
-export const setupIntegrations = async (
+export const setupGoogleCloudIntegrations = async (
     mode: (typeof Runtime)[keyof typeof Runtime],
-    {debugAgent, profiler}: GoogleCloudIntegrations = {
-        debugAgent: false,
+    {profiler}: GoogleCloudIntegrations = {
         profiler: false,
     },
 ): Promise<void> => {
     if (mode !== Runtime.Production) {
         // We don't support these agents outside of production.
         return;
-    }
-
-    if (debugAgent ?? false) {
-        const debugAgent = await import("@google-cloud/debug-agent");
-        debugAgent.start({allowExpressions: true});
     }
 
     if (profiler ?? false) {

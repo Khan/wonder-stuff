@@ -1,21 +1,31 @@
-import * as Express from "express";
+import {secret} from "@khanacademy/wonder-stuff-core";
 import * as RootLogger from "../root-logger";
-import * as DefaultRequestLogging from "../middleware/default-request-logging";
-import * as DefaultErrorLogging from "../middleware/default-error-logging";
+import * as WrapWithMiddleware from "../middleware/wrap-with-middleware";
+import * as CreateLogger from "../create-logger";
 import {Runtime} from "../types";
-
 import {startServer} from "../start-server";
+import type {ServerOptions} from "../types";
 
 jest.mock("heapdump");
+jest.mock("../create-logger");
 jest.mock("../root-logger");
-jest.mock("express");
-jest.mock("../middleware/default-error-logging");
-jest.mock("../middleware/default-request-logging");
+jest.mock("../middleware/wrap-with-middleware");
 
 describe("#start-server", () => {
+    const DefaultOptions: ServerOptions = {
+        name: "TEST_GATEWAY",
+        port: 42,
+        host: "127.0.0.1",
+        mode: Runtime.Test,
+        logLevel: "debug",
+        requestAuthentication: {
+            secret: secret("SECRET"),
+            headerName: "X-Auth",
+        },
+    };
+
     beforeEach(() => {
-        // @ts-expect-error [FEI-5011] - TS2345 - Argument of type '() => void' is not assignable to parameter of type '(event: string | symbol, listener: (...args: any[]) => void) => Process'.
-        jest.spyOn(process, "on").mockImplementation(() => {});
+        jest.spyOn(process, "on").mockImplementation((() => {}) as any);
     });
 
     it("should set the root logger to the given logger", async () => {
@@ -23,22 +33,18 @@ describe("#start-server", () => {
         const logger: any = {
             debug: jest.fn(),
         };
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger,
-            mode: Runtime.Test,
-        } as const;
         const pretendApp: any = {
             listen: jest.fn(),
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+        jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
+        jest.spyOn(WrapWithMiddleware, "wrapWithMiddleware").mockResolvedValue(
+            pretendApp,
+        );
         const setRootLoggerSpy = jest.spyOn(RootLogger, "setRootLogger");
 
         // Act
-        await startServer(options, pretendApp);
+        await startServer(DefaultOptions, pretendApp);
 
         // Assert
         expect(setRootLoggerSpy).toHaveBeenCalledWith(logger);
@@ -51,14 +57,10 @@ describe("#start-server", () => {
             const logger: any = {
                 debug: jest.fn(),
             };
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger,
-                mode,
+            const options: ServerOptions = {
+                ...DefaultOptions,
                 allowHeapDumps: true,
-            } as const;
+            };
             const fakeServer = {
                 address: jest.fn(),
                 on: jest.fn(),
@@ -68,7 +70,11 @@ describe("#start-server", () => {
                 listen: jest.fn().mockReturnValue(fakeServer),
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
 
             // Act
             await startServer(options, pretendApp);
@@ -87,11 +93,8 @@ describe("#start-server", () => {
         const logger: any = {
             debug: jest.fn(),
         };
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger,
+        const options: ServerOptions = {
+            ...DefaultOptions,
             mode: Runtime.Development,
         } as const;
         const fakeServer = {
@@ -103,7 +106,10 @@ describe("#start-server", () => {
             listen: jest.fn().mockReturnValue(fakeServer),
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+        jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
+        jest.spyOn(WrapWithMiddleware, "wrapWithMiddleware").mockResolvedValue(
+            pretendApp,
+        );
 
         // Act
         await startServer(options, pretendApp);
@@ -121,11 +127,8 @@ describe("#start-server", () => {
         const logger: any = {
             debug: jest.fn(),
         };
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger,
+        const options: ServerOptions = {
+            ...DefaultOptions,
             mode: Runtime.Production,
         } as const;
         const fakeServer = {
@@ -137,7 +140,10 @@ describe("#start-server", () => {
             listen: jest.fn().mockReturnValue(fakeServer),
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+        jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
+        jest.spyOn(WrapWithMiddleware, "wrapWithMiddleware").mockResolvedValue(
+            pretendApp,
+        );
 
         // Act
         await startServer(options, pretendApp);
@@ -151,11 +157,8 @@ describe("#start-server", () => {
         const logger: any = {
             debug: jest.fn(),
         };
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger,
+        const options: ServerOptions = {
+            ...DefaultOptions,
             mode: Runtime.Development,
             allowHeapDumps: false,
         } as const;
@@ -168,7 +171,10 @@ describe("#start-server", () => {
             listen: jest.fn().mockReturnValue(fakeServer),
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+        jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
+        jest.spyOn(WrapWithMiddleware, "wrapWithMiddleware").mockResolvedValue(
+            pretendApp,
+        );
 
         // Act
         await startServer(options, pretendApp);
@@ -177,17 +183,11 @@ describe("#start-server", () => {
         expect(logger.debug).not.toHaveBeenCalled();
     });
 
-    it("should add request middleware", async () => {
+    it("should wrap the app with middleware", async () => {
         // Arrange
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger: {
-                debug: jest.fn(),
-            } as any,
-            mode: Runtime.Test,
-        } as const;
+        const logger: any = {
+            debug: jest.fn(),
+        };
         const fakeServer = {
             address: jest.fn(),
             on: jest.fn(),
@@ -196,142 +196,35 @@ describe("#start-server", () => {
             listen: jest.fn().mockReturnValue(fakeServer),
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
-        jest.spyOn(
-            DefaultRequestLogging,
-            "defaultRequestLogging",
-            // @ts-expect-error: mock is not a valid Logger
-        ).mockReturnValue("FAKE_REQUEST_MIDDLEWARE");
+        jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
+        const wrapSpy = jest
+            .spyOn(WrapWithMiddleware, "wrapWithMiddleware")
+            .mockResolvedValue(pretendApp);
 
         // Act
-        await startServer(options, pretendApp);
+        await startServer(DefaultOptions, pretendApp);
 
         // Assert
-        expect(pretendApp.use).toHaveBeenCalledWith("FAKE_REQUEST_MIDDLEWARE");
-    });
-
-    it("should not add request middleware if asked not to", async () => {
-        // Arrange
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger: {
-                debug: jest.fn(),
-            } as any,
-            mode: Runtime.Test,
-            includeRequestMiddleware: false,
-        } as const;
-        const fakeServer = {
-            address: jest.fn(),
-            on: jest.fn(),
-        } as const;
-        const pretendApp: any = {
-            listen: jest.fn().mockReturnValue(fakeServer),
-            use: jest.fn().mockReturnThis(),
-        };
-        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
-        jest.spyOn(
-            DefaultRequestLogging,
-            "defaultRequestLogging",
-            // @ts-expect-error: mock is not a valid Logger
-        ).mockReturnValue("FAKE_REQUEST_MIDDLEWARE");
-
-        // Act
-        await startServer(options, pretendApp);
-
-        // Assert
-        expect(pretendApp.use).not.toHaveBeenCalledWith(
-            "FAKE_REQUEST_MIDDLEWARE",
-        );
-    });
-
-    it("should add error middleware", async () => {
-        // Arrange
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger: {
-                debug: jest.fn(),
-            } as any,
-            mode: Runtime.Test,
-        } as const;
-        const fakeServer = {
-            address: jest.fn(),
-            on: jest.fn(),
-        } as const;
-        const pretendApp: any = {
-            listen: jest.fn().mockReturnValue(fakeServer),
-            use: jest.fn().mockReturnThis(),
-        };
-        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
-        jest.spyOn(DefaultErrorLogging, "defaultErrorLogging").mockReturnValue(
-            // @ts-expect-error: mock is not a valid Logger
-            "FAKE_ERROR_MIDDLEWARE",
-        );
-
-        // Act
-        await startServer(options, pretendApp);
-
-        // Assert
-        expect(pretendApp.use).toHaveBeenCalledWith("FAKE_ERROR_MIDDLEWARE");
-    });
-
-    it("should not add error middleware if asked not to", async () => {
-        // Arrange
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger: {
-                debug: jest.fn(),
-            } as any,
-            mode: Runtime.Test,
-            includeErrorMiddleware: false,
-        } as const;
-        const fakeServer = {
-            address: jest.fn(),
-            on: jest.fn(),
-        } as const;
-        const pretendApp: any = {
-            listen: jest.fn().mockReturnValue(fakeServer),
-            use: jest.fn().mockReturnThis(),
-        };
-        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
-        jest.spyOn(DefaultErrorLogging, "defaultErrorLogging").mockReturnValue(
-            // @ts-expect-error: mock is not a valid Logger
-            "FAKE_ERROR_MIDDLEWARE",
-        );
-
-        // Act
-        await startServer(options, pretendApp);
-
-        // Assert
-        expect(pretendApp.use).not.toHaveBeenCalledWith(
-            "FAKE_ERROR_MIDDLEWARE",
+        expect(wrapSpy).toHaveBeenCalledWith(
+            pretendApp,
+            logger,
+            Runtime.Test,
+            DefaultOptions.requestAuthentication,
         );
     });
 
     it("should listen on the configured port", async () => {
         // Arrange
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger: {
-                debug: jest.fn(),
-            } as any,
-            mode: Runtime.Test,
-        } as const;
         const pretendApp: any = {
             listen: jest.fn(),
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+        jest.spyOn(WrapWithMiddleware, "wrapWithMiddleware").mockResolvedValue(
+            pretendApp,
+        );
 
         // Act
-        await startServer(options, pretendApp);
+        await startServer(DefaultOptions, pretendApp);
 
         // Assert
         expect(pretendApp.listen).toHaveBeenCalledWith(
@@ -343,15 +236,6 @@ describe("#start-server", () => {
 
     it("should listen for connections", async () => {
         // Arrange
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger: {
-                debug: jest.fn(),
-            } as any,
-            mode: Runtime.Test,
-        } as const;
         const fakeServer = {
             address: () => ({
                 address: "ADDRESS",
@@ -364,10 +248,12 @@ describe("#start-server", () => {
             listen: listenMock,
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+        jest.spyOn(WrapWithMiddleware, "wrapWithMiddleware").mockResolvedValue(
+            pretendApp,
+        );
 
         // Act
-        await startServer(options, pretendApp);
+        await startServer(DefaultOptions, pretendApp);
 
         // Assert
         expect(fakeServer.on).toHaveBeenCalledWith(
@@ -378,15 +264,6 @@ describe("#start-server", () => {
 
     it("should listen for connections closing", async () => {
         // Arrange
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger: {
-                debug: jest.fn(),
-            } as any,
-            mode: Runtime.Test,
-        } as const;
         let connectionHandler: any;
         const fakeServer = {
             address: () => ({
@@ -409,8 +286,10 @@ describe("#start-server", () => {
             listen: listenMock,
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
-        await startServer(options, pretendApp);
+        jest.spyOn(WrapWithMiddleware, "wrapWithMiddleware").mockResolvedValue(
+            pretendApp,
+        );
+        await startServer(DefaultOptions, pretendApp);
 
         // Act
         connectionHandler?.(fakeConnection);
@@ -424,14 +303,8 @@ describe("#start-server", () => {
 
     it("should set the keepAliveTimeout on the created server to the value in the options when provided", async () => {
         // Arrange
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger: {
-                debug: jest.fn(),
-            } as any,
-            mode: Runtime.Test,
+        const options: ServerOptions = {
+            ...DefaultOptions,
             keepAliveTimeout: 42,
         } as const;
         const fakeServer = {
@@ -443,7 +316,9 @@ describe("#start-server", () => {
             listen: jest.fn().mockReturnValue(fakeServer),
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+        jest.spyOn(WrapWithMiddleware, "wrapWithMiddleware").mockResolvedValue(
+            pretendApp,
+        );
 
         // Act
         await startServer(options, pretendApp);
@@ -455,15 +330,6 @@ describe("#start-server", () => {
 
     it("should set the keepAliveTimeout on the created server to 90000 when no value given", async () => {
         // Arrange
-        const options = {
-            name: "TEST_GATEWAY",
-            port: 42,
-            host: "127.0.0.1",
-            logger: {
-                debug: jest.fn(),
-            } as any,
-            mode: Runtime.Test,
-        } as const;
         const fakeServer = {
             address: jest.fn(),
             on: jest.fn(),
@@ -473,10 +339,12 @@ describe("#start-server", () => {
             listen: jest.fn().mockReturnValue(fakeServer),
             use: jest.fn().mockReturnThis(),
         };
-        jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+        jest.spyOn(WrapWithMiddleware, "wrapWithMiddleware").mockResolvedValue(
+            pretendApp,
+        );
 
         // Act
-        await startServer(options, pretendApp);
+        await startServer(DefaultOptions, pretendApp);
         const result = fakeServer.keepAliveTimeout;
 
         // Assert
@@ -491,14 +359,8 @@ describe("#start-server", () => {
         "should set headersTimeout to $headersTimeout when keepAliveTimeout is $keepAliveTimeout",
         async ({keepAliveTimeout, headersTimeout}: any) => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    debug: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
+            const options: ServerOptions = {
+                ...DefaultOptions,
                 keepAliveTimeout,
             } as const;
             const fakeServer = {
@@ -511,7 +373,10 @@ describe("#start-server", () => {
                 listen: jest.fn().mockReturnValue(fakeServer),
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
 
             // Act
             await startServer(options, pretendApp);
@@ -525,24 +390,23 @@ describe("#start-server", () => {
     describe("listen callback", () => {
         it("should report start failure if gateway is null", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    debug: jest.fn(),
-                    error: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
             const listenMock = jest.fn().mockReturnValue(null);
+            const logger: any = {
+                debug: jest.fn(),
+                error: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const pretendApp: any = {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
-            await startServer(options, pretendApp);
-            const errorSpy = jest.spyOn(options.logger, "error");
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
+
+            await startServer(DefaultOptions, pretendApp);
+            const errorSpy = jest.spyOn(logger, "error");
             const listenCallback = listenMock.mock.calls[0][2];
 
             // Act
@@ -557,23 +421,22 @@ describe("#start-server", () => {
 
         it("should report start failure if there's an error", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    error: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                debug: jest.fn(),
+                error: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const listenMock = jest.fn().mockReturnValue(null);
             const pretendApp: any = {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
-            await startServer(options, pretendApp);
-            const errorSpy = jest.spyOn(options.logger, "error");
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
+            await startServer(DefaultOptions, pretendApp);
+            const errorSpy = jest.spyOn(logger, "error");
             const listenCallback = listenMock.mock.calls[0][2];
 
             // Act
@@ -590,15 +453,12 @@ describe("#start-server", () => {
             "should report start failure if address is %s",
             async (address: any) => {
                 // Arrange
-                const options = {
-                    name: "TEST_GATEWAY",
-                    port: 42,
-                    host: "127.0.0.1",
-                    logger: {
-                        warn: jest.fn(),
-                    } as any,
-                    mode: Runtime.Test,
-                } as const;
+                const logger: any = {
+                    warn: jest.fn(),
+                };
+                jest.spyOn(CreateLogger, "createLogger").mockReturnValue(
+                    logger,
+                );
                 const fakeServer = {
                     address: () => address,
                     on: jest.fn(),
@@ -608,9 +468,12 @@ describe("#start-server", () => {
                     listen: listenMock,
                     use: jest.fn().mockReturnThis(),
                 };
-                jest.spyOn(Express, "default").mockReturnValue(pretendApp);
-                await startServer(options, pretendApp);
-                const warnSpy = jest.spyOn(options.logger, "warn");
+                jest.spyOn(
+                    WrapWithMiddleware,
+                    "wrapWithMiddleware",
+                ).mockResolvedValue(pretendApp);
+                await startServer(DefaultOptions, pretendApp);
+                const warnSpy = jest.spyOn(logger, "warn");
                 const listenCallback = listenMock.mock.calls[0][2];
 
                 // Act
@@ -625,15 +488,10 @@ describe("#start-server", () => {
 
         it("should report a successful start", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const fakeServer = {
                 address: () => ({
                     address: "ADDRESS",
@@ -646,9 +504,12 @@ describe("#start-server", () => {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
-            await startServer(options, pretendApp);
-            const infoSpy = jest.spyOn(options.logger, "info");
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
+            await startServer(DefaultOptions, pretendApp);
+            const infoSpy = jest.spyOn(logger, "info");
             const listenCallback = listenMock.mock.calls[0][2];
 
             // Act
@@ -664,24 +525,22 @@ describe("#start-server", () => {
     describe("close on SIGINT", () => {
         it("should do nothing if the gateway doesn't exist", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const listenMock = jest.fn().mockReturnValue(null);
             const pretendApp: any = {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
             const processSpy = jest.spyOn(process, "on");
-            await startServer(options, pretendApp);
-            const infoSpy = jest.spyOn(options.logger, "info");
+            await startServer(DefaultOptions, pretendApp);
+            const infoSpy = jest.spyOn(logger, "info");
             const processCallback = processSpy.mock.calls[0][1];
 
             // Act
@@ -693,15 +552,10 @@ describe("#start-server", () => {
 
         it("should attempt to close the server on SIGINT", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const fakeServer = {
                 address: () => ({
                     address: "ADDRESS",
@@ -715,10 +569,13 @@ describe("#start-server", () => {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
             const processSpy = jest.spyOn(process, "on");
-            await startServer(options, pretendApp);
-            const infoSpy = jest.spyOn(options.logger, "info");
+            await startServer(DefaultOptions, pretendApp);
+            const infoSpy = jest.spyOn(logger, "info");
             const processCallback = processSpy.mock.calls[0][1];
 
             // Act
@@ -733,16 +590,11 @@ describe("#start-server", () => {
 
         it("should handle errors from closing the server", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                    error: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+                error: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const fakeServer = {
                 address: () => ({
                     address: "ADDRESS",
@@ -756,14 +608,16 @@ describe("#start-server", () => {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
-                // @ts-expect-error [FEI-5011] - TS2554 - Expected 1 arguments, but got 0.
-                .mockReturnValue();
-            await startServer(options, pretendApp);
-            const errorSpy = jest.spyOn(options.logger, "error");
+                .mockReturnValue(undefined as never);
+            await startServer(DefaultOptions, pretendApp);
+            const errorSpy = jest.spyOn(logger, "error");
             const processCallback = processOnSpy.mock.calls[0][1];
             processCallback();
             const closeCallback = fakeServer.close.mock.calls[0][0];
@@ -783,16 +637,11 @@ describe("#start-server", () => {
 
         it("should default error message when closing the server and the error message is null", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                    error: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+                error: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const fakeServer = {
                 address: () => ({
                     address: "ADDRESS",
@@ -806,14 +655,16 @@ describe("#start-server", () => {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             } as any;
-            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
-                // @ts-expect-error [FEI-5011] - TS2554 - Expected 1 arguments, but got 0.
-                .mockReturnValue();
-            await startServer(options, pretendApp);
-            const errorSpy = jest.spyOn(options.logger, "error");
+                .mockReturnValue(undefined as never);
+            await startServer(DefaultOptions, pretendApp);
+            const errorSpy = jest.spyOn(logger, "error");
             const processCallback = processOnSpy.mock.calls[0][1];
             processCallback();
             const closeCallback = fakeServer.close.mock.calls[0][0];
@@ -833,16 +684,11 @@ describe("#start-server", () => {
 
         it("should close gracefully if there is no error", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                    error: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+                error: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const fakeServer = {
                 address: () => ({
                     address: "ADDRESS",
@@ -856,14 +702,16 @@ describe("#start-server", () => {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
-                // @ts-expect-error [FEI-5011] - TS2554 - Expected 1 arguments, but got 0.
-                .mockReturnValue();
-            await startServer(options, pretendApp);
-            const errorSpy = jest.spyOn(options.logger, "error");
+                .mockReturnValue(undefined as never);
+            await startServer(DefaultOptions, pretendApp);
+            const errorSpy = jest.spyOn(logger, "error");
             const processCallback = processOnSpy.mock.calls[0][1];
             processCallback();
             const closeCallback = fakeServer.close.mock.calls[0][0];
@@ -878,16 +726,11 @@ describe("#start-server", () => {
 
         it("should handle .close() throwing an error", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                    error: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+                error: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const fakeServer = {
                 address: () => ({
                     address: "ADDRESS",
@@ -903,14 +746,16 @@ describe("#start-server", () => {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
-                // @ts-expect-error [FEI-5011] - TS2554 - Expected 1 arguments, but got 0.
-                .mockReturnValue();
-            await startServer(options, pretendApp);
-            const errorSpy = jest.spyOn(options.logger, "error");
+                .mockReturnValue(undefined as never);
+            await startServer(DefaultOptions, pretendApp);
+            const errorSpy = jest.spyOn(logger, "error");
             const processCallback = processOnSpy.mock.calls[0][1];
 
             // Act
@@ -928,16 +773,11 @@ describe("#start-server", () => {
 
         it("should handle .close() throwing null", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                    error: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+                error: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const fakeServer = {
                 address: () => ({
                     address: "ADDRESS",
@@ -954,14 +794,16 @@ describe("#start-server", () => {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             } as any;
-            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
-                // @ts-expect-error [FEI-5011] - TS2554 - Expected 1 arguments, but got 0.
-                .mockReturnValue();
-            await startServer(options, pretendApp);
-            const errorSpy = jest.spyOn(options.logger, "error");
+                .mockReturnValue(undefined as never);
+            await startServer(DefaultOptions, pretendApp);
+            const errorSpy = jest.spyOn(logger, "error");
             const processCallback = processOnSpy.mock.calls[0][1];
 
             // Act
@@ -979,16 +821,11 @@ describe("#start-server", () => {
 
         it("should handle .close() throwing error with no message", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                    error: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+                error: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             const fakeServer = {
                 address: jest.fn(),
                 on: jest.fn(),
@@ -1002,14 +839,16 @@ describe("#start-server", () => {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             } as any;
-            jest.spyOn(Express, "default").mockImplementation(() => pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
             const processExitSpy = jest
                 .spyOn(process, "exit")
-                // @ts-expect-error [FEI-5011] - TS2554 - Expected 1 arguments, but got 0.
-                .mockReturnValue();
-            await startServer(options, pretendApp);
-            const errorSpy = jest.spyOn(options.logger, "error");
+                .mockReturnValue(undefined as never);
+            await startServer(DefaultOptions, pretendApp);
+            const errorSpy = jest.spyOn(logger, "error");
             const processCallback = processOnSpy.mock.calls[0][1];
 
             // Act
@@ -1027,15 +866,10 @@ describe("#start-server", () => {
 
         it("should destroy only open connections on close", async () => {
             // Arrange
-            const options = {
-                name: "TEST_GATEWAY",
-                port: 42,
-                host: "127.0.0.1",
-                logger: {
-                    info: jest.fn(),
-                } as any,
-                mode: Runtime.Test,
-            } as const;
+            const logger: any = {
+                info: jest.fn(),
+            };
+            jest.spyOn(CreateLogger, "createLogger").mockReturnValue(logger);
             let connectionHandler: any;
             const fakeServer = {
                 address: jest.fn(),
@@ -1069,9 +903,12 @@ describe("#start-server", () => {
                 listen: listenMock,
                 use: jest.fn().mockReturnThis(),
             };
-            jest.spyOn(Express, "default").mockReturnValue(pretendApp);
+            jest.spyOn(
+                WrapWithMiddleware,
+                "wrapWithMiddleware",
+            ).mockResolvedValue(pretendApp);
             const processOnSpy = jest.spyOn(process, "on");
-            await startServer(options, pretendApp);
+            await startServer(DefaultOptions, pretendApp);
             const sigintCallback = processOnSpy.mock.calls[0][1];
 
             // Act

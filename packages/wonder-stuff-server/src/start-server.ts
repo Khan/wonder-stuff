@@ -1,12 +1,15 @@
 import * as http from "http";
 import * as net from "net";
-import type {Application, Request, Response} from "express";
-import express from "express";
+import type {Application} from "express";
+import * as lw from "@google-cloud/logging-winston";
 import {setRootLogger} from "./root-logger";
+import {createLogger} from "./create-logger";
 import {Runtime} from "./types";
-import type {ServerOptions, RequestWithLog} from "./types";
+import type {ServerOptions} from "./types";
 import {Errors} from "./errors";
-import * as middleware from "./middleware/index";
+import {wrapWithMiddleware} from "./middleware/wrap-with-middleware";
+import {getDefaultLogMetadata} from "./get-default-log-metadata";
+import {setupGoogleCloudIntegrations} from "./setup-google-cloud-integrations";
 
 /**
  * Start an application server.
@@ -15,29 +18,46 @@ import * as middleware from "./middleware/index";
  * and other pieces before listening on the appropriate port per the passed
  * options.
  */
-export async function startServer<
-    TReq extends RequestWithLog<Request>,
-    TRes extends Response,
->(
+export async function startServer(
     {
-        logger,
         host,
         port,
         name,
         mode,
         keepAliveTimeout,
         allowHeapDumps,
-        includeErrorMiddleware = true,
-        includeRequestMiddleware = true,
+        requestAuthentication,
+        integrations,
+        logLevel,
     }: ServerOptions,
     app: Application,
 ): Promise<http.Server | null | undefined> {
     /**
-     * Setup logging.
-     * We create the root logger once and then share it via a singleton.
-     * This avoids us creating a new one in each worker, which was happening
-     * when we created the logger on import of `getLogger`.
+     * Make sure GAE_SERVICE has a value.
+     *
+     * If it isn't set at this point, we're not running in GAE, so we can
+     * set it ourselves.
      */
+    if (process.env.GAE_SERVICE == null) {
+        process.env.GAE_SERVICE = name;
+    }
+
+    // Setup the logger.
+    // We create the root logger once and then share it via a singleton.
+    // This avoids us creating a new one in each worker, which was happening
+    // when we created the logger on import of `getLogger`.
+    const logger = createLogger({
+        mode,
+        level: logLevel,
+        defaultMetadata: getDefaultLogMetadata(),
+        transport:
+            // In production, we use the Google Cloud logging winston transport.
+            mode === Runtime.Production
+                ? new lw.LoggingWinston({
+                      level: logLevel,
+                  })
+                : null,
+    });
     setRootLogger(logger);
 
     /**
@@ -65,18 +85,16 @@ export async function startServer<
         }
     }
 
-    /**
-     * Add middleware per options.
-     */
-    // @ts-expect-error [FEI-5011] - TS2558 - Expected 0 type arguments, but got 2.
-    const appWithMiddleware = express<TReq, TRes>();
-    if (includeRequestMiddleware) {
-        appWithMiddleware.use(middleware.defaultRequestLogging(logger));
-    }
-    appWithMiddleware.use(app);
-    if (includeErrorMiddleware) {
-        appWithMiddleware.use(middleware.defaultErrorLogging(logger));
-    }
+    // Set up Google Cloud debugging integrations.
+    await setupGoogleCloudIntegrations(mode, integrations);
+
+    // Wrap the server app with our middleware.
+    const appWithMiddleware = await wrapWithMiddleware(
+        app,
+        logger,
+        mode,
+        requestAuthentication,
+    );
 
     /**
      * Start the server listening.
@@ -84,7 +102,7 @@ export async function startServer<
      * We need the variable so we can reference it inside the error handling
      * callback. Feels a bit nasty, but it works.
      */
-    const server: http.Server | null | undefined = appWithMiddleware.listen(
+    const server: http.Server = appWithMiddleware.listen(
         port,
         host,
         (err?: Error | null) => {

@@ -15,7 +15,6 @@ describe("#getDelta", () => {
         } as const;
 
         // Act
-        // @ts-expect-error [FEI-5011] - TS2345 - Argument of type '{ readonly a: 60; readonly b: 30; readonly c: 10000; }' is not assignable to parameter of type '{ readonly a: 30; readonly b: 0; readonly c: 40000; }'.
         const result = getDelta(first, second);
 
         // Assert

@@ -1,9 +1,8 @@
 import * as traceAgent from "@google-cloud/trace-agent";
-import {getLogger} from "@khanacademy/wonder-stuff-server";
 import type {Request} from "express";
-import type {Logger, RequestWithLog} from "@khanacademy/wonder-stuff-server";
+import {getLogger} from "./get-logger";
+import type {Logger, RequestWithLog, ITraceSession} from "./types";
 import {traceImpl} from "./trace-impl";
-import type {ITraceSession} from "./types";
 
 interface ITrace {
     /**
@@ -55,7 +54,7 @@ interface ITrace {
 export const trace: ITrace = (
     action: string,
     message: string,
-    requestOrLogger: unknown,
+    requestOrLogger: any,
 ): ITraceSession => {
     const tracer = traceAgent.get();
     if (
@@ -64,11 +63,9 @@ export const trace: ITrace = (
     ) {
         // We have done a little check to make sure this is either null
         // or a request, so just tell Flow it's OK.
-        // @ts-expect-error [FEI-5011] - TS2345 - Argument of type 'unknown' is not assignable to parameter of type 'RequestWithLog<Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>> | undefined'.
         const logger = getLogger(requestOrLogger);
         return traceImpl(logger, action, message, tracer);
     }
 
-    // @ts-expect-error: At this point, we can assume it's a logger.
     return traceImpl(requestOrLogger, action, message, tracer);
 };

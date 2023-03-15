@@ -19,47 +19,23 @@ describe("#getRuntimeMode", () => {
         process.env.NODE_ENV = nodeEnv;
 
         // Act
-        const result = getRuntimeMode(Runtime.Development);
+        const result = getRuntimeMode();
 
         // Assert
         expect(result).toBe(expectation);
     });
 
-    it.each([
-        [Runtime.Production, undefined],
-        [Runtime.Development, undefined],
-        [Runtime.Production, "blah"],
-        [Runtime.Development, "blah"],
-    ])(
-        "should return %s if NODE_ENV unrecognised",
-        (expectation: any, nodeEnv: any) => {
+    it.each([undefined, "blah"])(
+        "should return development if NODE_ENV unrecognised",
+        (nodeEnv: any) => {
             // Arrange
             process.env.NODE_ENV = nodeEnv;
 
             // Act
-            const result = getRuntimeMode(expectation);
+            const result = getRuntimeMode();
 
             // Assert
-            expect(result).toBe(expectation);
-        },
-    );
-
-    it.each([
-        [Runtime.Development, "development"],
-        [Runtime.Production, "production"],
-        [Runtime.Development, "test"],
-        [Runtime.Production, "test"],
-    ])(
-        "should ignore default of %s and give precedent to NODE_ENV=%s",
-        (defaultValue: any, nodeEnv: any) => {
-            // Arrange
-            process.env.NODE_ENV = nodeEnv;
-
-            // Act
-            const result = getRuntimeMode(defaultValue);
-
-            // Assert
-            expect(result).toBe(nodeEnv);
+            expect(result).toBe(Runtime.Development);
         },
     );
 });

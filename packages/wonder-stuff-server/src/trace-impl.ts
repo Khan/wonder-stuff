@@ -1,11 +1,9 @@
-// @ts-expect-error [FEI-5011] - TS2305 - Module '"@google-cloud/trace-agent"' has no exported member 'Tracer'.
-import type {Tracer} from "@google-cloud/trace-agent";
+import type {PluginTypes} from "@google-cloud/trace-agent";
 import {Errors, KindError} from "@khanacademy/wonder-stuff-core";
-import type {Logger} from "@khanacademy/wonder-stuff-server";
-import {getAppEngineInfo} from "./get-app-engine-info";
 import {getDelta} from "./get-delta";
+import {getAppEngineInfo} from "./get-app-engine-info";
 import {getDefaultLogMetadata} from "./get-default-log-metadata";
-import type {ITraceSession, TraceSessionInfo} from "./types";
+import type {ITraceSession, TraceSessionInfo, Logger} from "./types";
 
 /**
  * Start tracing an event.
@@ -26,7 +24,7 @@ import type {ITraceSession, TraceSessionInfo} from "./types";
  * to add additional details about the trace.
  * @param {string} message A message that will be logged. This is not included
  * in the traces.
- * @param {Tracer} [tracer] A Google Cloud trace agent tracer which
+ * @param {PluginTypes.Tracer} [tracer] A Google Cloud trace agent tracer which
  * can be used to record the traced action.
  * @returns {ITraceSession} A trace session that the caller should use to
  * indicate when the session is finished.
@@ -35,7 +33,7 @@ export const traceImpl = (
     logger: Logger,
     action: string,
     message: string,
-    tracer?: Tracer,
+    tracer?: PluginTypes.Tracer,
 ): ITraceSession => {
     if (!action) {
         throw new KindError(

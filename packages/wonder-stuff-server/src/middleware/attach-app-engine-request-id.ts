@@ -1,20 +1,16 @@
-// @ts-expect-error [FEI-5011] - TS2305 - Module '"express"' has no exported member 'Middleware'.
-import type {Response, Request, Middleware, NextFunction} from "express";
-import {getRequestLogger} from "@khanacademy/wonder-stuff-server";
-import type {Logger, RequestWithLog} from "@khanacademy/wonder-stuff-server";
+import type {Response, Request, Handler, NextFunction} from "express";
+import {getRequestLogger} from "../get-request-logger";
+import type {Logger, RequestWithLog} from "../types";
 import {getAppEngineRequestID} from "../get-app-engine-request-id";
 
 /**
- * Create a middleware that sets the log property of a request to a logger
+ * Middleware that sets the log property of a request to a logger
  * that will attach the GAE requestID to the log metadata.
  */
-export function makeAppEngineRequestIDMiddleware<
-    TReq extends RequestWithLog<Request>,
-    TRes extends Response,
->(defaultLogger: Logger): Middleware<TReq, TRes> {
-    return <TReq extends RequestWithLog<Request>, TRes extends Response>(
-        req: TReq,
-        res: TRes,
+export function attachAppEngineRequestID(defaultLogger: Logger): Handler {
+    return (
+        req: RequestWithLog<Request>,
+        res: Response,
         next: NextFunction,
     ): void => {
         const requestID = getAppEngineRequestID(req);
@@ -32,7 +28,7 @@ export function makeAppEngineRequestIDMiddleware<
             requestID,
         });
         /*
-         * NOTE: the $Request type doesn't have a log field, officially.
+         * NOTE: the Request type doesn't have a log field, officially.
          * However, we know that the Google middleware adds it, so now we
          * replace it with our own version.
          */

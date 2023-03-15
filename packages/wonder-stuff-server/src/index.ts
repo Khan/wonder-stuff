@@ -8,3 +8,4 @@ export {getRequestLogger} from "./get-request-logger";
 export {getRuntimeMode} from "./get-runtime-mode";
 export {startServer} from "./start-server";
 export {getAgentForURL} from "./get-agent-for-url";
+export {decryptBufferWithKms} from "./decrypt-buffer-with-kms";
