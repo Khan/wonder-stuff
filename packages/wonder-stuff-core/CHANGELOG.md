@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.3.0
+
+### Minor Changes
+
+-   6897505: Added secret-related types and utility for turning a string into a secret
+
 ## 1.2.2
 
 ### Patch Changes
