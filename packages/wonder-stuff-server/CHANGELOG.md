@@ -1,5 +1,16 @@
 # @khanacademy/wonder-stuff-server
 
+## 3.0.0
+
+### Major Changes
+
+-   6897505: Consolidated wonder-stuff-server-google into wonder-stuff-server, added KMS buffer decryption, removed debug-agent support
+
+### Patch Changes
+
+-   Updated dependencies [6897505]
+    -   @khanacademy/wonder-stuff-core@1.3.0
+
 ## 2.1.3
 
 ### Patch Changes

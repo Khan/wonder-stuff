@@ -1,5 +1,11 @@
 # ws-dev-build-settings
 
+## 1.0.0
+
+### Major Changes
+
+-   ee36658: Moved from deprecated terser rollup plugin to the currently maintained version
+
 ## 0.1.1
 
 ### Patch Changes
