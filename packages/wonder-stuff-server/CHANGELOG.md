@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-server
 
+## 4.0.1
+
+### Patch Changes
+
+-   d8b1fe4: Export trace API
+
 ## 4.0.0
 
 ### Major Changes
