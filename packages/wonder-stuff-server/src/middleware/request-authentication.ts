@@ -51,17 +51,19 @@ function makeProductionMiddleware(options: RequestAuthentication): Handler {
     };
 }
 
-function makeDevelopmentMiddleware(options: RequestAuthentication): Handler {
+function makeDevelopmentMiddleware(options?: RequestAuthentication): Handler {
     /**
      * The secrets middleware is a noop when not in production.
      */
     return function (req: Request, res: Response, next: NextFunction): void {
         const logger = getLogger(req);
-        // Let's log a message if the expected header is omitted. This is a
-        // valid thing to do in dev since we don't authenticate dev requests,
-        // but it is also useful to know during testing if the header is
-        // missing.
-        if (req.header(options.headerName) == null) {
+        if (options == null) {
+            logger.debug("No authentication header configured.");
+        } else if (req.header(options.headerName) == null) {
+            // Let's log a message if the expected header is omitted. This is a
+            // valid thing to do in dev since we don't authenticate dev
+            // requests, but it is also useful to know during testing if the
+            // header is missing.
             logger.warn("Authentication header was not included in request.", {
                 header: options.headerName,
             });
@@ -92,9 +94,9 @@ function makeDevelopmentMiddleware(options: RequestAuthentication): Handler {
  * matches it against the configured secret values.
  */
 export function requestAuthentication(
-    authenticationOptions: RequestAuthentication,
+    authenticationOptions?: RequestAuthentication,
 ): Handler {
-    if (getRuntimeMode() === "production") {
+    if (authenticationOptions != null && getRuntimeMode() === "production") {
         return makeProductionMiddleware(authenticationOptions);
     }
     return makeDevelopmentMiddleware(authenticationOptions);

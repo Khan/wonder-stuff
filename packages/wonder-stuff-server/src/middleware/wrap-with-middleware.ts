@@ -14,7 +14,7 @@ export const wrapWithMiddleware = async (
     app: Application,
     logger: Logger,
     mode: RuntimeValue,
-    requestAuthOptions: RequestAuthentication,
+    requestAuthOptions?: RequestAuthentication,
 ): Promise<Application> => {
     // Setup the middleware around the app.
     const appWithMiddleware = express()

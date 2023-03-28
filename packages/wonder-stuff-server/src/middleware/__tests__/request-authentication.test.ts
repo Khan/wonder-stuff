@@ -39,6 +39,32 @@ describe("#requestAuthentication", () => {
             expect(fakeNext).toHaveBeenCalledTimes(1);
         });
 
+        it("should log if no authentication options are provided", async () => {
+            // Arrange
+            const fakeAuthOptions = undefined;
+            const fakeNext = jest.fn();
+            const headers: Record<string, string> = {};
+            const fakeRequest: any = {
+                header: (name: string) => headers[name.toLowerCase()],
+                headers,
+            };
+            const fakeResponse: any = null;
+            const fakeLogger: any = {
+                debug: jest.fn(),
+            };
+            const middleware = await requestAuthentication(fakeAuthOptions);
+            jest.spyOn(GetLogger, "getLogger").mockReturnValue(fakeLogger);
+
+            // Act
+            middleware(fakeRequest, fakeResponse, fakeNext);
+
+            // Assert
+            expect(fakeLogger.debug).toHaveBeenCalledTimes(1);
+            expect(fakeLogger.debug.mock.calls[0][0]).toMatchInlineSnapshot(
+                `"No authentication header configured."`,
+            );
+        });
+
         it("should log if authentication header is omitted from request", async () => {
             // Arrange
             const fakeAuthOptions: any = {
