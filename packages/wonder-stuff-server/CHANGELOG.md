@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-server
 
+## 4.0.2
+
+### Patch Changes
+
+-   7507104: Make authentication optional
+
 ## 4.0.1
 
 ### Patch Changes
