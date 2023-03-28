@@ -124,7 +124,7 @@ export type ServerOptions = {
     /**
      * Configuration information for authenticating requests.
      */
-    readonly requestAuthentication: RequestAuthentication;
+    readonly requestAuthentication?: RequestAuthentication;
     /**
      * Configuration for various Google Cloud agents that can aid debugging.
      */
