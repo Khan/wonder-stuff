@@ -50,6 +50,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
     "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
     "express-winston": "^4.2.0",
     "fast-glob": "^3.2.12",
     "flowgen": "git+https://git@github.com/Khan/flowgen.git#fa8050929948fb4313f738301285fb44625678c4",
@@ -64,6 +65,7 @@
     "rollup-plugin-executable-output": "^1.3.0",
     "rollup-plugin-filesize": "^10.0.0",
     "rollup-plugin-preserve-shebangs": "^0.2.0",
+    "superagent": "^5.3.1",
     "typescript": "^4.9.5",
     "winston": "^3.8.2"
   },
@@ -89,6 +91,7 @@
     "add:devdepbysha": "bash -c 'yarn add -W --dev \"git+https://git@github.com/Khan/$0.git#$1\"'"
   },
   "dependencies": {
-    "@rollup/plugin-terser": "^0.4.0"
+    "@rollup/plugin-terser": "^0.4.0",
+    "@types/superagent": "^4.1.16"
   }
 }
