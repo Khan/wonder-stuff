@@ -17,4 +17,5 @@ export type {
     MetadataArray,
     SecretString,
     Secrets,
+    Mutable,
 } from "./types";
