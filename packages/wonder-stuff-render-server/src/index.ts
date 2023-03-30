@@ -3,7 +3,7 @@
  * correct instrumentation of other imported modules.
  */
 // eslint-disable-next-line import/no-unassigned-import
-import "./start-trace-agent.js";
+import "./start-trace-agent";
 
 export * as Requests from "./request";
 

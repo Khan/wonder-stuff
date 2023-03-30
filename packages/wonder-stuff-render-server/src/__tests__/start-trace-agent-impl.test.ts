@@ -32,7 +32,7 @@ describe("#startTraceAgent", () => {
 
     it("should return the tracer", () => {
         // Arrange
-        const pretendTracer = ({} as any);
+        const pretendTracer = {} as any;
         jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("production");
         jest.spyOn(TraceAgent, "start").mockReturnValue(pretendTracer);
 

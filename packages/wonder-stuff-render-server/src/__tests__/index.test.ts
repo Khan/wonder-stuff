@@ -1,3 +1,5 @@
+import "jest-extended";
+
 describe("index.js", () => {
     it("should export what we expect it to export", async () => {
         // Arrange

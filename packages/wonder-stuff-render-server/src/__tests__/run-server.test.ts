@@ -1,3 +1,4 @@
+import {secret} from "@khanacademy/wonder-stuff-core";
 import * as Express from "express";
 import * as ExpressAsyncHandler from "express-async-handler";
 import * as WSServer from "@khanacademy/wonder-stuff-server";
@@ -10,8 +11,8 @@ import type {AuthenticationOptions} from "../types";
 jest.mock("express");
 jest.mock("express-async-handler");
 jest.mock("@khanacademy/wonder-stuff-server");
-jest.mock('../handlers/make-render-handler');
-jest.mock('../get-request-authentication');
+jest.mock("../handlers/make-render-handler");
+jest.mock("../get-request-authentication");
 
 describe("#runServer", () => {
     const OLD_KA_ALLOW_HEAPDUMPS = process.env.KA_ALLOW_HEAPDUMPS;
@@ -35,7 +36,7 @@ describe("#runServer", () => {
         beforeEach(() => {
             delete process.env.KA_IS_DEV_SERVER;
             jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
-                "something-else",
+                "something-else" as any,
             );
         });
 
@@ -55,17 +56,17 @@ describe("#runServer", () => {
 
         it("should set NODE_ENV to `production` when KA_IS_DEV_SERVER is not 1", () => {
             // Arrange
-            const pretendLogger = ({} as any);
+            const pretendLogger = {} as any;
             const fakeRenderEnvironment: any = {
                 render: jest.fn(),
             };
             jest.spyOn(WSServer, "getLogger").mockReturnValue(pretendLogger);
-            jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({});
-            const pretendApp = ({
+            jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
+            const pretendApp = {
                 use: jest.fn().mockReturnThis(),
                 get: jest.fn().mockReturnThis(),
                 set: jest.fn(),
-            } as any);
+            } as any;
             jest.spyOn(Express, "default").mockReturnValue(pretendApp);
 
             // Act
@@ -83,17 +84,17 @@ describe("#runServer", () => {
         it("should set NODE_ENV to `development` when KA_IS_DEV_SERVER is 1", () => {
             // Arrange
             process.env.KA_IS_DEV_SERVER = "1";
-            const pretendLogger = ({} as any);
+            const pretendLogger = {} as any;
             const fakeRenderEnvironment: any = {
                 render: jest.fn(),
             };
             jest.spyOn(WSServer, "getLogger").mockReturnValue(pretendLogger);
-            jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({});
-            const pretendApp = ({
+            jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
+            const pretendApp = {
                 use: jest.fn().mockReturnThis(),
                 get: jest.fn().mockReturnThis(),
                 set: jest.fn(),
-            } as any);
+            } as any;
             jest.spyOn(Express, "default").mockReturnValue(pretendApp);
 
             // Act
@@ -111,18 +112,18 @@ describe("#runServer", () => {
 
     it("should create an express app", async () => {
         // Arrange
-        const pretendLogger = ({} as any);
+        const pretendLogger = {} as any;
         const fakeRenderEnvironment: any = {
             render: jest.fn(),
         };
         jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
         jest.spyOn(WSServer, "getLogger").mockReturnValue(pretendLogger);
-        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({});
-        const pretendApp = ({
+        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
+        const pretendApp = {
             use: jest.fn().mockReturnThis(),
             get: jest.fn().mockReturnThis(),
             set: jest.fn(),
-        } as any);
+        } as any;
         const expressSpy = jest
             .spyOn(Express, "default")
             .mockReturnValue(pretendApp);
@@ -141,18 +142,18 @@ describe("#runServer", () => {
 
     it("should add the render handler wrapped by express-async-handler", async () => {
         // Arrange
-        const pretendLogger = ({} as any);
+        const pretendLogger = {} as any;
         const fakeRenderEnvironment: any = {
             render: jest.fn(),
         };
         jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
         jest.spyOn(WSServer, "getLogger").mockReturnValue(pretendLogger);
-        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({});
-        const pretendApp = ({
+        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
+        const pretendApp = {
             use: jest.fn().mockReturnThis(),
             get: jest.fn().mockReturnThis(),
             set: jest.fn(),
-        } as any);
+        } as any;
         jest.spyOn(Express, "default").mockReturnValue(pretendApp);
 
         /**
@@ -165,7 +166,7 @@ describe("#runServer", () => {
             () => "RENDER_HANDLER",
         );
         jest.spyOn(ExpressAsyncHandler, "default").mockImplementation(
-            (pretendFn: any) => `ASYNC_HANDLER:${pretendFn()}`,
+            (pretendFn: any) => `ASYNC_HANDLER:${pretendFn()}` as any,
         );
 
         // Act
@@ -185,18 +186,18 @@ describe("#runServer", () => {
 
     it("should get the authentication details", async () => {
         // Arrange
-        const pretendLogger = ({} as any);
+        const pretendLogger = {} as any;
         const fakeRenderEnvironment: any = {
             render: jest.fn(),
         };
         jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
         jest.spyOn(WSServer, "getLogger").mockReturnValue(pretendLogger);
-        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({});
-        const pretendApp = ({
+        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
+        const pretendApp = {
             use: jest.fn().mockReturnThis(),
             get: jest.fn().mockReturnThis(),
             set: jest.fn(),
-        } as any);
+        } as any;
         jest.spyOn(Express, "default").mockReturnValue(pretendApp);
         const getRequestAuthenticationSpy = jest.spyOn(
             GetRequestAuthentication,
@@ -225,19 +226,19 @@ describe("#runServer", () => {
         // Arrange
         const fakeRenderEnvironment: any = {render: jest.fn()};
         jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
-        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({});
-        const pretendApp = ({
+        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
+        const pretendApp = {
             use: jest.fn().mockReturnThis(),
             get: jest.fn().mockReturnThis(),
             set: jest.fn(),
-        } as any);
+        } as any;
         jest.spyOn(Express, "default").mockReturnValue(pretendApp);
         jest.spyOn(
             GetRequestAuthentication,
             "getRequestAuthentication",
         ).mockResolvedValue({
             headerName: "HEADER_NAME",
-            secret: "SECRET_VALUE",
+            secret: secret("SECRET_VALUE"),
         });
         const startGatewaySpy = jest.spyOn(WSServer, "startServer");
 
@@ -283,12 +284,12 @@ describe("#runServer", () => {
         process.env.KA_ALLOW_HEAPDUMP = "1";
         const fakeRenderEnvironment: any = {render: jest.fn()};
         jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
-        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({});
-        const pretendApp = ({
+        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
+        const pretendApp = {
             use: jest.fn().mockReturnThis(),
             get: jest.fn().mockReturnThis(),
             set: jest.fn(),
-        } as any);
+        } as any;
         jest.spyOn(Express, "default").mockReturnValue(pretendApp);
         const startGatewaySpy = jest.spyOn(WSServer, "startServer");
 

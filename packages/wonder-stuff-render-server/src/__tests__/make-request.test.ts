@@ -1,11 +1,12 @@
+import "jest-extended";
 import * as IsCacheable from "../is-cacheable";
 import * as MakeUnbufferedNoCacheRequest from "../make-unbuffered-no-cache-request";
 import * as RequestsFromCache from "../requests-from-cache";
 import {makeRequest} from "../make-request";
 
-jest.mock('../is-cacheable');
-jest.mock('../make-unbuffered-no-cache-request');
-jest.mock('../requests-from-cache');
+jest.mock("../is-cacheable");
+jest.mock("../make-unbuffered-no-cache-request");
+jest.mock("../requests-from-cache");
 
 describe("#makeRequest", () => {
     it("should get an unbuffered, no cache request", () => {
@@ -14,7 +15,7 @@ describe("#makeRequest", () => {
         const fakeRequestOptions: any = "FAKE_OPTIONS";
         const makeUnbufferedNoCacheRequestSpy = jest
             .spyOn(MakeUnbufferedNoCacheRequest, "makeUnbufferedNoCacheRequest")
-            .mockReturnValue({});
+            .mockReturnValue({} as any);
 
         // Act
         makeRequest(fakeRequestOptions, fakeLogger, "URL");
@@ -40,7 +41,7 @@ describe("#makeRequest", () => {
             jest.spyOn(
                 MakeUnbufferedNoCacheRequest,
                 "makeUnbufferedNoCacheRequest",
-            ).mockReturnValue({});
+            ).mockReturnValue({} as any);
             jest.spyOn(RequestsFromCache, "asUncachedRequest");
 
             // Act
@@ -56,7 +57,7 @@ describe("#makeRequest", () => {
         describe("isCachable returns true", () => {
             it("should call asCachedRequest", () => {
                 // Arrange
-                const fakeRequest = {
+                const fakeRequest: any = {
                     name: "FAKE_REQUEST",
                 } as const;
                 const fakeLogger: any = "LOGGER";
@@ -85,7 +86,7 @@ describe("#makeRequest", () => {
 
             it("should return result of asCachedRequest", () => {
                 // Arrange
-                const fakeCachedRequest = "FAKE_CACHED_REQUEST";
+                const fakeCachedRequest: any = "FAKE_CACHED_REQUEST";
                 const fakeLogger: any = "LOGGER";
                 const fakeRequestOptions: any = {
                     cachePlugin: "FAKE_CACHING_STRATEGY",
@@ -94,7 +95,7 @@ describe("#makeRequest", () => {
                 jest.spyOn(
                     MakeUnbufferedNoCacheRequest,
                     "makeUnbufferedNoCacheRequest",
-                ).mockReturnValue({});
+                ).mockReturnValue({} as any);
                 jest.spyOn(
                     RequestsFromCache,
                     "asCachedRequest",
@@ -123,7 +124,7 @@ describe("#makeRequest", () => {
                     "makeUnbufferedNoCacheRequest",
                 ).mockReturnValue({
                     _aborted: true,
-                });
+                } as any);
                 jest.spyOn(
                     RequestsFromCache,
                     "asCachedRequest",
@@ -144,7 +145,7 @@ describe("#makeRequest", () => {
         describe("isCachable returns false", () => {
             it("should call asUncachedRequest with request", () => {
                 // Arrange
-                const fakeRequest = {
+                const fakeRequest: any = {
                     name: "FAKE_REQUEST",
                 } as const;
                 const fakeLogger: any = "LOGGER";
@@ -170,7 +171,7 @@ describe("#makeRequest", () => {
 
             it("should return result of asUncachedRequest", () => {
                 // Arrange
-                const fakeUncachedRequest = "FAKE_UNCACHED_REQUEST";
+                const fakeUncachedRequest: any = "FAKE_UNCACHED_REQUEST";
                 const fakeLogger: any = "LOGGER";
                 const fakeRequestOptions: any = {
                     cachePlugin: "FAKE_CACHING_STRATEGY",
@@ -179,7 +180,7 @@ describe("#makeRequest", () => {
                 jest.spyOn(
                     MakeUnbufferedNoCacheRequest,
                     "makeUnbufferedNoCacheRequest",
-                ).mockReturnValue({});
+                ).mockReturnValue({} as any);
                 jest.spyOn(
                     RequestsFromCache,
                     "asUncachedRequest",
@@ -208,7 +209,7 @@ describe("#makeRequest", () => {
                     "makeUnbufferedNoCacheRequest",
                 ).mockReturnValue({
                     _aborted: true,
-                });
+                } as any);
                 jest.spyOn(
                     RequestsFromCache,
                     "asUncachedRequest",
@@ -230,7 +231,7 @@ describe("#makeRequest", () => {
     describe("with no cache plugin", () => {
         it("should call asUncachedRequest with request", () => {
             // Arrange
-            const fakeRequest = {
+            const fakeRequest: any = {
                 name: "FAKE_REQUEST",
             } as const;
             const fakeLogger: any = "LOGGER";
@@ -253,13 +254,13 @@ describe("#makeRequest", () => {
 
         it("should return result of asUncachedRequest", () => {
             // Arrange
-            const fakeUncachedRequest = "FAKE UNCACHED REQUEST";
+            const fakeUncachedRequest: any = "FAKE UNCACHED REQUEST";
             const fakeLogger: any = "LOGGER";
             const fakeRequestOptions: any = "FAKE_OPTIONS";
             jest.spyOn(
                 MakeUnbufferedNoCacheRequest,
                 "makeUnbufferedNoCacheRequest",
-            ).mockReturnValue({});
+            ).mockReturnValue({} as any);
             jest.spyOn(RequestsFromCache, "asUncachedRequest").mockReturnValue(
                 fakeUncachedRequest,
             );

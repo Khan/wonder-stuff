@@ -1,4 +1,9 @@
-import {CACHE_ID_PROP_NAME, getResponseSource, asCachedRequest, asUncachedRequest} from "../requests-from-cache";
+import {
+    CACHE_ID_PROP_NAME,
+    getResponseSource,
+    asCachedRequest,
+    asUncachedRequest,
+} from "../requests-from-cache";
 
 describe("#getResponseSource", () => {
     it("should return cache if the response CACHE_ID_PROP_NAME property does not match the given cacheID", () => {

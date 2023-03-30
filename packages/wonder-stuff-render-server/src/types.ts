@@ -1,4 +1,4 @@
-import type {Agent as HttpAgent} from "http";
+import type {Agent as HttpAgent, IncomingHttpHeaders} from "http";
 import type {Agent as HttpsAgent} from "https";
 import type {
     Response as ExpressResponse,
@@ -196,9 +196,7 @@ export type RenderAPI = {
      * Access of these headers should be tracked and a Vary header should be
      * set based on their access (even if they don't exist).
      */
-    headers: {
-        [header: string]: string;
-    };
+    headers: IncomingHttpHeaders;
     /**
      * Callback to start a trace session for tracing an operation.
      */

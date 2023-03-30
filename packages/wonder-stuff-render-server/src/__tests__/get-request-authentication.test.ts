@@ -1,8 +1,9 @@
+import {secret} from "@khanacademy/wonder-stuff-core";
 import {getRequestAuthentication} from "../get-request-authentication";
 import type {AuthenticationOptions} from "../types";
 import * as GetSecrets from "../get-secrets";
 
-jest.mock('../get-secrets');
+jest.mock("../get-secrets");
 
 describe("#getRequestAuthentication", () => {
     it("should resolve to undefined if there are no authentication options", async () => {
@@ -25,7 +26,7 @@ describe("#getRequestAuthentication", () => {
         const getSecretsSpy = jest
             .spyOn(GetSecrets, "getSecrets")
             .mockResolvedValue({
-                "some-secret": "some-secret-value",
+                "some-secret": secret("some-secret-value"),
             });
 
         // Act
@@ -61,7 +62,7 @@ describe("#getRequestAuthentication", () => {
             secretKey: "some-secret",
         };
         jest.spyOn(GetSecrets, "getSecrets").mockResolvedValue({
-            "some-secret": "some-secret-value",
+            "some-secret": secret("some-secret-value"),
         });
 
         // Act
@@ -84,7 +85,7 @@ describe("#getRequestAuthentication", () => {
             deprecatedSecretKey: "some-deprecated-secret",
         };
         jest.spyOn(GetSecrets, "getSecrets").mockResolvedValue({
-            "some-secret": "some-secret-value",
+            "some-secret": secret("some-secret-value"),
         });
 
         // Act
@@ -107,8 +108,8 @@ describe("#getRequestAuthentication", () => {
             deprecatedSecretKey: "some-deprecated-secret",
         };
         jest.spyOn(GetSecrets, "getSecrets").mockResolvedValue({
-            "some-secret": "some-secret-value",
-            "some-deprecated-secret": "some-deprecated-secret-value",
+            "some-secret": secret("some-secret-value"),
+            "some-deprecated-secret": secret("some-deprecated-secret-value"),
         });
 
         // Act

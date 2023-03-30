@@ -10,7 +10,10 @@
  * formatted.
  * @returns {string} The formatted error.
  */
-export const formatError = (errorFormat: string | null | undefined, errorMetadata: any): string => {
+export const formatError = (
+    errorFormat: string | null | undefined,
+    errorMetadata: any,
+): string => {
     const formattedMetadata = JSON.stringify(errorMetadata, undefined, 4);
     if (errorFormat == null) {
         return formattedMetadata;

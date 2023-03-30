@@ -59,7 +59,7 @@ describe("#extractError", () => {
         const error = {
             thisError: "IS NOT LIKE THE OTHERS",
             toString: () => "AND SO THIS IS THE ERROR!",
-        } as const;
+        } as any;
 
         // Act
         const result = extractError(error);
@@ -110,7 +110,7 @@ describe("#extractError", () => {
         // Arrange
         const error = {
             toString: () => "[object Object]",
-        } as const;
+        } as any;
 
         // Act
         const result = extractError(error);

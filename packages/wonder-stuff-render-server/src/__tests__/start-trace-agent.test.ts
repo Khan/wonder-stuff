@@ -1,6 +1,6 @@
 import * as StartTraceAgent from "../start-trace-agent-impl";
 
-jest.mock('../start-trace-agent-impl');
+jest.mock("../start-trace-agent-impl");
 
 describe("start-trace-agent.js export", () => {
     it("should invoke startTraceAgent on import", async () => {

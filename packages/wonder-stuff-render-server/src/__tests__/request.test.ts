@@ -5,9 +5,9 @@ import * as ExtractError from "../extract-error";
 import {request} from "../request";
 
 jest.mock("@khanacademy/wonder-stuff-server");
-jest.mock('../make-request');
-jest.mock('../requests-from-cache');
-jest.mock('../extract-error');
+jest.mock("../make-request");
+jest.mock("../requests-from-cache");
+jest.mock("../extract-error");
 
 describe("#request", () => {
     it("should create a child logger with the url of the request", () => {
@@ -129,7 +129,7 @@ describe("#request", () => {
         const traceSpy = jest
             .spyOn(WSServer, "trace")
             .mockReturnValue(fakeTraceSession);
-        const makeRequestSpy = jest
+        const makeRequestSpy: any = jest
             .spyOn(MakeRequest, "makeRequest")
             .mockReturnValue(fakeRequest);
 
@@ -270,7 +270,7 @@ describe("#request", () => {
             .mockReturnValueOnce(fakeRequest);
         jest.spyOn(WSServer, "trace").mockReturnValue(fakeTraceSession);
         jest.spyOn(RequestsFromCache, "getResponseSource").mockReturnValue(
-            "FAKE_FROM_CACHE",
+            "FAKE_FROM_CACHE" as any,
         );
 
         // Act
@@ -311,7 +311,7 @@ describe("#request", () => {
             .mockReturnValueOnce(fakeRequest);
         jest.spyOn(WSServer, "trace").mockReturnValue(fakeTraceSession);
         jest.spyOn(RequestsFromCache, "getResponseSource").mockReturnValue(
-            "FAKE_FROM_CACHE",
+            "FAKE_FROM_CACHE" as any,
         );
 
         // Act
@@ -349,7 +349,7 @@ describe("#request", () => {
             // Act
             request(fakeLogger, "URL", fakeOptions);
             const {shouldRetry} = makeRequestSpy.mock.calls[0][0];
-            shouldRetry("ERROR", "RESPONSE");
+            shouldRetry?.("ERROR", "RESPONSE" as any);
 
             // Assert
             expect(fakeOptions.shouldRetry).toHaveBeenCalledWith(
@@ -390,7 +390,7 @@ describe("#request", () => {
                 // Act
                 request(fakeLogger, "URL", fakeOptions);
                 const {shouldRetry} = makeRequestSpy.mock.calls[0][0];
-                const result = shouldRetry("ERROR", "RESPONSE");
+                const result = shouldRetry?.("ERROR", "RESPONSE" as any);
 
                 // Assert
                 expect(result).toBe(expectation);
@@ -404,10 +404,7 @@ describe("#request", () => {
             ${[undefined]}               | ${0}
         `(
             "should track retries when called with errors",
-            async ({
-                errorArgs,
-                expectation,
-            }: any) => {
+            async ({errorArgs, expectation}: any) => {
                 // Arrange
                 const fakeOptions: any = "FAKE_OPTIONS";
                 const fakeChildLogger: any = "FAKE_CHILD_LOGGER";
@@ -434,13 +431,13 @@ describe("#request", () => {
                 jest.spyOn(
                     RequestsFromCache,
                     "getResponseSource",
-                ).mockReturnValue("FAKE_FROM_CACHE");
+                ).mockReturnValue("FAKE_FROM_CACHE" as any);
 
                 // Act
                 const requestToAwait = request(fakeLogger, "URL", fakeOptions);
                 const {shouldRetry} = makeRequestSpy.mock.calls[0][0];
                 for (const errorArg of errorArgs) {
-                    shouldRetry(errorArg);
+                    shouldRetry?.(errorArg, undefined as any);
                 }
                 await requestToAwait;
 

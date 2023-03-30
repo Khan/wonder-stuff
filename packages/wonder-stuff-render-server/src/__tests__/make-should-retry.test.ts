@@ -1,7 +1,7 @@
 import * as ExtractError from "../extract-error";
 import {makeShouldRetry} from "../make-should-retry";
 
-jest.mock('../extract-error');
+jest.mock("../extract-error");
 
 describe("#makeShouldRetry", () => {
     it("should return a function", () => {
