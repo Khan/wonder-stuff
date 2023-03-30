@@ -192,6 +192,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 platform: "browser",
                 file: cjsBrowser,
                 plugins: [],
+                inputFile: `./src/index.ts`,
             });
         }
         if (formats.has("esm") && esmBrowser) {
@@ -202,6 +203,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 file: esmBrowser,
                 // We care about the file size of this one.
                 plugins: [filesize()],
+                inputFile: `./src/index.ts`,
             });
         }
     }
