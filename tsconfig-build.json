@@ -7,6 +7,8 @@
   "references": [
     {"path": "./packages/wonder-stuff-core"},
     {"path": "./packages/wonder-stuff-i18n"},
+    {"path": "./packages/wonder-stuff-render-environment-jsdom"},
+    {"path": "./packages/wonder-stuff-render-server"},
     {"path": "./packages/wonder-stuff-sentry"},
     {"path": "./packages/wonder-stuff-server"},
     {"path": "./packages/wonder-stuff-testing"},
