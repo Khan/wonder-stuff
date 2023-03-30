@@ -57,8 +57,8 @@ const checkPrivate = (pkgJson) => {
 const checkBrowser = (pkgJson) => {
     if (pkgJson.browser) {
         const expectedValue = {
-            [pkgJson.main]: "./dist/index.browser.js",
-            [pkgJson.module]: "./dist/es/index.browser.js",
+            [pkgJson.main]: "./dist/browser/index.js",
+            [pkgJson.module]: "./dist/browser/es/index.js",
         };
 
         for (const key of Object.keys(pkgJson.browser)) {
