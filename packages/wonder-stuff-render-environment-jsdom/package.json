@@ -14,9 +14,16 @@
     "scripts": {
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
-    "dependencies": {},
+    "dependencies": {
+        "@khanacademy/wonder-stuff-core": "^1.3.0",
+        "@khanacademy/wonder-stuff-server": "^4.0.2",
+        "@khanacademy/wonder-stuff-render-server": "^0.0.1"
+    },
     "devDependencies": {
         "ws-dev-build-settings": "^1.0.0"
+    },
+    "peerDependencies": {
+        "jsdom": "^21.1.1"
     },
     "author": "",
     "license": "MIT"

@@ -7,5 +7,9 @@
     "outDir": "dist",
     "rootDir": "src",
   },
-  "references": []
+  "references": [
+    {"path": "../wonder-stuff-core"},
+    {"path": "../wonder-stuff-server"},
+    {"path": "../wonder-stuff-render-server"},
+  ]
 }
