@@ -44,25 +44,6 @@ const makePackageBasedPath = (pkgName, pkgRelPath) =>
     path.normalize(path.join("packages", pkgName, pkgRelPath));
 
 /**
- * Generate the rollup output configuration for a given
- */
-const createOutputConfig = (pkgName, format, targetFile, isSingleFile) => {
-    const outputConfig = {
-        sourcemap: true,
-        format,
-    };
-    if (isSingleFile) {
-        outputConfig.file = makePackageBasedPath(pkgName, targetFile);
-    } else {
-        outputConfig.dir = makePackageBasedPath(
-            pkgName,
-            path.dirname(targetFile),
-        );
-    }
-    return outputConfig;
-};
-
-/**
  * Get a set of strings from a given string, returning the defaults
  *
  * This assumes comma-delimited strings.
@@ -96,8 +77,13 @@ const getFormats = ({configFormats}) =>
  */
 const createConfig = (
     commandLineArgs,
-    {name, format, platform, inputFile, file, plugins},
+    {name, format, platform, inputFile, plugins, file, dir},
 ) => {
+    if (file && dir) {
+        throw new Error(
+            "Cannot specify both file and dir. Either the output is a single file, or it is a directory.",
+        );
+    }
     const valueReplacementMappings = {
         __IS_BROWSER__: platform === "browser",
     };
@@ -113,9 +99,13 @@ const createConfig = (
 
     const extensions = [".js", ".jsx", ".ts", ".tsx"];
 
-    const isSingleFile = inputFile != null;
     const config = {
-        output: createOutputConfig(name, format, file, isSingleFile),
+        output: {
+            sourcemap: true,
+            format,
+            file: file ? makePackageBasedPath(name, file) : undefined,
+            dir: dir ? makePackageBasedPath(name, dir) : undefined,
+        },
         input: makePackageBasedPath(name, inputFile || "./src/index.ts"),
         plugins: [
             // We don't want to do process.env.NODE_ENV checks in our main
@@ -190,9 +180,8 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 name: pkgName,
                 format: "cjs",
                 platform: "browser",
-                file: cjsBrowser,
+                dir: path.dirname(cjsBrowser),
                 plugins: [],
-                inputFile: `./src/index.ts`,
             });
         }
         if (formats.has("esm") && esmBrowser) {
@@ -200,10 +189,9 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 name: pkgName,
                 format: "esm",
                 platform: "browser",
-                file: esmBrowser,
+                dir: path.dirname(esmBrowser),
                 // We care about the file size of this one.
                 plugins: [filesize()],
-                inputFile: `./src/index.ts`,
             });
         }
     }
@@ -213,7 +201,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 name: pkgName,
                 format: "cjs",
                 platform: "node",
-                file: cjsNode,
+                dir: path.dirname(cjsNode),
                 plugins: [],
             });
         }
@@ -222,7 +210,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 name: pkgName,
                 format: "esm",
                 platform: "node",
-                file: esmNode,
+                dir: path.dirname(esmNode),
                 plugins: [],
             });
         }
