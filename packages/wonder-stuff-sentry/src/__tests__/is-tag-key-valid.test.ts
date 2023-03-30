@@ -1,3 +1,4 @@
+import "jest-extended";
 import {isTagKeyValid} from "../is-tag-key-valid";
 
 describe("#isTagKeyValid", () => {
@@ -10,7 +11,6 @@ describe("#isTagKeyValid", () => {
             const result = isTagKeyValid(testPoint);
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2551 - Property 'toBeFalse' does not exist on type 'JestMatchers<boolean>'. Did you mean 'toBeFalsy'?
             expect(result).toBeFalse();
         },
     );
@@ -24,7 +24,6 @@ describe("#isTagKeyValid", () => {
             const result = isTagKeyValid(testPoint);
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2339 - Property 'toBeTrue' does not exist on type 'JestMatchers<boolean>'.
             expect(result).toBeTrue();
         },
     );

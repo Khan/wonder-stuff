@@ -1,3 +1,4 @@
+import "jest-extended";
 import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options";
 import {isReservedTagKey} from "../is-reserved-tag-key";
 
@@ -9,7 +10,6 @@ describe("#isReservedTagKey", () => {
         const result = isReservedTagKey(DefaultKindErrorDataOptions, "foo");
 
         // Assert
-        // @ts-expect-error [FEI-5011] - TS2551 - Property 'toBeFalse' does not exist on type 'JestMatchers<boolean>'. Did you mean 'toBeFalsy'?
         expect(result).toBeFalse();
     });
 
@@ -23,7 +23,6 @@ describe("#isReservedTagKey", () => {
         );
 
         // Assert
-        // @ts-expect-error [FEI-5011] - TS2339 - Property 'toBeTrue' does not exist on type 'JestMatchers<boolean>'.
         expect(result).toBeTrue();
     });
 });

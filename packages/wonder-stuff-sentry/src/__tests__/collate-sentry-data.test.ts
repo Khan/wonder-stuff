@@ -1,3 +1,4 @@
+import "jest-extended";
 import {KindError} from "@khanacademy/wonder-stuff-core";
 import {KindSentryError} from "../kind-sentry-error";
 import {collateSentryData} from "../collate-sentry-data";
@@ -226,7 +227,6 @@ describe("#collateSentryData", () => {
             );
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2339 - Property 'toIncludeSameMembers' does not exist on type 'JestMatchers<SentryFingerprint>'.
             expect(result.fingerprint).toIncludeSameMembers([
                 "CAUSE1FINGERPRINT",
                 "CAUSE2FINGERPRINT",
@@ -470,7 +470,6 @@ describe("#collateSentryData", () => {
             );
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2339 - Property 'toIncludeSameMembers' does not exist on type 'JestMatchers<SentryFingerprint>'.
             expect(result.fingerprint).toIncludeSameMembers([
                 "ROOTFINGERPRINT",
                 "CAUSE2FINGERPRINT",

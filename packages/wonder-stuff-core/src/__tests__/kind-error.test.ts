@@ -1,3 +1,4 @@
+import "jest-extended";
 import * as CloneMetadata from "../clone-metadata";
 import {ErrorInfo} from "../error-info";
 import {Errors} from "../errors";
@@ -63,7 +64,6 @@ describe("KindError", () => {
             const error = new KindError("MESSAGE");
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2339 - Property 'toEndWith' does not exist on type 'JestMatchers<string>'.
             expect(error.name).toEndWith("Error");
         });
 
@@ -76,7 +76,6 @@ describe("KindError", () => {
             });
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2339 - Property 'toEndWith' does not exist on type 'JestMatchers<string>'.
             expect(error.name).toEndWith("CUSTOM_NAMEError");
         });
 

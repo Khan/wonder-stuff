@@ -1,3 +1,4 @@
+import "jest-extended";
 import {Errors} from "../errors";
 
 describe("Errors", () => {
@@ -8,7 +9,6 @@ describe("Errors", () => {
         const result = Object.isFrozen(Errors);
 
         // Assert
-        // @ts-expect-error [FEI-5011] - TS2339 - Property 'toBeTrue' does not exist on type 'JestMatchers<boolean>'.
         expect(result).toBeTrue();
     });
 
@@ -21,7 +21,6 @@ describe("Errors", () => {
         );
 
         // Assert
-        // @ts-expect-error [FEI-5011] - TS2339 - Property 'toBeTrue' does not exist on type 'JestMatchers<boolean>'.
         expect(result).toBeTrue();
     });
 });
