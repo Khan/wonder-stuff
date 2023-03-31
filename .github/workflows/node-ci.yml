@@ -118,7 +118,7 @@ jobs:
       uses: preactjs/compressed-size-action@v2
       with:
         # We only care about the browser ES module size, really:
-        pattern: "**/dist/es/index.browser.js"
+        pattern: "**/dist/browser/es/index.js"
         # Always ignore SourceMaps and node_modules:
         exclude: "{**/*.map,**/node_modules/**}"
         # Clean up before a build
