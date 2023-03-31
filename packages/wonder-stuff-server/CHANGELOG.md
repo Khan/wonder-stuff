@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-server
 
+## 4.0.3
+
+### Patch Changes
+
+-   Updated dependencies [bd77edc]
+-   Updated dependencies [07488a4]
+    -   @khanacademy/wonder-stuff-core@1.4.0
+
 ## 4.0.2
 
 ### Patch Changes

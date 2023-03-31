@@ -1,5 +1,17 @@
 # @khanacademy/wonder-stuff-testing
 
+## 2.4.0
+
+### Minor Changes
+
+-   07488a4: Modified browser builds to have their own folder so we can easily support dynamic import usage
+
+### Patch Changes
+
+-   Updated dependencies [bd77edc]
+-   Updated dependencies [07488a4]
+    -   @khanacademy/wonder-stuff-core@1.4.0
+
 ## 2.3.4
 
 ### Patch Changes

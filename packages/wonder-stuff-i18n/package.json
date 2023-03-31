@@ -21,7 +21,7 @@
         "pofile": "^1.1.4"
     },
     "devDependencies": {
-        "ws-dev-build-settings": "^1.0.0"
+        "ws-dev-build-settings": "^1.1.0"
     },
     "bin": {
         "all-i18n-strings": "./dist/bin/all-i18n-strings.js",
