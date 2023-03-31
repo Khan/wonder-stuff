@@ -1,5 +1,11 @@
 # ws-dev-build-settings
 
+## 1.1.0
+
+### Minor Changes
+
+-   07488a4: Modified build process to support dynamic imports for all variations
+
 ## 1.0.0
 
 ### Major Changes

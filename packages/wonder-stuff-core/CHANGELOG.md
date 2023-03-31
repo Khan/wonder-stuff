@@ -1,5 +1,15 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.4.0
+
+### Minor Changes
+
+-   07488a4: Modified browser builds to have their own folder so we can easily support dynamic import usage
+
+### Patch Changes
+
+-   bd77edc: Added `Mutable` type
+
 ## 1.3.0
 
 ### Minor Changes
