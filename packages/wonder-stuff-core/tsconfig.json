@@ -6,6 +6,5 @@
     "rootDir": "src",
   },
   "references": [
-    {"path": "../tsconfig-shared.json"}
   ]
 }

@@ -6,7 +6,6 @@
     "rootDir": "src",
   },
   "references": [
-    {"path": "../wonder-stuff-core"},
-    {"path": "../tsconfig-shared.json"}
+    {"path": "../wonder-stuff-core"}
   ]
 }
