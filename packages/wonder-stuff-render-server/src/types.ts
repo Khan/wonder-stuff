@@ -28,7 +28,7 @@ export interface ICloseable {
     /**
      * Close the closeable.
      */
-    readonly close?: () => Promise<undefined> | null | undefined;
+    readonly close?: () => Promise<void> | void;
 }
 
 export type ResponseSource = "unknown" | "cache" | "new request";

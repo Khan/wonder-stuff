@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSDOMEnvironment #render should reject if result is malformed ({ body: 'NEED MORE THAN THIS' }) 1`] = `"Malformed render result: {"body":"NEED MORE THAN THIS"}"`;
+
+exports[`JSDOMEnvironment #render should reject if result is malformed ({ body: 'THIS HELPS BUT WHERE ARE THE HEADERS', status: 200 }) 1`] = `"Malformed render result: {"body":"THIS HELPS BUT WHERE ARE THE HEADERS","status":200}"`;
+
+exports[`JSDOMEnvironment #render should reject if result is malformed ({ status: 200, headers: {} }) 1`] = `"Malformed render result: {"status":200,"headers":{}}"`;
+
+exports[`JSDOMEnvironment #render should reject if result is malformed (THIS IS NOT CORRECT) 1`] = `"Malformed render result: "THIS IS NOT CORRECT""`;
+
+exports[`JSDOMEnvironment #render should reject if result is malformed (null) 1`] = `"Malformed render result: null"`;
+
+exports[`JSDOMEnvironment #render should reject if result is malformed (undefined) 1`] = `"Malformed render result: undefined"`;

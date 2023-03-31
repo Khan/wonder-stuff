@@ -46,11 +46,21 @@ const makePackageBasedPath = (pkgName, pkgRelPath) =>
 /**
  * Generate the rollup output configuration for a given
  */
-const createOutputConfig = (pkgName, format, targetFile) => ({
-    file: makePackageBasedPath(pkgName, targetFile),
-    sourcemap: true,
-    format,
-});
+const createOutputConfig = (pkgName, format, targetFile, isSingleFile) => {
+    const outputConfig = {
+        sourcemap: true,
+        format,
+    };
+    if (isSingleFile) {
+        outputConfig.file = makePackageBasedPath(pkgName, targetFile);
+    } else {
+        outputConfig.dir = makePackageBasedPath(
+            pkgName,
+            path.dirname(targetFile),
+        );
+    }
+    return outputConfig;
+};
 
 /**
  * Get a set of strings from a given string, returning the defaults
@@ -103,8 +113,9 @@ const createConfig = (
 
     const extensions = [".js", ".jsx", ".ts", ".tsx"];
 
+    const isSingleFile = inputFile != null;
     const config = {
-        output: createOutputConfig(name, format, file),
+        output: createOutputConfig(name, format, file, isSingleFile),
         input: makePackageBasedPath(name, inputFile || "./src/index.ts"),
         plugins: [
             // We don't want to do process.env.NODE_ENV checks in our main
@@ -181,6 +192,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 platform: "browser",
                 file: cjsBrowser,
                 plugins: [],
+                inputFile: `./src/index.ts`,
             });
         }
         if (formats.has("esm") && esmBrowser) {
@@ -191,6 +203,7 @@ const getPackageInfo = (commandLineArgs, pkgName) => {
                 file: esmBrowser,
                 // We care about the file size of this one.
                 plugins: [filesize()],
+                inputFile: `./src/index.ts`,
             });
         }
     }

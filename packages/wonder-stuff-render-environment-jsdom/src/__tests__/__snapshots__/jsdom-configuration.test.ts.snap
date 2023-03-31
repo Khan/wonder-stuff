@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSDOMConfiguration #constructor should throw if invalid getFileList is provided 1`] = `"Must provide valid callback for obtaining file list"`;
+
+exports[`JSDOMConfiguration #constructor should throw if invalid getFileList is provided 2`] = `"Must provide valid callback for obtaining file list"`;
+
+exports[`JSDOMConfiguration #constructor should throw if invalid getResourceLoader is provided 1`] = `"Must provide valid callback for obtaining resource loader"`;
+
+exports[`JSDOMConfiguration #constructor should throw if invalid getResourceLoader is provided 2`] = `"Must provide valid callback for obtaining resource loader"`;
