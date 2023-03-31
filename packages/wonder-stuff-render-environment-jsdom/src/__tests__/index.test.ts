@@ -7,17 +7,6 @@ describe("index.js", () => {
         const result = await importedModule;
 
         // Assert
-        expect(result).toContainAllKeys(["JSDOM"]);
-    });
-
-    it("should export JSDOM pieces", async () => {
-        // Arrange
-        const importedModule = import("../index");
-
-        // Act
-        const result = await importedModule;
-
-        // Assert
         expect(result).toContainAllKeys([
             "Configuration",
             "Environment",
