@@ -1,3 +1,4 @@
+import "jest-extended";
 import {isReservedContextProperty} from "../is-reserved-context-property";
 
 describe("#isReservedContextProperty", () => {
@@ -8,7 +9,6 @@ describe("#isReservedContextProperty", () => {
         const result = isReservedContextProperty("foo");
 
         // Assert
-        // @ts-expect-error [FEI-5011] - TS2551 - Property 'toBeFalse' does not exist on type 'JestMatchers<boolean>'. Did you mean 'toBeFalsy'?
         expect(result).toBeFalse();
     });
 
@@ -19,7 +19,6 @@ describe("#isReservedContextProperty", () => {
         const result = isReservedContextProperty("type");
 
         // Assert
-        // @ts-expect-error [FEI-5011] - TS2339 - Property 'toBeTrue' does not exist on type 'JestMatchers<boolean>'.
         expect(result).toBeTrue();
     });
 });

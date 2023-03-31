@@ -32,3 +32,8 @@ export type SecretString = {readonly [opaque]: "Secret"};
  * A collection of secrets keyed by their names.
  */
 export type Secrets = {readonly [key: string]: SecretString};
+
+/**
+ * Make a read-only type mutable.
+ */
+export type Mutable<T> = {-readonly [P in keyof T]: T[P]};

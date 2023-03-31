@@ -1,3 +1,4 @@
+import "jest-extended";
 import {Errors} from "@khanacademy/wonder-stuff-core";
 import type {Metadata} from "@khanacademy/wonder-stuff-core";
 import {KindSentryError} from "../kind-sentry-error";
@@ -12,7 +13,6 @@ describe("KindSentryError", () => {
             const {name: result} = new KindSentryError("MESSAGE", "KIND");
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2339 - Property 'toEndWith' does not exist on type 'JestMatchers<string>'.
             expect(result).toEndWith("SentryError");
         });
 
@@ -25,7 +25,6 @@ describe("KindSentryError", () => {
             });
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2339 - Property 'toEndWith' does not exist on type 'JestMatchers<string>'.
             expect(result).toEndWith("NAMEError");
         });
 
@@ -38,7 +37,6 @@ describe("KindSentryError", () => {
             });
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2339 - Property 'toStartWith' does not exist on type 'JestMatchers<string>'.
             expect(result).toStartWith("PREFIX");
         });
 

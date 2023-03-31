@@ -99,7 +99,12 @@ module.exports = {
             },
         ],
         "import/newline-after-import": "error",
-        "import/no-unassigned-import": "error",
+        "import/no-unassigned-import": [
+            "error",
+            {
+                allow: ["jest-extended"],
+            },
+        ],
         "import/no-named-default": "error",
         "import/extensions": [
             "error",

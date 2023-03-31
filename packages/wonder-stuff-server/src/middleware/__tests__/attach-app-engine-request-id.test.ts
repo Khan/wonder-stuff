@@ -1,3 +1,4 @@
+import "jest-extended";
 import {attachAppEngineRequestID} from "../attach-app-engine-request-id";
 import * as GetAppEngineRequestID from "../../get-app-engine-request-id";
 import * as GetRequestLogger from "../../get-request-logger";
@@ -13,7 +14,6 @@ describe("#attachAppEngineRequestID", () => {
         const result = attachAppEngineRequestID(pretendLogger);
 
         // Assert
-        // @ts-expect-error [FEI-5011] - TS2339 - Property 'toBeFunction' does not exist on type 'JestMatchers<Middleware<TReq, TRes>>'.
         expect(result).toBeFunction();
     });
 

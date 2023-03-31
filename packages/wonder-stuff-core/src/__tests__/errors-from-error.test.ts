@@ -1,3 +1,4 @@
+import "jest-extended";
 import {KindError} from "../kind-error";
 import {errorsFromError, Order} from "../errors-from-error";
 
@@ -31,7 +32,6 @@ describe("#errorsFromError", () => {
             );
 
             // Assert
-            // @ts-expect-error [FEI-5011] - TS2339 - Property 'toBeEmpty' does not exist on type 'JestMatchers<unknown[]>'.
             expect(result).toBeEmpty();
         },
     );
