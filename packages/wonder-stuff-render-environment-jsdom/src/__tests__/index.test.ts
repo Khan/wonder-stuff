@@ -15,7 +15,7 @@ describe("index.js", () => {
         const importedModule = import("../index");
 
         // Act
-        const {JSDOM: result} = await importedModule;
+        const result = await importedModule;
 
         // Assert
         expect(result).toContainAllKeys([
