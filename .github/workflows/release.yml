@@ -69,7 +69,7 @@ jobs:
           UPDATED_PACKAGES="${UPDATED_PACKAGES//'%'/'%25'}"
           UPDATED_PACKAGES="${UPDATED_PACKAGES//$'\n'/'%0A'}"
           UPDATED_PACKAGES="${UPDATED_PACKAGES//$'\r'/'%0D'}"
-          echo "::set-output name=updated_packages::$UPDATED_PACKAGES"
+          echo "updated_packages=$UPDATED_PACKAGES" >> $GITHUB_OUTPUT
 
       - name: Send a Slack notification for web if a publish happens
         if: steps.changesets.outputs.published == 'true'
