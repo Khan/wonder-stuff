@@ -19,10 +19,7 @@ import {keys} from "../keys";
         c: [3, 4],
     } as const;
 
-    // It would be nice if this worked, but TypeScript's library definition
-    // defines the return type of Object.keys() to be Array<string>.
     const keys2bad = keys(obj2);
-    // @ts-expect-error: string is not assignable to "a" | "b" | "c"
     const _: "a" | "b" | "c" = keys2bad[0];
 
     // @ts-expect-error: This errors because we try to get a key of only one type.
