@@ -19,8 +19,6 @@ import {keys} from "../keys";
         c: [3, 4],
     } as const;
 
-    // It would be nice if this worked, but TypeScript's library definition
-    // defines the return type of Object.keys() to be Array<string>.
     const keys2bad = keys(obj2);
     const _: "a" | "b" | "c" = keys2bad[0];
 
