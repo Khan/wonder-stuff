@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-render-server
 
+## 1.0.1
+
+### Patch Changes
+
+-   Updated dependencies [0299cc9]
+    -   @khanacademy/wonder-stuff-core@1.4.1
+    -   @khanacademy/wonder-stuff-server@4.0.4
+
 ## 1.0.0
 
 ### Major Changes

@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.4.1
+
+### Patch Changes
+
+-   0299cc9: Fix some errors in the generated flow types
+
 ## 1.4.0
 
 ### Minor Changes
