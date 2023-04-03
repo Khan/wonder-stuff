@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.4.2
+
+### Patch Changes
+
+-   b28725a: Fix the typing for the `key` function
+
 ## 1.4.1
 
 ### Patch Changes
