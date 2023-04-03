@@ -22,5 +22,6 @@ ignore:
   - "build-settings/*.js"
   - "utils/*.js"
   - "packages/**/dist/index.js"
-  - "packages/**/types.js"
-  - "packages/**/*.flowtest.js "
+  - "packages/**/types/**/*.ts"
+  - "packages/**/examples/**/*.ts"
+  - "packages/**/*.flowtest.js"

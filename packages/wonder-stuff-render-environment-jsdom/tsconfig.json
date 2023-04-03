@@ -1,6 +1,6 @@
 {
   "exclude": [
-    "dist"
+    "dist", "examples"
   ],
   "extends": "../tsconfig-shared.json",
   "compilerOptions": {
@@ -10,6 +10,6 @@
   "references": [
     {"path": "../wonder-stuff-core"},
     {"path": "../wonder-stuff-server"},
-    {"path": "../wonder-stuff-render-server"},
+    {"path": "../wonder-stuff-render-server"}
   ]
 }
