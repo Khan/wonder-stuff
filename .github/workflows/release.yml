@@ -58,18 +58,14 @@ jobs:
         id: slack_message
         if: steps.changesets.outputs.published == 'true'
         # We have to do this in stages to make sure that the output into the
-        # GITHUB_ENV retains are lines and is valid for updating the env.
+        # GITHUB_OUTPUT retains are lines and is valid for updating the env.
         # This is based on:
-        # - LIVE: https://trstringer.com/github-actions-multiline-strings/
-        # - ARCHIVE: https://web.archive.org/web/20211017170102/https://trstringer.com/github-actions-multiline-strings/
-        # - LIVE: https://renehernandez.io/snippets/multiline-strings-as-a-job-output-in-github-actions/
-        # - ARCHIVE: https://web.archive.org/web/20211115000540/https://renehernandez.io/snippets/multiline-strings-as-a-job-output-in-github-actions/
+        #   https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
         run: |
-          UPDATED_PACKAGES=$(jq -r '[group_by(.name) | .[] | " - "+.[].name+"@"+.[].version] | join("\n")' <<< '${{ steps.changesets.outputs.publishedPackages }}')
-          UPDATED_PACKAGES="${UPDATED_PACKAGES//'%'/'%25'}"
-          UPDATED_PACKAGES="${UPDATED_PACKAGES//$'\n'/'%0A'}"
-          UPDATED_PACKAGES="${UPDATED_PACKAGES//$'\r'/'%0D'}"
-          echo "updated_packages=$UPDATED_PACKAGES" >> $GITHUB_OUTPUT
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "updated_packages<<$EOF" >> $GITHUB_OUTPUT
+          $(jq -r '[group_by(.name) | .[] | " - "+.[].name+"@"+.[].version] | join("\n")' <<< '${{ steps.changesets.outputs.publishedPackages }}') >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
 
       - name: Send a Slack notification for web if a publish happens
         if: steps.changesets.outputs.published == 'true'
