@@ -37,7 +37,7 @@
     "@rollup/plugin-terser": "^0.4.0",
     "@types/superagent": "^4.1.16",
     "@types/winston": "^2.4.4",
-    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.0",
     "babel-jest": "29.5.0",
     "babel-watch": "^7.7.2",
