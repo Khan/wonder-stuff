@@ -12,5 +12,6 @@
     {"path": "./packages/wonder-stuff-sentry"},
     {"path": "./packages/wonder-stuff-server"},
     {"path": "./packages/wonder-stuff-testing"},
+    {"path": "./packages/wonder-stuff-ci"},
   ],
 }
