@@ -15,7 +15,7 @@ export const getMobileReleaseTags = async (): Promise<Array<string>> => {
 };
 
 /**
- * Compares two versions of the form <num>.<num>.<num>
+ * Compares two versions (of the form <num>.<num>.<num> ) or tags (of the form <tag>-<num>.<num>.<num>)
  * @param v1
  * @param v2
  * @returns int, 1 if v1 > v2, -1 if v1 < v2, 0 if v1 == v2

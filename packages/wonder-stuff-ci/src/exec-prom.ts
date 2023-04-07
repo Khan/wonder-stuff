@@ -5,11 +5,7 @@ import {exec, ExecOptions} from "child_process";
 import util from "util";
 
 export const bufferToString = (input: Buffer | string): string => {
-    if (typeof input === "string") {
-        return input;
-    } else {
-        return input.toString("utf8");
-    }
+    return typeof input === "string" ? input : input.toString("utf8");
 };
 
 export const execProm = util.promisify(exec);
