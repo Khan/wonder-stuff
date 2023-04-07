@@ -8,6 +8,9 @@
     "name": "@khanacademy/wonder-stuff-ci",
     "version": "0.0.1",
     "description": "Functions for creating automation and scripts.",
+    "module": "dist/es/index.js",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },

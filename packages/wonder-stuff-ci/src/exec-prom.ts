@@ -11,7 +11,7 @@ export const bufferToString = (input: Buffer | string): string => {
     }
 };
 
-const execProm = (
+export const execProm = (
     command: string,
     rejectOnError: boolean,
     options?: ExecOptions,

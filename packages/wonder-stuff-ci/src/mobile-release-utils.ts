@@ -4,8 +4,8 @@ import execProm from "./exec-prom";
  *
  * @returns all release tags sorted creation time ascending
  */
-const getReleaseTags = async (): Promise<Array<string>> => {
-    const tags = await allReleaseTags();
+export const getMobileReleaseTags = async (): Promise<Array<string>> => {
+    const tags = await allMobileReleaseTags();
     return tags
         .filter((tag) =>
             tag.match(/^(ios|android|unified)-(\d+\.\d+\.\d+(-\w*)*)$/i),
@@ -39,7 +39,7 @@ export const compareVersions = (v1: string, v2: string) => {
  * @param arg
  * @returns match, if found, null otherwise
  */
-export const isGetReleaseBranch = (arg: string) => {
+export const extractMobileReleaseBranch = (arg: string) => {
     if (!arg) {
         return null;
     }
@@ -56,7 +56,7 @@ export const isGetReleaseBranch = (arg: string) => {
  *
  * @returns all release tags sorted creation time ascending
  */
-const allReleaseTags = async (): Promise<Array<string>> => {
+const allMobileReleaseTags = async (): Promise<Array<string>> => {
     // Why not use simple-git here? Because for some reason it takes like 100x as long.
     await execProm("git fetch --tags", true);
     const prom: Promise<{

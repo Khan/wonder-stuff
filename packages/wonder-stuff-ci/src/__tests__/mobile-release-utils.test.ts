@@ -1,4 +1,7 @@
-import {compareVersions, isGetReleaseBranch} from "../release-utils";
+import {
+    compareVersions,
+    extractMobileReleaseBranch,
+} from "../mobile-release-utils";
 
 describe("#compareVersions", () => {
     it.each(["7.8.1", "7.9.0", "7.10.0", "8.0.0"])(
@@ -54,7 +57,7 @@ describe("#isGetReleaseBranch", () => {
         const releaseBranch = testCase;
 
         // Act
-        const result = isGetReleaseBranch(releaseBranch);
+        const result = extractMobileReleaseBranch(releaseBranch);
 
         // Assert
         expect(result?.version).toBe("7.8.0");
@@ -67,7 +70,7 @@ describe("#isGetReleaseBranch", () => {
             const releaseBranch = testCase;
 
             // Act
-            const result = isGetReleaseBranch(releaseBranch);
+            const result = extractMobileReleaseBranch(releaseBranch);
 
             // Assert
             expect(result).toBe(null);
@@ -79,7 +82,7 @@ describe("#isGetReleaseBranch", () => {
         const branchName = "release/unified/7.8.0";
 
         // Act
-        const result = isGetReleaseBranch(branchName);
+        const result = extractMobileReleaseBranch(branchName);
 
         // Assert
         expect(result?.prefix).toBe("release/unified/");
