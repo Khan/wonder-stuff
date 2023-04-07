@@ -1,4 +1,5 @@
 import execProm from "./exec-prom";
+import { allMobileReleaseTags } from "./mobile-release-git-utils";
 
 /**
  *
@@ -50,21 +51,4 @@ export const extractMobileReleaseBranch = (arg: string) => {
     return match && match.length >= 3 && match[3]
         ? {prefix: match[1] || "release/unified/", version: match[3]}
         : null;
-};
-
-/**
- *
- * @returns all release tags sorted creation time ascending
- */
-const allMobileReleaseTags = async (): Promise<Array<string>> => {
-    // Why not use simple-git here? Because for some reason it takes like 100x as long.
-    await execProm("git fetch --tags", true);
-    const prom: Promise<{
-        err: Error | null | undefined;
-        stdout: string;
-        stderr: string;
-    }> = execProm("git tag | grep -E -i -w 'ios|android|unified'", true);
-
-    const {stdout} = await prom;
-    return stdout.split("\n").filter(Boolean);
 };

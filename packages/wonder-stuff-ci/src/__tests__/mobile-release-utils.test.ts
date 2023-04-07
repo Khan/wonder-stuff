@@ -1,7 +1,9 @@
 import {
     compareVersions,
     extractMobileReleaseBranch,
+    getMobileReleaseTags,
 } from "../mobile-release-utils";
+import {allMobileReleaseTags} from "../mobile-release-git-utils";
 
 describe("#compareVersions", () => {
     it.each(["7.8.1", "7.9.0", "7.10.0", "8.0.0"])(
@@ -86,5 +88,25 @@ describe("#isGetReleaseBranch", () => {
 
         // Assert
         expect(result?.prefix).toBe("release/unified/");
+    });
+});
+
+describe("#getMobileReleaseTags", () => {
+    it("get the tags in sorted order by ascending version value", async () => {
+        // Arrange
+
+        jest.spyOn(
+            require("../mobile-release-git-utils"),
+            "allMobileReleaseTags",
+        ).mockReturnValue(["android-7.10.0", "unified-7.8.0", "unified-7.9.0"]);
+        // Act
+        const result = await getMobileReleaseTags();
+
+        // Assert
+        expect(result).toStrictEqual([
+            "unified-7.8.0",
+            "unified-7.9.0",
+            "android-7.10.0",
+        ]);
     });
 });
