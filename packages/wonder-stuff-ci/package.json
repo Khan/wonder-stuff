@@ -7,7 +7,7 @@
     },
     "name": "@khanacademy/wonder-stuff-ci",
     "version": "0.0.1",
-    "description": "Functions for creating automation and scripts.",
+    "description": "Functions for automation and scripts.",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

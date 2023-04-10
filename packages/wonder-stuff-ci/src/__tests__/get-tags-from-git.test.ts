@@ -1,16 +1,18 @@
-import {allMobileReleaseTags} from "../mobile-release-git-utils";
-import execProm from "../exec-prom";
+import {getTagsFromGit} from "../get-tags-from-git";
 
-jest.mock("../exec-prom");
+import {execAsync} from "../exec-async";
 
-describe("#allMobileReleaseTags", () => {
+jest.mock("../exec-async");
+
+describe("#getTagsFromGit", () => {
     it("return an array of release tags split by new line", async () => {
         // Arrange
-        jest.spyOn(require("../exec-prom"), "execProm").mockReturnValue({
+        jest.spyOn(require("../exec-async"), "execAsync").mockReturnValue({
             stdout: "android-7.10.0\nunified-7.8.0\nunified-7.9.0",
         });
+
         // Act
-        const result = await allMobileReleaseTags();
+        const result = await getTagsFromGit();
 
         // Assert
         expect(result).toStrictEqual([

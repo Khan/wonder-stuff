@@ -1,10 +1,9 @@
-import {buffer} from "stream/consumers";
-import {execProm, bufferToString} from "../exec-prom";
+import {bufferToString} from "../buffer-to-string";
 
 describe("#bufferToString", () => {
     it.each(["testing", Buffer.from("testing")])(
         "the buffer to string function returns the correct value",
-        (testCase: any) => {
+        (testCase: string | Buffer) => {
             // Arrange
             const input = testCase;
 
