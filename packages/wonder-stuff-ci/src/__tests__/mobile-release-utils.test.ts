@@ -49,7 +49,7 @@ describe("#compareVersions", () => {
     });
 });
 
-describe("#isGetReleaseBranch", () => {
+describe("#extractMobileReleaseBranch", () => {
     it.each([
         "release/unified/7.8.0",
         "release/android/7.8.0",
@@ -65,7 +65,7 @@ describe("#isGetReleaseBranch", () => {
         expect(result?.version).toBe("7.8.0");
     });
 
-    it.each(["release/testing", "android/7.8.0", "ios/7.8.0"])(
+    it.each(["release/testing", "android/7.8.0", "ios/7.8.0", null])(
         "return null if the branch is not a release branch",
         (testCase: any) => {
             // Arrange
