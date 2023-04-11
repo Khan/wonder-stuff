@@ -34,7 +34,7 @@
     "@types/jest": "^29.5.0",
     "@types/jest-when": "^3.5.2",
     "@types/jsdom": "^21.1.1",
-    "@rollup/plugin-terser": "^0.4.0",
+    "@rollup/plugin-terser": "^0.4.1",
     "@types/superagent": "^4.1.16",
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
