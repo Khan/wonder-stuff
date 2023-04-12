@@ -17,13 +17,13 @@ let logger: winston.Logger | null = null;
  */
 export const getMobileReleaseLogger = (
     {
-        redirectToStdout,
-        labels,
+        redirectToStdout = false,
+        labels = {},
     }: {
         redirectToStdout: boolean;
         labels: {[key: string]: string};
     } = {
-        redirectToStdout: true,
+        redirectToStdout: false,
         labels: {},
     },
 ): winston.Logger => {
