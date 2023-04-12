@@ -8,9 +8,11 @@
  * }
  *
  * @param {string} The release branch of the form `[release/[unified|ios|android]]/[v]<num>.<num>.<num>[-extra]`.
- * @returns {Object} The release version and prefix, if found; otherwise, `null`.
+ * @returns {MobileReleaseInfo} The release version and prefix, if found; otherwise, `null`.
  */
-export const extractMobileReleaseInfoFromBranchName = (arg: string | null) => {
+export const extractMobileReleaseInfoFromBranchName = (
+    arg: string | null,
+): MobileReleaseBranchInfo | null => {
     if (!arg) {
         return null;
     }
