@@ -15,3 +15,5 @@ export {getLogger} from "./get-logger";
 export {getRuntimeMode} from "./get-runtime-mode";
 export {startServer} from "./start-server";
 export {trace} from "./trace";
+export {createLogger} from "./create-logger";
+export {setRootLogger} from "./root-logger";
