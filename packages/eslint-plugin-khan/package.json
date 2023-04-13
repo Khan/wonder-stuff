@@ -8,6 +8,7 @@
     "/lib"
   ],
   "main": "lib/index.js",
+  "nobuild": true,
   "repository": "https://github.com/Khan/eslint-plugin-khan",
   "author": "Kevin Barabash <kevinb@khanacademy.org>",
   "license": "MIT",
