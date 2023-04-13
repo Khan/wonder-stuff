@@ -43,8 +43,7 @@ util.execFile = (file, ...args) => {
 ruleTester.run("require-static-url", rule, {
     valid: [
         {
-            code:
-                "// sync-start:foo-bar 1424803960 fileb\nconst FooBar = 'foobar';\n// sync-end:foobar",
+            code: "// sync-start:foo-bar 1424803960 fileb\nconst FooBar = 'foobar';\n// sync-end:foobar",
             filename: "filea",
             options: [
                 {
