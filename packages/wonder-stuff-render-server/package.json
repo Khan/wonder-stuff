@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-render-server",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "An unopinionated server for rendering specific URLs using a configured environment.",
     "module": "dist/es/index.js",
     "main": "dist/index.js",

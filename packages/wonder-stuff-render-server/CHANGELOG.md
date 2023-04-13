@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-render-server
 
+## 1.0.3
+
+### Patch Changes
+
+-   c77c982: Fix lint
+
 ## 1.0.2
 
 ### Patch Changes
