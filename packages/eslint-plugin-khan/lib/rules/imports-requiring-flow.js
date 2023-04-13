@@ -28,7 +28,6 @@ const checkImport = (context, rootDir, importPath, node) => {
     };
 
     const modules = context.options[0].modules || [];
-    console.log(modules);
 
     for (const mod of modules) {
         if (importPath.startsWith(".")) {
@@ -42,6 +41,19 @@ const checkImport = (context, rootDir, importPath, node) => {
             if (maybeReport(importPath, mod, importPath)) {
                 break;
             }
+        }
+    }
+
+    const regexes = context.options[0].regexes || [];
+
+    for (const src of regexes) {
+        const regex = new RegExp(src);
+        if (regex.test(importPath)) {
+            context.report({
+                node,
+                message: `Importing "${importPath}" requires using flow.`,
+            });
+            break;
         }
     }
 };
@@ -62,6 +74,12 @@ module.exports = {
                 type: "object",
                 properties: {
                     modules: {
+                        type: "array",
+                        items: {
+                            type: "string",
+                        },
+                    },
+                    regexes: {
                         type: "array",
                         items: {
                             type: "string",
