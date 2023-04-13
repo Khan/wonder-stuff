@@ -186,3 +186,6 @@ jobs:
         full: yarn test
         limited-trigger: ${{ steps.js-ts-files.outputs.filtered }}
         limited: yarn test --findRelatedTests --passWithNoTests {}
+
+    - name: Mocha (eslint-khan-plugin)
+      run: yarn --cwd packages/eslint-plugin-khan test

@@ -31,7 +31,7 @@ module.exports = {
         "!<rootDir>/node_modules/",
         "!packages/**/node_modules/",
         "!packages/**/.babelrc.js",
-        "!packages/eslint-config-khan/**",
+        "!packages/eslint-*-khan/**",
         "!packages/**/examples/**/*.ts",
         "!packages/**/types/**/*.ts",
     ],

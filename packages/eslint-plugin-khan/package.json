@@ -1,0 +1,44 @@
+{
+  "name": "@khanacademy/eslint-plugin",
+  "version": "0.7.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "/lib"
+  ],
+  "main": "lib/index.js",
+  "nobuild": true,
+  "repository": "https://github.com/Khan/eslint-plugin-khan",
+  "author": "Kevin Barabash <kevinb@khanacademy.org>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^5.8.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.2",
+    "mocha": "^3.3.0",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^2.0.1"
+  },
+  "scripts": {
+    "test": "mocha test/**/*.js",
+    "prettier": "prettier --write '{lib,test}/**/*.js'",
+    "prepublishOnly": "npm run test"
+  },
+  "dependencies": {
+    "@babel/types": "^7.7.4",
+    "checksync": "^2.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "yarn test",
+      "pretty-quick"
+    ]
+  }
+}
