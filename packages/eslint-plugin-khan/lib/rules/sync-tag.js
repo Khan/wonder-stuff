@@ -1,42 +1,98 @@
-const assert = require("assert");
 const path = require("path");
 
 const util = require("../util.js");
 
 const PKG_ROOT = path.join(__dirname, "..", "..");
+const CHECKSYNC_PATH = path.join(PKG_ROOT, "node_modules", ".bin", "checksync");
 
 const UPDATE_REMINDER =
     "If necessary, check the sync-tag target and make relevant changes before updating the checksum.";
 
-const processItem = (item, node, context, comments) => {
-    if (item.sourceLine && item.message) {
-        const line = item.sourceLine;
-        const comment = comments.find(
-            (comment) => comment.loc.start.line === line,
-        );
+const applyFix = (fixer, {tagToFix, fix}) => {
+    switch (fix.type) {
+        case "replace":
+            return fixer.replaceText(tagToFix, fix.text);
 
+        case "delete":
+            return fixer.remove(tagToFix);
+
+        default:
+            throw new Error(`Unknown fix type ${fix.type}`);
+    }
+};
+
+const processFile = (file, node, context, tagStarts) => {
+    for (const item of file) {
+        processItem(item, node, context, tagStarts);
+    }
+};
+
+const processItem = (item, node, context, tagStarts) => {
+    if (item.reason && item.location) {
         if (item.fix) {
+            const comment = tagStarts.find(
+                (comment) => comment.loc.start.line === item.fix.line,
+            );
             context.report({
                 node: comment,
-                message: `${item.message} ${UPDATE_REMINDER}`,
+                message: `${item.reason}`,
                 fix(fixer) {
-                    return fixer.replaceText(comment, item.fix.trim());
+                    return applyFix(fixer, {
+                        tagToFix: comment,
+                        fix: item.fix,
+                    });
                 },
             });
         } else {
+            const comment = tagStarts.find(
+                (comment) => comment.loc.start.line === item.location.line,
+            );
             context.report({
                 node: comment,
-                message: item.message,
+                message: item.reason,
             });
         }
     } else if (item.message) {
         context.report({
             node: node,
-            message: `${item.message} ${UPDATE_REMINDER}`,
+            message: `${item.reason} ${UPDATE_REMINDER}`,
         });
     } else {
         // eslint-disable-next-line no-console
         console.error(`Unknown item type ${item.type}`);
+    }
+};
+
+const getCommandForFilename = (
+    {configFile, ignoreFiles, rootDir},
+    filename,
+) => {
+    const ignoreFilesArg = ignoreFiles ? `--ignore-files ${ignoreFiles}` : "";
+    const configFileArg = configFile
+        ? `--config ${path.join(rootDir, configFile)}`
+        : "";
+
+    return `${CHECKSYNC_PATH} ${filename} ${configFileArg} ${ignoreFilesArg} --json`;
+};
+
+const getSyncErrors = ({configFile, ignoreFiles, rootDir}, filename) => {
+    const command = getCommandForFilename(
+        {configFile, ignoreFiles, rootDir},
+        filename,
+    );
+    try {
+        return util.execSync(command, {
+            cwd: rootDir,
+            encoding: "utf-8",
+        });
+    } catch (e) {
+        // From https://github.com/somewhatabstract/checksync/blob/b2f31732715aa940051e7b2b2166b4699aa0f047/src/exit-codes.js
+        // Error 3 is that we have DESYNCHRONIZED_BLOCKS.
+        if (e.status === 3) {
+            return e.stdout;
+        }
+
+        throw e;
     }
 };
 
@@ -58,6 +114,9 @@ module.exports = {
                     rootDir: {
                         type: "string",
                     },
+                    configFile: {
+                        type: "string",
+                    },
                 },
             },
         ],
@@ -65,6 +124,7 @@ module.exports = {
     },
 
     create(context) {
+        const configFile = context.options[0].configFile;
         const ignoreFiles = (context.options[0].ignoreFiles || []).join(",");
         const rootDir = context.options[0].rootDir;
         if (!rootDir) {
@@ -84,34 +144,24 @@ module.exports = {
                         rootDir,
                         context.getFilename(),
                     );
-                    const checksyncPath = path.join(
-                        PKG_ROOT,
-                        "node_modules",
-                        ".bin",
-                        "checksync",
+
+                    const rawJson = getSyncErrors(
+                        {configFile, ignoreFiles, rootDir},
+                        filename,
                     );
 
-                    const command = `${checksyncPath} ${filename} -c "//,#,{/*,{{/*" -m .ka_root --ignore-files ${ignoreFiles} --json`;
-                    const args = [
-                        filename,
-                        "-c",
-                        '"//,#,{/*,{{/*"',
-                        "-m",
-                        ".ka_root",
-                        "--ignore-files",
-                        ignoreFiles,
-                        "--json",
-                    ];
-                    assert.equal(command, [checksyncPath, ...args].join(" "));
-                    const stdout = util.execFile(checksyncPath, args, {
-                        cwd: rootDir,
-                        encoding: "utf-8",
-                    });
-
                     try {
-                        const data = JSON.parse(stdout);
-                        for (const item of data.items) {
-                            processItem(item, node, context, syncStartComments);
+                        const data = JSON.parse(rawJson);
+                        const fileOutput = Object.keys(data.files).find((f) =>
+                            filename.endsWith(f),
+                        );
+                        if (fileOutput) {
+                            processFile(
+                                data.files[fileOutput],
+                                node,
+                                context,
+                                syncStartComments,
+                            );
                         }
                     } catch (e) {
                         // eslint-disable-next-line no-console
