@@ -1,5 +1,11 @@
 # @khanacademy/eslint-config
 
+## 1.2.0
+
+### Minor Changes
+
+-   c77c982: Update to use eslint 8
+
 ## 1.1.0
 
 ### Minor Changes
