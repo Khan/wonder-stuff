@@ -9,8 +9,9 @@ const parserOptions = {
 const ruleTester = new RuleTester(parserOptions);
 const rule = rules["sync-tag"];
 
-util.execSync = command => {
-    console.log("execSync mock --------");
+util.execFile = (file, ...args) => {
+    console.log("execFile mock --------");
+    const command = [file, ...args].join(" ");
     if (command.includes("filea")) {
         const json = JSON.stringify({
             version: "2.2.3",

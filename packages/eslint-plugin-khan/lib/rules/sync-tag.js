@@ -1,3 +1,4 @@
+const assert = require("assert");
 const path = require("path");
 
 const util = require("../util.js");
@@ -11,7 +12,7 @@ const processItem = (item, node, context, comments) => {
     if (item.sourceLine && item.message) {
         const line = item.sourceLine;
         const comment = comments.find(
-            comment => comment.loc.start.line === line,
+            (comment) => comment.loc.start.line === line,
         );
 
         if (item.fix) {
@@ -72,7 +73,7 @@ module.exports = {
 
         return {
             Program(node) {
-                const syncStartComments = node.comments.filter(comment =>
+                const syncStartComments = node.comments.filter((comment) =>
                     comment.value.trim().startsWith("sync-start:"),
                 );
 
@@ -91,7 +92,18 @@ module.exports = {
                     );
 
                     const command = `${checksyncPath} ${filename} -c "//,#,{/*,{{/*" -m .ka_root --ignore-files ${ignoreFiles} --json`;
-                    const stdout = util.execSync(command, {
+                    const args = [
+                        filename,
+                        "-c",
+                        '"//,#,{/*,{{/*"',
+                        "-m",
+                        ".ka_root",
+                        "--ignore-files",
+                        ignoreFiles,
+                        "--json",
+                    ];
+                    assert.equal(command, [checksyncPath, ...args].join(" "));
+                    const stdout = util.execFile(checksyncPath, args, {
                         cwd: rootDir,
                         encoding: "utf-8",
                     });
