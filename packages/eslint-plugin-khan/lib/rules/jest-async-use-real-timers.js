@@ -5,7 +5,7 @@ const t = require("@babel/types");
  *
  * @param {CallExpression} describeCall the node for a call to `describe`.
  */
-const findBeforeEach = describeCall => {
+const findBeforeEach = (describeCall) => {
     const funcExpr = describeCall.arguments[1];
     if (
         funcExpr &&
@@ -59,8 +59,9 @@ const usesRealTimers = (call, closureArgIndex = 0) => {
                     if (
                         t.isIdentifier(object, {name: "jest"}) &&
                         t.isIdentifier(property, {name: "useRealTimers"})
-                    );
-                    return true;
+                    ) {
+                        return true;
+                    }
                 }
             }
         }
@@ -68,7 +69,7 @@ const usesRealTimers = (call, closureArgIndex = 0) => {
     return false;
 };
 
-const isAsync = itCall => {
+const isAsync = (itCall) => {
     return (
         t.isArrowFunctionExpression(itCall.arguments[1], {async: true}) ||
         t.isFunctionExpression(itCall.arguments[1], {async: true})

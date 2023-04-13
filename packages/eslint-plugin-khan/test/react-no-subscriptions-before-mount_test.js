@@ -139,5 +139,5 @@ ruleTester.run("bind-react-methods", rule, {
         invalidWithNestedProperty,
         invalidWithinPromise,
         // TODOInvalid,
-    ].map(code => ({code, errors})),
+    ].map((code) => ({code, errors})),
 });

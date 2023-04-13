@@ -81,8 +81,7 @@ ruleTester.run("jest-await-async-matchers", rule, {
             code: `expect(promise).rejects.not.toThrow(new Error("foo"));`,
             options: [],
             errors: ["Assertions using `rejects` should be awaited."],
-            output:
-                'await expect(promise).rejects.not.toThrow(new Error("foo"));',
+            output: 'await expect(promise).rejects.not.toThrow(new Error("foo"));',
         },
         {
             code: `expect(promise).resolves.not.toBe(true);`,

@@ -1,8 +1,8 @@
 const t = require("@babel/types");
 
-const getPropertyNames = node => {
+const getPropertyNames = (node) => {
     if (!t.isMemberExpression(node)) {
-        [];
+        return [];
     }
     if (t.isIdentifier(node.property)) {
         return [node.property.name, ...getPropertyNames(node.parent)];
@@ -10,7 +10,7 @@ const getPropertyNames = node => {
     return [];
 };
 
-const findParentCallExpression = node => {
+const findParentCallExpression = (node) => {
     if (t.isProgram(node)) {
         return null;
     }
@@ -21,10 +21,10 @@ const findParentCallExpression = node => {
 };
 
 const intersect = (array1, array2) => {
-    return array1.filter(value => array2.includes(value));
+    return array1.filter((value) => array2.includes(value));
 };
 
-const getCustomMatchers = options => {
+const getCustomMatchers = (options) => {
     if (options && options[0] && options[0].matchers) {
         return options[0].matchers;
     }
