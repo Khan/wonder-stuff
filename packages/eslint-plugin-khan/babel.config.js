@@ -1,9 +1,5 @@
 /* eslint-disable import/no-commonjs */
-/**
- * HACK(somewhatabstract):
- * Jest looks for the babel config in the cwd of the project and as such we
- * need a file to tell it where the config really lies or it would use it.
- */
+// NOTE(kevinb): This should only be used by eslint-plugin-khan
 module.exports = {
     presets: [
         "@babel/preset-flow",
