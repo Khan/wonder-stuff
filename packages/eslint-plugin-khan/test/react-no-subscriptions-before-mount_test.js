@@ -2,7 +2,7 @@ const {rules} = require("../lib/index.js");
 const RuleTester = require("eslint").RuleTester;
 
 const parserOptions = {
-    parser: "babel-eslint",
+    parser: require.resolve("@babel/eslint-parser"),
 };
 
 const ruleTester = new RuleTester(parserOptions);
@@ -139,5 +139,5 @@ ruleTester.run("bind-react-methods", rule, {
         invalidWithNestedProperty,
         invalidWithinPromise,
         // TODOInvalid,
-    ].map(code => ({code, errors})),
+    ].map((code) => ({code, errors})),
 });

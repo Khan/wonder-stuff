@@ -26,6 +26,7 @@ module.exports = {
         let precision = 2;
         for (const option of context.options) {
             if (typeof option === "object") {
+                // eslint-disable-next-line no-prototype-builtins
                 if (option.hasOwnProperty("precision")) {
                     precision = Math.max(option.precision, 0);
                 }
@@ -51,7 +52,7 @@ module.exports = {
                                 fix(fixer) {
                                     const replacementText = d.replace(
                                         regex,
-                                        match =>
+                                        (match) =>
                                             parseFloat(match).toFixed(
                                                 precision,
                                             ),

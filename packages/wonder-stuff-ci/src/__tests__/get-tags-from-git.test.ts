@@ -1,7 +1,5 @@
 import {getTagsFromGit} from "../get-tags-from-git";
 
-import {execAsync} from "../exec-async";
-
 jest.mock("../exec-async");
 
 describe("#getTagsFromGit", () => {

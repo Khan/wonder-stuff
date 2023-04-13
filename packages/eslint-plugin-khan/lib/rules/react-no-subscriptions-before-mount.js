@@ -50,7 +50,7 @@ module.exports = {
                 // MethodDefinition.
                 const ancestors = context.getAncestors(node.callee).reverse();
                 const ancestorMethodDef = ancestors.find(
-                    a => a.type === "MethodDefinition",
+                    (a) => a.type === "MethodDefinition",
                 );
 
                 // If there _is_ no parent MethodDefinition, bail early.

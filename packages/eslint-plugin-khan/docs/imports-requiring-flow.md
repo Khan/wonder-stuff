@@ -11,6 +11,8 @@ or its subdirectories are required to be using flow types.
 Notes:
 - All paths in `modules` that aren't npm packages (i.e. are directories or files
   within your codebase) are considered to be relative to `rootDir`.
+- All patterns in `regexes` are **strings** that are compiled to regexes by passing
+  them to the `new RegExp()`.
 - `rootDir` is required and should usually be set to `__dirname`.  This
   requires the the configuration of `@khanacademy/imports-requiring-flow` to be
   done in a `.js` file.
@@ -24,6 +26,7 @@ Give the following rule config:
     "error", {
         rootDir: __dirname,
         modules: ["foo", "src/bar.js"],
+        regexes: ["with-"],
     },
 ]
 ```
@@ -52,6 +55,10 @@ const foo = require("foo/bar");
 
 ```js
 const bar = require("./bar.js");
+```
+
+```js
+const withFoo = require("./with-foo.js");
 ```
 
 The following are not considered warnings:
@@ -84,6 +91,11 @@ const foo = require("foo/bar");
 ```js
 // @flow
 const bar = require("./bar.js");
+```
+
+```js
+// @flow
+const withFoo = require("./with-foo.js");
 ```
 
 ```js

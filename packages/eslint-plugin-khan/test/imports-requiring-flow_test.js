@@ -3,8 +3,10 @@ const path = require("path");
 const {rules} = require("../lib/index.js");
 const RuleTester = require("eslint").RuleTester;
 
+const parserPath = require.resolve("@babel/eslint-parser");
+console.log("parserPath = ", parserPath);
 const parserOptions = {
-    parser: "babel-eslint",
+    parser: parserPath,
 };
 
 const ruleTester = new RuleTester(parserOptions);
@@ -72,6 +74,16 @@ const barPromise = import("../package-2/bar.js");
 const dynamicImportBarModNoflow = `
 // @noflow
 const barPromise = import("../package-2/bar.js");
+`;
+
+const importHOCPkgFlow = `
+// @flow
+import withFoo from "~/foo/with-foo.js";
+`;
+
+const importHOCPkgNoflow = `
+// @noflow
+import withFoo from "~/foo/with-foo.js";
 `;
 
 ruleTester.run("imports-requiring-flow", rule, {
@@ -226,6 +238,28 @@ ruleTester.run("imports-requiring-flow", rule, {
                 },
             ],
         },
+        {
+            code: importHOCPkgFlow,
+            filename: path.join(rootDir, "src/package-1/foobar.js"),
+            options: [
+                {
+                    regexes: ["with-"],
+                    rootDir,
+                },
+            ],
+        },
+        {
+            code: importHOCPkgNoflow,
+            filename: path.join(rootDir, "src/package-1/foobar.js"),
+            options: [
+                {
+                    // Regexes doesn't match any of the imports so the import in
+                    // importHOCPkgNoflow is valid.
+                    regexes: ["use-"],
+                    rootDir,
+                },
+            ],
+        },
     ],
     invalid: [
         {
@@ -326,6 +360,17 @@ ruleTester.run("imports-requiring-flow", rule, {
                 },
             ],
             errors: ['Importing "../package-2/bar.js" requires using flow.'],
+        },
+        {
+            code: importHOCPkgNoflow,
+            filename: path.join(rootDir, "src/package-1/foobar.js"),
+            options: [
+                {
+                    regexes: ["with-"],
+                    rootDir,
+                },
+            ],
+            errors: ['Importing "~/foo/with-foo.js" requires using flow.'],
         },
     ],
 });

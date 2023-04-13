@@ -1,6 +1,6 @@
 const t = require("@babel/types");
 
-const isReactClassComponent = node => {
+const isReactClassComponent = (node) => {
     if (t.isClassDeclaration(node)) {
         const {superClass} = node;
         if (t.isMemberExpression(superClass)) {
@@ -16,7 +16,7 @@ const isReactClassComponent = node => {
     return false;
 };
 
-const isReactFunctionalComponent = node => {
+const isReactFunctionalComponent = (node) => {
     if (t.isArrowFunctionExpression(node)) {
         if (
             node.params.length === 1 &&

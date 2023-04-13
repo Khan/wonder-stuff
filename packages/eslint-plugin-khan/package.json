@@ -13,8 +13,11 @@
   "author": "Kevin Barabash <kevinb@khanacademy.org>",
   "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
-    "eslint": "^5.8.0",
+    "@babel/eslint-parser": "^7.21.3",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-flow": "^7.21.4",
+    "@babel/preset-react": "^7.18.6",
+    "eslint": "^8.38.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.1.2",
     "mocha": "^3.3.0",
