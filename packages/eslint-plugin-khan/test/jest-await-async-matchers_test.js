@@ -4,7 +4,7 @@ const {rules} = require("../lib/index.js");
 const RuleTester = require("eslint").RuleTester;
 
 const parserOptions = {
-    parser: "babel-eslint",
+    parser: require.resolve("babel-eslint"),
 };
 
 const ruleTester = new RuleTester(parserOptions);
@@ -81,7 +81,8 @@ ruleTester.run("jest-await-async-matchers", rule, {
             code: `expect(promise).rejects.not.toThrow(new Error("foo"));`,
             options: [],
             errors: ["Assertions using `rejects` should be awaited."],
-            output: 'await expect(promise).rejects.not.toThrow(new Error("foo"));',
+            output:
+                'await expect(promise).rejects.not.toThrow(new Error("foo"));',
         },
         {
             code: `expect(promise).resolves.not.toBe(true);`,
