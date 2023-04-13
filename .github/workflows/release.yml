@@ -58,13 +58,13 @@ jobs:
         id: slack_message
         if: steps.changesets.outputs.published == 'true'
         # We have to do this in stages to make sure that the output into the
-        # GITHUB_OUTPUT retains are lines and is valid for updating the env.
+        # GITHUB_OUTPUT retains our lines and is valid for updating the env.
         # This is based on:
         #   https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
         run: |
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "updated_packages<<$EOF" >> $GITHUB_OUTPUT
-          $(jq -r '[group_by(.name) | .[] | " - "+.[].name+"@"+.[].version] | join("\n")' <<< '${{ steps.changesets.outputs.publishedPackages }}') >> $GITHUB_OUTPUT
+          jq -r '[group_by(.name) | .[] | " - "+.[].name+"@"+.[].version] | join("\n")' <<< '${{ steps.changesets.outputs.publishedPackages }}' >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
 
       - name: Send a Slack notification for web if a publish happens
