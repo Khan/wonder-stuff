@@ -3,7 +3,7 @@ const util = require("../lib/util.js");
 const RuleTester = require("eslint").RuleTester;
 
 const parserOptions = {
-    parser: require.resolve("babel-eslint"),
+    parser: require.resolve("@babel/eslint-parser"),
 };
 
 const ruleTester = new RuleTester(parserOptions);
