@@ -41,6 +41,18 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Build Typedoc
+        # Generate nice docs inside "docs/" folder
+        run: yarn build:docs
+
+      - name: Deploy to GitHub pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          # The branch the action should deploy to.
+          branch: gh-pages
+          # The folder the action should deploy.
+          folder: docs
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
