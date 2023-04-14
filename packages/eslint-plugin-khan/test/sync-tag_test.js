@@ -1,3 +1,5 @@
+const assert = require("assert");
+
 const {rules} = require("../lib/index.js");
 const util = require("../lib/util.js");
 const RuleTester = require("eslint").RuleTester;
@@ -9,6 +11,7 @@ const parserOptions = {
 const ruleTester = new RuleTester(parserOptions);
 const rule = rules["sync-tag"];
 
+assert(util.execSync);
 util.execSync = (command) => {
     console.log("execSync mock --------");
     if (command.includes("filea")) {
