@@ -13,6 +13,7 @@ const rule = rules["sync-tag"];
 
 assert(util.execSync);
 util.execSync = (command) => {
+    // eslint-disable-next-line no-console
     console.log("execSync mock --------");
     if (command.includes("filea")) {
         const json = JSON.stringify({
