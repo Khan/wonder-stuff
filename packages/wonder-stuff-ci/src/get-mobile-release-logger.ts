@@ -13,7 +13,7 @@ let logger: winston.Logger | null = null;
 /**
  * Logger for auditing mobile release events.
  * @param {boolean} redirectToStdout If true, logs will be written to stdout.
- * @param {[key: string]: string} labels K/V metadata that will be add to the logs
+ * @param {{[key: string]: string}} labels K/V metadata that will be add to the logs
  */
 export const getMobileReleaseLogger = (
     {
