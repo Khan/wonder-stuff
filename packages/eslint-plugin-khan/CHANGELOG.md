@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 1.4.2
+
+### Patch Changes
+
+-   8c838b2: Remove logging
+
 ## 1.4.1
 
 ### Patch Changes
