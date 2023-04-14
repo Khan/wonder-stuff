@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 1.4.0
+
+### Minor Changes
+
+-   f731203: Port checksync changes from old repo
+
 ## 0.7.1
 
 ### Patch Changes
