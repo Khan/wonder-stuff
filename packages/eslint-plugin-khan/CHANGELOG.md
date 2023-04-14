@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 1.4.1
+
+### Patch Changes
+
+-   a621be6: Ensure sync-tag rule has access to 'execSync'
+
 ## 1.4.0
 
 ### Minor Changes
