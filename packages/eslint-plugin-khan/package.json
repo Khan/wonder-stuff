@@ -21,7 +21,7 @@
     "husky": "^4.2.3",
     "lint-staged": "^10.1.2",
     "mocha": "^3.3.0",
-    "prettier": "^1.18.2",
+    "prettier": "^2.8.7",
     "pretty-quick": "^2.0.1"
   },
   "scripts": {
