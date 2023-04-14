@@ -9,9 +9,6 @@ const checkImport = (context, rootDir, importPath, node) => {
             ? testRulePath
             : `${testRulePath}${path.sep}`;
 
-        console.log("testImportPath = ", testImportPath);
-        console.log("testRulePath = ", testRulePath);
-
         // If the path is the same, then it's a match for the error.
         // If the path starts with the module listed, then it's also a match.
         if (

@@ -3,10 +3,8 @@ const path = require("path");
 const {rules} = require("../lib/index.js");
 const RuleTester = require("eslint").RuleTester;
 
-const parserPath = require.resolve("@babel/eslint-parser");
-console.log("parserPath = ", parserPath);
 const parserOptions = {
-    parser: parserPath,
+    parser: require.resolve("@babel/eslint-parser"),
 };
 
 const ruleTester = new RuleTester(parserOptions);
