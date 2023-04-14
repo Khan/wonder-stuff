@@ -16,3 +16,4 @@ eslint plugin with our set of custom rules for various things
 - [khan/react-no-method-jsx-attribute](docs/react-no-method-jsx-attribute.md)
 - [khan/react-no-subscriptions-before-mount](docs/react-no-subscriptions-before-mount.md)
 - [khan/react-svg-path-precision](docs/react-svg-path-precision.md)
+- [khan/sync-tag](docs/sync-tag.md)
