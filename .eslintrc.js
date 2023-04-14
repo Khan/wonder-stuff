@@ -1,7 +1,15 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
     extends: ["./packages/eslint-config-khan/index.js"],
-    plugins: ["@babel", "import", "jest", "promise", "monorepo", "disable"],
+    plugins: [
+        "@babel",
+        "import",
+        "jest",
+        "jsdoc",
+        "promise",
+        "monorepo",
+        "disable",
+    ],
     settings: {
         "eslint-plugin-disable": {
             paths: {
@@ -133,6 +141,11 @@ module.exports = {
          * jest rules
          */
         "jest/no-focused-tests": "error",
+
+        /**
+         * jsdoc rules
+         */
+        "jsdoc/valid-types": "error",
 
         /**
          * promise rules
