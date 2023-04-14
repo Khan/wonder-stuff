@@ -18,7 +18,7 @@ interface ITrace {
      *
      * @param {string} action The name of the action being traced.
      * @param {string} message A message to be logged along side the action
-     * @param {TReq: RequestWithLog<$Request>} [request] The request being
+     * @param {{TReq: RequestWithLog<$Request>}} [request] The request being
      * fulfilled. This is used to determine if a request-scoped logger can be used.
      * @returns {ITraceSession} The new trace session that was created and is to be
      * used to end the session.
