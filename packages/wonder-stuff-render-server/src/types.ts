@@ -253,7 +253,7 @@ export type RenderGatewayOptions = {
      * A string that will be used to build an error response for a failed
      * render if all other error handling options fail.
      *
-     * If the sequence ${error} appears in the string, it will be replaced
+     * If the sequence `${error}` appears in the string, it will be replaced
      * with the JSONified error information. If it does not appear, the
      * JSONified error information will be omitted (useful if you don't want
      * to include that for users).

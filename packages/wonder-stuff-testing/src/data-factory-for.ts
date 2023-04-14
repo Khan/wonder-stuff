@@ -18,6 +18,7 @@ import {clone} from "@khanacademy/wonder-stuff-core";
  * that you have to check before setting the value.
  *
  * Example (shallow override):
+ * ```
  *     const BASE_OBJECT = {
  *         student: { ... },
  *         teacher: { ... },
@@ -31,8 +32,10 @@ import {clone} from "@khanacademy/wonder-stuff-core";
  *             ... other properties on `user`
  *         }
  *     });
+ * ```
  *
  * Example (deep update):
+ * ```
  *     const BASE_OBJECT = {
  *         student: { ... },
  *         teacher: { ... },
@@ -43,6 +46,7 @@ import {clone} from "@khanacademy/wonder-stuff-core";
  *         data.user.kaid = "new_kaid";
  *         data.user.id = "new_kaid";
  *     }
+ * ```
  */
 export const dataFactoryFor =
     <T>(baseObject: T): ((partialObject?: Partial<T>) => T) =>
