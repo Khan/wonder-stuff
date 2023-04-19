@@ -7,6 +7,7 @@ import type {GCPTransportOptions} from "./types";
  * @param {GCPTransportOptions} options for the transport
  * @returns {winston.transport} logger set up to send logs to GCP.
  */
+/* istanbul ignore file */
 export const getGCPLogTransport = (
     options: GCPTransportOptions,
 ): winston.transport => {
@@ -17,7 +18,6 @@ export const getGCPLogTransport = (
         resource: {
             labels: options.labels,
         },
-        /* istanbul ignore next */
         defaultCallback: (err) => {
             if (err) {
                 // eslint-disable-next-line no-console
