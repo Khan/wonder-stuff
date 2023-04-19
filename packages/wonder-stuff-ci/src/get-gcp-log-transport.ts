@@ -1,6 +1,6 @@
 import * as winston from "winston";
 import * as lw from "@google-cloud/logging-winston";
-import {GCPTransportOptions} from "./types";
+import type {GCPTransportOptions} from "./types";
 
 /**
  * Winston logging transport for emitting logs to GCP

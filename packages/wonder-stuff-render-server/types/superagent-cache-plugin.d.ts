@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {SuperAgentRequest, Response} from "superagent";
 
 declare module "superagent" {

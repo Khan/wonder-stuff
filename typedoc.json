@@ -1,0 +1,13 @@
+{
+    "entryPoints": [
+        "packages/wonder-stuff-core/src/index.ts",
+        "packages/wonder-stuff-i18n/src/index.ts",
+        "packages/wonder-stuff-render-environment-jsdom/src/index.ts",
+        "packages/wonder-stuff-render-server/src/index.ts",
+        "packages/wonder-stuff-sentry/src/index.ts",
+        "packages/wonder-stuff-server/src/index.ts",
+        "packages/wonder-stuff-server-google/src/index.ts",
+        "packages/wonder-stuff-testing/src/index.ts",
+    ],
+    "out": "docs"
+}

@@ -1,4 +1,5 @@
-import {MobileReleaseBranchInfo} from "./types";
+import type {MobileReleaseBranchInfo} from "./types";
+
 /**
  * Extract release version and prefix from mobile release branch.
  *

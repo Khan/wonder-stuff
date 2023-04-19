@@ -240,7 +240,7 @@ export default class I18nPlugin {
      * Go through all of the JS assets and insert translated strings for every
      * locale that we're currently translating into.
      *
-     * @param {assets: Object<string, Object>, translatedStrings: Object} options
+     * @param {{assets: Assets, translatedStrings: TranslatedStrings}} options
      * @returns {Object<string, string>} a map of old file hashes to new hashes
      */
     translateAssets({
@@ -376,7 +376,7 @@ export default class I18nPlugin {
      * Update manifest files so that they point to the correct location of
      * the translated files.
      *
-     * @param {assets: Object<string, Object>, hashMap: <string, string>} options
+     * @param {{assets: Assets, hashMap: HashMaps}} options
      */
     localizeManifests({assets, hashMap}: {assets: Assets; hashMap: HashMaps}) {
         const {locales, timing, shouldLocalizeManifest, getLocalePath} =

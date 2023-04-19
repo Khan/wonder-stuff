@@ -1,6 +1,7 @@
 node_modules
 coverage
 dist
+docs
 !.vscode
 .DS_Store
 yarn-error.log
