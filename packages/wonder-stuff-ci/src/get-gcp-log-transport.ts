@@ -17,6 +17,7 @@ export const getGCPLogTransport = (
         resource: {
             labels: options.labels,
         },
+        /* istanbul ignore next */
         defaultCallback: (err) => {
             if (err) {
                 // eslint-disable-next-line no-console

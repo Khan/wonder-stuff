@@ -17,8 +17,8 @@ let logger: winston.Logger | null = null;
  */
 export const getMobileReleaseLogger = (
     {
-        redirectToStdout = false,
-        labels = {},
+        redirectToStdout,
+        labels,
     }: {
         redirectToStdout: boolean;
         labels: {[key: string]: string};
