@@ -1,5 +1,6 @@
 import * as winston from "winston";
 import * as lw from "@google-cloud/logging-winston";
+import {GCPTransportOptions} from "./types";
 
 /**
  * Winston logging transport for emitting logs to GCP
@@ -18,6 +19,7 @@ export const getGCPLogTransport = (
         },
         defaultCallback: (err) => {
             if (err) {
+                // eslint-disable-next-line no-console
                 console.log("Error occurred while sending log to GCP: " + err);
             }
         },

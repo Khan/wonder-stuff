@@ -1,7 +1,7 @@
 /**
  * The information about a release branch.
  */
-type MobileReleaseBranchInfo = {
+export type MobileReleaseBranchInfo = {
     prefix: string;
     version: string;
 };
@@ -9,7 +9,7 @@ type MobileReleaseBranchInfo = {
 /**
  * The options for the Winston GCP transport.
  */
-type GCPTransportOptions = {
+export type GCPTransportOptions = {
     /**
      * The GCP project ID to send logs to.
      */
