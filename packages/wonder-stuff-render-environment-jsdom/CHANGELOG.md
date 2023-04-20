@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-render-environment-jsdom
 
+## 1.0.4
+
+### Patch Changes
+
+-   Updated dependencies [5ae21b9]
+    -   @khanacademy/wonder-stuff-server@4.0.6
+    -   @khanacademy/wonder-stuff-render-server@1.0.4
+
 ## 1.0.3
 
 ### Patch Changes

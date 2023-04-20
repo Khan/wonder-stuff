@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-render-environment-jsdom",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Render environment to use with the Wonder Stuff Render Server",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -17,8 +17,8 @@
     },
     "dependencies": {
         "@khanacademy/wonder-stuff-core": "^1.4.2",
-        "@khanacademy/wonder-stuff-server": "^4.0.5",
-        "@khanacademy/wonder-stuff-render-server": "^1.0.3"
+        "@khanacademy/wonder-stuff-server": "^4.0.6",
+        "@khanacademy/wonder-stuff-render-server": "^1.0.4"
     },
     "devDependencies": {
         "ws-dev-build-settings": "^1.1.0"
