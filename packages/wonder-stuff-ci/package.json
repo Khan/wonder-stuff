@@ -19,5 +19,8 @@
         "ws-dev-build-settings": "^1.1.0"
     },
     "author": "",
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "@khanacademy/wonder-stuff-server": "^4.0.5"
+    }
 }
