@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-server
 
+## 4.0.6
+
+### Patch Changes
+
+-   5ae21b9: Added GCP logger for mobile release
+
 ## 4.0.5
 
 ### Patch Changes
