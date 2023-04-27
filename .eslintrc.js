@@ -161,5 +161,11 @@ module.exports = {
          * monorepo rules
          */
         "monorepo/no-internal-import": "error",
+
+        /**
+         * typescript rules
+         */
+        "@typescript-eslint/prefer-enum-initializers": "error",
+        "@typescript-eslint/prefer-literal-enum-member": "error",
     },
 };
