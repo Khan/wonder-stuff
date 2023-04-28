@@ -130,5 +130,7 @@ module.exports = {
             ERROR,
             {args: "none", varsIgnorePattern: "^_*$"},
         ],
+        "@typescript-eslint/prefer-enum-initializers": "error",
+        "@typescript-eslint/prefer-literal-enum-member": "error",
     },
 };
