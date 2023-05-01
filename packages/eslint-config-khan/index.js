@@ -89,7 +89,7 @@ module.exports = {
         /**
          * prettier rules
          */
-        "prettier/prettier": ["error", require("./.prettierrc")],
+        "prettier/prettier": [ERROR, require("./.prettierrc")],
 
         /**
          * react rules
@@ -125,10 +125,37 @@ module.exports = {
         /**
          * typescript rules
          */
-        "@typescript-eslint/no-explicit-any": "off",
+
+        // Disallow the `any` type.
+        //
+        // We've disabled this rule because most repos have too many uses of `any`
+        // for this to be useful.  Individual repos can enable this rule if they're
+        // in a position to do so.
+        //
+        // Docs: https://typescript-eslint.io/rules/no-explicit-any
+        "@typescript-eslint/no-explicit-any": OFF,
+
         "@typescript-eslint/no-unused-vars": [
             ERROR,
             {args: "none", varsIgnorePattern: "^_*$"},
         ],
+
+        // Require each enum member value to be explicitly initialized.
+        //
+        // By default enums are assigned integer values starting with 0
+        // and ascending.  This can cause issue when removing or inserting
+        // new members in the enum since this can change their values.
+        // Requiring members to be explicitly initialized prevents this issue.
+        //
+        // Docs: https://typescript-eslint.io/rules/prefer-enum-initializers
+        "@typescript-eslint/prefer-enum-initializers": ERROR,
+
+        // Require all enum members to be literal values.
+        //
+        // Non-literal values can make it hard to tell what the value of a
+        // enum member is.
+        //
+        // Docs: https://typescript-eslint.io/rules/prefer-literal-enum-member
+        "@typescript-eslint/prefer-literal-enum-member": ERROR,
     },
 };
