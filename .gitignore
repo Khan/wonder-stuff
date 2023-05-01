@@ -5,4 +5,4 @@ docs
 !.vscode
 .DS_Store
 yarn-error.log
-tsconfig.tsbuildinfo
+*.tsbuildinfo

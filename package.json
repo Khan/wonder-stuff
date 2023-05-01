@@ -73,7 +73,7 @@
     "rollup-plugin-preserve-shebangs": "^0.2.0",
     "superagent": "^5.3.1",
     "typedoc": "^0.24.1",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.4",
     "winston": "^3.8.2"
   },
   "resolutions": {
@@ -86,7 +86,7 @@
     "build:flowtypes": "node -r @swc-node/register build-scripts/gen-flow-types.ts",
     "build:docs": "typedoc",
     "watch": "rollup -c build-settings/rollup.config.js --watch",
-    "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules && rm -f packages/*/tsconfig.tsbuildinfo",
+    "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules && rm -f packages/*/*.tsbuildinfo",
     "coverage": "yarn run jest --coverage",
     "format": "prettier --write .",
     "lint": "yarn lint:ci .",
