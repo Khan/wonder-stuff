@@ -57,6 +57,11 @@ export const asUncachedRequest = (
     return superagentRequest as any;
 };
 
+// NOTE(kevinb): This is necessary to workaround the followoing error when running
+// `yarn build:types`:
+// TS4078: Parameter 'response' of exported function has or is using private name 'Response'.
+type SAResponse = Response;
+
 // TODO(kevinb): Figure out how to move this into its own .d.ts file and have it
 // work with both `yarn typecheck` and `yarn build:types`.
 declare module "superagent" {
@@ -69,8 +74,8 @@ declare module "superagent" {
         pruneHeader(pruneHeader: Array<string>): this;
         prune(
             prune: (
-                response: Response,
-                gutResponse: (response: Response) => any,
+                response: SAResponse,
+                gutResponse: (response: SAResponse) => any,
             ) => any,
         ): this;
         responseProp(responseProp: string): this;
