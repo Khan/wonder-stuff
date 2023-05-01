@@ -1,5 +1,11 @@
 # @khanacademy/eslint-config
 
+## 1.3.0
+
+### Minor Changes
+
+-   53b4b7a: Add rules to ensure safe use of TS enums
+
 ## 1.2.0
 
 ### Minor Changes
