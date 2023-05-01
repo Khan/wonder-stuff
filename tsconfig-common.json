@@ -25,7 +25,6 @@
 
         /* Completeness */
         "skipDefaultLibCheck": true, // it's safe to assume that built-in .d.ts files are correct
-        "skipLibCheck": true,
-        "typeRoots": ["./node_modules/@types", "**/types"],
+        "skipLibCheck": false
     }
 }
