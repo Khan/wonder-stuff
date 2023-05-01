@@ -8,8 +8,7 @@
     "rootDir": "src",
   },
   "references": [
-    {"path": "../wonder-stuff-core"},
-    {"path": "../wonder-stuff-server"},
-    {"path": "../wonder-stuff-render-server"}
+    {"path": "../wonder-stuff-core/tsconfig-build.json"},
+    {"path": "../wonder-stuff-server/tsconfig-build.json"},
   ]
 }

@@ -5,7 +5,5 @@
     "outDir": "dist",
     "rootDir": "src",
   },
-  "references": [
-    {"path": "../wonder-stuff-core"}
-  ]
+  "references": []
 }
