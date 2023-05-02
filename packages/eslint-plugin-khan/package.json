@@ -30,7 +30,7 @@
     "prepublishOnly": "npm run test"
   },
   "dependencies": {
-    "@babel/types": "^7.7.4",
+    "@babel/types": "^7.21.5",
     "checksync": "^4.0.0"
   },
   "husky": {
