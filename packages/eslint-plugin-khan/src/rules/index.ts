@@ -8,12 +8,12 @@ import reactSvgPathPrecision from "./react-svg-path-precision";
 import syncTag from "./sync-tag";
 
 export default {
-    arrayTypeStyle,
-    jestAsyncUseRealTimers,
-    jestAwaitAsyncMatchers,
-    noOneTuple,
-    reactNoMethodJsxAttribute,
-    reactNoSubscriptionsBeforeMount,
-    reactSvgPathPrecision,
-    syncTag,
+    "array-type-style": arrayTypeStyle,
+    "jest-async-use-real-timers": jestAsyncUseRealTimers,
+    "jest-await-async-matchers": jestAwaitAsyncMatchers,
+    "no-one-tuple": noOneTuple,
+    "react-no-method-jsx-attribute": reactNoMethodJsxAttribute,
+    "react-no-subscriptions-before-mount": reactNoSubscriptionsBeforeMount,
+    "react-svg-path-precision": reactSvgPathPrecision,
+    "sync-tag": syncTag,
 };
