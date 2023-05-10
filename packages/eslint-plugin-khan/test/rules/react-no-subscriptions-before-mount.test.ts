@@ -1,4 +1,4 @@
-import rule from "../../src/rules/react-no-subscriptions-before-mount";
+import {rules} from "../../src/index";
 import {RuleTester} from "../RuleTester";
 
 const ruleTester = new RuleTester({
@@ -125,7 +125,10 @@ class MyComponent extends Component {
     }
 }`;
 
-ruleTester.run("bind-react-methods", rule, {
+const ruleName = "react-no-subscriptions-before-mount";
+const rule = rules[ruleName];
+
+ruleTester.run(ruleName, rule, {
     valid: [validBecauseNoSubs, validBecauseSubAfterMount],
 
     invalid: [

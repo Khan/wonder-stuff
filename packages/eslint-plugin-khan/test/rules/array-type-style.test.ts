@@ -1,4 +1,4 @@
-import rule from "../../src/rules/array-type-style";
+import {rules} from "../../src/index";
 import {RuleTester} from "../RuleTester";
 
 const ruleTester = new RuleTester({
@@ -10,7 +10,10 @@ const ruleTester = new RuleTester({
     },
 });
 
-ruleTester.run("flow-array-type-style", rule, {
+const ruleName = "array-type-style";
+const rule = rules[ruleName];
+
+ruleTester.run(ruleName, rule, {
     valid: [
         {
             code: "type foo = { bar: Array<number> }",

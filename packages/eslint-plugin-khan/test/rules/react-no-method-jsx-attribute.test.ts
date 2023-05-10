@@ -1,4 +1,4 @@
-import rule from "../../src/rules/react-no-method-jsx-attribute";
+import {rules} from "../../src/index";
 import {RuleTester} from "../RuleTester";
 
 const ruleTester = new RuleTester({
@@ -11,6 +11,9 @@ const ruleTester = new RuleTester({
         },
     },
 });
+
+const ruleName = "react-no-method-jsx-attribute";
+const rule = rules[ruleName];
 
 ruleTester.run("react-no-method-jsx-attribute", rule, {
     valid: [

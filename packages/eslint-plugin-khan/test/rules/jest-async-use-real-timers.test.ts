@@ -1,6 +1,4 @@
-import * as path from "path";
-
-import rule from "../../src/rules/jest-async-use-real-timers";
+import {rules} from "../../src/index";
 import {RuleTester} from "../RuleTester";
 
 const ruleTester = new RuleTester({
@@ -12,14 +10,16 @@ const ruleTester = new RuleTester({
     },
 });
 
-ruleTester.run("jest-real-timers", rule, {
+const ruleName = "jest-async-use-real-timers";
+const rule = rules[ruleName];
+
+ruleTester.run(ruleName, rule, {
     valid: [
         {
             code: `
 describe("foo", () => {
     it("doesn't require real timers", () => {});
 })`,
-            options: [],
         },
         {
             code: `
@@ -28,7 +28,6 @@ describe("foo", () => {
         jest.useRealTimers();
     });
 })`,
-            options: [],
         },
         {
             code: `
@@ -37,7 +36,6 @@ describe("foo", () => {
         jest.useRealTimers();
     });
 })`,
-            options: [],
         },
         {
             code: `
@@ -48,7 +46,6 @@ describe("foo", () => {
 
     it("requires real timers", async () => {});
 })`,
-            options: [],
         },
         {
             code: `
@@ -61,7 +58,6 @@ describe("foo", () => {
         it("requires real timers", async () => {});
     });
 })`,
-            options: [],
         },
         {
             code: `
@@ -74,22 +70,18 @@ describe("foo", () => {
         it("requires real timers", async () => {});
     });
 })`,
-            options: [],
         },
         {
             code: `describe("foo", fn)`,
-            options: [],
         },
         {
             code: `describe("foo", () => fn())`,
-            options: [],
         },
         {
             code: `
 describe("foo", () => {
     it("requires real timers", asyncFn);
 })`,
-            options: [],
         },
         {
             code: `
@@ -100,7 +92,6 @@ describe("foo", () => {
 
     it("requires real timers", async () => asyncFn());
 })`,
-            options: [],
         },
     ],
     invalid: [
@@ -109,16 +100,14 @@ describe("foo", () => {
 describe("foo", () => {
     it("requires real timers", async () => {});
 })`,
-            options: [],
-            errors: ["Async tests require jest.useRealTimers()."],
+            errors: [{messageId: "errorString"}],
         },
         {
             code: `
 describe("foo", () => {
     it("requires real timers", async function() {});
 })`,
-            options: [],
-            errors: ["Async tests require jest.useRealTimers()."],
+            errors: [{messageId: "errorString"}],
         },
         {
             code: `
@@ -127,8 +116,7 @@ describe("foo", () => {
 
     it("requires real timers", async () => {});
 })`,
-            options: [],
-            errors: ["Async tests require jest.useRealTimers()."],
+            errors: [{messageId: "errorString"}],
         },
         {
             code: `
@@ -139,8 +127,7 @@ describe("foo", () => {
         it("requires real timers", async () => {});
     });
 })`,
-            options: [],
-            errors: ["Async tests require jest.useRealTimers()."],
+            errors: [{messageId: "errorString"}],
         },
         {
             code: `
@@ -151,16 +138,14 @@ describe("foo", () => {
         it("requires real timers", async () => {});
     });
 })`,
-            options: [],
-            errors: ["Async tests require jest.useRealTimers()."],
+            errors: [{messageId: "errorString"}],
         },
         {
             code: `
 describe("foo", () => {
     it("requires real timers", async () => asyncFn());
 })`,
-            options: [],
-            errors: ["Async tests require jest.useRealTimers()."],
+            errors: [{messageId: "errorString"}],
         },
     ],
 });

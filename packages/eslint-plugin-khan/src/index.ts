@@ -1,3 +1,3 @@
 import rules from "./rules";
 
-export default {rules};
+export {rules};

@@ -1,4 +1,4 @@
-import rule from "../../src/rules/react-svg-path-precision";
+import {rules} from "../../src/index";
 import {RuleTester} from "../RuleTester";
 
 const ruleTester = new RuleTester({
@@ -11,6 +11,9 @@ const ruleTester = new RuleTester({
         },
     },
 });
+
+const ruleName = "react-svg-path-precision";
+const rule = rules[ruleName];
 
 ruleTester.run("react-svg-path-precision", rule, {
     valid: [

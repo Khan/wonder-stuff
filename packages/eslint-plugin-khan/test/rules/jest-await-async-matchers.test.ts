@@ -1,4 +1,4 @@
-import rule from "../../src/rules/jest-await-async-matchers";
+import {rules} from "../../src/index";
 import {RuleTester} from "../RuleTester";
 
 const ruleTester = new RuleTester({
@@ -9,6 +9,9 @@ const ruleTester = new RuleTester({
         ecmaFeatures: {},
     },
 });
+
+const ruleName = "jest-await-async-matchers";
+const rule = rules[ruleName];
 
 ruleTester.run("jest-await-async-matchers", rule, {
     valid: [

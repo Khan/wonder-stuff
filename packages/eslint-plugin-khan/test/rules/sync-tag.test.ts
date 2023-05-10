@@ -1,4 +1,4 @@
-import rule from "../../src/rules/sync-tag";
+import {rules} from "../../src/index";
 import * as util from "../../src/util";
 
 import {RuleTester} from "../RuleTester";
@@ -95,6 +95,9 @@ beforeEach(() => {
         return "";
     });
 });
+
+const ruleName = "sync-tag";
+const rule = rules[ruleName];
 
 ruleTester.run("sync-tag", rule, {
     valid: [
