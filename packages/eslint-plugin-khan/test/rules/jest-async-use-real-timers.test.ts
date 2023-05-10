@@ -1,14 +1,16 @@
-const path = require("path");
+import * as path from "path";
 
-const {rules} = require("../lib/index.js");
-const RuleTester = require("eslint").RuleTester;
+import rule from "../../src/rules/jest-async-use-real-timers";
+import {RuleTester} from "../RuleTester";
 
-const parserOptions = {
-    parser: require.resolve("@babel/eslint-parser"),
-};
-
-const ruleTester = new RuleTester(parserOptions);
-const rule = rules["jest-async-use-real-timers"];
+const ruleTester = new RuleTester({
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: "module",
+        ecmaFeatures: {},
+    },
+});
 
 ruleTester.run("jest-real-timers", rule, {
     valid: [

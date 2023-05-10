@@ -1,15 +1,14 @@
-const {rules} = require("../lib/index.js");
-const RuleTester = require("eslint").RuleTester;
+import rule from "../../src/rules/array-type-style";
+import {RuleTester} from "../RuleTester";
 
-const parserOptions = {
-    parser: require.resolve("@babel/eslint-parser"),
-};
-
-const ruleTester = new RuleTester(parserOptions);
-const rule = rules["flow-array-type-style"];
-
-const message = rule.__message;
-const errors = [message];
+const ruleTester = new RuleTester({
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: "module",
+        ecmaFeatures: {},
+    },
+});
 
 ruleTester.run("flow-array-type-style", rule, {
     valid: [
@@ -22,7 +21,7 @@ ruleTester.run("flow-array-type-style", rule, {
         {
             code: "type foo = { bar: number[] }",
             options: ["always"],
-            errors: errors,
+            errors: [{messageId: "errorString"}],
             output: "type foo = { bar: Array<number> }",
         },
         {
@@ -30,7 +29,7 @@ ruleTester.run("flow-array-type-style", rule, {
             options: ["always"],
             // Two errors are reported because there are two array types,
             // they just happen to be nested.
-            errors: [message, message],
+            errors: [{messageId: "errorString"}, {messageId: "errorString"}],
             // This is a partial fix.  Multiple runs of eslint --fix are needed
             // to fix nested (in the AST) array types completely.
             output: "type foo = { bar: Array<number>[] }",

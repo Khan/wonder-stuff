@@ -1,15 +1,14 @@
-const {rules} = require("../lib/index.js");
-const RuleTester = require("eslint").RuleTester;
+import rule from "../../src/rules/react-no-subscriptions-before-mount";
+import {RuleTester} from "../RuleTester";
 
-const parserOptions = {
-    parser: require.resolve("@babel/eslint-parser"),
-};
-
-const ruleTester = new RuleTester(parserOptions);
-const rule = rules["react-no-subscriptions-before-mount"];
-
-const message = rule.__message;
-const errors = [message];
+const ruleTester = new RuleTester({
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: "module",
+        ecmaFeatures: {},
+    },
+});
 
 const validBecauseNoSubs = `
 class MyComponent extends Component {
@@ -139,5 +138,5 @@ ruleTester.run("bind-react-methods", rule, {
         invalidWithNestedProperty,
         invalidWithinPromise,
         // TODOInvalid,
-    ].map((code) => ({code, errors})),
+    ].map((code) => ({code, errors: [{messageId: "errorMessage"}]})),
 });

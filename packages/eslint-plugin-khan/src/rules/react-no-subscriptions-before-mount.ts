@@ -1,8 +1,19 @@
-const message =
-    "Subscriptions (eg. event listeners) should not be set before the " +
-    "component has mounted. This is to avoid firing them on the server, " +
-    "as well as to ensure compatibility with React 16.\n\n" +
-    "Please consider moving this subscription to `componentDidMount`.";
+import {ESLintUtils, TSESTree} from "@typescript-eslint/utils";
+
+import * as t from "../ast-utils";
+
+const createRule = ESLintUtils.RuleCreator(
+    (name) =>
+        `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
+);
+
+const messages = {
+    errorMessage:
+        "Subscriptions (eg. event listeners) should not be set before the " +
+        "component has mounted. This is to avoid firing them on the server, " +
+        "as well as to ensure compatibility with React 16.\n\n" +
+        "Please consider moving this subscription to `componentDidMount`.",
+};
 
 const subscriptionNames = [
     "then",
@@ -17,41 +28,52 @@ const beforeMountMethods = ["constructor", "componentWillMount"];
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-module.exports = {
+type Options = ["always" | "never"];
+type MessageIds = keyof typeof messages;
+
+export default createRule<Options, MessageIds>({
+    name: "react-no-subscriptions-before-mount",
     meta: {
         docs: {
             // eslint-disable-next-line max-len
             description:
                 "Avoid subscriptions in `constructor` and `componentWillMount`",
-            category: "react",
             recommended: false,
         },
-        schema: [],
+        messages,
+        schema: [
+            {
+                enum: ["always", "never"],
+            },
+        ],
+        type: "problem",
     },
     create(context) {
         return {
             CallExpression(node) {
-                // Is this a function (eg. 'setTimeout()'), or a method
-                // (eg. 'window.setTimeout()')?
-                const isMethod = node.callee.type === "MemberExpression";
-
                 // Grab the function-call bit (setTimeout)
-                const identifier = isMethod
+                const identifier = t.isMemberExpression(node.callee)
                     ? node.callee.property
                     : node.callee;
 
                 // Bail early if this identifier isn't forbidden.
-                if (!subscriptionNames.includes(identifier.name)) {
+                if (
+                    !(
+                        t.isIdentifier(identifier) &&
+                        subscriptionNames.includes(identifier.name)
+                    )
+                ) {
                     return;
                 }
 
                 // Are we in one of the before-mount methods?
                 // To answer this question, we need to find the ancestor
                 // MethodDefinition.
-                const ancestors = context.getAncestors(node.callee).reverse();
+                // const ancestors = context.getAncestors(node.callee).reverse();
+                const ancestors = context.getAncestors().reverse();
                 const ancestorMethodDef = ancestors.find(
                     (a) => a.type === "MethodDefinition",
-                );
+                ) as TSESTree.MethodDefinition | undefined;
 
                 // If there _is_ no parent MethodDefinition, bail early.
                 // This subsciption is just fine.
@@ -60,10 +82,13 @@ module.exports = {
                 }
 
                 // Check if this is one of the pre-mount methods.
-                if (beforeMountMethods.includes(ancestorMethodDef.key.name)) {
+                if (
+                    t.isIdentifier(ancestorMethodDef.key) &&
+                    beforeMountMethods.includes(ancestorMethodDef.key.name)
+                ) {
                     return context.report({
                         node,
-                        message,
+                        messageId: "errorMessage",
                     });
                 }
 
@@ -90,5 +115,5 @@ module.exports = {
             },
         };
     },
-    __message: message,
-};
+    defaultOptions: ["always"],
+});

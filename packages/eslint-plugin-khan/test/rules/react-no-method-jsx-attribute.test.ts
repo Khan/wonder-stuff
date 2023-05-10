@@ -1,14 +1,16 @@
-const path = require("path");
+import rule from "../../src/rules/react-no-method-jsx-attribute";
+import {RuleTester} from "../RuleTester";
 
-const {rules} = require("../lib/index.js");
-const RuleTester = require("eslint").RuleTester;
-
-const parserOptions = {
-    parser: require.resolve("@babel/eslint-parser"),
-};
-
-const ruleTester = new RuleTester(parserOptions);
-const rule = rules["react-no-method-jsx-attribute"];
+const ruleTester = new RuleTester({
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: "module",
+        ecmaFeatures: {
+            jsx: true,
+        },
+    },
+});
 
 ruleTester.run("react-no-method-jsx-attribute", rule, {
     valid: [
@@ -24,7 +26,6 @@ class Foo {
         return <div onClick={this.handleClick} />
     }
 }`,
-            options: [],
         },
         // method arrow function class property
         {
@@ -36,7 +37,6 @@ class Foo {
         return <div onClick={this.handleClick} />
     }
 }`,
-            options: [],
         },
         // different classes using the same event handler
         {
@@ -56,7 +56,6 @@ class Bar {
         return <div onClick={() => this.handleClick()} />
     }
 }`,
-            options: [],
         },
         // getter method - called in Foo's scope so it's fine
         {
@@ -70,7 +69,6 @@ class Foo {
         return <div id={this.bar} />
     }
 }`,
-            options: [],
         },
     ],
     invalid: [
@@ -84,10 +82,8 @@ class Foo {
         return <div onClick={this.handleClick} />
     }
 }`,
-            options: [],
-            errors: [
-                "Methods cannot be passed as props, use a class property instead.",
-            ],
+
+            errors: [{messageId: "errorMessage"}],
         },
         // two regular methods, both not okay, two errors
         {
@@ -107,11 +103,8 @@ class Bar {
         return <div onClick={this.handleClick} />
     }
 }`,
-            options: [],
-            errors: [
-                "Methods cannot be passed as props, use a class property instead.",
-                "Methods cannot be passed as props, use a class property instead.",
-            ],
+
+            errors: [{messageId: "errorMessage"}, {messageId: "errorMessage"}],
         },
     ],
 });

@@ -1,14 +1,33 @@
-const t = require("@babel/types");
+import {ESLintUtils, TSESTree, AST_NODE_TYPES} from "@typescript-eslint/utils";
 
-module.exports = {
+import * as t from "../ast-utils";
+
+const createRule = ESLintUtils.RuleCreator(
+    (name) =>
+        `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
+);
+
+const messages = {
+    errorMessage: "This path contains numbers with too many decimal places.",
+};
+
+type MessageIds = keyof typeof messages;
+type Options = [
+    {
+        precision: number;
+    },
+];
+
+export default createRule<Options, MessageIds>({
+    name: "react-svg-path-precision",
     meta: {
         docs: {
             description:
                 "Ensure that SVG paths don't use too many decimal places",
-            category: "react",
             recommended: false,
         },
         fixable: "code",
+        messages,
         schema: [
             {
                 type: "object",
@@ -20,6 +39,7 @@ module.exports = {
                 additionalProperties: false,
             },
         ],
+        type: "problem",
     },
 
     create(context) {
@@ -43,9 +63,11 @@ module.exports = {
                 ) {
                     if (
                         t.isJSXOpeningElement(node.parent) &&
-                        t.isJSXIdentifier(node.parent.name, {name: "path"})
+                        t.isJSXIdentifier(node.parent.name, {name: "path"}) &&
+                        t.isLiteral(node.value)
                     ) {
-                        const d = node.value.value;
+                        const nodeValue = node.value;
+                        const d = nodeValue.value as string;
 
                         if (regex.test(d)) {
                             context.report({
@@ -59,13 +81,12 @@ module.exports = {
                                     );
 
                                     return fixer.replaceText(
-                                        node.value,
+                                        nodeValue,
                                         `"${replacementText}"`,
                                     );
                                 },
                                 node,
-                                message:
-                                    "This path contains numbers with too many decimal places.",
+                                messageId: "errorMessage",
                             });
                         }
                     }
@@ -73,4 +94,5 @@ module.exports = {
             },
         };
     },
-};
+    defaultOptions: [{precision: 3}],
+});
