@@ -1,6 +1,12 @@
-const path = require("path");
+import * as path from "path";
+import {ESLintUtils, TSESTree, TSESLint} from "@typescript-eslint/utils";
 
-const util = require("../util.js");
+import * as util from "../util";
+
+const createRule = ESLintUtils.RuleCreator(
+    (name) =>
+        `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
+);
 
 const PKG_ROOT = path.join(__dirname, "..", "..");
 const CHECKSYNC_PATH = path.join(PKG_ROOT, "node_modules", ".bin", "checksync");
@@ -8,7 +14,20 @@ const CHECKSYNC_PATH = path.join(PKG_ROOT, "node_modules", ".bin", "checksync");
 const UPDATE_REMINDER =
     "If necessary, check the sync-tag target and make relevant changes before updating the checksum.";
 
-const applyFix = (fixer, {tagToFix, fix}) => {
+type Fix = {type: "replace" | "delete"; line: number; text: string};
+
+type Item = {
+    type: "replace" | "delete";
+    reason?: string;
+    location?: {line: number};
+    message?: string;
+    fix?: Fix;
+};
+
+const applyFix = (
+    fixer: TSESLint.RuleFixer,
+    {tagToFix, fix}: {tagToFix: TSESTree.Comment; fix: Fix},
+) => {
     switch (fix.type) {
         case "replace":
             return fixer.replaceText(tagToFix, fix.text);
@@ -21,41 +40,72 @@ const applyFix = (fixer, {tagToFix, fix}) => {
     }
 };
 
-const processFile = (file, node, context, tagStarts) => {
+const processFile = (
+    file: Array<Item>,
+    node: TSESTree.Program,
+    context: TSESLint.RuleContext<MessageIds, Options>,
+    tagStarts: Array<TSESTree.Comment>,
+) => {
     for (const item of file) {
         processItem(item, node, context, tagStarts);
     }
 };
 
-const processItem = (item, node, context, tagStarts) => {
+const messages = {
+    reason: "{{reason}}",
+    reasonAndReminder: "{{reason}} {{reminder}}",
+};
+
+const processItem = (
+    item: Item,
+    node: TSESTree.Program,
+    context: TSESLint.RuleContext<MessageIds, Options>,
+    tagStarts: Array<TSESTree.Comment>,
+) => {
     if (item.reason && item.location) {
         if (item.fix) {
+            const itemFix = item.fix;
             const comment = tagStarts.find(
-                (comment) => comment.loc.start.line === item.fix.line,
+                (comment) => comment.loc.start.line === itemFix.line,
             );
-            context.report({
-                node: comment,
-                message: `${item.reason}`,
-                fix(fixer) {
-                    return applyFix(fixer, {
-                        tagToFix: comment,
-                        fix: item.fix,
-                    });
-                },
-            });
+            if (comment) {
+                context.report({
+                    node: comment,
+                    messageId: "reason",
+                    data: {
+                        reason: item.reason,
+                    },
+                    fix(fixer) {
+                        return applyFix(fixer, {
+                            tagToFix: comment,
+                            fix: itemFix,
+                        });
+                    },
+                });
+            }
         } else {
+            const itemLocation = item.location;
             const comment = tagStarts.find(
-                (comment) => comment.loc.start.line === item.location.line,
+                (comment) => comment.loc.start.line === itemLocation.line,
             );
-            context.report({
-                node: comment,
-                message: item.reason,
-            });
+            if (comment) {
+                context.report({
+                    node: comment,
+                    messageId: "reason",
+                    data: {
+                        reason: item.reason,
+                    },
+                });
+            }
         }
     } else if (item.message) {
         context.report({
             node: node,
-            message: `${item.reason} ${UPDATE_REMINDER}`,
+            messageId: "reasonAndReminder",
+            data: {
+                reason: item.reason,
+                reminder: UPDATE_REMINDER,
+            },
         });
     } else {
         // eslint-disable-next-line no-console
@@ -64,8 +114,12 @@ const processItem = (item, node, context, tagStarts) => {
 };
 
 const getCommandForFilename = (
-    {configFile, ignoreFiles, rootDir},
-    filename,
+    {
+        configFile,
+        ignoreFiles,
+        rootDir,
+    }: {configFile?: string; ignoreFiles: string; rootDir: string},
+    filename: string,
 ) => {
     const ignoreFilesArg = ignoreFiles ? `--ignore-files ${ignoreFiles}` : "";
     const configFileArg = configFile
@@ -75,7 +129,14 @@ const getCommandForFilename = (
     return `${CHECKSYNC_PATH} ${filename} ${configFileArg} ${ignoreFilesArg} --json`;
 };
 
-const getSyncErrors = ({configFile, ignoreFiles, rootDir}, filename) => {
+const getSyncErrors = (
+    {
+        configFile,
+        ignoreFiles,
+        rootDir,
+    }: {configFile?: string; ignoreFiles: string; rootDir: string},
+    filename: string,
+) => {
     const command = getCommandForFilename(
         {configFile, ignoreFiles, rootDir},
         filename,
@@ -85,7 +146,7 @@ const getSyncErrors = ({configFile, ignoreFiles, rootDir}, filename) => {
             cwd: rootDir,
             encoding: "utf-8",
         });
-    } catch (e) {
+    } catch (e: any) {
         // From https://github.com/somewhatabstract/checksync/blob/b2f31732715aa940051e7b2b2166b4699aa0f047/src/exit-codes.js
         // Error 3 is that we have DESYNCHRONIZED_BLOCKS.
         if (e.status === 3) {
@@ -96,11 +157,24 @@ const getSyncErrors = ({configFile, ignoreFiles, rootDir}, filename) => {
     }
 };
 
-module.exports = {
+type Options = [
+    {
+        ignoreFiles: Array<string>;
+        rootDir: string;
+        configFile?: string;
+    },
+];
+type MessageIds = keyof typeof messages;
+
+export default createRule<Options, MessageIds>({
+    name: "sync-tag",
     meta: {
         docs: {
             description: "Ensure sync tags are valid",
+            recommended: false,
         },
+        fixable: "code",
+        messages,
         schema: [
             {
                 type: "object",
@@ -120,7 +194,7 @@ module.exports = {
                 },
             },
         ],
-        fixable: "code",
+        type: "problem",
     },
 
     create(context) {
@@ -133,9 +207,10 @@ module.exports = {
 
         return {
             Program(node) {
-                const syncStartComments = node.comments.filter((comment) =>
-                    comment.value.trim().startsWith("sync-start:"),
-                );
+                const syncStartComments =
+                    node.comments?.filter((comment) =>
+                        comment.value.trim().startsWith("sync-start:"),
+                    ) ?? [];
 
                 const shouldChecksync = syncStartComments.length > 0;
 
@@ -172,4 +247,11 @@ module.exports = {
             },
         };
     },
-};
+    defaultOptions: [
+        {
+            ignoreFiles: [],
+            configFile: "",
+            rootDir: "",
+        },
+    ],
+});

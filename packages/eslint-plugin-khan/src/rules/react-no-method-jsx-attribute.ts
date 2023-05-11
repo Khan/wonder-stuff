@@ -1,11 +1,28 @@
-module.exports = {
+import {ESLintUtils, TSESTree, AST_NODE_TYPES} from "@typescript-eslint/utils";
+
+const createRule = ESLintUtils.RuleCreator(
+    (name) =>
+        `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
+);
+
+const messages = {
+    errorMessage:
+        "Methods cannot be passed as props, use a class property instead.",
+};
+
+type MessageIds = keyof typeof messages;
+type Options = ["always" | "never"];
+
+export default createRule<Options, MessageIds>({
+    name: "react-no-method-jsx-attribute",
     meta: {
         docs: {
             description: "Ensure that methods aren't used as jsx attributes",
-            category: "react",
             recommended: false,
         },
-        schema: [],
+        messages,
+        schema: [{enum: ["always", "never"]}],
+        type: "problem",
     },
 
     create(context) {
@@ -16,7 +33,7 @@ module.exports = {
             ClassDeclaration(node) {
                 for (const child of node.body.body) {
                     if (
-                        child.type === "ClassProperty" &&
+                        child.type === AST_NODE_TYPES.PropertyDefinition &&
                         child.key.type === "Identifier"
                     ) {
                         classProperties.set(child.key.name, child);
@@ -29,10 +46,10 @@ module.exports = {
                     }
                 }
             },
-            "ClassDeclaration:exit"(node) {
+            "ClassDeclaration:exit"(node: TSESTree.ClassDeclaration) {
                 for (const child of node.body.body) {
                     if (
-                        child.type === "ClassProperty" &&
+                        child.type === AST_NODE_TYPES.PropertyDefinition &&
                         child.key.type === "Identifier"
                     ) {
                         classProperties.delete(child.key.name);
@@ -49,7 +66,7 @@ module.exports = {
                 const {value} = node;
                 // value doesn't exist for boolean shorthand attributes
                 if (value && value.type === "JSXExpressionContainer") {
-                    const {expression} = node.value;
+                    const {expression} = value;
                     if (expression.type === "MemberExpression") {
                         const {object, property} = expression;
                         if (
@@ -60,8 +77,7 @@ module.exports = {
                             if (methods.has(name)) {
                                 context.report({
                                     node: methods.get(name),
-                                    message:
-                                        "Methods cannot be passed as props, use a class property instead.",
+                                    messageId: "errorMessage",
                                 });
                             }
                         }
@@ -70,4 +86,5 @@ module.exports = {
             },
         };
     },
-};
+    defaultOptions: ["always"],
+});

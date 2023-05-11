@@ -1,17 +1,19 @@
-const {rules} = require("../lib/index.js");
-const RuleTester = require("eslint").RuleTester;
+import {rules} from "../../src/index";
+import {RuleTester} from "../RuleTester";
 
-const parserOptions = {
-    parser: require.resolve("@babel/eslint-parser"),
-};
+const ruleTester = new RuleTester({
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: "module",
+        ecmaFeatures: {},
+    },
+});
 
-const ruleTester = new RuleTester(parserOptions);
-const rule = rules["flow-no-one-tuple"];
+const ruleName = "no-one-tuple";
+const rule = rules[ruleName];
 
-const message = rule.__message;
-const errors = [message];
-
-ruleTester.run("flow-no-one-tuple", rule, {
+ruleTester.run(ruleName, rule, {
     valid: [
         {
             code: "type foo = { bar: Array<number> }",
@@ -26,7 +28,7 @@ ruleTester.run("flow-no-one-tuple", rule, {
         {
             code: "type foo = { bar: [number] }",
             options: ["always"],
-            errors: errors,
+            errors: [{messageId: "errorString"}],
             output: "type foo = { bar: Array<number> }",
         },
         {
@@ -34,7 +36,7 @@ ruleTester.run("flow-no-one-tuple", rule, {
             options: ["always"],
             // Two errors are reported because there are two one-tuples,
             // they just happen to be nested.
-            errors: [message, message],
+            errors: [{messageId: "errorString"}, {messageId: "errorString"}],
             // This is a partial fix.  Multiple runs of eslint --fix are needed
             // to fix nested 1-tuples completely.
             output: "type foo = { bar: Array<[number]> }",

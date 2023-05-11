@@ -19,6 +19,7 @@ fg(path.join(__dirname, "..", "packages", "*", "package.json")).then(
         // eslint-disable-next-line promise/always-return
         for (const pkgPath of pkgPaths) {
             const pkgJson = require(path.relative(__dirname, pkgPath));
+            const pkgName = pkgJson.name;
 
             if (!checkPrivate(pkgJson)) {
                 if (pkgJson.nobuild) {
@@ -26,7 +27,10 @@ fg(path.join(__dirname, "..", "packages", "*", "package.json")).then(
                 } else {
                     checkPublishConfig(pkgJson);
                     checkEntrypoints(pkgJson);
-                    checkTypes(pkgJson);
+                    // The eslint packages don't publish types.
+                    if (!pkgName.includes("eslint")) {
+                        checkTypes(pkgJson);
+                    }
                 }
             }
         }
