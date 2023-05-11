@@ -4234,10 +4234,10 @@ eslint-plugin-jest@27.2.1:
   dependencies:
     "@typescript-eslint/utils" "^5.10.0"
 
-eslint-plugin-jsdoc@^43.2.0:
-  version "43.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-43.2.0.tgz#9d0df2329100a6956635f26211d0723c3ff91f15"
-  integrity sha512-Hst7XUfqh28UmPD52oTXmjaRN3d0KrmOZdgtp4h9/VHUJD3Evoo82ZGXi1TtRDWgWhvqDIRI63O49H0eH7NrZQ==
+eslint-plugin-jsdoc@^44.2.2:
+  version "44.2.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-44.2.2.tgz#03173405a6b7570b1ccd92d5c1575e440b3fc00d"
+  integrity sha512-LgzBwBfAbQPhC3vRcH5mkus8G7plr8kYFldgPtRMe55t7hjLM97luCBnk6VnAG/Ski4vhNPiX66zlDdgL21mog==
   dependencies:
     "@es-joy/jsdoccomment" "~0.38.0"
     are-docs-informative "^0.0.2"
