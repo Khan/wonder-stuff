@@ -40,43 +40,70 @@ ruleTester.run(ruleName, rule, {
                 baz={baz}
             />`,
         },
+        {
+            code: `
+            const foo = <Foo
+                onClick={(e) => {
+                    // @ts-ignore: inside a JSXAttribute's value
+                    e.preventDefault();
+                }}
+            />`,
+        },
     ],
     invalid: [
         {
             code: `
-            const foo = <Foo
-                // @ts-expect-error: on JSXAttribute
-                bar="bar"
-                baz={baz}
-            />`,
+const foo = <Foo
+// @ts-expect-error: on JSXAttribute
+bar="bar"
+baz={baz}
+/>`,
             errors: [
                 {messageId: "errorString", data: {type: "@ts-expect-error"}},
             ],
+            output: `
+const foo = <Foo
+bar="bar"
+baz={baz}
+/>`,
         },
         {
             code: `
-            const foo = <Foo
-                // @ts-ignore: on JSXAttribute
-                bar="bar"
-                baz={baz}
-            />`,
+const foo = <Foo
+// @ts-ignore: on JSXAttribute
+bar="bar"
+baz={baz}
+/>`,
             errors: [{messageId: "errorString", data: {type: "@ts-ignore"}}],
+            output: `
+const foo = <Foo
+bar="bar"
+baz={baz}
+/>`,
         },
         {
             code: `
-            const foo = <Foo
-                // @ts-expect-error: on JSXAttribute
-                bar="bar"
-                baz={baz}
-            />;
-            const bar = <Bar
-                // @ts-expect-error: on JSXAttribute
-                baz={baz}
-            />;`,
+const foo = <Foo
+// @ts-expect-error: on JSXAttribute
+bar="bar"
+baz={baz}
+/>;
+const bar = <Bar
+// @ts-expect-error: on JSXAttribute
+baz={baz}
+/>;`,
             errors: [
                 {messageId: "errorString", data: {type: "@ts-expect-error"}},
                 {messageId: "errorString", data: {type: "@ts-expect-error"}},
             ],
+            output: `
+const foo = <Foo
+bar="bar"
+baz={baz}
+/>;
+const bar = <Bar
+baz={baz}
+/>;`,
         },
     ],
 });

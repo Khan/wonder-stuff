@@ -6,7 +6,7 @@ import reactNoMethodJsxAttribute from "./react-no-method-jsx-attribute";
 import reactNoSubscriptionsBeforeMount from "./react-no-subscriptions-before-mount";
 import reactSvgPathPrecision from "./react-svg-path-precision";
 import syncTag from "./sync-tag";
-import tsNoErrorSupressions from "./ts-no-error-supressions";
+import tsNoErrorSupressions from "./ts-no-error-suppressions";
 
 export default {
     "array-type-style": arrayTypeStyle,
