@@ -8,6 +8,7 @@ export {keys} from "./keys";
 export {KindError} from "./kind-error";
 export {safeStringify} from "./safe-stringify";
 export {truncateMiddle} from "./truncate-middle";
+export * from "./type-predicates";
 export {values} from "./values";
 export {secret} from "./secrets/secret";
 
