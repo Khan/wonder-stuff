@@ -28,7 +28,7 @@ const beforeMountMethods = ["constructor", "componentWillMount"];
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-type Options = ["always" | "never"];
+type Options = [];
 type MessageIds = keyof typeof messages;
 
 export default createRule<Options, MessageIds>({
@@ -41,11 +41,7 @@ export default createRule<Options, MessageIds>({
             recommended: false,
         },
         messages,
-        schema: [
-            {
-                enum: ["always", "never"],
-            },
-        ],
+        schema: [],
         type: "problem",
     },
     create(context) {
@@ -115,5 +111,5 @@ export default createRule<Options, MessageIds>({
             },
         };
     },
-    defaultOptions: ["always"],
+    defaultOptions: [],
 });

@@ -11,7 +11,7 @@ const messages = {
 };
 
 type MessageIds = keyof typeof messages;
-type Options = ["always" | "never"];
+type Options = [];
 
 export default createRule<Options, MessageIds>({
     name: "react-no-method-jsx-attribute",
@@ -21,7 +21,7 @@ export default createRule<Options, MessageIds>({
             recommended: false,
         },
         messages,
-        schema: [{enum: ["always", "never"]}],
+        schema: [],
         type: "problem",
     },
 
@@ -86,5 +86,5 @@ export default createRule<Options, MessageIds>({
             },
         };
     },
-    defaultOptions: ["always"],
+    defaultOptions: [],
 });

@@ -2,6 +2,7 @@ node_modules
 coverage
 dist
 docs
+!packages/eslint-plugin-khan/docs
 !.vscode
 .DS_Store
 yarn-error.log

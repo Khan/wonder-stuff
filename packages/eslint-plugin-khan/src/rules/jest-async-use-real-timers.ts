@@ -91,7 +91,7 @@ const isAsync = (itCall: TSESTree.CallExpression) => {
     );
 };
 
-type Options = ["always" | "never"];
+type Options = [];
 type MessageIds = "errorString";
 
 const message = "Async tests require jest.useRealTimers().";
@@ -107,11 +107,7 @@ export default createRule<Options, MessageIds>({
         messages: {
             errorString: message,
         },
-        schema: [
-            {
-                enum: ["always", "never"],
-            },
-        ],
+        schema: [],
         type: "problem",
     },
 
@@ -152,5 +148,5 @@ export default createRule<Options, MessageIds>({
         };
     },
 
-    defaultOptions: ["always"],
+    defaultOptions: [],
 });
