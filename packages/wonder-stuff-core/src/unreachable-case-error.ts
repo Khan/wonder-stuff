@@ -22,6 +22,7 @@ import {KindError, Options} from "./kind-error";
  *     }
  *     case "delete": {
  *       // do delete
+ *       break;
  *     }
  *     default: {
  *       throw new UnreachableCaseError(action);
