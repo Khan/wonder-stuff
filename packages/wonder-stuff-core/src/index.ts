@@ -11,6 +11,7 @@ export {truncateMiddle} from "./truncate-middle";
 export * from "./type-predicates";
 export {values} from "./values";
 export {secret} from "./secrets/secret";
+export {UnreachableCaseError} from "./unreachable-case-error";
 
 export type {
     Metadata,
