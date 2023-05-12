@@ -25,5 +25,8 @@ export const isTruthy = <T>(x: T | Falsy): x is T => !!x;
  *
  * `nonNullableArray` will be `[0, 5, false, true, "", "hello"]` and will have the
  * following type: `Array<string | number | boolean>`.
+ *
+ * NOTE: The term "nullable" in TypeScript refers to either `null` or `undefined`.
+ * This terminology is taken from https://www.typescriptlang.org/docs/handbook/utility-types.html#nonnullabletype.
  */
 export const isNonNullable = <T>(x: T | null | undefined): x is T => x != null;
