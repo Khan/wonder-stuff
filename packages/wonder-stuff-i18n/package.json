@@ -15,7 +15,7 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "ancesdir": "^4.0.0",
+        "ancesdir": "^5.0.0",
         "async": "^3.2.4",
         "fast-glob": "^3.2.12",
         "pofile": "^1.1.4"
