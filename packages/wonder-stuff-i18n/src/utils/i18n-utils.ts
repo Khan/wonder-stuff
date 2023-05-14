@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 
-// @ts-expect-error [FEI-5011] - TS7016 - Could not find a declaration file for module 'ancesdir'. '/Users/kevinbarabash/khan/wonder-stuff/node_modules/ancesdir/dist/index.js' implicitly has an 'any' type.
 import ancesdir from "ancesdir";
 
 import {extractStrings} from "./extract-i18n";
