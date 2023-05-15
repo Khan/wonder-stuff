@@ -5,7 +5,7 @@ const createRule = ESLintUtils.RuleCreator(
         `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
 );
 
-type Options = ["always" | "never"];
+type Options = [];
 type MessageIds = "errorString";
 
 const message = "{{type}} not allowed on JSXAttributes";
@@ -32,15 +32,11 @@ export default createRule<Options, MessageIds>({
         messages: {
             errorString: message,
         },
-        schema: [{enum: ["always", "never"]}],
+        schema: [],
         type: "problem",
     },
 
-    create(context, [mode]) {
-        if (mode === "never") {
-            return {};
-        }
-
+    create(context) {
         let tsComments: Array<TSESTree.Comment>;
 
         return {
@@ -87,5 +83,5 @@ export default createRule<Options, MessageIds>({
             },
         };
     },
-    defaultOptions: ["always"],
+    defaultOptions: [],
 });

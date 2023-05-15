@@ -34,13 +34,6 @@ const intersect = (
     return array1.filter((value) => array2.includes(value));
 };
 
-const getCustomMatchers = (options: Options) => {
-    if (options && options[0] && options[0].matchers) {
-        return options[0].matchers;
-    }
-    return [];
-};
-
 const DEFAULT_MATCHERS = [
     // built into jest
     "resolves",
@@ -81,8 +74,7 @@ export default createRule<Options, MessageIds>({
         type: "problem",
     },
 
-    create(context) {
-        const customMatchers = getCustomMatchers(context.options);
+    create(context, [{matchers: customMatchers}]) {
         const allowedMatchers = [...DEFAULT_MATCHERS, ...customMatchers];
 
         return {

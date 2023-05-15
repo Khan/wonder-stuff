@@ -42,16 +42,7 @@ export default createRule<Options, MessageIds>({
         type: "problem",
     },
 
-    create(context) {
-        let precision = 2;
-        for (const option of context.options) {
-            if (typeof option === "object") {
-                // eslint-disable-next-line no-prototype-builtins
-                if (option.hasOwnProperty("precision")) {
-                    precision = Math.max(option.precision, 0);
-                }
-            }
-        }
+    create(context, [{precision}]) {
         const pattern = `\\d*\\.\\d{${precision},}\\d+`;
         const regex = new RegExp(pattern, "g");
 
@@ -94,5 +85,5 @@ export default createRule<Options, MessageIds>({
             },
         };
     },
-    defaultOptions: [{precision: 3}],
+    defaultOptions: [{precision: 2}],
 });

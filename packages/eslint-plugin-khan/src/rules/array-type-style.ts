@@ -5,7 +5,7 @@ const createRule = ESLintUtils.RuleCreator(
         `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
 );
 
-type Options = ["always" | "never"];
+type Options = [];
 type MessageIds = "errorString";
 
 const message =
@@ -23,37 +23,28 @@ export default createRule<Options, MessageIds>({
         messages: {
             errorString: message,
         },
-        schema: [
-            {
-                enum: ["always", "never"],
-            },
-        ],
+        schema: [],
         type: "problem",
     },
 
     create(context) {
-        const configuration = context.options[0] || "never";
         const sourceCode = context.getSourceCode();
 
         return {
             TSArrayType(node) {
-                if (configuration === "always") {
-                    context.report({
-                        fix(fixer) {
-                            const type = node.elementType;
-                            const typeText = sourceCode.text.slice(
-                                ...type.range,
-                            );
-                            const replacementText = `Array<${typeText}>`;
+                context.report({
+                    fix(fixer) {
+                        const type = node.elementType;
+                        const typeText = sourceCode.text.slice(...type.range);
+                        const replacementText = `Array<${typeText}>`;
 
-                            return fixer.replaceText(node, replacementText);
-                        },
-                        node: node,
-                        messageId: "errorString",
-                    });
-                }
+                        return fixer.replaceText(node, replacementText);
+                    },
+                    node: node,
+                    messageId: "errorString",
+                });
             },
         };
     },
-    defaultOptions: ["always"],
+    defaultOptions: [],
 });

@@ -5,7 +5,7 @@ const createRule = ESLintUtils.RuleCreator(
         `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
 );
 
-type Options = ["always" | "never"];
+type Options = [];
 type MessageIds = "errorString";
 
 const message =
@@ -23,20 +23,16 @@ export default createRule<Options, MessageIds>({
         messages: {
             errorString: message,
         },
-        schema: [{enum: ["always", "never"]}],
+        schema: [],
         type: "problem",
     },
 
     create(context) {
-        const configuration = context.options[0] || "never";
         const sourceCode = context.getSourceCode();
 
         return {
             TSTupleType(node) {
-                if (
-                    configuration === "always" &&
-                    node.elementTypes.length === 1
-                ) {
+                if (node.elementTypes.length === 1) {
                     context.report({
                         fix(fixer) {
                             const type = node.elementTypes[0];
@@ -54,5 +50,5 @@ export default createRule<Options, MessageIds>({
             },
         };
     },
-    defaultOptions: ["always"],
+    defaultOptions: [],
 });
