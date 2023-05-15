@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-render-server",
-    "version": "1.0.5",
+    "version": "1.0.4",
     "description": "An unopinionated server for rendering specific URLs using a configured environment.",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -16,8 +16,8 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^1.5.0",
-        "@khanacademy/wonder-stuff-server": "^4.0.7"
+        "@khanacademy/wonder-stuff-core": "^1.4.2",
+        "@khanacademy/wonder-stuff-server": "^4.0.6"
     },
     "devDependencies": {
         "ws-dev-build-settings": "^1.1.0"

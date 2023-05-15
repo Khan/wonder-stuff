@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-server",
-    "version": "4.0.7",
+    "version": "4.0.6",
     "description": "APIs for doing useful things in node servers",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -15,7 +15,7 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^1.5.0"
+        "@khanacademy/wonder-stuff-core": "^1.4.2"
     },
     "devDependencies": {
         "ws-dev-build-settings": "^1.1.0"
