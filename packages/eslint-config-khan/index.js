@@ -5,7 +5,13 @@ const ERROR = "error";
 
 module.exports = {
     parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint", "jsx-a11y", "prettier", "react"],
+    plugins: [
+        "@typescript-eslint",
+        "jsx-a11y",
+        "prettier",
+        "react",
+        "@khanacademy",
+    ],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
@@ -85,6 +91,14 @@ module.exports = {
         "jsx-a11y/aria-props": ERROR,
         "jsx-a11y/aria-role": [ERROR, {ignoreNonDOM: true}],
         "jsx-a11y/anchor-is-valid": ERROR,
+
+        /**
+         * khanacademy rules
+         */
+        // Prevents the use of @ts-expect-error, @ts-ignore, etc. comments on JSX attributes
+        // since this prevents TS from type checking any of the other attrs/props on the JSX
+        // element.
+        "@khanacademy/ts-no-error-suppressions": ERROR,
 
         /**
          * prettier rules
