@@ -85,5 +85,5 @@ export default createRule<Options, MessageIds>({
             },
         };
     },
-    defaultOptions: [{precision: 3}],
+    defaultOptions: [{precision: 2}],
 });
