@@ -1,5 +1,16 @@
 # @khanacademy/eslint-plugin
 
+## 2.0.0
+
+### Major Changes
+
+-   2ff595c: Migrate code to TS, drop rules for flow and enzyme
+-   1766154: Remove always/never from eslint rule options
+
+### Minor Changes
+
+-   599060f: Add eslint rule to disallow @ts- error suppression comments on JSXAttribute nodes
+
 ## 1.4.2
 
 ### Patch Changes
