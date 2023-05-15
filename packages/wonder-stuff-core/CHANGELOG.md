@@ -1,5 +1,12 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.5.0
+
+### Minor Changes
+
+-   f3127aa: Add isTruthy and isNonNullable type predicates
+-   f3127aa: Add UnreachableCaseError for use in exhaustive switch-case statements
+
 ## 1.4.2
 
 ### Patch Changes
