@@ -1,5 +1,18 @@
 # @khanacademy/eslint-config
 
+## 2.0.0
+
+### Minor Changes
+
+-   eba825a: Add @khanacademy/ts-no-error-suppressions to config
+
+### Patch Changes
+
+-   Updated dependencies [599060f]
+-   Updated dependencies [2ff595c]
+-   Updated dependencies [1766154]
+    -   @khanacademy/eslint-plugin@2.0.0
+
 ## 1.3.0
 
 ### Minor Changes
