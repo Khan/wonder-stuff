@@ -37,7 +37,7 @@
     "@types/jsdom": "^21.1.1",
     "@types/superagent": "^4.1.16",
     "@types/winston": "^2.4.4",
-    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
     "babel-jest": "29.5.0",
     "babel-watch": "^7.7.2",
