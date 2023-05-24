@@ -20,7 +20,7 @@
     "@babel/preset-env": "^7.21.5",
     "@babel/preset-typescript": "^7.21.5",
     "@changesets/cli": "^2.26.1",
-    "@google-cloud/kms": "^3.5.1",
+    "@google-cloud/kms": "^3.6.0",
     "@google-cloud/logging-winston": "^4.2.4",
     "@google-cloud/profiler": "^4.2.0",
     "@google-cloud/trace-agent": "^5.1.6",
