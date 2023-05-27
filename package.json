@@ -74,7 +74,7 @@
     "superagent": "^5.3.1",
     "typedoc": "^0.24.7",
     "typescript": "^5.0.4",
-    "winston": "^3.8.2"
+    "winston": "^3.9.0"
   },
   "resolutions": {
     "node-gyp": "^9.3.0"
