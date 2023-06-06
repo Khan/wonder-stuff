@@ -8,7 +8,7 @@ describe("#getGCPLogTransport", () => {
             logName: "release-raccoon",
             level: "info",
             redirectToStdout: true,
-            labels: {},
+            labels: {test: "test"},
         });
 
         // Assert
