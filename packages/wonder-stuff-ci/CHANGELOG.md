@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-ci
 
+## 1.0.0
+
+### Major Changes
+
+-   b4edf28: Add peer dependencies so that the build is complete
+
 ## 0.0.4
 
 ### Patch Changes
