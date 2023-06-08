@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-ci
 
+## 1.1.0
+
+### Minor Changes
+
+-   76aaaaf: Add more configurations to the GCP logger
+
 ## 1.0.0
 
 ### Major Changes
