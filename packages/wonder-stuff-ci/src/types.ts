@@ -31,3 +31,5 @@ export type GCPTransportOptions = {
      */
     labels: {[key: string]: string};
 };
+
+export type GCPLogLevels = "debug" | "info" | "warn" | "error";
