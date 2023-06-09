@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-ci
 
+## 1.2.0
+
+### Minor Changes
+
+-   a3ba9db: Update the library to fix GCP api changes
+
 ## 1.1.0
 
 ### Minor Changes
