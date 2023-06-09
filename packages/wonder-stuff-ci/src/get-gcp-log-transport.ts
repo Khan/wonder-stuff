@@ -15,9 +15,7 @@ export const getGCPLogTransport = (
         projectId: options.projectId,
         logName: options.logName,
         level: options.level,
-        resource: {
-            labels: options.labels,
-        },
+        resource: options.resource,
         defaultCallback: (err) => {
             if (err) {
                 // eslint-disable-next-line no-console

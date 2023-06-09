@@ -9,6 +9,7 @@ describe("#getGCPLogTransport", () => {
             level: "info",
             redirectToStdout: true,
             labels: {test: "test"},
+            resource: {type: "global"},
         });
 
         // Assert
