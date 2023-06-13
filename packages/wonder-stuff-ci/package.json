@@ -15,7 +15,7 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "devDependencies": {
-        "@types/node": "^20.2.5",
+        "@types/node": "^20.3.0",
         "ws-dev-build-settings": "^1.1.0"
     },
     "author": "",
