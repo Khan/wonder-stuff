@@ -1,11 +1,5 @@
 # @khanacademy/wonder-stuff-ci
 
-## 1.2.1
-
-### Patch Changes
-
--   @khanacademy/wonder-stuff-server@4.0.8
-
 ## 1.2.0
 
 ### Minor Changes

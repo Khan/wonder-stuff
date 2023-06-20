@@ -1,11 +1,5 @@
 # @khanacademy/wonder-stuff-core
 
-## 1.5.1
-
-### Patch Changes
-
--   ba75d6c: Make sure isTruthy and isNonNullable get exported
-
 ## 1.5.0
 
 ### Minor Changes
