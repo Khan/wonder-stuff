@@ -6,5 +6,9 @@ export function isTruthy<T>(x: T | Falsy): boolean %checks {
     return Boolean(x);
 }
 
-// NOTE(kevinb): There is no export for `isNonNullable` because I couldn't
-// create a predicate function in Flow that has the same behavior.
+// NOTE(kevinb): This doesn't work properly with .filter() and only is only
+// here so to avoid issues with the re-export in index.js since Flow doesn't
+// recognize `export * from "..."` in .js.flow files for some reason.
+export function isNonNullable<T>(x: ?T): boolean %checks {
+    return x != null;
+}
