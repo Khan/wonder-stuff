@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-testing",
-    "version": "2.4.3",
+    "version": "2.4.4",
     "description": "Utilities for use in testing",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -15,7 +15,7 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^1.5.0"
+        "@khanacademy/wonder-stuff-core": "^1.5.1"
     },
     "devDependencies": {
         "ws-dev-build-settings": "^1.1.0"
