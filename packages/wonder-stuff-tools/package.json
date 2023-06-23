@@ -1,0 +1,25 @@
+{
+    "publishConfig": {
+        "access": "public"
+    },
+    "engines": {
+        "node": ">=16"
+    },
+    "name": "@khanacademy/wonder-stuff-tools",
+    "version": "1.2.1",
+    "description": "Tools for supporting code development.",
+    "module": "dist/es/index.js",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
+    },
+    "devDependencies": {
+        "@types/node": "^20.3.1",
+        "ws-dev-build-settings": "^1.1.0"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {},
+    "peerDependencies": {}
+}

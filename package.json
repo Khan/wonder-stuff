@@ -86,7 +86,11 @@
     "build:flowtypes": "node -r @swc-node/register build-scripts/gen-flow-types.ts",
     "build:docs": "typedoc",
     "watch": "rollup -c build-settings/rollup.config.js --watch",
-    "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules && rm -f packages/*/*.tsbuildinfo",
+    "clean": "yarn clean:dist && yarn clean:docs && yarn clean:node_modules && yarn clean:tsbuildinfo",
+    "clean:docs": "rm -rf docs",
+    "clean:dist": "rm -rf packages/wonder-stuff-*/dist",
+    "clean:node_modules": "rm -rf packages/wonder-stuff-*/node_modules",
+    "clean:tsbuildinfo": "rm -f packages/*/*.tsbuildinfo",
     "coverage": "yarn run jest --coverage",
     "format": "prettier --write .",
     "lint": "yarn lint:ci .",
@@ -95,7 +99,7 @@
     "publish:ci": "yarn run lint:pkg-json && node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && yarn build && yarn build:types && yarn build:flowtypes && changeset publish",
     "test": "yarn jest",
     "typecheck": "tsc",
-    "nochangeset": "yarn changeset add --empty",
+    "nochangeset": "yarn changeset --empty",
     "add:devdepbysha": "bash -c 'yarn add -W --dev \"git+https://git@github.com/Khan/$0.git#$1\"'"
   }
 }
