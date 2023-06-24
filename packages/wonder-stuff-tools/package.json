@@ -20,6 +20,10 @@
     },
     "author": "",
     "license": "MIT",
-    "dependencies": {},
-    "peerDependencies": {}
+    "dependencies": {
+        "@khanacademy/wonder-stuff-core": "^1.5.1"
+    },
+    "peerDependencies": {
+        "inquirer": "^9.2.7"
+    }
 }

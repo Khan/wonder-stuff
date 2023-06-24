@@ -1,1 +1,1 @@
-// Nothing yet
+export {updatePackages} from "./update-packages";
