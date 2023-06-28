@@ -2414,10 +2414,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
-"@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0", "@types/node@^20.3.1":
-  version "20.3.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.1.tgz#e8a83f1aa8b649377bb1fb5d7bac5cb90e784dfe"
-  integrity sha512-EhcH/wvidPy1WeML3TtYFGR83UzjxeWRen9V402T8aUGYsCHOmfoisV3ZSg03gAFIbLq8TnWOJ0f4cALtnSEUg==
+"@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0", "@types/node@^20.3.2":
+  version "20.3.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.2.tgz#fa6a90f2600e052a03c18b8cb3fd83dd4e599898"
+  integrity sha512-vOBLVQeCQfIcF/2Y7eKFTqrMnizK5lRNQ7ykML/5RuwVXVWxYkgwS7xbt4B6fKCUPgbSL5FSsjHQpaGQP/dQmw==
 
 "@types/node@^12.7.1":
   version "12.20.55"
@@ -3272,10 +3272,10 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
-checksync@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/checksync/-/checksync-4.0.0.tgz#fd74959cc91f665047ae94b541ab22007b0a9b53"
-  integrity sha512-G+wpCe4LfFLUSLCD+cSwF/stWXP9tm4M2Iy+8CBKiBX0izZ53nHTzbQ02aKfVxg6Q87e1xd/Q7AJbPXqiQxacw==
+checksync@^5.0.0:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/checksync/-/checksync-5.0.4.tgz#6d69c4750e9c83c05284fd4a183ad72145f89542"
+  integrity sha512-7g7WRqMY/pPQFzG41ovh+yez7HLuL1cXYWMHWK02PiHwWC7GOiQ6eUaCIvXfmQ2mHYSuDurvhrqse6DEl9/+hw==
 
 chokidar@^3.4.3:
   version "3.5.3"
