@@ -27,6 +27,6 @@
   "dependencies": {
     "@babel/types": "^7.22.5",
     "@typescript-eslint/utils": "^5.60.1",
-    "checksync": "^5.0.0"
+    "checksync": "^5.0.4"
   }
 }
