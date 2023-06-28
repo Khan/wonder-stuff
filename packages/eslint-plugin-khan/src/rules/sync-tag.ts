@@ -1,4 +1,5 @@
 import * as path from "path";
+import ancesdir from "ancesdir";
 import {ESLintUtils, TSESTree, TSESLint} from "@typescript-eslint/utils";
 
 import * as util from "../util";
@@ -8,7 +9,7 @@ const createRule = ESLintUtils.RuleCreator(
         `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
 );
 
-const PKG_ROOT = path.join(__dirname, "..", "..");
+const PKG_ROOT = ancesdir(__dirname);
 const CHECKSYNC_PATH = path.join(PKG_ROOT, "node_modules", ".bin", "checksync");
 
 const UPDATE_REMINDER =
