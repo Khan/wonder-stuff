@@ -9,6 +9,9 @@
     "repository": "git@github.com:Khan/eslint-config-khan.git",
     "author": "Kevin Barabash <kevinb@khanacademy.org>",
     "license": "MIT",
+    "dependencies": {
+        "ancesdir": "^5.0.0"
+    },
     "peerDependencies": {
         "@khanacademy/eslint-plugin": "^2.0.0",
         "@typescript-eslint/eslint-plugin": "^5.52.0",
