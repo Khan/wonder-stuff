@@ -22,6 +22,7 @@
         "strictPropertyInitialization": true,
         "strictBindCallApply": true,
         "noImplicitAny": true,
+        "allowJs": true,
 
         /* Completeness */
         "skipDefaultLibCheck": true, // it's safe to assume that built-in .d.ts files are correct

@@ -8,6 +8,12 @@ import reactSvgPathPrecision from "./react-svg-path-precision";
 import syncTag from "./sync-tag";
 import tsNoErrorSupressions from "./ts-no-error-suppressions";
 
+import jestEnzymeMatchers from "./jest-enzyme-matchers";
+import flowArrayTypeStyle from "./flow-array-type-style";
+import flowExactProps from "./flow-exact-props";
+import flowExactState from "./flow-exact-state";
+import flowNoOneTuple from "./flow-no-one-tuple";
+
 export default {
     "array-type-style": arrayTypeStyle,
     "jest-async-use-real-timers": jestAsyncUseRealTimers,
@@ -18,4 +24,10 @@ export default {
     "react-no-subscriptions-before-mount": reactNoSubscriptionsBeforeMount,
     "react-svg-path-precision": reactSvgPathPrecision,
     "sync-tag": syncTag,
+
+    "flow-array-type-style": flowArrayTypeStyle,
+    "flow-exact-props": flowExactProps,
+    "flow-exact-state": flowExactState,
+    "flow-no-one-tuple": flowNoOneTuple,
+    "jest-enzyme-matchers": jestEnzymeMatchers,
 };
