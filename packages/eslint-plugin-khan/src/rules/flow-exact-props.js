@@ -1,9 +1,9 @@
 import * as t from "@babel/types";
 
-const {
+import {
     isReactClassComponent,
     isReactFunctionalComponent,
-} = require("../react-utils.js");
+} from "../react-utils";
 
 const maybeReport = (node, typeAnnotation, typeAliases, context) => {
     if (t.isGenericTypeAnnotation(typeAnnotation)) {
