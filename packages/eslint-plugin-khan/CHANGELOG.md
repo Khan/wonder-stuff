@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 2.0.1
+
+### Patch Changes
+
+-   c81383d: Use ancesdir to determine path of checksync binary
+
 ## 2.0.0
 
 ### Major Changes
