@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 2.1.0
+
+### Minor Changes
+
+-   f1c596e: Re-add old eslint rules
+
 ## 2.0.1
 
 ### Patch Changes
