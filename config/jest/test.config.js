@@ -13,7 +13,7 @@ module.exports = {
     restoreMocks: true,
     resetMocks: true,
     testEnvironment: "jest-environment-node",
-    testMatch: ["<rootDir>/**/*.test.ts", "<rootDir>/**/*.test.js"],
+    testMatch: ["<rootDir>/**/*.test.ts"],
     setupFilesAfterEnv: [
         "jest-extended/all",
         "<rootDir>/config/jest/test-setup.js",
