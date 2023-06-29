@@ -1,5 +1,12 @@
 # @khanacademy/eslint-config
 
+## 3.0.1
+
+### Patch Changes
+
+-   Updated dependencies [126c9d1]
+    -   @khanacademy/eslint-plugin@2.1.1
+
 ## 3.0.0
 
 ### Patch Changes

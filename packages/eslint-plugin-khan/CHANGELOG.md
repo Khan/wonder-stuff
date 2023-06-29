@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 2.1.1
+
+### Patch Changes
+
+-   126c9d1: Export 'imports-requiring-flow'
+
 ## 2.1.0
 
 ### Minor Changes
