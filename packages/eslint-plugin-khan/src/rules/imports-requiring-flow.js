@@ -59,7 +59,7 @@ const isRequire = ({callee}) =>
     callee.type === "Identifier" && callee.name === "require";
 const isDynamicImport = ({callee}) => callee.type === "Import";
 
-module.exports = {
+export default {
     meta: {
         docs: {
             description: "Require flow when using certain imports",
