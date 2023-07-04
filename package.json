@@ -38,7 +38,7 @@
     "@types/superagent": "^4.1.16",
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
-    "@typescript-eslint/parser": "^5.60.1",
+    "@typescript-eslint/parser": "^5.61.0",
     "babel-jest": "29.5.0",
     "babel-watch": "^7.8.0",
     "eslint": "^8.44.0",
