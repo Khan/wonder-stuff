@@ -3027,10 +3027,10 @@ babel-preset-jest@^29.5.0:
     babel-plugin-jest-hoist "^29.5.0"
     babel-preset-current-node-syntax "^1.0.0"
 
-babel-watch@^7.8.0:
-  version "7.8.0"
-  resolved "https://registry.yarnpkg.com/babel-watch/-/babel-watch-7.8.0.tgz#19c819d7edf1a5e00a7378f83606a598dff01b55"
-  integrity sha512-Cw3l6cvkKyUFdxsPtleeuIzV7gmXRSc1IFxcrwSlWQ1ubs8ofAk1weKPiPKiX7NeQcf7AMR8qmdgbUqTjtEU9w==
+babel-watch@^7.8.1:
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/babel-watch/-/babel-watch-7.8.1.tgz#3be4016d61bfefae9522c116ef9ba209088e6498"
+  integrity sha512-TnAlLAaorqMruh3BaTiXbbuv/b8iHqqvlljaWkCCJQLRsVFn7nUKO+38+DGxEaFvlj/IgIlQlx+DMirxSHiC4g==
   dependencies:
     chalk "^4.1.0"
     chokidar "^3.4.3"
