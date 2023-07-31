@@ -3,12 +3,13 @@ import {secret} from "@khanacademy/wonder-stuff-core";
 import * as GetRuntimeMode from "../../get-runtime-mode";
 import * as GetLogger from "../../get-logger";
 import {requestAuthentication} from "../request-authentication";
+import {Runtime} from "../../types";
 
 describe("#requestAuthentication", () => {
     describe("when not in production", () => {
         beforeEach(() => {
             jest.spyOn(GetRuntimeMode, "getRuntimeMode").mockReturnValue(
-                "development",
+                Runtime.Development,
             );
         });
 
@@ -193,7 +194,7 @@ describe("#requestAuthentication", () => {
     describe("when in production", () => {
         beforeEach(() => {
             jest.spyOn(GetRuntimeMode, "getRuntimeMode").mockReturnValue(
-                "production",
+                Runtime.Production,
             );
         });
 

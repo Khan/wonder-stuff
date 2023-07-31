@@ -24,14 +24,11 @@ export type Logger = WinstonLogger;
 /**
  * The runtime modes that a gateway can run under.
  */
-// TODO(FEI-5001): Replace with TS enum
-export const Runtime = {
-    Production: "production" as const,
-    Development: "development" as const,
-    Test: "test" as const,
-} as const;
-
-export type RuntimeValue = (typeof Runtime)[keyof typeof Runtime];
+export enum Runtime {
+    Production = "production",
+    Development = "development",
+    Test = "test",
+}
 
 /**
  * Options to configure logging.
@@ -40,7 +37,7 @@ export type LoggingOptions = {
     /**
      * The runtime mode.
      */
-    mode: RuntimeValue;
+    mode: Runtime;
     /**
      * Log only if the level of a logged entry is less than or equal to this
      * level. Enables filtering out of debug message in production, for example.
@@ -100,7 +97,7 @@ export type ServerOptions = {
     /**
      * What runtime mode the server is running under.
      */
-    readonly mode: RuntimeValue;
+    readonly mode: Runtime;
     /**
      * Optional value in milliseconds for keepalive timeout of the server.
      * For running in Google Cloud, this should be higher than the load
