@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@babel/types": "^7.22.5",
-    "@typescript-eslint/utils": "^5.60.1",
+    "@typescript-eslint/utils": "^6.2.1",
     "checksync": "^5.0.0"
   }
 }
