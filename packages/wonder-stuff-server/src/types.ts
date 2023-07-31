@@ -30,8 +30,6 @@ export enum Runtime {
     Test = "test",
 }
 
-export type RuntimeValue = (typeof Runtime)[keyof typeof Runtime];
-
 /**
  * Options to configure logging.
  */
@@ -39,7 +37,7 @@ export type LoggingOptions = {
     /**
      * The runtime mode.
      */
-    mode: RuntimeValue;
+    mode: Runtime;
     /**
      * Log only if the level of a logged entry is less than or equal to this
      * level. Enables filtering out of debug message in production, for example.
@@ -99,7 +97,7 @@ export type ServerOptions = {
     /**
      * What runtime mode the server is running under.
      */
-    readonly mode: RuntimeValue;
+    readonly mode: Runtime;
     /**
      * Optional value in milliseconds for keepalive timeout of the server.
      * For running in Google Cloud, this should be higher than the load

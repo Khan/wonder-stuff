@@ -1,8 +1,7 @@
 import express from "express";
 import type {Application} from "express";
 import * as lw from "@google-cloud/logging-winston";
-import type {Logger, RequestAuthentication, RuntimeValue} from "../types";
-import {Runtime} from "../types";
+import {Logger, RequestAuthentication, Runtime} from "../types";
 import {attachAppEngineRequestID} from "./attach-app-engine-request-id";
 import {commonServiceRoutes} from "./common-service-routes";
 import {defaultErrorLogging} from "./default-error-logging";
@@ -13,7 +12,7 @@ import {requestAuthentication} from "./request-authentication";
 export const wrapWithMiddleware = async (
     app: Application,
     logger: Logger,
-    mode: RuntimeValue,
+    mode: Runtime,
     requestAuthOptions?: RequestAuthentication,
 ): Promise<Application> => {
     // Setup the middleware around the app.
