@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-server
 
+## 5.0.0
+
+### Major Changes
+
+-   4419e81: Make Runtime a TS enum
+
 ## 4.0.8
 
 ### Patch Changes
