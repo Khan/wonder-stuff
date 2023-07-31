@@ -75,9 +75,6 @@ jobs:
     - name: Build Types
       run: yarn build:types
 
-    - name: Build Flow Types
-      run: yarn build:flowtypes
-
     # Linting / type checking
     - name: Eslint
       uses: Khan/actions@full-or-limited-v0

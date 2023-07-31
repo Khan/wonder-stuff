@@ -116,7 +116,9 @@ describe("#runServer", () => {
         const fakeRenderEnvironment: any = {
             render: jest.fn(),
         };
-        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
+        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
+            WSServer.Runtime.Test,
+        );
         jest.spyOn(WSServer, "getLogger").mockReturnValue(pretendLogger);
         jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
         const pretendApp = {
@@ -146,7 +148,9 @@ describe("#runServer", () => {
         const fakeRenderEnvironment: any = {
             render: jest.fn(),
         };
-        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
+        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
+            WSServer.Runtime.Test,
+        );
         jest.spyOn(WSServer, "getLogger").mockReturnValue(pretendLogger);
         jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
         const pretendApp = {
@@ -190,7 +194,9 @@ describe("#runServer", () => {
         const fakeRenderEnvironment: any = {
             render: jest.fn(),
         };
-        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
+        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
+            WSServer.Runtime.Test,
+        );
         jest.spyOn(WSServer, "getLogger").mockReturnValue(pretendLogger);
         jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
         const pretendApp = {
@@ -225,7 +231,9 @@ describe("#runServer", () => {
     it("should start the gateway", async () => {
         // Arrange
         const fakeRenderEnvironment: any = {render: jest.fn()};
-        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
+        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
+            WSServer.Runtime.Test,
+        );
         jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
         const pretendApp = {
             use: jest.fn().mockReturnThis(),
@@ -283,7 +291,9 @@ describe("#runServer", () => {
         // Arrange
         process.env.KA_ALLOW_HEAPDUMP = "1";
         const fakeRenderEnvironment: any = {render: jest.fn()};
-        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("test");
+        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
+            WSServer.Runtime.Test,
+        );
         jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
         const pretendApp = {
             use: jest.fn().mockReturnThis(),

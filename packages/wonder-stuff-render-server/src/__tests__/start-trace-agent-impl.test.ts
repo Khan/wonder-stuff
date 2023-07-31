@@ -8,7 +8,9 @@ jest.mock("@khanacademy/wonder-stuff-server");
 describe("#startTraceAgent", () => {
     it("should start the trace agent as disabled when not in production", () => {
         // Arrange
-        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("development");
+        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
+            WSServer.Runtime.Development,
+        );
         const startSpy = jest.spyOn(TraceAgent, "start");
 
         // Act
@@ -20,7 +22,9 @@ describe("#startTraceAgent", () => {
 
     it("should start the trace agent as enabled when in production", () => {
         // Arrange
-        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("production");
+        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
+            WSServer.Runtime.Production,
+        );
         const startSpy = jest.spyOn(TraceAgent, "start");
 
         // Act
@@ -33,7 +37,9 @@ describe("#startTraceAgent", () => {
     it("should return the tracer", () => {
         // Arrange
         const pretendTracer = {} as any;
-        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue("production");
+        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
+            WSServer.Runtime.Production,
+        );
         jest.spyOn(TraceAgent, "start").mockReturnValue(pretendTracer);
 
         // Act

@@ -24,12 +24,11 @@ export type Logger = WinstonLogger;
 /**
  * The runtime modes that a gateway can run under.
  */
-// TODO(FEI-5001): Replace with TS enum
-export const Runtime = {
-    Production: "production" as const,
-    Development: "development" as const,
-    Test: "test" as const,
-} as const;
+export enum Runtime {
+    Production = "production",
+    Development = "development",
+    Test = "test",
+}
 
 export type RuntimeValue = (typeof Runtime)[keyof typeof Runtime];
 
