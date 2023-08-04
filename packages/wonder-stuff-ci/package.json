@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-ci",
-    "version": "1.2.2",
+    "version": "1.2.1",
     "description": "Functions for automation and scripts.",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -16,12 +16,12 @@
     },
     "devDependencies": {
         "@types/node": "^20.4.2",
-        "ws-dev-build-settings": "^1.2.0"
+        "ws-dev-build-settings": "^1.1.0"
     },
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@khanacademy/wonder-stuff-server": "^5.0.0"
+        "@khanacademy/wonder-stuff-server": "^4.0.8"
     },
     "peerDependencies": {
         "@google-cloud/kms": "^3.4.0",

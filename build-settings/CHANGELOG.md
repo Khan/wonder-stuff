@@ -1,11 +1,5 @@
 # ws-dev-build-settings
 
-## 1.2.0
-
-### Minor Changes
-
--   4419e81: Stop building Flow type definitions
-
 ## 1.1.0
 
 ### Minor Changes
