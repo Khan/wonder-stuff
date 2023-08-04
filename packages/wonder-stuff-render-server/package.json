@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-render-server",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "An unopinionated server for rendering specific URLs using a configured environment.",
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -17,10 +17,10 @@
     },
     "dependencies": {
         "@khanacademy/wonder-stuff-core": "^1.5.1",
-        "@khanacademy/wonder-stuff-server": "^4.0.8"
+        "@khanacademy/wonder-stuff-server": "^5.0.0"
     },
     "devDependencies": {
-        "ws-dev-build-settings": "^1.1.0"
+        "ws-dev-build-settings": "^1.2.0"
     },
     "peerDependencies": {
         "@google-cloud/kms": "^3.4.0",
