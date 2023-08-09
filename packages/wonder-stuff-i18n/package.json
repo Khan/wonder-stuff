@@ -8,6 +8,11 @@
     "name": "@khanacademy/wonder-stuff-i18n",
     "version": "2.1.2",
     "description": "i18n tools and Webpack plugin.",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:Khan/wonder-stuff.git",
+        "directory": "packages/wonder-stuff-i18n"
+    },
     "module": "dist/es/index.js",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
