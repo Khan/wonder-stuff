@@ -8,6 +8,11 @@
     "name": "@khanacademy/wonder-stuff-render-server",
     "version": "1.0.7",
     "description": "An unopinionated server for rendering specific URLs using a configured environment.",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:Khan/wonder-stuff.git",
+        "directory": "packages/wonder-stuff-render-server"
+    },
     "module": "dist/es/index.js",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

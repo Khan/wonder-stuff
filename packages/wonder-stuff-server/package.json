@@ -8,6 +8,11 @@
     "name": "@khanacademy/wonder-stuff-server",
     "version": "5.0.0",
     "description": "APIs for doing useful things in node servers",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:Khan/wonder-stuff.git",
+        "directory": "packages/wonder-stuff-server"
+    },
     "module": "dist/es/index.js",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

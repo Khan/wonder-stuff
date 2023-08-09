@@ -3,6 +3,9 @@
         "require-main": "error",
         "require-module": "error",
         "require-name": "error",
+        "require-description": "error",
+        "require-repository-directory": "error",
+        "require-repository":"error",
         "require-types": "error",
         "require-version": "error",
         "valid-values-publishConfig": ["error", [{"access": "public"}]]

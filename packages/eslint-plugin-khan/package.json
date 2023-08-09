@@ -1,6 +1,12 @@
 {
   "name": "@khanacademy/eslint-plugin",
   "version": "2.1.1",
+  "description": "ESLint plugin that applies Khan Academy's custom rules",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Khan/wonder-stuff.git",
+    "directory": "packages/eslint-plugin-khan"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -9,7 +15,6 @@
   ],
   "main": "dist/index.js",
   "module": "dist/es/index.js",
-  "repository": "https://github.com/Khan/eslint-plugin-khan",
   "author": "Kevin Barabash <kevinb@khanacademy.org>",
   "license": "MIT",
   "devDependencies": {
