@@ -23,7 +23,7 @@
         "@khanacademy/wonder-stuff-core": "^1.5.1"
     },
     "devDependencies": {
-        "@khanacademy/ws-dev-build-settings": "^1.2.0"
+        "@khanacademy/ws-dev-build-settings": "^2.0.0"
     },
     "browser": {
         "dist/es/index.js": "./dist/browser/es/index.js",
