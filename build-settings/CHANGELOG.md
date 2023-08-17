@@ -1,5 +1,11 @@
 # ws-dev-build-settings
 
+## 2.0.0
+
+### Major Changes
+
+-   6ffe6ca: Moved build settings to Khan Academy namespace
+
 ## 1.2.0
 
 ### Minor Changes
