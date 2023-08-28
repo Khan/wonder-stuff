@@ -1,7 +1,5 @@
 import {afterEachRestoreEnv} from "../after-each-restore-env";
 
-jest.mock("../internal/jest-wrappers");
-
 describe("#afterEachRestoreEnv", () => {
     const EXISTS_1 = process.env.EXISTS_1;
     const EXISTS_2 = process.env.EXISTS_2;
