@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-testing",
-    "version": "2.4.4",
+    "version": "3.0.0",
     "description": "Utilities for use in testing",
     "repository": {
         "type": "git",

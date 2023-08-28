@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-testing
 
+## 3.0.0
+
+### Major Changes
+
+-   0196160: New afterEachRestoreEnv function added to `jest` support in Wonder Stuff Testing for capture and restoration of node environment variables.
+
 ## 2.4.4
 
 ### Patch Changes
