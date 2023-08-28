@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-testing
 
+## 3.0.1
+
+### Patch Changes
+
+-   d031421: Fix Wonder Stuff Testing to work with jest again
+
 ## 3.0.0
 
 ### Major Changes
