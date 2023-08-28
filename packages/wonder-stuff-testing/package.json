@@ -22,6 +22,9 @@
     "dependencies": {
         "@khanacademy/wonder-stuff-core": "^1.5.1"
     },
+    "peerDependencies": {
+        "jest": "^29"
+    },
     "devDependencies": {
         "@khanacademy/ws-dev-build-settings": "^1.2.0"
     },
