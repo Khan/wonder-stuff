@@ -2,7 +2,6 @@ import {wait, waitForAnimationFrame} from "../wait";
 import * as VerifyRealTimers from "../internal/verify-real-timers";
 import * as UnverifiedWait from "../internal/unverified-wait";
 
-jest.mock("../internal/assert-jest");
 jest.mock("../internal/verify-real-timers");
 jest.mock("../internal/unverified-wait");
 
