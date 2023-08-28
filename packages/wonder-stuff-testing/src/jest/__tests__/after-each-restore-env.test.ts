@@ -1,5 +1,3 @@
-import * as JestWrappers from "../internal/jest-wrappers";
-
 import {afterEachRestoreEnv} from "../after-each-restore-env";
 
 jest.mock("../internal/jest-wrappers");
@@ -43,7 +41,7 @@ describe("#afterEachRestoreEnv", () => {
     it("should register an afterEach callback", () => {
         // Arrange
         const afterEachSpy = jest
-            .spyOn(JestWrappers, "afterEach")
+            .spyOn(global, "afterEach")
             .mockImplementationOnce(() => {});
 
         // Act
@@ -57,7 +55,7 @@ describe("#afterEachRestoreEnv", () => {
         it("should restore changed environment variables to their original values", () => {
             // Arrange
             const afterEachSpy = jest
-                .spyOn(JestWrappers, "afterEach")
+                .spyOn(global, "afterEach")
                 .mockImplementationOnce(() => {});
 
             // Make sure the env vars exist.
@@ -82,7 +80,7 @@ describe("#afterEachRestoreEnv", () => {
         it("should delete environment variables that were not set before", () => {
             // Arrange
             const afterEachSpy = jest
-                .spyOn(JestWrappers, "afterEach")
+                .spyOn(global, "afterEach")
                 .mockImplementationOnce(() => {});
 
             // Make sure the env vars don't exist.
@@ -107,7 +105,7 @@ describe("#afterEachRestoreEnv", () => {
         it("should only restore the variables it was asked to restore", () => {
             // Arrange
             const afterEachSpy = jest
-                .spyOn(JestWrappers, "afterEach")
+                .spyOn(global, "afterEach")
                 .mockImplementationOnce(() => {});
 
             // Make sure the env vars don't exist or exist as we want.
