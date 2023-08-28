@@ -1,5 +1,3 @@
-import {afterEach} from "./internal/jest-wrappers";
-
 /**
  * Restore the values of the given environment variables after each test.
  *
