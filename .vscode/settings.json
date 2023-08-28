@@ -9,7 +9,6 @@
     ],
     "files.trimTrailingWhitespace": true,
     "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
     "typescript.format.enable": false,
     "typescript.validate.enable": true,
     "javascript.validate.enable": true,
