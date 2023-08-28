@@ -11,8 +11,13 @@ import {afterEach} from "./internal/jest-wrappers";
 export const afterEachRestoreEnv = (
     ...variableNames: ReadonlyArray<string>
 ): void => {
+    // We capture the variables to restore. If none are given, we capture all.
+    const restoreAll = variableNames.length === 0;
+    const variablesToCapture = restoreAll
+        ? Object.keys(process.env)
+        : variableNames;
     // We capture the current values on invocation.
-    const originalValues = variableNames.reduce(
+    const originalValues = variablesToCapture.reduce(
         (acc: Record<string, string | undefined>, variableName: string) => {
             acc[variableName] = process.env[variableName];
             return acc;
@@ -33,6 +38,17 @@ export const afterEachRestoreEnv = (
 
     // Now, in the afterEach call, we restore the environment state.
     afterEach(() => {
+        // If we are restoriing all variables then we cannot rely solely on
+        // what was captured, but instead we must also check what is currently
+        // in the environment that was not captured to make sure we delete it.
+        if (restoreAll) {
+            for (const variableName of Object.keys(process.env)) {
+                if (!(variableName in originalValues)) {
+                    delete process.env[variableName];
+                }
+            }
+        }
+
         for (const [variableName, value] of Object.entries(originalValues)) {
             restoreValue(variableName, value);
         }

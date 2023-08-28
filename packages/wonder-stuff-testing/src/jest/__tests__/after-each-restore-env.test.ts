@@ -66,7 +66,7 @@ describe("#afterEachRestoreEnv", () => {
 
             // Act
             // Capture the state and set up the callback.
-            afterEachRestoreEnv("EXISTS_1", "EXISTS_2");
+            afterEachRestoreEnv();
             const afterEachCallback: any = afterEachSpy.mock.calls.at(-1)?.[0];
             // Change the state.
             process.env.EXISTS_1 = "exists-1-changed";
@@ -91,7 +91,7 @@ describe("#afterEachRestoreEnv", () => {
 
             // Act
             // Capture the state and set up the callback.
-            afterEachRestoreEnv("ABSENT_1", "ABSENT_2");
+            afterEachRestoreEnv();
             const afterEachCallback: any = afterEachSpy.mock.calls.at(-1)?.[0];
             // Change the state.
             process.env.ABSENT_1 = "absent-1-set";
@@ -102,6 +102,45 @@ describe("#afterEachRestoreEnv", () => {
 
             // Assert
             expect(result).toEqual([undefined, undefined]);
+        });
+
+        it("should only restore the variables it was asked to restore", () => {
+            // Arrange
+            const afterEachSpy = jest
+                .spyOn(JestWrappers, "afterEach")
+                .mockImplementationOnce(() => {});
+
+            // Make sure the env vars don't exist or exist as we want.
+            process.env.EXISTS_1 = "exists-1";
+            process.env.EXISTS_2 = "exists-2";
+            delete process.env.ABSENT_1;
+            delete process.env.ABSENT_2;
+
+            // Act
+            // Capture the state and set up the callback.
+            afterEachRestoreEnv("ABSENT_1", "EXISTS_1");
+            const afterEachCallback: any = afterEachSpy.mock.calls.at(-1)?.[0];
+            // Change the state.
+            process.env.EXISTS_1 = "exists-1-changed";
+            process.env.EXISTS_2 = "exists-2-changed";
+            process.env.ABSENT_1 = "absent-1-set";
+            process.env.ABSENT_2 = "absent-2-set";
+            // Restore the state.
+            afterEachCallback();
+            const result = [
+                process.env.EXISTS_1,
+                process.env.EXISTS_2,
+                process.env.ABSENT_1,
+                process.env.ABSENT_2,
+            ];
+
+            // Assert
+            expect(result).toEqual([
+                "exists-1",
+                "exists-2-changed",
+                undefined,
+                "absent-2-set",
+            ]);
         });
     });
 });
