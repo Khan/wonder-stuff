@@ -1,4 +1,3 @@
-/* eslint-disable import/no-commonjs */
 import fs from "fs";
 import path from "path";
 import autoExternal from "rollup-plugin-auto-external";
@@ -10,7 +9,9 @@ import filesize from "rollup-plugin-filesize";
 import {preserveShebangs} from "rollup-plugin-preserve-shebangs";
 import rollupExecutable from "rollup-plugin-executable-output";
 
-const createBabelPresets = require("./create-babel-presets");
+// We need the extension here, otherwise rollup cannot find the file.
+// eslint-disable-next-line import/extensions
+import createBabelPresets from "./create-babel-presets.js";
 
 /**
  * We support the following config args with this rollup configuration:
