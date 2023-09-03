@@ -359,7 +359,7 @@ describe("JSDOMEnvironment", () => {
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const jsdomSpy = jest.spyOn(JSDOM, "JSDOM");
             const underTest = new JSDOMEnvironment(fakeConfiguration);
 
@@ -409,7 +409,7 @@ describe("JSDOMEnvironment", () => {
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow = {
                 close: jest.fn(),
             } as const;
@@ -452,18 +452,18 @@ describe("JSDOMEnvironment", () => {
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {};
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const patchSpy = jest.spyOn(
@@ -509,18 +509,18 @@ describe("JSDOMEnvironment", () => {
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {};
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const fakeGate: any = {
@@ -566,18 +566,18 @@ describe("JSDOMEnvironment", () => {
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {};
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const underTest = new JSDOMEnvironment(fakeConfiguration);
@@ -627,18 +627,18 @@ describe("JSDOMEnvironment", () => {
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {};
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const environment = new JSDOMEnvironment(fakeConfiguration);
@@ -688,18 +688,18 @@ describe("JSDOMEnvironment", () => {
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {};
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const environment = new JSDOMEnvironment(fakeConfiguration);
@@ -756,18 +756,18 @@ describe("JSDOMEnvironment", () => {
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {};
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const environment = new JSDOMEnvironment(fakeConfiguration);
@@ -817,18 +817,18 @@ window["__register__"](fakeRender);
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {};
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const environment = new JSDOMEnvironment(fakeConfiguration);
@@ -880,20 +880,20 @@ window["__register__"](fakeRender);
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {
                 close: jest.fn(),
             };
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const environment = new JSDOMEnvironment(fakeConfiguration);
@@ -941,18 +941,18 @@ window["__register__"](fakeRender);
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {};
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const fakeGate: any = {
@@ -1010,18 +1010,18 @@ window["__register__"](fakeRender);
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {};
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const environment = new JSDOMEnvironment(fakeConfiguration);
@@ -1076,20 +1076,20 @@ window["__register__"](fakeRender);
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {
                 close: jest.fn(),
             };
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const fakeGate: any = {
@@ -1157,20 +1157,20 @@ window["__register__"](fakeRender);
             jest.spyOn(
                 CloseableVirtualConsole,
                 "CloseableVirtualConsole",
-            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"} as any));
+            ).mockImplementation(() => ({fakeConsole: "FAKE_CONSOLE"}) as any);
             const fakeWindow: any = {
                 close: jest.fn(),
             };
             fakeWindow.window = fakeWindow;
             const fakeJSDOM: any = {
                 window: vm.createContext(fakeWindow),
-                getInternalVMContext: jest
-                    .fn()
-                    .mockImplementation(function (this: any) {
-                        // This is a valid use of this for our scenario.
-                        // eslint-disable-next-line @babel/no-invalid-this
-                        return this.window;
-                    }),
+                getInternalVMContext: jest.fn().mockImplementation(function (
+                    this: any,
+                ) {
+                    // This is a valid use of this for our scenario.
+                    // eslint-disable-next-line @babel/no-invalid-this
+                    return this.window;
+                }),
             } as const;
             jest.spyOn(JSDOM, "JSDOM").mockReturnValue(fakeJSDOM);
             const fakeGate: any = {
@@ -1233,7 +1233,7 @@ window["__register__"](fakeRender);
                     CloseableVirtualConsole,
                     "CloseableVirtualConsole",
                 ).mockImplementation(
-                    () => ({fakeConsole: "FAKE_CONSOLE"} as any),
+                    () => ({fakeConsole: "FAKE_CONSOLE"}) as any,
                 );
                 const fakeWindow: any = {};
                 fakeWindow.window = fakeWindow;

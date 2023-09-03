@@ -152,13 +152,11 @@ export interface CustomErrorHandlerFn {
      * promise of an error result to be returned for the error,
      * or, `null` if the original error is to be given.
      */
-    (url: string, headers: any, error: SimplifiedError):
-        | ErrorResult
-        | null
-        | undefined
-        | Promise<ErrorResult>
-        | null
-        | undefined;
+    (
+        url: string,
+        headers: any,
+        error: SimplifiedError,
+    ): ErrorResult | null | undefined | Promise<ErrorResult> | null | undefined;
 }
 
 /**

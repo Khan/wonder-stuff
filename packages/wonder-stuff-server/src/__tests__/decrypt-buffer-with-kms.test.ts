@@ -19,7 +19,7 @@ describe("#decryptBufferWithKms", () => {
                                     Buffer.from("DECRYPTED").toString("base64"),
                             },
                         ]),
-                    } as any),
+                    }) as any,
             );
 
         // Act
@@ -43,7 +43,7 @@ describe("#decryptBufferWithKms", () => {
             () =>
                 ({
                     decrypt: decryptSpy,
-                } as any),
+                }) as any,
         );
 
         // Act
@@ -71,7 +71,7 @@ describe("#decryptBufferWithKms", () => {
                                 Buffer.from("DECRYPTED").toString("base64"),
                         },
                     ]),
-                } as any),
+                }) as any,
         );
 
         // Act

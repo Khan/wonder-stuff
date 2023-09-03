@@ -64,9 +64,8 @@ export const runServer = async (
             integrations: {
                 profiler: cloudOptions?.profiler,
             },
-            requestAuthentication: await getRequestAuthentication(
-                authentication,
-            ),
+            requestAuthentication:
+                await getRequestAuthentication(authentication),
             allowHeapDumps: process.env.KA_ALLOW_HEAPDUMP === "1",
         },
         app,
