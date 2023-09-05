@@ -1,5 +1,11 @@
 # ws-dev-build-settings
 
+## 2.0.1
+
+### Patch Changes
+
+-   5da3e4b: Update rollup to v3
+
 ## 2.0.0
 
 ### Major Changes
