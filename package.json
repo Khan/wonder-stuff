@@ -79,7 +79,8 @@
     "node-gyp": "^9.3.0"
   },
   "scripts": {
-    "build": "rollup -c build-settings/rollup.config.mjs",
+    "rollup": "rollup -c build-settings/rollup.config.mjs",
+    "build": "yarn rollup",
     "build:prodsizecheck": "yarn rollup --configPlatforms='browser' --configFormats='esm' --configEnvironment='production'",
     "build:types": "yarn tsc --build --verbose tsconfig-build.json",
     "build:docs": "typedoc",
