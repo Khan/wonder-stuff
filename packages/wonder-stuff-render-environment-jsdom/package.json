@@ -26,7 +26,7 @@
         "@khanacademy/wonder-stuff-render-server": "^1.0.7"
     },
     "devDependencies": {
-        "@khanacademy/ws-dev-build-settings": "^2.0.0"
+        "@khanacademy/ws-dev-build-settings": "^2.0.1"
     },
     "peerDependencies": {
         "jsdom": "^21.1.1"
