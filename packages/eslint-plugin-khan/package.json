@@ -18,7 +18,7 @@
   "author": "Kevin Barabash <kevinb@khanacademy.org>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/eslint-parser": "^7.22.9",
+    "@babel/eslint-parser": "^7.22.15",
     "@babel/preset-env": "^7.22.15",
     "@babel/preset-flow": "^7.22.15",
     "@babel/preset-react": "^7.22.5",
