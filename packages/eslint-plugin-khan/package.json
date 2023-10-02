@@ -34,7 +34,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "@babel/types": "^7.22.5",
+    "@babel/types": "^7.23.0",
     "@typescript-eslint/utils": "^5.60.1",
     "checksync": "^5.0.5"
   }
