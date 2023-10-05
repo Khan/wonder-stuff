@@ -2373,10 +2373,10 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest-when@^3.5.2":
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/@types/jest-when/-/jest-when-3.5.2.tgz#7e6225e827267d26f115dc97da6403a3b37556c5"
-  integrity sha512-1WP+wJDW7h4TYAVLoIebxRIVv8GPk66Qsq2nU7PkwKZ6usurnDQZgk0DfBNKAJ9gVzapCXSV53Vn/3nBHBNzAw==
+"@types/jest-when@^3.5.3":
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/@types/jest-when/-/jest-when-3.5.3.tgz#c5568ac23e39e8a11e9efbd0844a3b96d0a9f3be"
+  integrity sha512-gJWLSCRWEkPHYXYjjrxEMfWopoA2bl9nUbwDomxIzRXfe0gLkmSDPD0lLcoAiO2RDpXDoHSeigy/rNa/ja0MfQ==
   dependencies:
     "@types/jest" "*"
 
