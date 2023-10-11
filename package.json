@@ -71,7 +71,7 @@
     "rollup-plugin-filesize": "^10.0.0",
     "rollup-plugin-preserve-shebangs": "^0.2.0",
     "superagent": "^5.3.1",
-    "typedoc": "^0.25.1",
+    "typedoc": "^0.25.2",
     "typescript": "^5.1.5",
     "winston": "^3.10.0"
   },
