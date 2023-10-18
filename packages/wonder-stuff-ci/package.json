@@ -20,7 +20,7 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "devDependencies": {
-        "@types/node": "^20.8.6",
+        "@types/node": "^20.8.7",
         "@khanacademy/ws-dev-build-settings": "^2.0.1"
     },
     "author": "",
