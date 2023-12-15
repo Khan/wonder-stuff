@@ -76,7 +76,7 @@
     "winston": "^3.10.0"
   },
   "resolutions": {
-    "node-gyp": "^9.3.0"
+    "node-gyp": "^10.0.0"
   },
   "scripts": {
     "rollup": "rollup -c build-settings/rollup.config.mjs",
