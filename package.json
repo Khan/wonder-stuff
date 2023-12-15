@@ -76,6 +76,9 @@
     "winston": "^3.10.0"
   },
   "resolutions": {
+    "//": "We need to use node-gyp 10 to support systems that use Python 3.12",
+    "//": "we need to pin wide-align/string-width because v5 & up are ESM only",
+    "wide-align/string-width": "^4.2.0",
     "node-gyp": "^10.0.0"
   },
   "scripts": {
