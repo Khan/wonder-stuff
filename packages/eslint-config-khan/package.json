@@ -1,6 +1,6 @@
 {
     "name": "@khanacademy/eslint-config",
-    "version": "3.0.1",
+    "version": "4.0.0",
     "description": "ESLint config that applies Khan Academy's setings",
     "repository": {
         "type": "git",
@@ -15,7 +15,7 @@
     "author": "Kevin Barabash <kevinb@khanacademy.org>",
     "license": "MIT",
     "peerDependencies": {
-        "@khanacademy/eslint-plugin": "^2.1.1",
+        "@khanacademy/eslint-plugin": "^3.0.0",
         "@typescript-eslint/eslint-plugin": "^5.52.0",
         "@typescript-eslint/parser": "^5.52.0",
         "eslint": "^8.38.0",

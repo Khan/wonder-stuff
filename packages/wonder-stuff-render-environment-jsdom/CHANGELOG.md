@@ -1,5 +1,15 @@
 # @khanacademy/wonder-stuff-render-environment-jsdom
 
+## 1.0.8
+
+### Patch Changes
+
+-   23a8585: Update comments to no longer reference Flow
+-   Updated dependencies [23a8585]
+    -   @khanacademy/wonder-stuff-render-server@1.0.8
+    -   @khanacademy/wonder-stuff-server@5.0.1
+    -   @khanacademy/wonder-stuff-core@1.5.2
+
 ## 1.0.7
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.5.2
+
+### Patch Changes
+
+-   23a8585: Update comments to no longer reference Flow
+
 ## 1.5.1
 
 ### Patch Changes

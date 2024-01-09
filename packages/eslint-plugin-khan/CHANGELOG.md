@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 3.0.0
+
+### Major Changes
+
+-   23a8585: Remove Flow related rules
+
 ## 2.1.1
 
 ### Patch Changes
