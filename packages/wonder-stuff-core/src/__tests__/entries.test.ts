@@ -1,4 +1,3 @@
-// @flow
 import {entries} from "../entries";
 
 describe("#entries", () => {
