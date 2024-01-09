@@ -1,4 +1,3 @@
-// @flow
 import {secret} from "@khanacademy/wonder-stuff-core";
 import * as GetRuntimeMode from "../../get-runtime-mode";
 import * as GetLogger from "../../get-logger";

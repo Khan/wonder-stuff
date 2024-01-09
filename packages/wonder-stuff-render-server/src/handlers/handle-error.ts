@@ -42,7 +42,7 @@ export const handleError = async (
 
     /**
      * The calling code should handle if the original request was valid or
-     * not, so we just appease flow here.
+     * not, so we just appease TypeScript here.
      */
     const requestURL = typeof req.query.url === "string" ? req.query.url : "";
 

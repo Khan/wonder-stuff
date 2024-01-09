@@ -62,7 +62,7 @@ export const trace: ITrace = (
         Object.prototype.hasOwnProperty.call(requestOrLogger, "url")
     ) {
         // We have done a little check to make sure this is either null
-        // or a request, so just tell Flow it's OK.
+        // or a request, so just tell TypeScript it's OK.
         const logger = getLogger(requestOrLogger);
         return traceImpl(logger, action, message, tracer);
     }

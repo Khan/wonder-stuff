@@ -1,4 +1,3 @@
-// @flow
 import type {RequestHandler, NextFunction} from "express";
 import {KindError, Errors} from "@khanacademy/wonder-stuff-core";
 import {trace, getLogger} from "@khanacademy/wonder-stuff-server";

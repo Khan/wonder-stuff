@@ -44,11 +44,11 @@ We love code reviews. If there are open pull requests, please feel free to revie
 
 #### Automated
 
-To ensure code quality, we use prettier, flow, eslint, and jest. These are all executed automatically on commit, so don't worry if you forget to run them before you commit. They are also executed when you submit, edit, or push to a pull request to ensure the contribution meets our code quality standard.
+To ensure code quality, we use prettier, TypeScript, eslint, and jest. These are all executed automatically on commit, so don't worry if you forget to run them before you commit. They are also executed when you submit, edit, or push to a pull request to ensure the contribution meets our code quality standard.
 
 To execute these operations outside of a pull request or commit operation, you can use `yarn`.
 
-- `yarn flow`
+- `yarn typecheck`
 - `yarn lint`
 - `yarn test`
 

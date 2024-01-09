@@ -100,10 +100,6 @@ export const traceImpl = (
 
         /**
          * Add some session information to the span as labels.
-         *
-         * Flow doesn't trust the inexact objects returned by memoryUsage()
-         * and so `getDelta` isn't typed to handle that. Have to rethink
-         * how to make that work.
          */
         // @ts-expect-error [FEI-5011] - TS2345 - Argument of type 'MemoryUsage' is not assignable to parameter of type 'NumberObj'.
         addLabel("/memory/delta", getDelta(beforeMemory, afterMemory));

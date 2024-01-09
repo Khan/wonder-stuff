@@ -52,12 +52,6 @@ describe("#makeRenderHandler", () => {
             const handler = makeRenderHandler(fakeRenderEnvironment);
 
             // Act
-            /**
-             * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-             * can mean two different call signatures, and sadly, they both
-             * have completely different argument type ordering, which
-             * totally confused flow here.
-             */
             await handler(fakeRequest, fakeResponse, nextFn);
 
             // Assert
@@ -92,12 +86,6 @@ describe("#makeRenderHandler", () => {
             const handler = makeRenderHandler(fakeRenderEnvironment);
 
             // Act
-            /**
-             * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-             * can mean two different call signatures, and sadly, they both
-             * have completely different argument type ordering, which
-             * totally confused flow here.
-             */
             const underTest = handler(fakeRequest, fakeResponse, nextFn);
 
             // Assert
@@ -136,12 +124,6 @@ describe("#makeRenderHandler", () => {
             const handler = makeRenderHandler(fakeRenderEnvironment);
 
             // Act
-            /**
-             * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-             * can mean two different call signatures, and sadly, they both
-             * have completely different argument type ordering, which
-             * totally confused flow here.
-             */
             const underTest = handler(fakeRequest, fakeResponse, nextFn);
 
             // Assert
@@ -185,12 +167,6 @@ describe("#makeRenderHandler", () => {
             const handler = makeRenderHandler(fakeRenderEnvironment);
 
             // Act
-            /**
-             * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-             * can mean two different call signatures, and sadly, they both
-             * have completely different argument type ordering, which
-             * totally confused flow here.
-             */
             await handler(fakeRequest, fakeResponse, nextFn);
 
             // Assert
@@ -238,14 +214,6 @@ describe("#makeRenderHandler", () => {
                             addLabel: jest.fn(),
                         } as any);
                     const handler = makeRenderHandler(fakeRenderEnvironment);
-                    /**
-                     * $FlowIgnore[incompatible-call]
-                     *
-                     * Middleware<Request, Response> can mean two different
-                     * call signatures, and sadly, they both have completely
-                     * different argument type ordering, which totally confused
-                     * flow here.
-                     */
                     await handler(fakeRequest, fakeResponse, nextFn);
                     const underTest =
                         fakeRenderEnvironment.render.mock.calls[0][1].trace;
@@ -297,12 +265,7 @@ describe("#makeRenderHandler", () => {
                 const handler = makeRenderHandler(fakeRenderEnvironment);
 
                 // Act
-                /**
-                 * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-                 * can mean two different call signatures, and sadly, they both
-                 * have completely different argument type ordering, which
-                 * totally confused flow here.
-                 */
+
                 await handler(fakeRequest, fakeResponse, nextFn);
 
                 // Assert
@@ -362,13 +325,6 @@ describe("#makeRenderHandler", () => {
                     );
 
                     // Act
-                    /**
-                     * $FlowIgnore[incompatible-call]
-                     * Middleware<Request, Response> can mean two different
-                     * call signatures, and sadly, they both have completely
-                     * different argument type ordering, which totally confused
-                     * flow here.
-                     */
                     await handler(fakeRequest, fakeResponse, nextFn);
 
                     // Assert
@@ -417,12 +373,7 @@ describe("#makeRenderHandler", () => {
                 const handler = makeRenderHandler(fakeRenderEnvironment);
 
                 // Act
-                /**
-                 * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-                 * can mean two different call signatures, and sadly, they both
-                 * have completely different argument type ordering, which
-                 * totally confused flow here.
-                 */
+
                 await handler(fakeRequest, fakeResponse, nextFn);
 
                 // Assert
@@ -459,12 +410,7 @@ describe("#makeRenderHandler", () => {
                 const handler = makeRenderHandler(fakeRenderEnvironment);
 
                 // Act
-                /**
-                 * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-                 * can mean two different call signatures, and sadly, they both
-                 * have completely different argument type ordering, which
-                 * totally confused flow here.
-                 */
+
                 await handler(fakeRequest, fakeResponse, nextFn);
 
                 // Assert
@@ -501,12 +447,7 @@ describe("#makeRenderHandler", () => {
                 const handler = makeRenderHandler(fakeRenderEnvironment);
 
                 // Act
-                /**
-                 * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-                 * can mean two different call signatures, and sadly, they both
-                 * have completely different argument type ordering, which
-                 * totally confused flow here.
-                 */
+
                 await handler(fakeRequest, fakeResponse, nextFn);
 
                 // Assert
@@ -550,12 +491,7 @@ describe("#makeRenderHandler", () => {
                 const handleErrorSpy = jest.spyOn(HandleError, "handleError");
 
                 // Act
-                /**
-                 * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-                 * can mean two different call signatures, and sadly, they both
-                 * have completely different argument type ordering, which
-                 * totally confused flow here.
-                 */
+
                 await handler(fakeRequest, fakeResponse, nextFn);
 
                 // Assert
@@ -603,12 +539,7 @@ describe("#makeRenderHandler", () => {
                 );
 
                 // Act
-                /**
-                 * $FlowIgnore[incompatible-call] Middleware<Request, Response>
-                 * can mean two different call signatures, and sadly, they both
-                 * have completely different argument type ordering, which
-                 * totally confused flow here.
-                 */
+
                 await handler(fakeRequest, fakeResponse, nextFn);
 
                 // Assert
