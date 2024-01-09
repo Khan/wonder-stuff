@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-server
 
+## 5.0.1
+
+### Patch Changes
+
+-   23a8585: Update comments to no longer reference Flow
+-   Updated dependencies [23a8585]
+    -   @khanacademy/wonder-stuff-core@1.5.2
+
 ## 5.0.0
 
 ### Major Changes

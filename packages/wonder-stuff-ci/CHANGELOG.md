@@ -1,5 +1,12 @@
 # @khanacademy/wonder-stuff-ci
 
+## 1.2.3
+
+### Patch Changes
+
+-   Updated dependencies [23a8585]
+    -   @khanacademy/wonder-stuff-server@5.0.1
+
 ## 1.2.2
 
 ### Patch Changes

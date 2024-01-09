@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-render-environment-jsdom",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "Render environment to use with the Wonder Stuff Render Server",
     "repository": {
         "type": "git",
@@ -21,9 +21,9 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^1.5.1",
-        "@khanacademy/wonder-stuff-server": "^5.0.0",
-        "@khanacademy/wonder-stuff-render-server": "^1.0.7"
+        "@khanacademy/wonder-stuff-core": "^1.5.2",
+        "@khanacademy/wonder-stuff-server": "^5.0.1",
+        "@khanacademy/wonder-stuff-render-server": "^1.0.8"
     },
     "devDependencies": {
         "@khanacademy/ws-dev-build-settings": "^2.0.1"
