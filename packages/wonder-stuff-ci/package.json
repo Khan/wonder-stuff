@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-ci",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "Functions for automation and scripts.",
     "repository": {
         "type": "git",
@@ -26,7 +26,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@khanacademy/wonder-stuff-server": "^5.0.1"
+        "@khanacademy/wonder-stuff-server": "^6.0.0"
     },
     "peerDependencies": {
         "@google-cloud/kms": "^3.4.0",

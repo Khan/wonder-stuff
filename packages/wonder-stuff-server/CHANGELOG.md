@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-server
 
+## 6.0.0
+
+### Major Changes
+
+-   4fc7dbb: Removed support for the heapdump peer dependency and heap dump generation.
+
 ## 5.0.1
 
 ### Patch Changes
