@@ -110,15 +110,6 @@ export type ServerOptions = {
      */
     readonly keepAliveTimeout?: number;
     /**
-     * When `true`, the "heapdump" package will be loaded, allowing for
-     * heap dumps to be generated on demand using `kill -USR2 <pid>` where
-     * `<pid>` is the process ID of the server.
-     *
-     * Defaults to `false` in production mode, and `true` in all other modes.
-     * Set explicitly to `false` to disable heap dumps in all modes.
-     */
-    readonly allowHeapDumps?: boolean;
-    /**
      * Configuration information for authenticating requests.
      */
     readonly requestAuthentication?: RequestAuthentication;
