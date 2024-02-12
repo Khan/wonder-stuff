@@ -15,20 +15,6 @@ jest.mock("../handlers/make-render-handler");
 jest.mock("../get-request-authentication");
 
 describe("#runServer", () => {
-    const OLD_KA_ALLOW_HEAPDUMPS = process.env.KA_ALLOW_HEAPDUMPS;
-
-    beforeEach(() => {
-        delete process.env.KA_ALLOW_HEAPDUMPS;
-    });
-
-    afterEach(() => {
-        if (OLD_KA_ALLOW_HEAPDUMPS == null) {
-            delete process.env.KA_ALLOW_HEAPDUMPS;
-        } else {
-            process.env.KA_ALLOW_HEAPDUMPS = OLD_KA_ALLOW_HEAPDUMPS;
-        }
-    });
-
     describe("when NODE_ENV does not match the runtime mode", () => {
         const OLD_NODE_ENV = process.env.NODE_ENV;
         const OLD_KA_IS_DEV_SERVER = process.env.KA_IS_DEV_SERVER;
@@ -273,7 +259,6 @@ describe("#runServer", () => {
                 port: 42,
                 host: "127.0.0.1",
                 mode: "test",
-                allowHeapDumps: false,
                 integrations: {
                     profiler: true,
                 },
@@ -282,45 +267,6 @@ describe("#runServer", () => {
                     headerName: "HEADER_NAME",
                     secret: "SECRET_VALUE",
                 },
-            },
-            pretendApp,
-        );
-    });
-
-    it("should start the server with allowHeapDumps as true when KA_ALLOW_HEAPDUMP is 1", async () => {
-        // Arrange
-        process.env.KA_ALLOW_HEAPDUMP = "1";
-        const fakeRenderEnvironment: any = {render: jest.fn()};
-        jest.spyOn(WSServer, "getRuntimeMode").mockReturnValue(
-            WSServer.Runtime.Test,
-        );
-        jest.spyOn(WSServer, "getAppEngineInfo").mockReturnValue({} as any);
-        const pretendApp = {
-            use: jest.fn().mockReturnThis(),
-            get: jest.fn().mockReturnThis(),
-            set: jest.fn(),
-        } as any;
-        jest.spyOn(Express, "default").mockReturnValue(pretendApp);
-        const startGatewaySpy = jest.spyOn(WSServer, "startServer");
-
-        // Act
-        await runServer({
-            name: "MY_TEST",
-            port: 42,
-            host: "127.0.0.1",
-            renderEnvironment: fakeRenderEnvironment,
-        });
-
-        // Assert
-        expect(startGatewaySpy).toHaveBeenCalledWith(
-            {
-                name: "MY_TEST",
-                port: 42,
-                host: "127.0.0.1",
-                mode: "test",
-                allowHeapDumps: true,
-                integrations: {},
-                logLevel: "debug",
             },
             pretendApp,
         );

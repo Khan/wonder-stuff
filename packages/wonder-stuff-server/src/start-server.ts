@@ -25,7 +25,6 @@ export async function startServer(
         name,
         mode,
         keepAliveTimeout,
-        allowHeapDumps,
         requestAuthentication,
         integrations,
         logLevel,
@@ -59,31 +58,6 @@ export async function startServer(
                 : null,
     });
     setRootLogger(logger);
-
-    /**
-     * In development mode, we include the heapdump module if it exists.
-     * With this installed, `kill -USR2 <pid>` can be used to create a
-     * heapsnapshot file of the gateway's memory.
-     *
-     * We ignore this from coverage because we don't care enough to test it.
-     */
-    /* istanbul ignore next */
-    if (
-        allowHeapDumps === true ||
-        (mode !== Runtime.Production && allowHeapDumps !== false)
-    ) {
-        try {
-            /* eslint-disable import/no-unassigned-import */
-            require("heapdump");
-            /* eslint-enable import/no-unassigned-import */
-            logger.debug(
-                `Heapdumps enabled. To create a heap snapshot at any time, run "kill -USR2 ${process.pid}".`,
-            );
-        } catch (e: any) {
-            // heapdump is an optional peer dependency, so if it is absent,
-            // that is perfectly fine.
-        }
-    }
 
     // Set up Google Cloud debugging integrations.
     await setupGoogleCloudIntegrations(mode, integrations);
