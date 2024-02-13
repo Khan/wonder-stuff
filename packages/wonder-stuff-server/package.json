@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-server",
-    "version": "5.0.1",
+    "version": "6.0.0",
     "description": "APIs for doing useful things in node servers",
     "repository": {
         "type": "git",

@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-render-server",
-    "version": "1.0.8",
+    "version": "2.0.0",
     "description": "An unopinionated server for rendering specific URLs using a configured environment.",
     "repository": {
         "type": "git",
@@ -22,7 +22,7 @@
     },
     "dependencies": {
         "@khanacademy/wonder-stuff-core": "^1.5.2",
-        "@khanacademy/wonder-stuff-server": "^5.0.1"
+        "@khanacademy/wonder-stuff-server": "^6.0.0"
     },
     "devDependencies": {
         "@khanacademy/ws-dev-build-settings": "^2.0.1"
