@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-testing
 
+## 3.0.3
+
+### Patch Changes
+
+-   3277b69: Allow Wonder Stuff Testing to be imported outside of jest
+
 ## 3.0.2
 
 ### Patch Changes
