@@ -1,8 +1,5 @@
 import {verifyRealTimers} from "./internal/verify-real-timers";
 import {unverifiedWait} from "./internal/unverified-wait";
-import {assertJest} from "./internal/assert-jest";
-
-assertJest();
 
 type WaitOptions = {
     /**
