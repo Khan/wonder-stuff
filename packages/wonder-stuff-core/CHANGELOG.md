@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.5.3
+
+### Patch Changes
+
+-   4fb7745: Don't include TypeScript config and buildinfo in packages
+
 ## 1.5.2
 
 ### Patch Changes
