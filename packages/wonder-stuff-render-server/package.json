@@ -16,6 +16,10 @@
     "module": "dist/es/index.js",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "CHANGELOG.md"
+    ],
     "scripts": {
         "example": "bash -c 'RUNNER=\"./examples/$0/run.ts\"; KA_LOG_LEVEL=silly NODE_ENV=development babel-watch --config-file ../../babel.config.js \"$RUNNER\" --extensions .ts'",
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
