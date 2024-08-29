@@ -7,3 +7,4 @@ docs
 .DS_Store
 yarn-error.log
 *.tsbuildinfo
+utils/**/*.d.ts

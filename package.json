@@ -83,7 +83,7 @@
     "rollup": "rollup -c build-settings/rollup.config.mjs",
     "build": "yarn rollup",
     "build:prodsizecheck": "yarn rollup --configPlatforms='browser' --configFormats='esm' --configEnvironment='production'",
-    "build:types": "yarn tsc --build --verbose tsconfig-build.json",
+    "build:types": "yarn tsc --build --verbose tsconfig-build.json && ./build-settings/remove-files-not-to-be-packaged.ts",
     "build:docs": "typedoc",
     "watch": "yarn rollup --watch",
     "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules && rm -f packages/*/*.tsbuildinfo",
