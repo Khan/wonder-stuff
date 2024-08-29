@@ -1,5 +1,15 @@
 # @khanacademy/wonder-stuff-render-environment-jsdom
 
+## 1.0.10
+
+### Patch Changes
+
+-   4fb7745: Don't include TypeScript config and buildinfo in packages
+-   Updated dependencies [4fb7745]
+    -   @khanacademy/wonder-stuff-core@1.5.3
+    -   @khanacademy/wonder-stuff-render-server@2.0.1
+    -   @khanacademy/wonder-stuff-server@6.0.1
+
 ## 1.0.9
 
 ### Patch Changes

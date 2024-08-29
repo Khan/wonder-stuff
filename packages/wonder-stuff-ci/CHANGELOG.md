@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-ci
 
+## 1.2.5
+
+### Patch Changes
+
+-   4fb7745: Don't include TypeScript config and buildinfo in packages
+-   Updated dependencies [4fb7745]
+    -   @khanacademy/wonder-stuff-server@6.0.1
+
 ## 1.2.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 2.1.3
+
+### Patch Changes
+
+-   4fb7745: Don't include TypeScript config and buildinfo in packages
+
 ## 2.1.2
 
 ### Patch Changes
