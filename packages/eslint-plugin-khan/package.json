@@ -10,9 +10,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "/dist"
-  ],
   "main": "dist/index.js",
   "module": "dist/es/index.js",
   "author": "Kevin Barabash <kevinb@khanacademy.org>",
