@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-sentry
 
+## 1.2.7
+
+### Patch Changes
+
+-   a026cee: Stop packaging some files that we don't need to package
+-   Updated dependencies [a026cee]
+    -   @khanacademy/wonder-stuff-core@1.5.4
+
 ## 1.2.6
 
 ### Patch Changes

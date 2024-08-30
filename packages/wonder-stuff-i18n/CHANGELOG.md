@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 2.1.4
+
+### Patch Changes
+
+-   a026cee: Stop packaging some files that we don't need to package
+
 ## 2.1.3
 
 ### Patch Changes

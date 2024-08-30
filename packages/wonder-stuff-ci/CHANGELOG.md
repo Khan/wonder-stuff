@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-ci
 
+## 1.2.6
+
+### Patch Changes
+
+-   a026cee: Stop packaging some files that we don't need to package
+-   Updated dependencies [a026cee]
+    -   @khanacademy/wonder-stuff-server@6.0.2
+
 ## 1.2.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.5.4
+
+### Patch Changes
+
+-   a026cee: Stop packaging some files that we don't need to package
+
 ## 1.5.3
 
 ### Patch Changes

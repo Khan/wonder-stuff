@@ -1,5 +1,14 @@
 # @khanacademy/wonder-stuff-render-server
 
+## 2.0.2
+
+### Patch Changes
+
+-   a026cee: Stop packaging some files that we don't need to package
+-   Updated dependencies [a026cee]
+    -   @khanacademy/wonder-stuff-core@1.5.4
+    -   @khanacademy/wonder-stuff-server@6.0.2
+
 ## 2.0.1
 
 ### Patch Changes
