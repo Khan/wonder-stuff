@@ -1,6 +1,0 @@
-# This is a template file that is copied to packages using the
-# ./util/create-npmignores.sh script.
-*.tsbuildinfo
-tsconfig-build.json
-dist/**/__tests__
-dist/**/*.test.d.ts
