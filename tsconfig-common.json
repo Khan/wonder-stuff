@@ -32,8 +32,10 @@
         //   Consider using 'export default' or another module format instead.
         // - node_modules/@typescript-eslint/utils/node_modules/@typescript-eslint/typescript-estree/dist/ts-estree/ts-nodes.d.ts:19:3551 - error
         //   TS2694: Namespace 'ts' has no exported member 'InputFiles'.
+        //   Conflicts with node_modules/typescript/lib/typescript.d.ts.
         // - node_modules/@typescript-eslint/utils/node_modules/@typescript-eslint/typescript-estree/dist/ts-estree/ts-nodes.d.ts:19:3567 - error
         //   TS2694: Namespace 'ts' has no exported member 'UnparsedSource'.
+        //   Conflicts with node_modules/typescript/lib/typescript.d.ts.
         // - node_modules/typescript/lib/typescript.d.ts:5515:15 - error
         //   TS2320: Interface 'AssertEntry' cannot simultaneously extend types 'ImportAttribute' and 'Node'.
         //   Conflicts with node_modules/@typescript-eslint/utils/node_modules/@typescript-eslint/typescript-estree/dist/ts-estree/ts-nodes.d.ts
