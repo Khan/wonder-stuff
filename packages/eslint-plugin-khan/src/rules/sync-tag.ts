@@ -3,8 +3,9 @@ import ancesdir from "ancesdir";
 import {ESLintUtils, TSESTree, TSESLint} from "@typescript-eslint/utils";
 
 import * as util from "../util";
+import type {MyPluginDocs} from "../types";
 
-const createRule = ESLintUtils.RuleCreator(
+const createRule = ESLintUtils.RuleCreator<MyPluginDocs>(
     (name) =>
         `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
 );
