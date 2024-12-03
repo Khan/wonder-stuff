@@ -16,9 +16,9 @@
     "license": "MIT",
     "peerDependencies": {
         "@khanacademy/eslint-plugin": "^3.0.0",
-        "@typescript-eslint/eslint-plugin": "^5.52.0",
-        "@typescript-eslint/parser": "^5.52.0",
-        "eslint": "^8.38.0",
+        "@typescript-eslint/eslint-plugin": "8.17.0",
+        "@typescript-eslint/parser": "8.17.0",
+        "eslint": "^8.44.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-import-resolver-typescript": "^3.5.3",
         "eslint-plugin-import": "^2.23.4",
