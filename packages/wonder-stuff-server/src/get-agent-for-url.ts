@@ -39,12 +39,12 @@ export const getAgentForURL = (url: URL): HttpAgent | HttpsAgent => {
     const agentOptions = {keepAlive: true} as const;
     switch (url.protocol) {
         case "http:":
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             const http = require("http");
             return new http.Agent(agentOptions);
 
         case "https:":
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             const https = require("https");
             return new https.Agent(agentOptions);
 
