@@ -486,7 +486,6 @@ export function* extractStrings(
             const endOffset =
                 textString.indexOf(
                     groups.ngettext_plural,
-                    // @ts-expect-error [FEI-5011] - TS2532 - Object is possibly 'undefined'.
                     match.index + groups.ngettext_singular.length,
                 ) + groups.ngettext_plural.length;
             yield {

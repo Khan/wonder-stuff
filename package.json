@@ -37,8 +37,8 @@
     "@types/jsdom": "^21.1.1",
     "@types/superagent": "^4.1.16",
     "@types/winston": "^2.4.4",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.21.0",
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
     "babel-jest": "^29.7.0",
     "babel-watch": "^7.8.1",
     "eslint": "^8.52.0",
@@ -71,7 +71,7 @@
     "rollup-plugin-preserve-shebangs": "^0.2.0",
     "superagent": "^5.3.1",
     "typedoc": "^0.25.3",
-    "typescript": "^5.1.5",
+    "typescript": "5.7.2",
     "winston": "^3.10.0"
   },
   "resolutions": {

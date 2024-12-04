@@ -36,8 +36,6 @@ export const applyAbortablePromisesPatch = (force = false): void => {
     const ourAbort = () => {
         /* empty */
     };
-    // @ts-expect-error We know that the inferred type is wrong here and
-    // it's not worth convincing TS with a better type, so just suppress it.
     ourAbort[patchedMarker] = true;
 
     // @ts-expect-error We know this isn't on the Promise type. We could

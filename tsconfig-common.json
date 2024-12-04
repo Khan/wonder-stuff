@@ -26,6 +26,25 @@
 
         /* Completeness */
         "skipDefaultLibCheck": true, // it's safe to assume that built-in .d.ts files are correct
-        "skipLibCheck": false
+        // Setting `skipLibCheck: true`, avoids the following issues in various .d.ts files:
+        // - node_modules/@google-cloud/kms/node_modules/long/index.d.ts:446:1 - error
+        //   TS1203: Export assignment cannot be used when targeting ECMAScript modules.
+        //   Consider using 'export default' or another module format instead.
+        // - node_modules/@typescript-eslint/utils/node_modules/@typescript-eslint/typescript-estree/dist/ts-estree/ts-nodes.d.ts:19:3551 - error
+        //   TS2694: Namespace 'ts' has no exported member 'InputFiles'.
+        //   Conflicts with node_modules/typescript/lib/typescript.d.ts.
+        // - node_modules/@typescript-eslint/utils/node_modules/@typescript-eslint/typescript-estree/dist/ts-estree/ts-nodes.d.ts:19:3567 - error
+        //   TS2694: Namespace 'ts' has no exported member 'UnparsedSource'.
+        //   Conflicts with node_modules/typescript/lib/typescript.d.ts.
+        // - node_modules/typescript/lib/typescript.d.ts:5515:15 - error
+        //   TS2320: Interface 'AssertEntry' cannot simultaneously extend types 'ImportAttribute' and 'Node'.
+        //   Conflicts with node_modules/@typescript-eslint/utils/node_modules/@typescript-eslint/typescript-estree/dist/ts-estree/ts-nodes.d.ts
+        // - node_modules/typescript/lib/typescript.d.ts:5518:15 - error
+        //   TS2320: Interface 'AssertClause' cannot simultaneously extend types 'ImportAttributes' and 'Node'.
+        //   Conflicts with node_modules/@typescript-eslint/utils/node_modules/@typescript-eslint/typescript-estree/dist/ts-estree/ts-nodes.d.ts
+        // NOTE(kevinb): I tried update @typescript-eslint/plugin and @typescript-eslint/parser to
+        // the most recent version (8.17.0 at the time this was written) but it didn't have any
+        // effect on these errors.
+        "skipLibCheck": true,
     }
 }
