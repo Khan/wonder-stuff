@@ -151,7 +151,7 @@ module.exports = {
 
         "@typescript-eslint/no-unused-vars": [
             ERROR,
-            {args: "none", varsIgnorePattern: "^_*$"},
+            {args: "none", caughtErrors: "none", varsIgnorePattern: "^_*$"},
         ],
 
         // Require each enum member value to be explicitly initialized.

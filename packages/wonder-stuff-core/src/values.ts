@@ -14,6 +14,6 @@ export const values: {
               }
             | ArrayLike<T>,
     ): T[];
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     (obj: {}): any[];
 } = (obj: any) => Object.values(obj);

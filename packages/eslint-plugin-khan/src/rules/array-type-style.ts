@@ -1,6 +1,8 @@
 import {ESLintUtils} from "@typescript-eslint/utils";
 
-const createRule = ESLintUtils.RuleCreator(
+import type {MyPluginDocs} from "../types";
+
+const createRule = ESLintUtils.RuleCreator<MyPluginDocs>(
     (name) =>
         `https://github.com/Khan/wonder-stuff/blob/main/packages/eslint-plugin-khan/docs/${name}.md`,
 );

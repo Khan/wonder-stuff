@@ -55,17 +55,6 @@ module.exports = {
                 "no-console": "off",
             },
         },
-        {
-            files: [
-                "**/__tests__/**/*.test.ts",
-                "utils/*.js",
-                "config/**",
-                "build-settings/**",
-            ],
-            rules: {
-                "@typescript-eslint/no-var-requires": "off",
-            },
-        },
     ],
     rules: {
         /**
@@ -161,5 +150,11 @@ module.exports = {
          * monorepo rules
          */
         "monorepo/no-internal-import": "error",
+
+        /**
+         * typescript rules
+         */
+        // import/no-common-js covers this already
+        "@typescript-eslint/no-require-imports": "off",
     },
 };
