@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 3.0.1
+
+### Patch Changes
+
+-   86caa2d: Update @typescript-eslint/\* to versions that work with TypeScript v5.7.x
+
 ## 3.0.0
 
 ### Major Changes
