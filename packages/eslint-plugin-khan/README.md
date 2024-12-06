@@ -12,3 +12,11 @@ eslint plugin with our set of custom rules for various things
 - [khan/react-no-subscriptions-before-mount](docs/react-no-subscriptions-before-mount.md)
 - [khan/react-svg-path-precision](docs/react-svg-path-precision.md)
 - [khan/sync-tag](docs/sync-tag.md)
+
+## Creating a new lint rule
+
+Here are some helpful resources for setting up a new lint rule:
+
+- [TypeScript Eslint custom rules](https://typescript-eslint.io/developers/custom-rules/)
+- [AST Explorer](https://astexplorer.net/): A tool for showing what the abstract syntax tree (AST) looks like based on code
+- [ESTree Spec](https://github.com/estree/estree/tree/master): The spec for learning more about the AST node types
