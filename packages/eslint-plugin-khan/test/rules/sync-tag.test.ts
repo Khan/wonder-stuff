@@ -1,16 +1,20 @@
+import {RuleTester} from "@typescript-eslint/rule-tester";
+
 import {rules} from "../../src/index";
 import * as util from "../../src/util";
 
-import {RuleTester} from "../RuleTester";
-
 const ruleTester = new RuleTester({
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: "module",
-        ecmaFeatures: {
-            jsx: true,
+    languageOptions: {
+        parserOptions: {
+            ecmaVersion: 6,
+            sourceType: "module",
+            ecmaFeatures: {},
         },
+    },
+    linterOptions: {
+        // NOTE(kevinb): Avoids 'TypeError: Expected a Boolean' error
+        // when running the tests.
+        reportUnusedDisableDirectives: true,
     },
 });
 
@@ -188,12 +192,6 @@ ruleTester.run("sync-tag", rule, {
                     },
                 },
             ],
-            // Prettier is removing whitespace within backticks, so I had to add
-            // the newlines manually.
-            output: `
-                // sync-start:foo-bar 1424803960 filey
-                const FooBar = 'foobar';
-                // sync-end:foo-bar`,
             options: [
                 {
                     ignoreFiles: ["lint_blacklist.txt"],

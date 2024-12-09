@@ -1,14 +1,21 @@
+import {RuleTester} from "@typescript-eslint/rule-tester";
+
 import {rules} from "../../src/index";
-import {RuleTester} from "../RuleTester";
 
 const ruleTester = new RuleTester({
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: "module",
-        ecmaFeatures: {
-            jsx: true,
+    languageOptions: {
+        parserOptions: {
+            ecmaVersion: 6,
+            sourceType: "module",
+            ecmaFeatures: {
+                jsx: true,
+            },
         },
+    },
+    linterOptions: {
+        // NOTE(kevinb): Avoids 'TypeError: Expected a Boolean' error
+        // when running the tests.
+        reportUnusedDisableDirectives: true,
     },
 });
 
