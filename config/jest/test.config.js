@@ -14,7 +14,6 @@ module.exports = {
     resetMocks: true,
     testEnvironment: "jest-environment-node",
     testMatch: ["<rootDir>/**/*.test.ts"],
-    testPathIgnorePatterns: ["/eslint-plugin-khan/"],
     setupFilesAfterEnv: [
         "jest-extended/all",
         "<rootDir>/config/jest/test-setup.js",

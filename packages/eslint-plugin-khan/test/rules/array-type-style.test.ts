@@ -1,12 +1,19 @@
+import {RuleTester} from "@typescript-eslint/rule-tester";
+
 import {rules} from "../../src/index";
-import {RuleTester} from "../RuleTester";
 
 const ruleTester = new RuleTester({
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: "module",
-        ecmaFeatures: {},
+    languageOptions: {
+        parserOptions: {
+            ecmaVersion: 6,
+            sourceType: "module",
+            ecmaFeatures: {},
+        },
+    },
+    linterOptions: {
+        // NOTE(kevinb): Avoids 'TypeError: Expected a Boolean' error
+        // when running the tests.
+        reportUnusedDisableDirectives: true,
     },
 });
 
@@ -30,9 +37,10 @@ ruleTester.run(ruleName, rule, {
             // Two errors are reported because there are two array types,
             // they just happen to be nested.
             errors: [{messageId: "errorString"}, {messageId: "errorString"}],
-            // This is a partial fix.  Multiple runs of eslint --fix are needed
-            // to fix nested (in the AST) array types completely.
-            output: "type foo = { bar: Array<number>[] }",
+            output: [
+                "type foo = { bar: Array<number>[] }",
+                "type foo = { bar: Array<Array<number>> }",
+            ],
         },
     ],
 });

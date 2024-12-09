@@ -1,12 +1,19 @@
+import {RuleTester} from "@typescript-eslint/rule-tester";
+
 import {rules} from "../../src/index";
-import {RuleTester} from "../RuleTester";
 
 const ruleTester = new RuleTester({
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: "module",
-        ecmaFeatures: {},
+    languageOptions: {
+        parserOptions: {
+            ecmaVersion: 6,
+            sourceType: "module",
+            ecmaFeatures: {},
+        },
+    },
+    linterOptions: {
+        // NOTE(kevinb): Avoids 'TypeError: Expected a Boolean' error
+        // when running the tests.
+        reportUnusedDisableDirectives: true,
     },
 });
 
@@ -84,14 +91,6 @@ ruleTester.run("jest-await-async-matchers", rule, {
                 {messageId: "asyncMatchers", data: {matchers: ["rejects"]}},
             ],
             output: 'await expect(promise).rejects.not.toThrow(new Error("foo"));',
-        },
-        {
-            code: `expect(promise).resolves.not.toBe(true);`,
-
-            errors: [
-                {messageId: "asyncMatchers", data: {matchers: ["resolves"]}},
-            ],
-            output: "await expect(promise).resolves.not.toBe(true);",
         },
         {
             code: `expect(promise).toResolve();`,

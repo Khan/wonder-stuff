@@ -1,12 +1,22 @@
-import {RuleTester} from "eslint";
+import {RuleTester} from "@typescript-eslint/rule-tester";
 
 import {rules} from "../../src/index";
 
-const parserOptions = {
-    parser: require.resolve("@babel/eslint-parser"),
-};
+const ruleTester = new RuleTester({
+    languageOptions: {
+        parserOptions: {
+            ecmaVersion: 6,
+            sourceType: "module",
+            ecmaFeatures: {},
+        },
+    },
+    linterOptions: {
+        // NOTE(kevinb): Avoids 'TypeError: Expected a Boolean' error
+        // when running the tests.
+        reportUnusedDisableDirectives: true,
+    },
+});
 
-const ruleTester = new RuleTester(parserOptions);
 const rule = rules["jest-enzyme-matchers"];
 
 ruleTester.run("jest-real-timers", rule, {
