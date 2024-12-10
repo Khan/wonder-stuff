@@ -12,6 +12,7 @@ eslint plugin with our set of custom rules for various things
 - [khan/react-no-subscriptions-before-mount](docs/react-no-subscriptions-before-mount.md)
 - [khan/react-svg-path-precision](docs/react-svg-path-precision.md)
 - [khan/sync-tag](docs/sync-tag.md)
+- [khan/aphrodite-add-style-variable-name](docs/aphrodite-add-style-variable-name.md)
 
 ## Creating a new lint rule
 
