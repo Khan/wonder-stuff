@@ -22,5 +22,6 @@ module.exports = {
                 rootDir: __dirname,
             },
         ],
+        "@khanacademy/aphrodite-add-style-variable-name": "error",
     },
 };
