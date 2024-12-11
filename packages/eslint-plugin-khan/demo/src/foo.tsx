@@ -1,5 +1,11 @@
 import * as React from "react";
 
+function addStyle(str: string) {
+    // Placeholder example for calling addStyle for aphrodite
+}
+
+const div = addStyle("div");
+
 export const Icon = (): React.ReactNode => {
     return (
         <svg>
