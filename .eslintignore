@@ -5,3 +5,4 @@ coverage
 **/package.json
 **/*.md
 docs/assets/main.js
+packages/eslint-plugin-khan/demo

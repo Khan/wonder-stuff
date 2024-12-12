@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx ."
+  },
   "devDependencies": {
     "@khanacademy/eslint-plugin": "../",
     "eslint": "^8.55.0",

@@ -1,6 +1,7 @@
-/* eslint-disable import/no-commonjs */
 module.exports = {
+    root: true,
     plugins: ["@khanacademy"],
+    parser: "@typescript-eslint/parser",
     rules: {
         "@khanacademy/jest-await-async-matchers": [
             "error",
@@ -22,6 +23,7 @@ module.exports = {
                 rootDir: __dirname,
             },
         ],
-        "@khanacademy/aphrodite-add-style-variable-name": "error",
+        // TODO(kevinb): re-enable after publishing @khanacademy/eslint-plugin
+        // "@khanacademy/aphrodite-add-style-variable-name": "error",
     },
 };
