@@ -1,4 +1,4 @@
-import {TSESTree, ESLintUtils} from "@typescript-eslint/utils";
+import {TSESTree, ESLintUtils, AST_NODE_TYPES} from "@typescript-eslint/utils";
 
 import type {MyPluginDocs} from "../types";
 
@@ -33,13 +33,15 @@ export default createRule<Options, MessageIds>({
                 // Check if addStyle is being called
                 if (
                     node.init &&
-                    node.init.type === "CallExpression" &&
-                    node.init.callee.type === "Identifier" &&
+                    node.init.type === AST_NODE_TYPES.CallExpression &&
+                    node.init.callee.type === AST_NODE_TYPES.Identifier &&
                     node.init.callee.name === "addStyle"
                 ) {
                     // Get variable name for the addStyle return value
                     const variableName =
-                        node.id.type === "Identifier" ? node.id.name : null;
+                        node.id.type === AST_NODE_TYPES.Identifier
+                            ? node.id.name
+                            : null;
 
                     // Get the tag name that was passed into addStyle
                     const firstArg = node.init.arguments[0];
