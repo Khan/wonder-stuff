@@ -50,8 +50,16 @@ ruleTester.run(ruleName, rule, {
             code: `const StyledSup = addStyle("sup")`,
         },
         {
-            // Handling custom html components
+            // Handling custom html components (kebab-case)
             code: `const StyledFooBar = addStyle("foo-bar")`,
+        },
+        {
+            // Handling custom html components (snake_case)
+            code: `const StyledFooBar = addStyle("foo_bar")`,
+        },
+        {
+            // Handling custom html components (PascalCase)
+            code: `const StyledFooBar = addStyle("FooBar")`,
         },
         {
             // Variable name can be anything if a component is used as the
@@ -126,6 +134,45 @@ ruleTester.run(ruleName, rule, {
                         variableName: "styledDiv",
                         tagName: "div",
                         expectedName: "StyledDiv",
+                    },
+                },
+            ],
+        },
+        {
+            code: `const FooBar = addStyle("foo-bar")`,
+            errors: [
+                {
+                    messageId: "errorString",
+                    data: {
+                        variableName: "FooBar",
+                        tagName: "foo-bar",
+                        expectedName: "StyledFooBar",
+                    },
+                },
+            ],
+        },
+        {
+            code: `const FooBar = addStyle("foo_bar")`,
+            errors: [
+                {
+                    messageId: "errorString",
+                    data: {
+                        variableName: "FooBar",
+                        tagName: "foo_bar",
+                        expectedName: "StyledFooBar",
+                    },
+                },
+            ],
+        },
+        {
+            code: `const FooBar = addStyle("FooBar")`,
+            errors: [
+                {
+                    messageId: "errorString",
+                    data: {
+                        variableName: "FooBar",
+                        tagName: "FooBar",
+                        expectedName: "StyledFooBar",
                     },
                 },
             ],

@@ -18,6 +18,11 @@ const message = `Variable name "{{ variableName }}" does not match tag name "{{ 
  * @returns The PascalCase version of the string
  */
 function toPascalCase(str: string): string {
+    // Check if the string is already in PascalCase
+    if (/^[A-Z][a-zA-Z]*$/.test(str)) {
+        return str;
+    }
+
     // Split the string into words based on common delimiters (space, underscore, hyphen, etc.)
     const words = str.split(/[_\-\s]+/);
 
