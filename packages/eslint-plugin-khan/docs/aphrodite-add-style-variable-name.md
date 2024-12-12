@@ -2,7 +2,7 @@
 
 The variable name when using `addStyle` should be the same as the tag argument in the format `StyledTag`.
 
-This is useful so that Aphrodite styled elements can be mapped to HTML elements for static code analysis. For example, if the `addStyle` variables are consistently named, we are able to provide custom component mapping to `eslint-plugin-jsx-a11y` so that it can identify linting issues based on the underlying HTML tag.
+This is useful so that Aphrodite styled elements can be mapped to HTML elements for static code analysis. For example, if the `addStyle` variables are consistently named, we are able to provide [custom component mapping](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#component-mapping) to `eslint-plugin-jsx-a11y` so that it can identify linting issues based on the underlying HTML tag.
 
 ## Rule Details
 
