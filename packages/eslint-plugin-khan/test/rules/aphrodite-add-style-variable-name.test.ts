@@ -49,6 +49,10 @@ ruleTester.run(ruleName, rule, {
         {
             code: `const StyledSup = addStyle("sup")`,
         },
+        {
+            // Handling custom html components
+            code: `const StyledFooBar = addStyle("foo-bar")`,
+        },
     ],
     invalid: [
         {

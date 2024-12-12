@@ -12,6 +12,26 @@ type MessageIds = "errorString";
 
 const message = `Variable name "{{ variableName }}" does not match tag name "{{ tagName }}". Variable name should be "{{ expectedName }}"`;
 
+/**
+ * Converts a string into PascalCase.
+ * @param str The string to convert
+ * @returns The PascalCase version of the string
+ */
+function toPascalCase(str: string): string {
+    // Split the string into words based on common delimiters (space, underscore, hyphen, etc.)
+    const words = str.split(/[_\-\s]+/);
+
+    // Capitalize the first letter of each word and join them together
+    const pascalCase = words
+        .map(
+            (word) =>
+                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+        )
+        .join("");
+
+    return pascalCase;
+}
+
 export default createRule<Options, MessageIds>({
     name: "aphrodite-add-style-variable-name",
     meta: {
@@ -65,9 +85,7 @@ export default createRule<Options, MessageIds>({
                 }
 
                 const tagName = firstArg.value;
-                const expectedName = `Styled${tagName
-                    .charAt(0)
-                    .toUpperCase()}${tagName.slice(1)}`;
+                const expectedName = `Styled${toPascalCase(tagName)}`;
 
                 // Check if the variable name matches the expected pattern
                 if (variableName !== expectedName) {
