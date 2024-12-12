@@ -53,6 +53,16 @@ ruleTester.run(ruleName, rule, {
             // Handling custom html components
             code: `const StyledFooBar = addStyle("foo-bar")`,
         },
+        {
+            // Variable name can be anything if a component is used as the
+            // argument
+            code: `const LinkWithStyle = addStyle(Link)`,
+        },
+        {
+            // Another example where variable name can be anything if a
+            // component is used as the argument
+            code: `const Foo = addStyle(Bar)`,
+        },
     ],
     invalid: [
         {

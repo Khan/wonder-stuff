@@ -37,7 +37,7 @@ export default createRule<Options, MessageIds>({
     meta: {
         docs: {
             description:
-                "Ensure variable names match the tag name passed to addStyle and follow the format: StyledTag (ie. StyledDiv, StyledImg)",
+                "Variable name should match the tag name passed into addStyle and follow the format: StyledTag (ie. StyledDiv, StyledImg)",
             recommended: true,
         },
         messages: {
