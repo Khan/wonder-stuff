@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 3.1.1
+
+### Patch Changes
+
+-   afc8d77: Update error message for `aphrodite-add-style-variable-name` rule
+
 ## 3.1.0
 
 ### Minor Changes
