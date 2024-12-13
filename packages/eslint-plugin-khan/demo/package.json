@@ -7,7 +7,7 @@
     "lint": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx ."
   },
   "devDependencies": {
-    "@khanacademy/eslint-plugin": "^3.0.1",
+    "@khanacademy/eslint-plugin": "^3.1.0",
     "eslint": "^8.55.0",
     "typescript": "^5.0.4"
   },
