@@ -23,7 +23,6 @@ module.exports = {
                 rootDir: __dirname,
             },
         ],
-        // TODO(kevinb): re-enable after publishing @khanacademy/eslint-plugin
-        // "@khanacademy/aphrodite-add-style-variable-name": "error",
+        "@khanacademy/aphrodite-add-style-variable-name": "error",
     },
 };
