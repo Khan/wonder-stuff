@@ -1,5 +1,14 @@
 # @khanacademy/eslint-config
 
+## 5.0.0
+
+### Patch Changes
+
+-   3d8fea4: Update eslint to ^8.55.0
+-   Updated dependencies [3d8fea4]
+-   Updated dependencies [3d8fea4]
+    -   @khanacademy/eslint-plugin@3.1.0
+
 ## 4.0.1
 
 ### Patch Changes

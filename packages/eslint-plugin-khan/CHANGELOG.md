@@ -1,5 +1,15 @@
 # @khanacademy/eslint-plugin
 
+## 3.1.0
+
+### Minor Changes
+
+-   3d8fea4: Add `aphrodite-add-style-variable-name` lint rule
+
+### Patch Changes
+
+-   3d8fea4: Update eslint to ^8.55.0
+
 ## 3.0.1
 
 ### Patch Changes
