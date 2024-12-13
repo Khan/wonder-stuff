@@ -80,7 +80,6 @@ ruleTester.run(ruleName, rule, {
                     messageId: "errorString",
                     data: {
                         variableName: "foo",
-                        tagName: "div",
                         expectedName: "StyledDiv",
                     },
                 },
@@ -93,7 +92,6 @@ ruleTester.run(ruleName, rule, {
                     messageId: "errorString",
                     data: {
                         variableName: "div",
-                        tagName: "div",
                         expectedName: "StyledDiv",
                     },
                 },
@@ -106,7 +104,6 @@ ruleTester.run(ruleName, rule, {
                     messageId: "errorString",
                     data: {
                         variableName: "span",
-                        tagName: "span",
                         expectedName: "StyledSpan",
                     },
                 },
@@ -119,7 +116,6 @@ ruleTester.run(ruleName, rule, {
                     messageId: "errorString",
                     data: {
                         variableName: "p",
-                        tagName: "p",
                         expectedName: "StyledP",
                     },
                 },
@@ -132,7 +128,6 @@ ruleTester.run(ruleName, rule, {
                     messageId: "errorString",
                     data: {
                         variableName: "styledDiv",
-                        tagName: "div",
                         expectedName: "StyledDiv",
                     },
                 },
@@ -145,7 +140,6 @@ ruleTester.run(ruleName, rule, {
                     messageId: "errorString",
                     data: {
                         variableName: "FooBar",
-                        tagName: "foo-bar",
                         expectedName: "StyledFooBar",
                     },
                 },
@@ -158,7 +152,6 @@ ruleTester.run(ruleName, rule, {
                     messageId: "errorString",
                     data: {
                         variableName: "FooBar",
-                        tagName: "foo_bar",
                         expectedName: "StyledFooBar",
                     },
                 },
@@ -171,7 +164,6 @@ ruleTester.run(ruleName, rule, {
                     messageId: "errorString",
                     data: {
                         variableName: "FooBar",
-                        tagName: "FooBar",
                         expectedName: "StyledFooBar",
                     },
                 },

@@ -10,7 +10,7 @@ const createRule = ESLintUtils.RuleCreator<MyPluginDocs>(
 type Options = [];
 type MessageIds = "errorString";
 
-const message = `Variable name "{{ variableName }}" does not match tag name "{{ tagName }}". Variable name should be "{{ expectedName }}"`;
+const message = `Variable name "{{ variableName }}" does not match the expected naming convention. Expected: "{{ expectedName }}"`;
 
 /**
  * Converts a string into PascalCase.
@@ -99,7 +99,6 @@ export default createRule<Options, MessageIds>({
                         messageId: "errorString",
                         data: {
                             variableName,
-                            tagName,
                             expectedName,
                         },
                     });
