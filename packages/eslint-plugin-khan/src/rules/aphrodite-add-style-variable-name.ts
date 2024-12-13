@@ -99,7 +99,6 @@ export default createRule<Options, MessageIds>({
                         messageId: "errorString",
                         data: {
                             variableName,
-                            tagName,
                             expectedName,
                         },
                     });
