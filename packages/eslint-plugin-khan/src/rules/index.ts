@@ -8,6 +8,7 @@ import reactSvgPathPrecision from "./react-svg-path-precision";
 import syncTag from "./sync-tag";
 import tsNoErrorSupressions from "./ts-no-error-suppressions";
 import jestEnzymeMatchers from "./jest-enzyme-matchers";
+import aphroditeAddStyleVariableName from "./aphrodite-add-style-variable-name";
 
 export default {
     "array-type-style": arrayTypeStyle,
@@ -20,4 +21,5 @@ export default {
     "react-svg-path-precision": reactSvgPathPrecision,
     "sync-tag": syncTag,
     "jest-enzyme-matchers": jestEnzymeMatchers,
+    "aphrodite-add-style-variable-name": aphroditeAddStyleVariableName,
 };
