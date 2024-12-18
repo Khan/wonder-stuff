@@ -13,3 +13,5 @@ export const Icon = (): React.ReactNode => {
         </svg>
     );
 };
+
+// trivial change
