@@ -23,5 +23,7 @@ module.exports = {
         },
         "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     },
-    rules: {},
+    rules: {
+        "@khanacademy/aphrodite-add-style-variable-name": ERROR,
+    },
 };
