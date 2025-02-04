@@ -1,5 +1,11 @@
 # @khanacademy/eslint-config
 
+## 5.1.0
+
+### Minor Changes
+
+-   40e273a: Set up base a11y eslint config file (`@khanacademy/eslint-config/a11y`). It enables the `@khanacademy/aphrodite-add-style-variable-name` rule.
+
 ## 5.0.1
 
 ### Patch Changes
