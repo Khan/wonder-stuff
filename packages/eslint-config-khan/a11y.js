@@ -2,6 +2,14 @@
 const ERROR = "error";
 const OFF = "off";
 
+/**
+ * Eslint config for enabling lint rules related to accessibility. This config
+ * is intended to encourage the development of frontend interfaces with
+ * accessibility in mind.
+ *
+ * Note: Other types of accessibility tests (tooling, manual testing)
+ * are still useful since linting can only detect some issues from static code.
+ */
 module.exports = {
     parser: "@typescript-eslint/parser",
     extends: ["plugin:jsx-a11y/strict"],
@@ -21,10 +29,11 @@ module.exports = {
         "jsx-a11y": {
             polymorphicPropName: "tag",
             components: {
+                // Mapping for common WB components
                 Link: "a",
                 Button: "button",
                 IconButton: "button",
-                Textarea: "textarea",
+                TextArea: "textarea",
                 TextField: "input",
 
                 // Mapping for common wrappers for html elements when we can use `addStyle`
