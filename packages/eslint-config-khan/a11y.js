@@ -77,11 +77,18 @@ module.exports = {
     rules: {
         "@khanacademy/aphrodite-add-style-variable-name": ERROR,
 
-        // jsx-a11y
+        /** jsx-a11y **/
+
+        /** jsx-a11y: Rules to explictly enable that are not part of the strict rules **/
+        "jsx-a11y/lang": ERROR,
+        "jsx-a11y/no-aria-hidden-on-focusable": ERROR,
+        "jsx-a11y/anchor-ambiguous-text": ERROR,
         // Explicitly enable accessible emoji rule so that emojis are used intentionally.
         // Note: The plugin marks this rule as deprecated since browsers and assistive
         // tech have advanced since the rule was introduced.
         "jsx-a11y/accessible-emoji": ERROR,
+
+        /** jsx-a11y: Rules to explicitly disable **/
         // Disabled since using autofocus could be valid depending on the context
         "jsx-a11y/no-autofocus": OFF,
         // Disabled since setting role is sometimes valid, especially on flexible
@@ -90,9 +97,8 @@ module.exports = {
         // Disabled because results from rule are not reliable. Would be more
         // helpful to check associated labels on rendered output
         "jsx-a11y/control-has-associated-label": OFF,
-        "jsx-a11y/lang": ERROR,
-        "jsx-a11y/no-aria-hidden-on-focusable": ERROR,
-        "jsx-a11y/anchor-ambiguous-text": ERROR,
+
+        /** jsx-a11y: Rules with configuration options **/
         "jsx-a11y/anchor-is-valid": [
             ERROR,
             // This makes it so Link components using the `to` prop is valid
