@@ -27,6 +27,7 @@ module.exports = {
                 TextField: "input",
 
                 // Mapping for common wrappers for html elements when we can use `addStyle`
+                StyledA: "a",
                 StyledButton: "button",
                 StyledImg: "img",
                 StyledSvg: "svg",
@@ -36,6 +37,9 @@ module.exports = {
                 StyledSpan: "span",
                 StyledDiv: "div",
                 StyledSection: "section",
+                StyledHeader: "header",
+                StyledFooter: "footer",
+                StyledBlockquote: "blockquote",
                 StyledForm: "form",
                 StyledOutput: "output",
                 StyledIframe: "iframe",
