@@ -28,6 +28,29 @@ module.exports = {
         "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
         "jsx-a11y": {
             polymorphicPropName: "tag",
+            // These are the WB components that have a `tag` prop to assign the
+            // underlying html element. Intentionally allowing these components
+            // since other components could be using "tag" as a prop name for
+            // a different purpose.
+            polymorphicAllowList: [
+                "BodyMonospace",
+                "BodySerifBlock",
+                "Body",
+                "Caption",
+                "Footnote",
+                "HeadingLarge",
+                "HeadingMedium",
+                "HeadingSmall",
+                "HeadingXSmall",
+                "LabelLarge",
+                "LabelMedium",
+                "LabelSmall",
+                "LabelXSmall",
+                "Tagline",
+                "Text",
+                "Title",
+                "View",
+            ],
             components: {
                 // Mapping for common WB components
                 Link: "a",
