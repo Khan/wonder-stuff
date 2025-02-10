@@ -58,6 +58,12 @@ module.exports = {
                 IconButton: "button",
                 TextArea: "textarea",
                 TextField: "input",
+                // SingleSelect/MultiSelect components don't have an equivalent
+                // html element, the closest is a `select` element. This allows
+                // for labels to be assosciated with the control for the
+                // jsx-a11y/label-has-associated-control rule.
+                SingleSelect: "select",
+                MultiSelect: "select",
 
                 // Mapping for common wrappers for html elements when we can use `addStyle`
                 StyledA: "a",
