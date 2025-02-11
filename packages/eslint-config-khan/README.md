@@ -8,6 +8,7 @@ Shared Khan Academy eslint configuration.
 - Update your .eslintrc.js file to:
   - extend `"@khanacademy"`
   - include settings for `"import/resolver"`
+- For accessibility linting rules, extend `@khanacademy/eslint-config/a11y`
 
 For monorepos the `"import/resolver"` settings will look like this:
 
@@ -30,10 +31,7 @@ For monorepos the `"import/resolver"` settings will look like this:
     },
 ```
 
-For regulard repos, the settings will look like this:
-
-```
-For monorepos the `"import/resolver"` settings will look like this:
+For regular repos, the settings will look like this:
 
 ```
     settings: {
