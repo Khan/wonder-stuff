@@ -1,5 +1,11 @@
 # @khanacademy/eslint-config
 
+## 5.2.0
+
+### Minor Changes
+
+-   cd91b93: Enable accessibility linting rules from `eslint-plugin-jsx-a11y` in `@khanacademy/eslint-config/a11y`
+
 ## 5.1.0
 
 ### Minor Changes
