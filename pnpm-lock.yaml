@@ -43,6 +43,9 @@ importers:
       '@google-cloud/trace-agent':
         specifier: ^5.1.6
         version: 5.1.6(encoding@0.1.13)
+      '@jest/globals':
+        specifier: ^29.7.0
+        version: 29.7.0
       '@rollup/plugin-babel':
         specifier: ^6.0.4
         version: 6.0.4(@babel/core@7.23.0)(@types/babel__core@7.20.0)(rollup@4.21.2)
@@ -87,6 +90,9 @@ importers:
         version: 8.17.0(@typescript-eslint/parser@8.17.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3)
       '@typescript-eslint/parser':
         specifier: 8.17.0
+        version: 8.17.0(eslint@8.57.1)(typescript@5.7.3)
+      '@typescript-eslint/rule-tester':
+        specifier: ^8.17.0
         version: 8.17.0(eslint@8.57.1)(typescript@5.7.3)
       babel-jest:
         specifier: ^29.7.0
