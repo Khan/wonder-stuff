@@ -26,7 +26,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@khanacademy/wonder-stuff-server": "workspace:"
+        "@khanacademy/wonder-stuff-server": "workspace:*"
     },
     "peerDependencies": {
         "@google-cloud/kms": "^3.4.0",

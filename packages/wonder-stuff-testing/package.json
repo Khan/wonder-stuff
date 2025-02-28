@@ -20,13 +20,13 @@
         "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "workspace:"
+        "@khanacademy/wonder-stuff-core": "workspace:*"
     },
     "peerDependencies": {
         "jest": "^29"
     },
     "devDependencies": {
-        "@khanacademy/ws-dev-build-settings": "workspace:"
+        "@khanacademy/ws-dev-build-settings": "workspace:*"
     },
     "browser": {
         "dist/es/index.js": "./dist/browser/es/index.js",
