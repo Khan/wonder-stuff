@@ -1,9 +1,11 @@
 import * as CollateSentryData from "../collate-sentry-data";
 import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options";
 import {EmptySentryData} from "../empty-sentry-data";
-import {KindErrorData} from "../kind-error-data";
+import {kindErrorDataIntegration} from "../kind-error-data";
 
 jest.mock("../collate-sentry-data");
+
+const mockClient: any = 0;
 
 describe("KindErrorData", () => {
     const NODE_ENV = process.env.NODE_ENV;
@@ -33,7 +35,7 @@ describe("KindErrorData", () => {
                     // Arrange
 
                     // Act
-                    const act = () => new KindErrorData(badOptions);
+                    const act = () => kindErrorDataIntegration(badOptions);
 
                     // Assert
                     expect(act).toThrowErrorMatchingSnapshot();
@@ -61,7 +63,7 @@ describe("KindErrorData", () => {
                     // Arrange
 
                     // Act
-                    const act = () => new KindErrorData(badOptions);
+                    const act = () => kindErrorDataIntegration(badOptions);
 
                     // Assert
                     expect(act).not.toThrowError("Invalid options");
@@ -81,7 +83,7 @@ describe("KindErrorData", () => {
             const act = new Promise((resolve: any, reject: any) => {
                 try {
                     // Should not resolve!
-                    resolve(new KindErrorData(badOptions));
+                    resolve(kindErrorDataIntegration(badOptions));
                 } catch (e: any) {
                     reject(e);
                 }
@@ -103,77 +105,7 @@ describe("KindErrorData", () => {
         });
     });
 
-    describe("#setupOnce", () => {
-        it("should register a global event processor", () => {
-            // Arrange
-            const addGlobalEventProcessorMock = jest.fn();
-            const underTest = new KindErrorData();
-
-            // Act
-            underTest.setupOnce(addGlobalEventProcessorMock, jest.fn());
-
-            // Assert
-            expect(addGlobalEventProcessorMock).toHaveBeenCalledWith(
-                expect.any(Function),
-            );
-        });
-
-        describe("registered event processor", () => {
-            it("should return the event if the integration is not returned from the hub", () => {
-                // Arrange
-                const addGlobalEventProcessorMock = jest.fn();
-                const getHub = () => ({
-                    getIntegration: () => undefined,
-                });
-                const underTest = new KindErrorData();
-                underTest.setupOnce(addGlobalEventProcessorMock, getHub);
-                const registeredProcessor =
-                    addGlobalEventProcessorMock.mock.calls[0][0];
-                const event = {
-                    kind: "event",
-                    event_id: "event-id",
-                } as const;
-
-                // Act
-                const result = registeredProcessor(event);
-
-                // Assert
-                expect(result).toBe(event);
-            });
-
-            it("should call enhanceEventWithErrorData", () => {
-                // Arrange
-                const underTest = new KindErrorData();
-                const addGlobalEventProcessorMock = jest.fn();
-                const getHub = () => ({
-                    getIntegration: jest.fn().mockReturnValue(underTest),
-                });
-                const enhanceSpy = jest
-                    .spyOn(underTest, "enhanceEventWithErrorData")
-                    // @ts-expect-error [FEI-5011] - TS2559 - Type '"ENHANCED"' has no properties in common with type 'SentryEvent'.
-                    .mockReturnValue("ENHANCED");
-                underTest.setupOnce(addGlobalEventProcessorMock, getHub);
-                const registeredProcessor =
-                    addGlobalEventProcessorMock.mock.calls[0][0];
-                const event = {
-                    kind: "event",
-                    event_id: "event-id",
-                } as const;
-                const hint = {
-                    event_id: "event-id",
-                } as const;
-
-                // Act
-                const result = registeredProcessor(event, hint);
-
-                // Assert
-                expect(enhanceSpy).toHaveBeenCalledWith(event, hint);
-                expect(result).toBe("ENHANCED");
-            });
-        });
-    });
-
-    describe("#enhanceEventWithErrorData", () => {
+    describe("#processEvent", () => {
         it.each([
             null,
             undefined,
@@ -184,7 +116,7 @@ describe("KindErrorData", () => {
             "should return the event if the original exception (%s) is not an Error",
             (originalException: any) => {
                 // Arrange
-                const underTest = new KindErrorData();
+                const underTest = kindErrorDataIntegration();
                 const event = {
                     kind: "event",
                     event_id: "event-id",
@@ -195,7 +127,11 @@ describe("KindErrorData", () => {
                 } as const;
 
                 // Act
-                const result = underTest.enhanceEventWithErrorData(event, hint);
+                const result = underTest.processEvent?.(
+                    event,
+                    hint,
+                    mockClient,
+                );
 
                 // Assert
                 expect(result).toBe(event);
@@ -204,14 +140,14 @@ describe("KindErrorData", () => {
 
         it("should return the event if there is no hint", () => {
             // Arrange
-            const underTest = new KindErrorData();
+            const underTest = kindErrorDataIntegration();
             const event = {
                 kind: "event",
                 event_id: "event-id",
             } as const;
 
             // Act
-            const result = underTest.enhanceEventWithErrorData(event);
+            const result = underTest.processEvent?.(event, {}, mockClient);
 
             // Assert
             expect(result).toBe(event);
@@ -224,7 +160,7 @@ describe("KindErrorData", () => {
                 groupByTagName: "GROUP",
                 kindTagName: "KIND",
             } as const;
-            const underTest = new KindErrorData(options);
+            const underTest = kindErrorDataIntegration(options);
             const event = {
                 kind: "event",
                 event_id: "event-id",
@@ -238,7 +174,7 @@ describe("KindErrorData", () => {
                 .mockReturnValue(EmptySentryData);
 
             // Act
-            underTest.enhanceEventWithErrorData(event, hint);
+            underTest.processEvent?.(event, hint, mockClient);
 
             // Assert
             expect(collateSentryDataSpy).toHaveBeenCalledWith(
@@ -254,7 +190,7 @@ describe("KindErrorData", () => {
                 groupByTagName: "GROUP",
                 kindTagName: "KIND",
             } as const;
-            const underTest = new KindErrorData(options);
+            const underTest = kindErrorDataIntegration(options);
             const event = {
                 kind: "event",
                 event_id: "event-id",
@@ -290,7 +226,7 @@ describe("KindErrorData", () => {
 
             // Act
             // @ts-expect-error [FEI-5011] - TS2345 - Argument of type '{ readonly kind: "event"; readonly event_id: "event-id"; readonly tags: { readonly tag1: "originalValue1"; readonly tag2: "originalValue2"; }; readonly contexts: { readonly context1: { readonly key1: "originalValue1"; }; readonly context2: { ...; }; }; readonly fingerprint: readonly [...]; }' is not assignable to parameter of type 'SentryEvent'.
-            const result = underTest.enhanceEventWithErrorData(event, hint);
+            const result = underTest.processEvent?.(event, hint, mockClient);
 
             // Assert
             expect(result).toStrictEqual({
