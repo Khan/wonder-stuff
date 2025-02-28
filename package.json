@@ -98,7 +98,7 @@
     "lint": "pnpm run lint:ci .",
     "lint:ci": "eslint --ext .ts --ext .js",
     "lint:pkg-json": "pnpm npmPkgJsonLint ./packages/wonder-stuff-*",
-    "publish:ci": "pnpm run lint:pkg-json && node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && yarn build && yarn build:types",
+    "publish:ci": "pnpm run lint:pkg-json && node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && yarn build && yarn build:types && changeset publish",
     "test": "pnpm jest",
     "typecheck": "tsc",
     "nochangeset": "pnpm changeset add --empty",
