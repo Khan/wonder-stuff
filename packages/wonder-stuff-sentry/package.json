@@ -27,7 +27,13 @@
         "@khanacademy/wonder-stuff-core": "^1.5.4"
     },
     "devDependencies": {
-        "@khanacademy/ws-dev-build-settings": "^2.0.1"
+        "@khanacademy/ws-dev-build-settings": "^2.0.1",
+        "@sentry/browser": "8",
+        "@sentry/core": "8"
+    },
+    "peerDependencies": {
+        "@sentry/browser": "8",
+        "@sentry/core": "8"
     },
     "browser": {
         "dist/es/index.js": "./dist/browser/es/index.js",
