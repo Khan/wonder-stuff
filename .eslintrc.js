@@ -37,7 +37,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: ["utils/*.js"],
+            files: ["utils/*.js", "typedoc.config.js"],
             rules: {
                 "import/no-commonjs": "off",
             },
