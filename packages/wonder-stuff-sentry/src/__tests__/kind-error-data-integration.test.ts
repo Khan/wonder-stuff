@@ -1,7 +1,7 @@
 import * as CollateSentryData from "../collate-sentry-data";
 import {DefaultKindErrorDataOptions} from "../default-kind-error-data-options";
 import {EmptySentryData} from "../empty-sentry-data";
-import {kindErrorDataIntegration} from "../kind-error-data";
+import {kindErrorDataIntegration} from "../kind-error-data-integration";
 
 jest.mock("../collate-sentry-data");
 
