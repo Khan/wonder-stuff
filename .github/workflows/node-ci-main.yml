@@ -54,7 +54,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Run tests with coverage
-      run: yarn coverage
+      run: pnpm run coverage
     - name: Upload Coverage
       uses: codecov/codecov-action@v4
       with:
