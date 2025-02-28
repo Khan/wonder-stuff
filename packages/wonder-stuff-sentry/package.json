@@ -28,12 +28,10 @@
     },
     "devDependencies": {
         "@khanacademy/ws-dev-build-settings": "^2.0.1",
-        "@sentry/browser": "8",
-        "@sentry/core": "8"
+        "@sentry/core": "9"
     },
     "peerDependencies": {
-        "@sentry/browser": "8",
-        "@sentry/core": "8"
+        "@sentry/core": "9"
     },
     "browser": {
         "dist/es/index.js": "./dist/browser/es/index.js",
