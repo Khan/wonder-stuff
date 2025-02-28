@@ -78,6 +78,7 @@
     }
   },
   "scripts": {
+    "preinstall": "npx -y only-allow pnpm",
     "rollup": "rollup -c build-settings/rollup.config.mjs",
     "build": "yarn rollup",
     "build:prodsizecheck": "yarn rollup --configPlatforms='browser' --configFormats='esm' --configEnvironment='production'",
@@ -95,5 +96,6 @@
     "typecheck": "tsc",
     "nochangeset": "yarn changeset add --empty",
     "add:devdepbysha": "bash -c 'yarn add -W --dev \"git+https://git@github.com/Khan/$0.git#$1\"'"
-  }
+  },
+  "packageManager": "pnpm@10.0.0+sha512.b8fef5494bd3fe4cbd4edabd0745df2ee5be3e4b0b8b08fa643aa3e4c6702ccc0f00d68fa8a8c9858a735a0032485a44990ed2810526c875e416f001b17df12b"
 }
