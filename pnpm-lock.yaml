@@ -282,8 +282,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6(encoding@0.1.13)
       '@khanacademy/wonder-stuff-server':
-        specifier: ^6.0.2
-        version: 6.0.2(@google-cloud/kms@3.8.0(encoding@0.1.13))(@google-cloud/logging-winston@4.2.4(encoding@0.1.13)(winston@3.10.0))(@google-cloud/profiler@4.2.0(encoding@0.1.13))(@google-cloud/trace-agent@5.1.6(encoding@0.1.13))(express-winston@4.2.0(winston@3.10.0))(express@4.19.2)(winston@3.10.0)
+        specifier: 'workspace:'
+        version: link:../wonder-stuff-server
       express:
         specifier: ^4.17.2
         version: 4.19.2
@@ -329,14 +329,14 @@ importers:
   packages/wonder-stuff-render-environment-jsdom:
     dependencies:
       '@khanacademy/wonder-stuff-core':
-        specifier: ^1.5.4
-        version: 1.5.4
+        specifier: 'workspace:'
+        version: link:../wonder-stuff-core
       '@khanacademy/wonder-stuff-render-server':
-        specifier: ^2.0.2
-        version: 2.0.2(@google-cloud/kms@3.8.0(encoding@0.1.13))(@google-cloud/logging-winston@4.2.4(encoding@0.1.13)(winston@3.10.0))(@google-cloud/profiler@4.2.0(encoding@0.1.13))(@google-cloud/trace-agent@5.1.6(encoding@0.1.13))(express-async-handler@1.2.0)(express-winston@4.2.0(winston@3.10.0))(express@4.21.2)(superagent@5.3.1)(winston@3.10.0)
+        specifier: 'workspace:'
+        version: link:../wonder-stuff-render-server
       '@khanacademy/wonder-stuff-server':
-        specifier: ^6.0.2
-        version: 6.0.2(@google-cloud/kms@3.8.0(encoding@0.1.13))(@google-cloud/logging-winston@4.2.4(encoding@0.1.13)(winston@3.10.0))(@google-cloud/profiler@4.2.0(encoding@0.1.13))(@google-cloud/trace-agent@5.1.6(encoding@0.1.13))(express-winston@4.2.0(winston@3.10.0))(express@4.21.2)(winston@3.10.0)
+        specifier: 'workspace:'
+        version: link:../wonder-stuff-server
       jsdom:
         specifier: ^21.1.1
         version: 21.1.1
@@ -360,11 +360,11 @@ importers:
         specifier: ^7.1.2
         version: 7.1.2(encoding@0.1.13)
       '@khanacademy/wonder-stuff-core':
-        specifier: ^1.5.4
-        version: 1.5.4
+        specifier: 'workspace:'
+        version: link:../wonder-stuff-core
       '@khanacademy/wonder-stuff-server':
-        specifier: ^6.0.2
-        version: 6.0.2(@google-cloud/kms@3.8.0(encoding@0.1.13))(@google-cloud/logging-winston@5.3.0(encoding@0.1.13)(winston@3.10.0))(@google-cloud/profiler@5.0.5(encoding@0.1.13))(@google-cloud/trace-agent@7.1.2(encoding@0.1.13))(express-winston@4.2.0(winston@3.10.0))(express@4.19.2)(winston@3.10.0)
+        specifier: 'workspace:'
+        version: link:../wonder-stuff-server
       express:
         specifier: ^4.18.2
         version: 4.19.2
@@ -388,8 +388,8 @@ importers:
   packages/wonder-stuff-sentry:
     dependencies:
       '@khanacademy/wonder-stuff-core':
-        specifier: ^1.5.4
-        version: 1.5.4
+        specifier: 'workspace:'
+        version: link:../wonder-stuff-core
     devDependencies:
       '@khanacademy/ws-dev-build-settings':
         specifier: 'workspace:'
@@ -413,8 +413,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6(encoding@0.1.13)
       '@khanacademy/wonder-stuff-core':
-        specifier: ^1.5.4
-        version: 1.5.4
+        specifier: 'workspace:'
+        version: link:../wonder-stuff-core
       express:
         specifier: ^4.17.2
         version: 4.19.2
@@ -432,8 +432,8 @@ importers:
   packages/wonder-stuff-testing:
     dependencies:
       '@khanacademy/wonder-stuff-core':
-        specifier: ^1.5.4
-        version: 1.5.4
+        specifier: 'workspace:'
+        version: link:../wonder-stuff-core
       jest:
         specifier: ^29
         version: 29.7.0(@types/node@20.17.24)
@@ -1429,36 +1429,6 @@ packages:
 
   '@khanacademy/eslint-plugin@3.1.1':
     resolution: {integrity: sha512-1tOJRN1MWc7tOiSwxBT9KfOmo46d0/eB3P3On4PCZKkrrdC+wDNTxQ3FWX+xZBCjl6bSdh/ab5HZkOatDD7efA==}
-
-  '@khanacademy/wonder-stuff-core@1.5.4':
-    resolution: {integrity: sha512-Z1DOHdSNrXyIKCgYsq6XKT6ZTRq5bb7Daof8mN31O30twStrwBynP5fS0lARS9qgxycaueThEcmeCF8AXyU21g==}
-    engines: {node: '>=16'}
-
-  '@khanacademy/wonder-stuff-render-server@2.0.2':
-    resolution: {integrity: sha512-PEx0drkDjtNK60Hixbcbc/+Cwn6ynEZUD9Py4WctQwdGzFRlTphBbS80ZpO3Ds/XpM+QzH/wHwj+KD29LJ+qLA==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@google-cloud/kms': ^3.4.0
-      '@google-cloud/logging-winston': ^5.3.0
-      '@google-cloud/profiler': ^5.0.4
-      '@google-cloud/trace-agent': ^7.1.2
-      express: ^4.18.2
-      express-async-handler: ^1.2.0
-      express-winston: ^4.2.0
-      superagent: ^5.3.1
-      winston: ^3.8.2
-
-  '@khanacademy/wonder-stuff-server@6.0.2':
-    resolution: {integrity: sha512-SUsk39Y2xMPnjgQMk4h3Xr6yvCTfg1OJUDXXCuM09+QRb67Ksu+xZkTghSzKzYQz2Z7HCO8fyIZUTVmc1fLMPA==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@google-cloud/kms': ^3.4.0
-      '@google-cloud/logging-winston': ^4.1.1
-      '@google-cloud/profiler': ^4.1.7
-      '@google-cloud/trace-agent': ^5.1.6
-      express: ^4.17.2
-      express-winston: ^4.2.0
-      winston: ^3.4.0
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -7527,55 +7497,6 @@ snapshots:
       - eslint
       - supports-color
       - typescript
-
-  '@khanacademy/wonder-stuff-core@1.5.4': {}
-
-  '@khanacademy/wonder-stuff-render-server@2.0.2(@google-cloud/kms@3.8.0(encoding@0.1.13))(@google-cloud/logging-winston@4.2.4(encoding@0.1.13)(winston@3.10.0))(@google-cloud/profiler@4.2.0(encoding@0.1.13))(@google-cloud/trace-agent@5.1.6(encoding@0.1.13))(express-async-handler@1.2.0)(express-winston@4.2.0(winston@3.10.0))(express@4.21.2)(superagent@5.3.1)(winston@3.10.0)':
-    dependencies:
-      '@google-cloud/kms': 3.8.0(encoding@0.1.13)
-      '@google-cloud/logging-winston': 4.2.4(encoding@0.1.13)(winston@3.10.0)
-      '@google-cloud/profiler': 4.2.0(encoding@0.1.13)
-      '@google-cloud/trace-agent': 5.1.6(encoding@0.1.13)
-      '@khanacademy/wonder-stuff-core': 1.5.4
-      '@khanacademy/wonder-stuff-server': 6.0.2(@google-cloud/kms@3.8.0(encoding@0.1.13))(@google-cloud/logging-winston@4.2.4(encoding@0.1.13)(winston@3.10.0))(@google-cloud/profiler@4.2.0(encoding@0.1.13))(@google-cloud/trace-agent@5.1.6(encoding@0.1.13))(express-winston@4.2.0(winston@3.10.0))(express@4.21.2)(winston@3.10.0)
-      express: 4.21.2
-      express-async-handler: 1.2.0
-      express-winston: 4.2.0(winston@3.10.0)
-      superagent: 5.3.1
-      winston: 3.10.0
-
-  '@khanacademy/wonder-stuff-server@6.0.2(@google-cloud/kms@3.8.0(encoding@0.1.13))(@google-cloud/logging-winston@4.2.4(encoding@0.1.13)(winston@3.10.0))(@google-cloud/profiler@4.2.0(encoding@0.1.13))(@google-cloud/trace-agent@5.1.6(encoding@0.1.13))(express-winston@4.2.0(winston@3.10.0))(express@4.19.2)(winston@3.10.0)':
-    dependencies:
-      '@google-cloud/kms': 3.8.0(encoding@0.1.13)
-      '@google-cloud/logging-winston': 4.2.4(encoding@0.1.13)(winston@3.10.0)
-      '@google-cloud/profiler': 4.2.0(encoding@0.1.13)
-      '@google-cloud/trace-agent': 5.1.6(encoding@0.1.13)
-      '@khanacademy/wonder-stuff-core': 1.5.4
-      express: 4.19.2
-      express-winston: 4.2.0(winston@3.10.0)
-      winston: 3.10.0
-
-  '@khanacademy/wonder-stuff-server@6.0.2(@google-cloud/kms@3.8.0(encoding@0.1.13))(@google-cloud/logging-winston@4.2.4(encoding@0.1.13)(winston@3.10.0))(@google-cloud/profiler@4.2.0(encoding@0.1.13))(@google-cloud/trace-agent@5.1.6(encoding@0.1.13))(express-winston@4.2.0(winston@3.10.0))(express@4.21.2)(winston@3.10.0)':
-    dependencies:
-      '@google-cloud/kms': 3.8.0(encoding@0.1.13)
-      '@google-cloud/logging-winston': 4.2.4(encoding@0.1.13)(winston@3.10.0)
-      '@google-cloud/profiler': 4.2.0(encoding@0.1.13)
-      '@google-cloud/trace-agent': 5.1.6(encoding@0.1.13)
-      '@khanacademy/wonder-stuff-core': 1.5.4
-      express: 4.21.2
-      express-winston: 4.2.0(winston@3.10.0)
-      winston: 3.10.0
-
-  '@khanacademy/wonder-stuff-server@6.0.2(@google-cloud/kms@3.8.0(encoding@0.1.13))(@google-cloud/logging-winston@5.3.0(encoding@0.1.13)(winston@3.10.0))(@google-cloud/profiler@5.0.5(encoding@0.1.13))(@google-cloud/trace-agent@7.1.2(encoding@0.1.13))(express-winston@4.2.0(winston@3.10.0))(express@4.19.2)(winston@3.10.0)':
-    dependencies:
-      '@google-cloud/kms': 3.8.0(encoding@0.1.13)
-      '@google-cloud/logging-winston': 5.3.0(encoding@0.1.13)(winston@3.10.0)
-      '@google-cloud/profiler': 5.0.5(encoding@0.1.13)
-      '@google-cloud/trace-agent': 7.1.2(encoding@0.1.13)
-      '@khanacademy/wonder-stuff-core': 1.5.4
-      express: 4.19.2
-      express-winston: 4.2.0(winston@3.10.0)
-      winston: 3.10.0
 
   '@manypkg/find-root@1.1.0':
     dependencies:
