@@ -21,7 +21,7 @@
     },
     "devDependencies": {
         "@types/node": "^20.17.23",
-        "@khanacademy/ws-dev-build-settings": "^2.0.1"
+        "@khanacademy/ws-dev-build-settings": "workspace:"
     },
     "author": "",
     "license": "MIT",
