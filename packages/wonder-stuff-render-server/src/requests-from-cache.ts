@@ -58,12 +58,12 @@ export const asUncachedRequest = (
 };
 
 // NOTE(kevinb): This is necessary to workaround the followoing error when running
-// `yarn build:types`:
+// `pnpm build:types`:
 // TS4078: Parameter 'response' of exported function has or is using private name 'Response'.
 type SAResponse = Response;
 
 // TODO(kevinb): Figure out how to move this into its own .d.ts file and have it
-// work with both `yarn typecheck` and `yarn build:types`.
+// work with both `pnpm typecheck` and `pnpm build:types`.
 declare module "superagent" {
     interface SuperAgentRequest {
         cacheWhenEmpty(cacheWhenEmpty: boolean): this;

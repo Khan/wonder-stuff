@@ -5,6 +5,5 @@ docs
 !packages/eslint-plugin-khan/docs
 !.vscode
 .DS_Store
-yarn-error.log
 *.tsbuildinfo
 utils/**/*.d.ts
