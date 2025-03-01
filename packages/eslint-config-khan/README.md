@@ -4,7 +4,7 @@ Shared Khan Academy eslint configuration.
 
 ## Quick Start
 
-- `yarn add @khanacademy/eslint-config`
+- `(yarn|pnpm) add --save-dev @khanacademy/eslint-config`
 - Update your .eslintrc.js file to:
   - extend `"@khanacademy"`
   - include settings for `"import/resolver"`
