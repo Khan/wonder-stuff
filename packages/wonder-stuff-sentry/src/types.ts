@@ -1,8 +1,5 @@
 import type {Metadata} from "@khanacademy/wonder-stuff-core";
 
-// Copied from https://github.com/Khan/flow-to-typescript-codemod/blob/main/flow.d.ts
-type Class<T> = new (...args: any[]) => T;
-
 /**
  * Tags for a Sentry event.
  *
@@ -93,83 +90,3 @@ export type KindErrorDataOptions = {
     // TODO(somewhatabstract): Allow configuration of which fields we include
     // in causal error contexts.
 };
-
-/////////////////////////////////////////////
-// -> Sentry-specific types below this point.
-// NOTE(somewhatabstract): This is not comprehensive typing. Just the things
-// we need to use.
-type SentrySeverity =
-    | "fatal"
-    | "error"
-    | "warning"
-    | "log"
-    | "info"
-    | "debug"
-    | "critical";
-
-export interface SentryEvent {
-    event_id?: string;
-    message?: string;
-    timestamp?: number;
-    start_timestamp?: number;
-    level?: SentrySeverity;
-    platform?: string;
-    logger?: string;
-    server_name?: string;
-    release?: string;
-    dist?: string;
-    environment?: string;
-    sdk?: any;
-    request?: Request;
-    transaction?: string;
-    modules?: {
-        [key: string]: string;
-    };
-    fingerprint?: SentryFingerprint;
-    exception?: {
-        values?: Array<any>;
-    };
-    stacktrace?: any;
-    breadcrumbs?: Array<any>;
-    contexts?: SentryContexts;
-    tags?: SentryTags;
-    extra?: SentryContext;
-    user?: any;
-    type?: any;
-    spans?: Array<any>;
-    measurements?: any;
-    debug_meta?: any;
-}
-
-export interface SentryEventHint {
-    event_id?: string;
-    captureContext?: any;
-    syntheticException?: Error | null | undefined;
-    originalException?: Error | string | null | undefined;
-    data?: any;
-}
-
-export type SentryEventProcessor = (
-    event: SentryEvent,
-    hint?: SentryEventHint,
-) => Promise<SentryEvent | null | undefined> | SentryEvent | null | undefined;
-
-export interface SentryHub {
-    getIntegration<T extends SentryIntegration>(
-        integration: Class<T>,
-    ): T | null | undefined;
-}
-
-export interface SentryIntegration {
-    name: string;
-    /**
-     * Sets the integration up only once.
-     * This takes no options on purpose, options should be passed in the constructor
-     */
-    setupOnce(
-        addGlobalEventProcessor: (callback: SentryEventProcessor) => void,
-        getCurrentHub: () => SentryHub,
-    ): void;
-}
-// <- Sentry-specific types above this point.
-/////////////////////////////////////////////
