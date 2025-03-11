@@ -3792,10 +3792,10 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
-checksync@^5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/checksync/-/checksync-5.0.5.tgz#d1ad19cb0cb09e1ccf2d3a82bb55a3db7d2c9c64"
-  integrity sha512-mbAQuqFmeJphuoGMnrggki7zY0/mw9NOGKTOMisZwO5Hn7R0UrRmJvFfwvtPorYsUHllyt/kyc+UlpdIMBiQcw==
+checksync@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/checksync/-/checksync-8.0.0.tgz#4103981d160c31362883aeb46ace5115320a02ab"
+  integrity sha512-vq0zjShy+TkiPFWaEroU0FSACBSPLmbZTrEFaTFM8yVa+at4fC4Uvj5EJYt2keerAxMa4BScCU+n//XiRosXng==
 
 chokidar@^3.4.3:
   version "3.5.3"
