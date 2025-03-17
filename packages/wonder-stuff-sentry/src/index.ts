@@ -1,5 +1,5 @@
 export {KindSentryError} from "./kind-sentry-error";
-export {kindErrorDataIntegration} from "./kind-error-data";
+export {kindErrorDataIntegration} from "./kind-error-data-integration";
 
 export type {
     KindErrorDataOptions,
