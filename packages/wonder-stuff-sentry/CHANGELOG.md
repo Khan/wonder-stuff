@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-sentry
 
+## 2.0.0
+
+### Major Changes
+
+-   a8e801b: Migrate the `KindErrorData` integration to be compatible with @sentry/types@9
+
 ## 1.2.7
 
 ### Patch Changes
