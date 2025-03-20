@@ -74,7 +74,6 @@
   },
   "pnpm": {
     "overrides": {
-      "a": "we need to pin wide-align/string-width because v5 & up are ESM only",
       "wide-align>string-width": "^4.2.0",
       "node-gyp": "^10.0.0"
     },
