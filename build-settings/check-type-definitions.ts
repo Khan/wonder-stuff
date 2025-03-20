@@ -24,7 +24,6 @@ const packagesDir = path.join(rootDir, "packages");
 const typeDefinitionFiles = fglob.sync("**/*.d.ts", {
     cwd: packagesDir,
     onlyFiles: true,
-    globstar: true,
     ignore: ["**/node_modules/**"],
 });
 
