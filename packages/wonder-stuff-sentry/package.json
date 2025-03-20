@@ -27,7 +27,7 @@
         "@khanacademy/wonder-stuff-core": "workspace:*"
     },
     "devDependencies": {
-        "@khanacademy/ws-dev-build-settings": "workspace:",
+        "@khanacademy/ws-dev-build-settings": "workspace:*",
         "@sentry/core": "9"
     },
     "peerDependencies": {
