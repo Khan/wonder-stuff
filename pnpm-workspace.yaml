@@ -1,0 +1,4 @@
+packages:
+    - "packages/*"
+    - "build-settings/"
+    - "packages/eslint-plugin-khan/demo/"

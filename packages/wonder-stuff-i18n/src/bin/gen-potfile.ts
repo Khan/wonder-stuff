@@ -10,10 +10,10 @@
  * USAGE:
  *
  *   # Extract strings from all JS files and export to a shared POT file
- *   yarn gen-potfile "javascript/*.{js,jsx}" > JavaScript.pot
+ *   pnpm gen-potfile "javascript/*.{js,jsx}" > JavaScript.pot
  *
  *   # Extract strings from a specific file and output to STDOUT
- *   yarn gen-potfile javascript/about/about.jsx
+ *   pnpm gen-potfile javascript/about/about.jsx
  */
 import {
     getFilesToExtractFrom,

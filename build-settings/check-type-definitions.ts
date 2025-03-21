@@ -8,7 +8,7 @@
  * files instead. Since we don't want to ship source code in every package,
  * we want to guard against this.
  *
- * This script should be run after `yarn build:types`. It will scan the type
+ * This script should be run after `pnpm build:types`. It will scan the type
  * definitions of each package for any types that are being incorrectly
  * imported from other the source code of other packages, and flag them,
  * exiting with a non-zero status code if any are found.
@@ -24,6 +24,7 @@ const packagesDir = path.join(rootDir, "packages");
 const typeDefinitionFiles = fglob.sync("**/*.d.ts", {
     cwd: packagesDir,
     onlyFiles: true,
+    ignore: ["**/node_modules/**"],
 });
 
 let foundErrors = false;

@@ -17,16 +17,16 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
+        "test": "bash -c 'set -x; pnpm run --silent --dir \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "devDependencies": {
         "@types/node": "^20.17.23",
-        "@khanacademy/ws-dev-build-settings": "^2.0.1"
+        "@khanacademy/ws-dev-build-settings": "workspace:*"
     },
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "@khanacademy/wonder-stuff-server": "^6.0.2"
+        "@khanacademy/wonder-stuff-server": "workspace:*"
     },
     "peerDependencies": {
         "@google-cloud/kms": "^3.4.0",

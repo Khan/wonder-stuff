@@ -21,13 +21,13 @@
         "CHANGELOG.md"
     ],
     "scripts": {
-        "test": "bash -c 'yarn --silent --cwd \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
+        "test": "bash -c 'pnpm run --silent --dir \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "@khanacademy/wonder-stuff-core": "^1.5.4"
+        "@khanacademy/wonder-stuff-core": "workspace:*"
     },
     "devDependencies": {
-        "@khanacademy/ws-dev-build-settings": "^2.0.1",
+        "@khanacademy/ws-dev-build-settings": "workspace:*",
         "@sentry/core": "9"
     },
     "peerDependencies": {

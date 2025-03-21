@@ -37,13 +37,13 @@ jobs:
           fetch-depth: 0
 
       - name: Install & cache node_modules
-        uses: Khan/actions@shared-node-cache-v2
+        uses: Khan/actions@shared-node-cache-v3
         with:
           node-version: 20.x
 
       - name: Build Typedoc
         # Generate nice docs inside "docs/" folder
-        run: yarn build:docs
+        run: pnpm run build:docs
 
       - name: Deploy to GitHub pages
         uses: JamesIves/github-pages-deploy-action@v4
@@ -57,7 +57,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: yarn publish:ci
+          publish: pnpm run publish:ci
         env:
           # We use a Personal Access Token here rather than the GITHUB_TOKEN
           # so that it will trigger our other actions. The token has to be on

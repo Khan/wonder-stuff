@@ -6,5 +6,5 @@ run the following command from the root folder, where `<EXAMPLE>` is the name
 of the example folder.
 
 ```shell
-yarn example <EXAMPLE>
+pnpm example <EXAMPLE>
 ```

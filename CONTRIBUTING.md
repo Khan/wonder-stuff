@@ -25,8 +25,8 @@ To work in the `wonder-stuff` repository, follow these steps:
 
 1. Clone the repository
    `git clone git@github.com:Khan/wonder-stuff.git`
-2. Install `yarn` (see [🔗yarnpkg.com](https://yarnpkg.com))
-3. Run `yarn install` to install the dependencies
+2. Install `pnpm` (see [🔗pnpm](https://pnpm.io))
+3. Run `pnpm install` to install the dependencies
 
 You can now work on `wonder-stuff`. We prefer [🔗Visual Studio Code](https://code.visualstudio.com/) as our development environment (it's cross-platform and awesome), but please use what you feel comfortable with (we'll even forgive you for using vim).
 
@@ -46,17 +46,17 @@ We love code reviews. If there are open pull requests, please feel free to revie
 
 To ensure code quality, we use prettier, TypeScript, eslint, and jest. These are all executed automatically on commit, so don't worry if you forget to run them before you commit. They are also executed when you submit, edit, or push to a pull request to ensure the contribution meets our code quality standard.
 
-To execute these operations outside of a pull request or commit operation, you can use `yarn`.
+To execute these operations outside of a pull request or commit operation, you can use `pnpm`.
 
-- `yarn typecheck`
-- `yarn lint`
-- `yarn test`
+- `pnpm typecheck`
+- `pnpm lint`
+- `pnpm test`
 
 💭**REMEMBER** If you would like to contribute code changes to the project, first make sure there's a corresponding issue for the change you wish to make.
 
 ## 📦 Build And Publish
 
-Anyone can create a local build of the distributed code by running `yarn build`.
+Anyone can create a local build of the distributed code by running `pnpm build`.
 
 ### Publishing
 

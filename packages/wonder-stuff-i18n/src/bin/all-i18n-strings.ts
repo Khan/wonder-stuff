@@ -6,8 +6,8 @@
  *
  * USAGE:
  *
- *   yarn all-i18n-strings file.js
- *   yarn all-i18n-strings "src/*.js"
+ *   pnpm all-i18n-strings file.js
+ *   pnpm all-i18n-strings "src/*.js"
  */
 import {getFilesToExtractFrom, getPoItemMap} from "../utils/pofile-utils";
 

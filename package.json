@@ -6,12 +6,9 @@
   "author": "Jeff Yates <jeff@khanacademy.org>",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "build-settings"
-  ],
   "engines": {
-    "node": ">=16"
+    "node": ">=16",
+    "pnpm": ">=10"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
@@ -24,6 +21,7 @@
     "@google-cloud/logging-winston": "^4.2.4",
     "@google-cloud/profiler": "^4.2.0",
     "@google-cloud/trace-agent": "^5.1.6",
+    "@jest/globals": "^29.7.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.3",
@@ -39,6 +37,8 @@
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "8.17.0",
     "@typescript-eslint/parser": "8.17.0",
+    "@typescript-eslint/rule-tester": "^8.17.0",
+    "ancesdir": "^5.0.1",
     "babel-jest": "^29.7.0",
     "babel-watch": "^7.8.1",
     "eslint": "^8.55.0",
@@ -74,28 +74,37 @@
     "typescript": "5.7.3",
     "winston": "^3.10.0"
   },
-  "resolutions": {
-    "//": "we need to pin wide-align/string-width because v5 & up are ESM only",
-    "wide-align/string-width": "^4.2.0",
-    "node-gyp": "^10.0.0"
+  "pnpm": {
+    "overrides": {
+      "wide-align>string-width-docs": "we need to pin wide-align/string-width because v5 & up are ESM only",
+      "wide-align>string-width": "^4.2.0",
+      "node-gyp": "^10.0.0"
+    },
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "pprof",
+      "protobufjs"
+    ]
   },
   "scripts": {
+    "preinstall": "npx -y only-allow pnpm",
     "rollup": "rollup -c build-settings/rollup.config.mjs",
-    "build": "yarn rollup",
-    "build:prodsizecheck": "yarn rollup --configPlatforms='browser' --configFormats='esm' --configEnvironment='production'",
-    "build:types": "yarn tsc --build --verbose tsconfig-build.json && ./build-settings/check-type-definitions.ts",
+    "build": "pnpm run rollup",
+    "build:prodsizecheck": "pnpm run rollup --configPlatforms='browser' --configFormats='esm' --configEnvironment='production'",
+    "build:types": "pnpm tsc --build --verbose tsconfig-build.json && ./build-settings/check-type-definitions.ts",
     "build:docs": "typedoc",
-    "watch": "yarn rollup --watch",
+    "watch": "pnpm run rollup --watch",
     "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf node_modules && rm -rf packages/*/node_modules && rm -f packages/*/*.tsbuildinfo",
-    "coverage": "yarn run jest --coverage",
+    "coverage": "pnpm jest --coverage",
     "format": "prettier --write .",
-    "lint": "yarn lint:ci .",
+    "lint": "pnpm run lint:ci .",
     "lint:ci": "eslint --ext .ts --ext .js",
-    "lint:pkg-json": "yarn npmPkgJsonLint ./packages/wonder-stuff-*",
-    "publish:ci": "yarn run lint:pkg-json && node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && yarn build && yarn build:types && changeset publish",
-    "test": "yarn jest",
+    "lint:pkg-json": "pnpm npmPkgJsonLint ./packages/wonder-stuff-*",
+    "publish:ci": "pnpm run lint:pkg-json && node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && pnpm run build && pnpm run build:types && changeset publish",
+    "test": "pnpm jest",
     "typecheck": "tsc",
-    "nochangeset": "yarn changeset add --empty",
-    "add:devdepbysha": "bash -c 'yarn add -W --dev \"git+https://git@github.com/Khan/$0.git#$1\"'"
-  }
+    "nochangeset": "pnpm changeset add --empty",
+    "add:devdepbysha": "bash -c 'pnpm add --workspace-root --save-dev \"git+https://git@github.com/Khan/$0.git#$1\"'"
+  },
+  "packageManager": "pnpm@10.6.5"
 }
