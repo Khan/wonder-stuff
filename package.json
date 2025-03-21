@@ -86,7 +86,7 @@
     "build:types": "yarn tsc --build --verbose tsconfig-build.json && ./build-settings/check-type-definitions.ts",
     "build:docs": "typedoc",
     "watch": "yarn rollup --watch",
-    "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf packages/wonder-stuff-*/node_modules && rm -f packages/*/*.tsbuildinfo",
+    "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf node_modules && rm -rf packages/*/node_modules && rm -f packages/*/*.tsbuildinfo",
     "coverage": "yarn run jest --coverage",
     "format": "prettier --write .",
     "lint": "yarn lint:ci .",
