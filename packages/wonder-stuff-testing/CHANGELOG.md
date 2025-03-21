@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-testing
 
+## 3.0.6
+
+### Patch Changes
+
+-   82ec7078: Migrate packages to use pnpm internally
+-   Updated dependencies [82ec7078]
+    -   @khanacademy/wonder-stuff-core@1.5.5
+
 ## 3.0.5
 
 ### Patch Changes

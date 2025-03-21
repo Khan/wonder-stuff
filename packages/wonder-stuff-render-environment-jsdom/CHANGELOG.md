@@ -1,5 +1,15 @@
 # @khanacademy/wonder-stuff-render-environment-jsdom
 
+## 1.0.12
+
+### Patch Changes
+
+-   82ec7078: Migrate packages to use pnpm internally
+-   Updated dependencies [82ec7078]
+    -   @khanacademy/wonder-stuff-render-server@2.0.3
+    -   @khanacademy/wonder-stuff-server@6.0.3
+    -   @khanacademy/wonder-stuff-core@1.5.5
+
 ## 1.0.11
 
 ### Patch Changes

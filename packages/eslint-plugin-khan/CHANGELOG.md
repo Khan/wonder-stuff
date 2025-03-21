@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 3.1.2
+
+### Patch Changes
+
+-   82ec7078: Migrate packages to use pnpm internally
+
 ## 3.1.1
 
 ### Patch Changes

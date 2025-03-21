@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-render-server",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "An unopinionated server for rendering specific URLs using a configured environment.",
     "repository": {
         "type": "git",

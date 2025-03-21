@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 2.1.5
+
+### Patch Changes
+
+-   82ec7078: Migrate packages to use pnpm internally
+
 ## 2.1.4
 
 ### Patch Changes
