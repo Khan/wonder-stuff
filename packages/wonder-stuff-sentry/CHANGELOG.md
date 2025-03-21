@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-sentry
 
+## 2.0.1
+
+### Patch Changes
+
+-   82ec7078: Migrate packages to use pnpm internally
+-   Updated dependencies [82ec7078]
+    -   @khanacademy/wonder-stuff-core@1.5.5
+
 ## 2.0.0
 
 ### Major Changes

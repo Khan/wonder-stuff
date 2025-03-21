@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-server
 
+## 6.0.3
+
+### Patch Changes
+
+-   82ec7078: Migrate packages to use pnpm internally
+-   Updated dependencies [82ec7078]
+    -   @khanacademy/wonder-stuff-core@1.5.5
+
 ## 6.0.2
 
 ### Patch Changes

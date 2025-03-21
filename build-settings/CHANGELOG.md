@@ -1,5 +1,11 @@
 # ws-dev-build-settings
 
+## 2.0.2
+
+### Patch Changes
+
+-   82ec7078: Migrate packages to use pnpm internally
+
 ## 2.0.1
 
 ### Patch Changes

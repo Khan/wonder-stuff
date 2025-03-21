@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-core",
-    "version": "1.5.4",
+    "version": "1.5.5",
     "description": "Core APIs for doing useful things that most things want to do",
     "repository": {
         "type": "git",

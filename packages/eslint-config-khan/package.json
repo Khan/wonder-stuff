@@ -1,6 +1,6 @@
 {
     "name": "@khanacademy/eslint-config",
-    "version": "5.2.0",
+    "version": "5.2.1",
     "description": "ESLint config that applies Khan Academy's setings",
     "repository": {
         "type": "git",

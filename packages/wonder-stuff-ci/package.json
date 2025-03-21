@@ -6,7 +6,7 @@
         "node": ">=16"
     },
     "name": "@khanacademy/wonder-stuff-ci",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "description": "Functions for automation and scripts.",
     "repository": {
         "type": "git",

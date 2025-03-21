@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 1.5.5
+
+### Patch Changes
+
+-   82ec7078: Migrate packages to use pnpm internally
+
 ## 1.5.4
 
 ### Patch Changes
