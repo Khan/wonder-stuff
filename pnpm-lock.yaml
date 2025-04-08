@@ -251,8 +251,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       checksync:
-        specifier: ^5.0.5
-        version: 5.0.5
+        specifier: ^9.0.1
+        version: 9.0.1
     devDependencies:
       '@babel/eslint-parser':
         specifier: ^7.25.1
@@ -2506,9 +2506,9 @@ packages:
   chardet@0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
 
-  checksync@5.0.5:
-    resolution: {integrity: sha512-mbAQuqFmeJphuoGMnrggki7zY0/mw9NOGKTOMisZwO5Hn7R0UrRmJvFfwvtPorYsUHllyt/kyc+UlpdIMBiQcw==}
-    engines: {node: '>= 16', yarn: '>=1.18.0 <2'}
+  checksync@9.0.1:
+    resolution: {integrity: sha512-P4mjISfVshT5tEjHs2nFDyUrzh2LnXkKEjpKy2P3NvZaCfJzDFIGLz6Og7tAolL03uYc1rtXc8BFEjj7Qwn7JA==}
+    engines: {node: '>= 20'}
     hasBin: true
 
   chokidar@3.5.3:
@@ -8713,7 +8713,7 @@ snapshots:
 
   chardet@0.7.0: {}
 
-  checksync@5.0.5: {}
+  checksync@9.0.1: {}
 
   chokidar@3.5.3:
     dependencies:
