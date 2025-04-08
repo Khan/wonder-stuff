@@ -20,7 +20,7 @@
         "test": "bash -c 'pnpm run --silent --dir \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
     "dependencies": {
-        "ancesdir": "^5.0.1",
+        "ancesdir": "^7.0.0",
         "async": "^3.2.4",
         "fast-glob": "^3.3.0",
         "pofile": "^1.1.4"
