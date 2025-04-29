@@ -18,7 +18,7 @@
     "ancesdir": "^5.0.1",
     "@babel/types": "^7.23.0",
     "@typescript-eslint/utils": "8.17.0",
-    "checksync": "^5.0.5"
+    "checksync": "^10.0.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.1",
