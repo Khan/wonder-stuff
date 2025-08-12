@@ -251,8 +251,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       checksync:
-        specifier: ^5.0.5
-        version: 5.0.5
+        specifier: ^10.0.2
+        version: 10.0.2
     devDependencies:
       '@babel/eslint-parser':
         specifier: ^7.25.1
@@ -2506,9 +2506,9 @@ packages:
   chardet@0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
 
-  checksync@5.0.5:
-    resolution: {integrity: sha512-mbAQuqFmeJphuoGMnrggki7zY0/mw9NOGKTOMisZwO5Hn7R0UrRmJvFfwvtPorYsUHllyt/kyc+UlpdIMBiQcw==}
-    engines: {node: '>= 16', yarn: '>=1.18.0 <2'}
+  checksync@10.0.2:
+    resolution: {integrity: sha512-ib0VVlZ0sPsf5zZuJdZgtAmRpt8pG0KGT9Ov7n6YBZIaEtTUcBIaEBYcYD05CL2h5QPE2syrGkCY+JrsccppMw==}
+    engines: {node: '>= 20'}
     hasBin: true
 
   chokidar@3.5.3:
@@ -5488,7 +5488,7 @@ packages:
   superagent@5.3.1:
     resolution: {integrity: sha512-wjJ/MoTid2/RuGCOFtlacyGNxN9QLMgcpYLDQlWFIhhdJ93kNscFonGvrpAHSCVjRVj++DGCglocF7Aej1KHvQ==}
     engines: {node: '>= 7.0.0'}
-    deprecated: Please upgrade to v9.0.0+ as we have fixed a public vulnerability with formidable dependency. Note that v9.0.0+ requires Node.js v14.18.0+. See https://github.com/ladjs/superagent/pull/1800 for insight. This project is supported and maintained by the team at Forward Email @ https://forwardemail.net
+    deprecated: Please upgrade to superagent v10.2.2+, see release notes at https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is supported by Forward Email @ https://forwardemail.net
 
   supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
@@ -8713,7 +8713,7 @@ snapshots:
 
   chardet@0.7.0: {}
 
-  checksync@5.0.5: {}
+  checksync@10.0.2: {}
 
   chokidar@3.5.3:
     dependencies:
