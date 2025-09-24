@@ -347,8 +347,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       async:
-        specifier: ^3.2.4
-        version: 3.2.4
+        specifier: ^3.2.6
+        version: 3.2.6
       fast-glob:
         specifier: ^3.3.0
         version: 3.3.2
@@ -2358,8 +2358,8 @@ packages:
     resolution: {integrity: sha512-gpuo6xOyF4D5DE5WvyqZdPA3NGhiT6Qf07l7DCB0wwDEsLvDIbCr6j9S5aj5Ch96dLace5tXVzWBZkxU/c5ohw==}
     engines: {node: <=0.11.8 || >0.11.10}
 
-  async@3.2.4:
-    resolution: {integrity: sha512-iAB+JbDEGXhyIUavoDl9WP/Jj106Kz9DEn1DPgYw5ruDn0e3Wgi3sKFm55sASdGBNOQB8F59d9qQ7deqrHA8wQ==}
+  async@3.2.6:
+    resolution: {integrity: sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==}
 
   asynciterator.prototype@1.0.0:
     resolution: {integrity: sha512-wwHYEIS0Q80f5mosx3L/dfG5t5rjEa9Ft51GTaNt862EnpyGHpgz2RkZvLPp1oF5TnAiTohkEKVEu8pQPJI7Vg==}
@@ -8612,7 +8612,7 @@ snapshots:
       semver: 5.7.2
       shimmer: 1.2.1
 
-  async@3.2.4: {}
+  async@3.2.6: {}
 
   asynciterator.prototype@1.0.0:
     dependencies:
@@ -13179,7 +13179,7 @@ snapshots:
     dependencies:
       '@colors/colors': 1.5.0
       '@dabh/diagnostics': 2.0.3
-      async: 3.2.4
+      async: 3.2.6
       is-stream: 2.0.1
       logform: 2.5.1
       one-time: 1.0.0
