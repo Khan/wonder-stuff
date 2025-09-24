@@ -36,7 +36,7 @@
     "@types/superagent": "^4.1.16",
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "8.17.0",
-    "@typescript-eslint/parser": "8.17.0",
+    "@typescript-eslint/parser": "8.44.1",
     "@typescript-eslint/rule-tester": "^8.17.0",
     "ancesdir": "^5.0.1",
     "babel-jest": "^29.7.0",
