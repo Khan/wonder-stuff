@@ -1,6 +1,6 @@
 import * as winston from "winston";
 
-import {Errors} from "./errors";
+import {Errors} from "@khanacademy/wonder-stuff-core";
 import type {LoggingOptions, Logger} from "./types";
 
 import {getLoggingTransport} from "./get-logging-transport";

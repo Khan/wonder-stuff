@@ -37,3 +37,12 @@ export type Secrets = {readonly [key: string]: SecretString};
  * Make a read-only type mutable.
  */
 export type Mutable<T> = {-readonly [P in keyof T]: T[P]};
+
+/**
+ * The runtime modes that a something can run under.
+ */
+export enum Runtime {
+    Production = "production",
+    Development = "development",
+    Test = "test",
+}

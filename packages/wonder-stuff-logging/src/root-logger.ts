@@ -1,5 +1,4 @@
-import {KindError} from "@khanacademy/wonder-stuff-core";
-import {Errors} from "./errors";
+import {KindError, Errors} from "@khanacademy/wonder-stuff-core";
 import type {Logger} from "./types";
 
 let rootLogger: Logger | null | undefined = null;
