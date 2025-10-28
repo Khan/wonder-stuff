@@ -360,25 +360,6 @@ importers:
         specifier: workspace:*
         version: link:../../build-settings
 
-  packages/wonder-stuff-render-environment-jsdom:
-    dependencies:
-      '@khanacademy/wonder-stuff-core':
-        specifier: workspace:*
-        version: link:../wonder-stuff-core
-      '@khanacademy/wonder-stuff-render-server':
-        specifier: workspace:*
-        version: link:../wonder-stuff-render-server
-      '@khanacademy/wonder-stuff-server':
-        specifier: workspace:*
-        version: link:../wonder-stuff-server
-      jsdom:
-        specifier: ^21.1.1
-        version: 21.1.1
-    devDependencies:
-      '@khanacademy/ws-dev-build-settings':
-        specifier: workspace:*
-        version: link:../../build-settings
-
   packages/wonder-stuff-render-server:
     dependencies:
       '@google-cloud/kms':
@@ -9495,7 +9476,7 @@ snapshots:
       is-glob: 4.0.3
       stable-hash: 0.0.4
     optionalDependencies:
-      eslint-plugin-import: 2.28.1(@typescript-eslint/parser@8.17.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
+      eslint-plugin-import: 2.28.1(@typescript-eslint/parser@8.44.1(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
