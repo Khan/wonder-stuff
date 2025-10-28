@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 3.0.0
+
+### Major Changes
+
+-   6277a04b: Minimum node set to 20
+
 ## 2.1.5
 
 ### Patch Changes

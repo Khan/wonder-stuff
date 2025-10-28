@@ -1,5 +1,15 @@
 # @khanacademy/wonder-stuff-core
 
+## 2.0.0
+
+### Major Changes
+
+-   6277a04b: Minimum node set to 20
+
+### Patch Changes
+
+-   6277a04b: Added `Runtime` type
+
 ## 1.5.5
 
 ### Patch Changes

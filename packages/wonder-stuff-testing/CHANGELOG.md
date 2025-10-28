@@ -1,5 +1,17 @@
 # @khanacademy/wonder-stuff-testing
 
+## 4.0.0
+
+### Major Changes
+
+-   6277a04b: Minimum node set to 20
+
+### Patch Changes
+
+-   Updated dependencies [6277a04b]
+-   Updated dependencies [6277a04b]
+    -   @khanacademy/wonder-stuff-core@2.0.0
+
 ## 3.0.6
 
 ### Patch Changes
