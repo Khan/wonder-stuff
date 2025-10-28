@@ -1,5 +1,23 @@
 # @khanacademy/wonder-stuff-ci
 
+## 2.0.0
+
+### Major Changes
+
+-   6277a04b: Minimum node set to 20
+
+### Minor Changes
+
+-   6277a04b: Replaced use of @khanacademy/wonder-stuff-server with @khanacademy/wonder-stuff-logging
+
+### Patch Changes
+
+-   Updated dependencies [6277a04b]
+-   Updated dependencies [6277a04b]
+-   Updated dependencies [6277a04b]
+    -   @khanacademy/wonder-stuff-core@2.0.0
+    -   @khanacademy/wonder-stuff-logging@1.0.1
+
 ## 1.2.7
 
 ### Patch Changes
