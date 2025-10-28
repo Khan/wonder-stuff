@@ -1,8 +1,6 @@
-import {
-    createLogger,
-    Runtime,
-    setRootLogger,
-} from "@khanacademy/wonder-stuff-server";
+import {createLogger, setRootLogger} from "@khanacademy/wonder-stuff-logging";
+
+import {Runtime} from "@khanacademy/wonder-stuff-core";
 
 import * as winston from "winston";
 

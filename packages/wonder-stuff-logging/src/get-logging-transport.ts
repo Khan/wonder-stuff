@@ -2,7 +2,7 @@ import stream from "stream";
 import * as winston from "winston";
 import type {transport as Transport, Logform} from "winston";
 
-import {Runtime} from "./types";
+import {Runtime} from "@khanacademy/wonder-stuff-core";
 import type {LogLevel, Info} from "./types";
 
 /**

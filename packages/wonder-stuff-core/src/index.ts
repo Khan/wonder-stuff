@@ -21,3 +21,4 @@ export type {
     Secrets,
     Mutable,
 } from "./types";
+export {Runtime} from "./types";

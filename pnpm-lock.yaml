@@ -315,9 +315,12 @@ importers:
       '@google-cloud/trace-agent':
         specifier: ^5.1.6
         version: 5.1.6(encoding@0.1.13)
-      '@khanacademy/wonder-stuff-server':
+      '@khanacademy/wonder-stuff-core':
         specifier: workspace:*
-        version: link:../wonder-stuff-server
+        version: link:../wonder-stuff-core
+      '@khanacademy/wonder-stuff-logging':
+        specifier: workspace:*
+        version: link:../wonder-stuff-logging
       express:
         specifier: ^4.17.2
         version: 4.19.2
@@ -360,6 +363,22 @@ importers:
         specifier: workspace:*
         version: link:../../build-settings
 
+  packages/wonder-stuff-logging:
+    dependencies:
+      '@khanacademy/wonder-stuff-core':
+        specifier: workspace:*
+        version: link:../wonder-stuff-core
+      express-winston:
+        specifier: ^4.2.0
+        version: 4.2.0(winston@3.10.0)
+      winston:
+        specifier: ^3.4.0
+        version: 3.10.0
+    devDependencies:
+      '@khanacademy/ws-dev-build-settings':
+        specifier: workspace:*
+        version: link:../../build-settings
+
   packages/wonder-stuff-sentry:
     dependencies:
       '@khanacademy/wonder-stuff-core':
@@ -372,37 +391,6 @@ importers:
       '@sentry/core':
         specifier: '9'
         version: 9.6.1
-
-  packages/wonder-stuff-server:
-    dependencies:
-      '@google-cloud/kms':
-        specifier: ^3.4.0
-        version: 3.8.0(encoding@0.1.13)
-      '@google-cloud/logging-winston':
-        specifier: ^4.1.1
-        version: 4.2.4(encoding@0.1.13)(winston@3.10.0)
-      '@google-cloud/profiler':
-        specifier: ^4.1.7
-        version: 4.2.0(encoding@0.1.13)
-      '@google-cloud/trace-agent':
-        specifier: ^5.1.6
-        version: 5.1.6(encoding@0.1.13)
-      '@khanacademy/wonder-stuff-core':
-        specifier: workspace:*
-        version: link:../wonder-stuff-core
-      express:
-        specifier: ^4.17.2
-        version: 4.19.2
-      express-winston:
-        specifier: ^4.2.0
-        version: 4.2.0(winston@3.10.0)
-      winston:
-        specifier: ^3.4.0
-        version: 3.10.0
-    devDependencies:
-      '@khanacademy/ws-dev-build-settings':
-        specifier: workspace:*
-        version: link:../../build-settings
 
   packages/wonder-stuff-testing:
     dependencies:

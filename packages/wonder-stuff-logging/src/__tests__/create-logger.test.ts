@@ -1,8 +1,7 @@
 import * as winston from "winston";
-import {Errors} from "@khanacademy/wonder-stuff-core";
+import {Errors, Runtime} from "@khanacademy/wonder-stuff-core";
 import * as GetLoggingTransport from "../get-logging-transport";
 import {createLogger} from "../create-logger";
-import {Runtime} from "../types";
 
 jest.mock("winston", () => {
     const original = jest.requireActual("winston");

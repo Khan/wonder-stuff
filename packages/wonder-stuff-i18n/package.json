@@ -3,7 +3,7 @@
         "access": "public"
     },
     "engines": {
-        "node": ">=16"
+        "node": ">=20"
     },
     "name": "@khanacademy/wonder-stuff-i18n",
     "version": "2.1.5",

@@ -1,5 +1,5 @@
 import * as winston from "winston";
-import {Runtime} from "../types";
+import {Runtime} from "@khanacademy/wonder-stuff-core";
 
 import {getLoggingTransport} from "../get-logging-transport";
 

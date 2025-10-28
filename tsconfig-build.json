@@ -7,8 +7,8 @@
   "references": [
     {"path": "./packages/wonder-stuff-core/tsconfig-build.json"},
     {"path": "./packages/wonder-stuff-i18n/tsconfig-build.json"},
+    {"path": "./packages/wonder-stuff-logging/tsconfig-build.json"},
     {"path": "./packages/wonder-stuff-sentry/tsconfig-build.json"},
-    {"path": "./packages/wonder-stuff-server/tsconfig-build.json"},
     {"path": "./packages/wonder-stuff-testing/tsconfig-build.json"},
     {"path": "./packages/wonder-stuff-ci/tsconfig-build.json"},
   ],

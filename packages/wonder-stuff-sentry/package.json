@@ -3,7 +3,7 @@
         "access": "public"
     },
     "engines": {
-        "node": ">=16"
+        "node": ">=20"
     },
     "name": "@khanacademy/wonder-stuff-sentry",
     "version": "2.0.1",

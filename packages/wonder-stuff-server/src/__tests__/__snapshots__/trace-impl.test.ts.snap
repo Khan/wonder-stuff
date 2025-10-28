@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`#trace should throw if the action is empty/falsy 1`] = `"Must provide an action for the trace session."`;
-
-exports[`#trace should throw if the action is empty/falsy 2`] = `"Must provide an action for the trace session."`;
-
-exports[`#trace should throw if the action is empty/falsy 3`] = `"Must provide an action for the trace session."`;
