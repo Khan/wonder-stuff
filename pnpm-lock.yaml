@@ -95,8 +95,8 @@ importers:
         specifier: ^8.17.0
         version: 8.17.0(eslint@8.57.1)(typescript@5.7.3)
       ancesdir:
-        specifier: ^5.0.1
-        version: 5.0.1
+        specifier: ^7.1.1
+        version: 7.1.1
       babel-jest:
         specifier: ^29.7.0
         version: 29.7.0(@babel/core@7.23.0)
@@ -248,8 +248,8 @@ importers:
         specifier: 8.17.0
         version: 8.17.0(eslint@8.57.1)(typescript@5.7.3)
       ancesdir:
-        specifier: ^5.0.1
-        version: 5.0.1
+        specifier: ^7.1.1
+        version: 7.1.1
       checksync:
         specifier: ^5.0.5
         version: 5.0.5
@@ -344,8 +344,8 @@ importers:
   packages/wonder-stuff-i18n:
     dependencies:
       ancesdir:
-        specifier: ^5.0.1
-        version: 5.0.1
+        specifier: ^7.1.1
+        version: 7.1.1
       async:
         specifier: ^3.2.6
         version: 3.2.6
@@ -2121,9 +2121,9 @@ packages:
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
-  ancesdir@5.0.1:
-    resolution: {integrity: sha512-s61cXyQspPAwsFvf2UJYAZpLOqTKS12fjUxOebi4ymUCLuSn0f0trGBe+a3bFEH0Yw4zgQDxXkYFsvc6YbQpkw==}
-    engines: {node: '>=16', npm: please-use-yarn, yarn: '>=1.18.0 <2'}
+  ancesdir@7.1.1:
+    resolution: {integrity: sha512-dygBP/QPPSxKh+Iae14q1Eeq8SW4UfrSMD+Fcvo4zXc9E/lhjVpU3OWJORVlxh2Ny5jiHowM/kZ2xZiBjYhzwQ==}
+    engines: {node: '>=20', npm: please-use-pnpm, yarn: please-use-pnpm}
 
   ansi-align@3.0.1:
     resolution: {integrity: sha512-IOfwwBF5iczOjp/WeY4YxyjqAFMQoZufdQWDd19SEExbVLNXqvpzSJ/M7Za4/sCPmQ0+GRquoA7bGcINcxew6w==}
@@ -8194,7 +8194,7 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
-  ancesdir@5.0.1: {}
+  ancesdir@7.1.1: {}
 
   ansi-align@3.0.1:
     dependencies:
