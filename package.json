@@ -94,7 +94,7 @@
     "build:types": "pnpm tsc --build --verbose tsconfig-build.json && ./build-settings/check-type-definitions.ts",
     "build:docs": "typedoc",
     "watch": "pnpm run rollup --watch",
-    "clean": "rm -rf packages/wonder-stuff-*/dist && rm -rf node_modules && rm -rf packages/*/node_modules && rm -f packages/*/*.tsbuildinfo",
+    "clean": "rm -rf packages/*/dist && rm -f packages/*/*.tsbuildinfo",
     "coverage": "pnpm jest --coverage",
     "format": "prettier --write .",
     "lint": "pnpm run lint:ci .",
