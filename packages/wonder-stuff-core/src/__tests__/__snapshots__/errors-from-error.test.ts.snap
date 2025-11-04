@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`#errorsFromError should throw if the order is invalid 1`] = `"Invalid sequence order"`;
 

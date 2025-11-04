@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`#getLoggingTransport during development should format log messages to include metadata when present ({ other: 'metadata' }) 1`] = `
 "debug: MESSAGE {

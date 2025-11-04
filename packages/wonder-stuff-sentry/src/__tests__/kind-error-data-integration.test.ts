@@ -66,7 +66,7 @@ describe("KindErrorData", () => {
                     const act = () => kindErrorDataIntegration(badOptions);
 
                     // Assert
-                    expect(act).not.toThrowError("Invalid options");
+                    expect(act).not.toThrow("Invalid options");
                 },
             );
         });

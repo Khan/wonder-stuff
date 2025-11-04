@@ -136,7 +136,7 @@ describe("ErrorInfo", () => {
                     ErrorInfo.fromConsequenceAndCause(null, cause);
 
                 // Assert
-                expect(act).not.toThrowError(
+                expect(act).not.toThrow(
                     "consequence must be an instance of ErrorInfo",
                 );
             });
@@ -155,7 +155,7 @@ describe("ErrorInfo", () => {
                     ErrorInfo.fromConsequenceAndCause(consequence, null);
 
                 // Assert
-                expect(act).not.toThrowError(
+                expect(act).not.toThrow(
                     "cause must be an instance of ErrorInfo",
                 );
             });
@@ -170,7 +170,7 @@ describe("ErrorInfo", () => {
                     ErrorInfo.fromConsequenceAndCause(consequence, cause);
 
                 // Assert
-                expect(act).not.toThrowError(
+                expect(act).not.toThrow(
                     "cause and consequence must be different",
                 );
             });
@@ -312,7 +312,7 @@ describe("ErrorInfo", () => {
                 const act = () => ErrorInfo.normalize(error);
 
                 // Assert
-                expect(act).not.toThrowError(
+                expect(act).not.toThrow(
                     `"Cannot read property 'toString' of undefined"`,
                 );
             });
@@ -325,7 +325,7 @@ describe("ErrorInfo", () => {
                 const act = () => ErrorInfo.normalize(error, -1);
 
                 // Assert
-                expect(act).not.toThrowError(`"stripFrames must be >= 0"`);
+                expect(act).not.toThrow(`"stripFrames must be >= 0"`);
             });
 
             it("should not throw if minimumFrameCount is < 0", () => {
@@ -336,9 +336,7 @@ describe("ErrorInfo", () => {
                 const act = () => ErrorInfo.normalize(error, 0, -1);
 
                 // Assert
-                expect(act).not.toThrowError(
-                    `"minimumFrameCount must be >= 0"`,
-                );
+                expect(act).not.toThrow(`"minimumFrameCount must be >= 0"`);
             });
         });
 
@@ -454,9 +452,7 @@ describe("ErrorInfo", () => {
                 const act = () => ErrorInfo.from(error);
 
                 // Assert
-                expect(act).not.toThrowError(
-                    `"Error must be an instance of Error"`,
-                );
+                expect(act).not.toThrow(`"Error must be an instance of Error"`);
             });
         });
 
