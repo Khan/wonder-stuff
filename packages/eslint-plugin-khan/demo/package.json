@@ -9,8 +9,8 @@
   },
   "devDependencies": {
     "@khanacademy/eslint-plugin": "workspace:*",
-    "eslint": "^8.55.0",
-    "typescript": "^5.0.4"
+    "eslint": "^8.57.1",
+    "typescript": "5.9.3"
   },
   "dependencies": {
     "@types/react": "^18.2.6",

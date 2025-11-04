@@ -28,6 +28,6 @@
     "author": "",
     "license": "MIT",
     "peerDependencies": {
-        "winston": "^3.4.0"
+        "winston": "^3.10.0"
     }
 }
