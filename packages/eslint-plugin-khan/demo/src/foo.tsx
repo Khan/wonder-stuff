@@ -4,7 +4,9 @@ function addStyle(str: string) {
     // Placeholder example for calling addStyle for aphrodite
 }
 
-// sync-start:foo-bar 1424803960 src/bar.ts
+// This sync-tag is wrong so that the lint error shows.
+// Don't fix it.
+// sync-start:foo-bar 911 src/bar.ts
 const div = addStyle("div");
 // sync-end:foo-bar
 
