@@ -1,3 +1,5 @@
+resolvePeersFromWorkspaceRoot: true
+autoInstallPeers: false
 packages:
     - "packages/*"
     - "build-settings/"
