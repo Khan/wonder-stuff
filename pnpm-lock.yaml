@@ -134,8 +134,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0(jest@30.2.0(@types/node@20.17.24))(typescript@5.7.3)
       jest-when:
-        specifier: ^3.6.0
-        version: 3.6.0(jest@30.2.0(@types/node@20.17.24))
+        specifier: ^3.7.0
+        version: 3.7.0(jest@30.2.0(@types/node@20.17.24))
       jsdom:
         specifier: ^21.1.1
         version: 21.1.1
@@ -1977,9 +1977,6 @@ packages:
 
   '@types/jest-when@3.5.5':
     resolution: {integrity: sha512-H9MDPIrz7NOu6IXP9OHExNN9LnJbGYAzRsGIDKxWr7Fth9vovemNV8yFbkUWLSEmuA8PREvAEvt9yK0PPLmFHA==}
-
-  '@types/jest@29.5.14':
-    resolution: {integrity: sha512-ZN+4sdnLUbo8EVvVc2ao0GFW6oVrQRPn4K2lglySj7APvSrgzxHiNNK99us4WDMi57xxA2yggblIAMNhXOotLQ==}
 
   '@types/jest@30.0.0':
     resolution: {integrity: sha512-XTYugzhuwqWjws0CVz8QpM36+T+Dz5mTEBKhNs/esGLnCIlGdRy+Dq78NRjd7ls7r8BC8ZRMOrKlkO1hU0JOwA==}
@@ -4157,8 +4154,8 @@ packages:
     resolution: {integrity: sha512-PYxa28dxJ9g777pGm/7PrbnMeA0Jr7osHP9bS7eJy9DuAjMgdGtxgf0uKMyoIsTWAkIbUW5hSDdJ3urmgXBqxg==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
 
-  jest-when@3.6.0:
-    resolution: {integrity: sha512-+cZWTy0ekAJo7M9Om0Scdor1jm3wDiYJWmXE8U22UVnkH54YCXAuaqz3P+up/FdtOg8g4wHOxV7Thd7nKhT6Dg==}
+  jest-when@3.7.0:
+    resolution: {integrity: sha512-aLbiyxmtksijcrKFir7n+t+XPbqSLV01eDkRyX28WM4VgA/iSc3mG8R8O2evDtOAa6SefrJiTIt/rTqqyrwVZg==}
     peerDependencies:
       jest: '>= 25'
 
@@ -8697,12 +8694,7 @@ snapshots:
 
   '@types/jest-when@3.5.5':
     dependencies:
-      '@types/jest': 29.5.14
-
-  '@types/jest@29.5.14':
-    dependencies:
-      expect: 29.7.0
-      pretty-format: 29.7.0
+      '@types/jest': 30.0.0
 
   '@types/jest@30.0.0':
     dependencies:
@@ -10055,6 +10047,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  eslint-module-utils@2.8.0(@typescript-eslint/parser@8.44.1(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1):
+    dependencies:
+      debug: 3.2.7
+    optionalDependencies:
+      '@typescript-eslint/parser': 8.44.1(eslint@8.57.1)(typescript@5.7.3)
+      eslint: 8.57.1
+      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.28.1)(eslint@8.57.1)
+    transitivePeerDependencies:
+      - supports-color
+
   eslint-plugin-disable@2.0.3(eslint@8.57.1):
     dependencies:
       eslint: 8.57.1
@@ -10169,7 +10171,7 @@ snapshots:
 
   eslint-plugin-monorepo@0.3.2(@typescript-eslint/parser@8.44.1(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1):
     dependencies:
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@8.44.1(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@8.44.1(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
       get-monorepo-packages: 1.2.0
       globby: 7.1.1
       load-json-file: 4.0.0
@@ -11638,7 +11640,7 @@ snapshots:
       jest-util: 30.2.0
       string-length: 4.0.2
 
-  jest-when@3.6.0(jest@30.2.0(@types/node@20.17.24)):
+  jest-when@3.7.0(jest@30.2.0(@types/node@20.17.24)):
     dependencies:
       jest: 30.2.0(@types/node@20.17.24)
 
