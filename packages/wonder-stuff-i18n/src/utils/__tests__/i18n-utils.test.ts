@@ -1,11 +1,12 @@
 import fs from "fs";
 
+import * as Ancesdir from "ancesdir";
+
 import {
     getIgnoreGlobs,
     getI18nStringsFromString,
     translateString,
 } from "../i18n-utils";
-import * as Ancesdir from "ancesdir";
 
 jest.mock("ancesdir");
 
