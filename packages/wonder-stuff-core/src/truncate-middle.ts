@@ -3,7 +3,6 @@ const ELLIPSIS = "...";
 /**
  * Truncates a string by replacing the middle with an ellipsis.
  *
- * @export
  * @param {string} str The string to be truncated.
  * @param {number} maxLength The maximum length of a string before it must be
  * truncated.

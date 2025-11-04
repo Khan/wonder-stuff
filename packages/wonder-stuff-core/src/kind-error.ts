@@ -70,7 +70,6 @@ export class KindError extends Error {
     /**
      * Creates an instance of `KindError`.
      *
-     * @memberof KindError
      * @param {string} message The error message.
      * @param {string} [kind] The kind of error. This will be combined with
      * `prefix` to form the name of the error, i.e. PrefixKindError.

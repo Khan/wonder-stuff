@@ -66,15 +66,12 @@ type Options = {
  *
  * The error kind will be a tag on the reported Sentry event.
  *
- * @export
  * @class KindSentryError
  * @extends {KindError}
  */
 export class KindSentryError extends KindError {
     /**
      *Creates an instance of KindSentryError.
-
-     * @memberof KindSentryError
      * @param {string} message The error message.
      * @param {string} [kind] The kind of error. This will be combined with
      * `prefix` to form the name of the error, i.e. PrefixSentryKindError.
