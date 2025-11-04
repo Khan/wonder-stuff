@@ -1,5 +1,7 @@
 import fs from "fs";
 
+import * as Ancesdir from "ancesdir";
+
 import {
     getIgnoreGlobs,
     getI18nStringsFromString,
@@ -12,8 +14,7 @@ describe("getIgnoreGlobs", () => {
     it("reads from a .i18nignore file", () => {
         // Arrange
         const expectedGlobs = ["foo.js", "bar.js", "*_test.js"];
-        const ancesdir = require("ancesdir");
-        ancesdir.mockReturnValue(__dirname);
+        jest.spyOn(Ancesdir, "default").mockReturnValue(__dirname);
         jest.spyOn(fs, "readFileSync").mockReturnValue(
             expectedGlobs.join("\n"),
         );
@@ -28,8 +29,7 @@ describe("getIgnoreGlobs", () => {
     it("returns nothing if no .i18nignore file is found", () => {
         // Arrange
         const expectedGlobs: Array<any> = [];
-        const ancesdir = require("ancesdir");
-        ancesdir.mockImplementation(() => {
+        jest.spyOn(Ancesdir, "default").mockImplementation(() => {
             throw new Error("No such file");
         });
 
@@ -43,8 +43,7 @@ describe("getIgnoreGlobs", () => {
     it("removes whitespace, empty lines, and comments", () => {
         // Arrange
         const expectedGlobs = ["foo.js", "bar.js", "*_test.js"];
-        const ancesdir = require("ancesdir");
-        ancesdir.mockReturnValue(__dirname);
+        jest.spyOn(Ancesdir, "default").mockReturnValue(__dirname);
         jest.spyOn(fs, "readFileSync").mockReturnValue(`
 # This is a comment
   # And me too!

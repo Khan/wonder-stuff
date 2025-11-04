@@ -106,6 +106,8 @@ const createConfig = (
             format,
             file: file ? makePackageBasedPath(name, file) : undefined,
             dir: dir ? makePackageBasedPath(name, dir) : undefined,
+            // Handle ESM default imports from external CommonJS modules with __esModule
+            interop: "auto",
         },
         input: makePackageBasedPath(name, inputFile || "./src/index.ts"),
         plugins: [
