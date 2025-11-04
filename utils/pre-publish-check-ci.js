@@ -4,7 +4,7 @@
  */
 const path = require("path");
 const fg = require("fast-glob");
-const ancesdir = require("ancesdir");
+const Ancesdir = require("ancesdir");
 
 const {
     checkPrivate,
@@ -15,7 +15,7 @@ const {
 } = require("./pre-publish-utils");
 
 // eslint-disable-next-line promise/catch-or-return
-fg("packages/*/package.json", {cwd: ancesdir()}).then((pkgPaths) => {
+fg("packages/*/package.json", {cwd: Ancesdir.default()}).then((pkgPaths) => {
     // eslint-disable-next-line promise/always-return
     for (const pkgPath of pkgPaths) {
         const pkgJson = require(path.relative(__dirname, pkgPath));
