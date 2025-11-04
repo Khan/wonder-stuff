@@ -90,7 +90,7 @@ describe("#normalizeSentryData", () => {
                 normalizeSentryData(DefaultKindErrorDataOptions, data);
 
             // Assert
-            expect(result).not.toThrowError(`"Sentry data is not valid"`);
+            expect(result).not.toThrow(`"Sentry data is not valid"`);
         });
 
         it("should not throw if there are reserved tag keys", () => {
@@ -106,7 +106,7 @@ describe("#normalizeSentryData", () => {
                 normalizeSentryData(DefaultKindErrorDataOptions, data);
 
             // Assert
-            expect(result).not.toThrowError(`"Sentry data is not valid"`);
+            expect(result).not.toThrow(`"Sentry data is not valid"`);
         });
 
         it("should not throw if there are reserved context properties", () => {
@@ -124,7 +124,7 @@ describe("#normalizeSentryData", () => {
                 normalizeSentryData(DefaultKindErrorDataOptions, data);
 
             // Assert
-            expect(result).not.toThrowError(`"Sentry data is not valid"`);
+            expect(result).not.toThrow(`"Sentry data is not valid"`);
         });
     });
 

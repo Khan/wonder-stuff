@@ -9,17 +9,17 @@ import type {MobileReleaseBranchInfo} from "./types";
  *    version: "7.8.0"
  * }
  *
- * @param {string} The release branch of the form `[release/[unified|ios|android]]/[v]<num>.<num>.<num>[-extra]`.
+ * @param {string} releaseBranch release branch of the form `[release/[unified|ios|android]]/[v]<num>.<num>.<num>[-extra]`.
  * @returns {MobileReleaseInfo} The release version and prefix, if found; otherwise, `null`.
  */
 export const extractMobileReleaseInfoFromBranchName = (
-    arg: string | null,
+    releaseBranch: string | null,
 ): MobileReleaseBranchInfo | null => {
-    if (!arg) {
+    if (!releaseBranch) {
         return null;
     }
 
-    const match = arg.match(
+    const match = releaseBranch.match(
         /^(release\/(ios|android|unified)\/)?v?(\d+\.\d+\.\d+(-\w*)*)$/i,
     );
     return match && match.length >= 3 && match[3]

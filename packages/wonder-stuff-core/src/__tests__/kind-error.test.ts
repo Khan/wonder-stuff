@@ -167,9 +167,7 @@ describe("KindError", () => {
                         new KindError("MESSAGE", Errors.Unknown, {name});
 
                     // Assert
-                    expect(act).not.toThrowError(
-                        "name must not contain whitespace",
-                    );
+                    expect(act).not.toThrow("name must not contain whitespace");
                 },
             );
 
@@ -182,9 +180,7 @@ describe("KindError", () => {
                     const act = () => new KindError("MESSAGE", kind);
 
                     // Assert
-                    expect(act).not.toThrowError(
-                        "kind must not contain whitespace",
-                    );
+                    expect(act).not.toThrow("kind must not contain whitespace");
                 },
             );
 
@@ -198,7 +194,7 @@ describe("KindError", () => {
                         new KindError("MESSAGE", "CUSTOM_KIND", {prefix});
 
                     // Assert
-                    expect(act).not.toThrowError(
+                    expect(act).not.toThrow(
                         "prefix must not contain whitespace",
                     );
                 },
@@ -214,7 +210,7 @@ describe("KindError", () => {
                     });
 
                 // Assert
-                expect(act).not.toThrowError("stripStackFrames must be >= 0");
+                expect(act).not.toThrow("stripStackFrames must be >= 0");
             });
 
             it("should not throw validation error if minimumFrameCount is < 0", () => {
@@ -227,7 +223,7 @@ describe("KindError", () => {
                     });
 
                 // Assert
-                expect(act).not.toThrowError("minimumFrameCount must be >= 0");
+                expect(act).not.toThrow("minimumFrameCount must be >= 0");
             });
         });
 
@@ -334,7 +330,7 @@ describe("KindError", () => {
                         });
 
                     // Assert
-                    expect(act).not.toThrowError(
+                    expect(act).not.toThrow(
                         `"Error must be an instance of Error"`,
                     );
                 });

@@ -57,4 +57,6 @@ for (const typeDefinitionFile of typeDefinitionFiles) {
 
 if (foundErrors) {
     process.exit(1);
+} else {
+    console.log("All type imports are correct.");
 }

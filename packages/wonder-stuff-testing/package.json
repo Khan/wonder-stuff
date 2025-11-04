@@ -23,7 +23,7 @@
         "@khanacademy/wonder-stuff-core": "workspace:*"
     },
     "peerDependencies": {
-        "jest": "^29"
+        "jest": "^30.2.0"
     },
     "devDependencies": {
         "@khanacademy/ws-dev-build-settings": "workspace:*"

@@ -1,13 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`KindErrorData #constructor when not built for production should throw if options are invalid ({
-  kindTagName: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-kind',
-  groupByTagName: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-group-by',
-  concatenatedMessageTagName: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-concatenated-message'
-}) 1`] = `"Invalid options"`;
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`KindErrorData #constructor when not built for production should throw if options are invalid ({ concatenatedMessageTagName: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }) 1`] = `"Invalid options"`;
 
 exports[`KindErrorData #constructor when not built for production should throw if options are invalid ({ groupByTagName: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }) 1`] = `"Invalid options"`;
 
 exports[`KindErrorData #constructor when not built for production should throw if options are invalid ({ kindTagName: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }) 1`] = `"Invalid options"`;
+
+exports[`KindErrorData #constructor when not built for production should throw if options are invalid ({\\n  kindTagName: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-kind',\\n  groupByTagName: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-group-by',\\n  concatenatedMessageTagName: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-concatenated-message'\\n}) 1`] = `"Invalid options"`;
