@@ -45,7 +45,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-monorepo": "^0.3.2",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-react": "^7.33.2",
     "fast-glob": "^3.3.0",
     "jest": "^30.2.0",
