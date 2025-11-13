@@ -1,17 +1,20 @@
 {
-    "publishConfig": {
-        "access": "public"
-    },
-    "engines": {
-        "node": ">=20"
-    },
     "name": "@khanacademy/wonder-stuff-ci",
-    "version": "1.2.7",
     "description": "Functions for automation and scripts.",
+    "author": "Khan Academy",
+    "license": "MIT",
+    "version": "1.2.7",
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
     "repository": {
         "type": "git",
-        "url": "git@github.com:Khan/wonder-stuff.git",
+        "url": "https://github.com/Khan/wonder-stuff.git",
         "directory": "packages/wonder-stuff-ci"
+    },
+    "bugs": {
+        "url": "https://github.com/Khan/wonder-blocks/issues"
     },
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -19,12 +22,6 @@
     "scripts": {
         "test": "bash -c 'set -x; pnpm run --silent --dir \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
-    "devDependencies": {
-        "@types/node": "^20.17.23",
-        "@khanacademy/ws-dev-build-settings": "workspace:*"
-    },
-    "author": "",
-    "license": "MIT",
     "dependencies": {
         "@khanacademy/wonder-stuff-core": "workspace:*",
         "@khanacademy/wonder-stuff-logging": "workspace:*"
@@ -32,5 +29,12 @@
     "peerDependencies": {
         "@google-cloud/logging-winston": "^4.2.4",
         "winston": "^3.10.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.17.23",
+        "@khanacademy/ws-dev-build-settings": "workspace:*"
+    },
+    "engines": {
+        "node": ">=20"
     }
 }

@@ -1,36 +1,40 @@
 {
-  "name": "@khanacademy/eslint-plugin",
-  "version": "3.1.2",
-  "description": "ESLint plugin that applies Khan Academy's custom rules",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Khan/wonder-stuff.git",
-    "directory": "packages/eslint-plugin-khan"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": "dist/index.js",
-  "module": "dist/es/index.js",
-  "author": "Kevin Barabash <kevinb@khanacademy.org>",
-  "license": "MIT",
-  "dependencies": {
-    "@babel/types": "^7.28.5",
-    "@typescript-eslint/utils": "8.46.3",
-    "ancesdir": "^7.1.1",
-    "checksync": "^10.0.2"
-  },
-  "devDependencies": {
-    "@babel/eslint-parser": "^7.25.1",
-    "@babel/preset-env": "^7.26.9",
-    "@babel/preset-react": "^7.22.15",
-    "@swc-node/register": "^1.11.1",
-    "@swc/core": "^1.15.0",
-    "@typescript-eslint/rule-tester": "^8.46.3",
-    "eslint": "^8.57.1",
-    "prettier": "^3.0.3"
-  },
-  "scripts": {
-    "prettier": "prettier --write '{lib,test}/**/*.{js,ts}'"
-  }
+    "name": "@khanacademy/eslint-plugin",
+    "description": "ESLint plugin that applies Khan Academy's custom rules",
+    "author": "Kevin Barabash <kevinb@khanacademy.org>",
+    "license": "MIT",
+    "version": "3.1.2",
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Khan/wonder-stuff.git",
+        "directory": "packages/eslint-plugin-khan"
+    },
+    "bugs": {
+        "url": "https://github.com/Khan/wonder-blocks/issues"
+    },
+    "module": "dist/es/index.js",
+    "main": "dist/index.js",
+    "scripts": {
+        "prettier": "prettier --write '{lib,test}/**/*.{js,ts}'"
+    },
+    "dependencies": {
+        "@babel/types": "^7.28.5",
+        "@typescript-eslint/utils": "8.46.3",
+        "ancesdir": "^7.1.1",
+        "checksync": "^10.0.2"
+    },
+    "devDependencies": {
+        "@babel/eslint-parser": "^7.25.1",
+        "@babel/preset-env": "^7.26.9",
+        "@babel/preset-react": "^7.22.15",
+        "@swc-node/register": "^1.11.1",
+        "@swc/core": "^1.15.0",
+        "@typescript-eslint/rule-tester": "^8.46.3",
+        "eslint": "^8.57.1",
+        "prettier": "^3.0.3"
+    }
 }

@@ -1,17 +1,20 @@
 {
-    "publishConfig": {
-        "access": "public"
-    },
-    "engines": {
-        "node": ">=20"
-    },
     "name": "@khanacademy/wonder-stuff-sentry",
-    "version": "2.0.1",
     "description": "Sentry integration support",
+    "author": "Khan Academy",
+    "license": "MIT",
+    "version": "2.0.1",
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
     "repository": {
         "type": "git",
-        "url": "git@github.com:Khan/wonder-stuff.git",
+        "url": "https://github.com/Khan/wonder-stuff.git",
         "directory": "packages/wonder-stuff-sentry"
+    },
+    "bugs": {
+        "url": "https://github.com/Khan/wonder-blocks/issues"
     },
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -26,17 +29,18 @@
     "dependencies": {
         "@khanacademy/wonder-stuff-core": "workspace:*"
     },
-    "devDependencies": {
-        "@khanacademy/ws-dev-build-settings": "workspace:*",
+    "peerDependencies": {
         "@sentry/core": "9"
     },
-    "peerDependencies": {
+    "devDependencies": {
+        "@khanacademy/ws-dev-build-settings": "workspace:*",
         "@sentry/core": "9"
     },
     "browser": {
         "dist/es/index.js": "./dist/browser/es/index.js",
         "dist/index.js": "./dist/browser/index.js"
     },
-    "author": "",
-    "license": "MIT"
+    "engines": {
+        "node": ">=20"
+    }
 }
