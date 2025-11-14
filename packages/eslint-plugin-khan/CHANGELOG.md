@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 3.2.1
+
+### Patch Changes
+
+-   71b60fb: Re-publish with Trusted Publishing (no functional changes from previous release)
+
 ## 3.2.0
 
 ### Minor Changes

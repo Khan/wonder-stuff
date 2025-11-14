@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 2.0.1
+
+### Patch Changes
+
+-   71b60fb: Re-publish with Trusted Publishing (no functional changes from previous release)
+
 ## 2.0.0
 
 ### Major Changes
