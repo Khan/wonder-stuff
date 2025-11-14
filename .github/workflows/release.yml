@@ -30,6 +30,10 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required for publishing to npm
+      contents: write # required to `git push`
+      pages: write # so we can deploy to GitHub pages
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,6 +44,14 @@ jobs:
         uses: Khan/actions@shared-node-cache-v3
         with:
           node-version: 20.x
+
+      - name: Upgrade npm for OIDC support
+        shell: bash
+        run: |
+          # npm trusted publishing requires npm CLI v11.5.1+
+          # Node.js 22 ships with npm 10.x, so we need to upgrade
+          # and pnpm uses npm under the hood for publishes.
+          npm install -g npm@latest && echo "✅ npm upgraded to $(npm --version)"
 
       - name: Build Typedoc
         # Generate nice docs inside "docs/" folder
@@ -64,7 +76,10 @@ jobs:
           # the account of someone with appropriate access levels and given the
           # repo scope.
           GITHUB_TOKEN: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Note: we no longer use the NPM_TOKEN secret because we've enabled
+          # Trusted Publishing (https://docs.npmjs.com/trusted-publishers) on
+          # the npmjs.com side:
+          # https://www.npmjs.com/package/@khanacademy/graphql-flow/access
 
       - name: Build Slack message
         id: slack_message
