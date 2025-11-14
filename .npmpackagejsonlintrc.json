@@ -8,6 +8,9 @@
         "require-repository":"error",
         "require-types": "error",
         "require-version": "error",
-        "valid-values-publishConfig": ["error", [{"access": "public"}]]
+        "valid-values-publishConfig": [
+          "error",
+          [{"access": "public", "provenance": true}]
+        ]
     }
 }

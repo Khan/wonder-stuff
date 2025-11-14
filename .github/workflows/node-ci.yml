@@ -84,6 +84,9 @@ jobs:
         limited-trigger: ${{ steps.js-ts-files.outputs.filtered }}
         limited: pnpm run lint:ci {}
 
+    - name: Lint package.json
+      run: pnpm run lint:pkg-json
+
     - name: Typecheck
       if: steps.js-ts-files.outputs.filtered != '[]'
       run: pnpm run typecheck
