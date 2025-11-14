@@ -1,5 +1,18 @@
 # @khanacademy/wonder-stuff-core
 
+## 2.0.0
+
+### Major Changes
+
+-   a27f83f5: Update to TypeScript 5.9.x and other dependency changes
+-   6277a04b: Minimum node set to 20
+
+### Patch Changes
+
+-   8972b362: Re-publishing to enable Trusted Publishing
+-   eee37380: Re-publish with Trusted Publishing (no functional changes in this release)
+-   6277a04b: Added `Runtime` type
+
 ## 1.5.5
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # ws-dev-build-settings
 
+## 3.0.0
+
+### Major Changes
+
+-   a27f83f5: Update to TypeScript 5.9.x and other dependency changes
+
+### Patch Changes
+
+-   31bd9f47: Set `interop` to `auto` so that commonjs esModule is handled properly
+
 ## 2.0.2
 
 ### Patch Changes

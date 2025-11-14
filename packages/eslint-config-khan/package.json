@@ -3,7 +3,7 @@
     "description": "ESLint config that applies Khan Academy's setings",
     "author": "Kevin Barabash <kevinb@khanacademy.org>",
     "license": "MIT",
-    "version": "5.2.1",
+    "version": "6.0.0",
     "publishConfig": {
         "access": "public",
         "provenance": true

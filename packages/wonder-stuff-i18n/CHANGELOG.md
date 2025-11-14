@@ -1,5 +1,20 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 3.0.0
+
+### Major Changes
+
+-   6277a04b: Minimum node set to 20
+
+### Minor Changes
+
+-   31bd9f47: Updated to latest `ancesdir` and `checksync`
+
+### Patch Changes
+
+-   8972b362: Re-publishing to enable Trusted Publishing
+-   eee37380: Re-publish with Trusted Publishing (no functional changes in this release)
+
 ## 2.1.5
 
 ### Patch Changes

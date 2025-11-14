@@ -1,5 +1,11 @@
 # demo
 
+## 0.0.4
+
+### Patch Changes
+
+-   31bd9f47: Added an example for sync-tag rule
+
 ## 0.0.3
 
 ### Patch Changes
