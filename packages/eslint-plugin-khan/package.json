@@ -23,7 +23,7 @@
     },
     "dependencies": {
         "@babel/types": "^7.28.5",
-        "@typescript-eslint/utils": "8.46.3",
+        "@typescript-eslint/utils": "8.46.4",
         "ancesdir": "^7.1.1",
         "checksync": "^10.0.2"
     },
