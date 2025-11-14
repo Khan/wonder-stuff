@@ -17,7 +17,7 @@
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-typescript": "^7.28.5",
     "@changesets/cli": "^2.26.2",
-    "@google-cloud/logging-winston": "^4.2.4",
+    "@google-cloud/logging-winston": "^6.0.1",
     "@jest/globals": "^30.2.0",
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
