@@ -1,17 +1,20 @@
 {
-    "publishConfig": {
-        "access": "public"
-    },
-    "engines": {
-        "node": ">=20"
-    },
     "name": "@khanacademy/wonder-stuff-logging",
-    "version": "1.0.0",
     "description": "Logging setup for Winston-based logging",
+    "author": "Khan Academy",
+    "license": "MIT",
+    "version": "1.0.0",
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
     "repository": {
         "type": "git",
-        "url": "git@github.com:Khan/wonder-stuff.git",
+        "url": "https://github.com/Khan/wonder-stuff.git",
         "directory": "packages/wonder-stuff-logging"
+    },
+    "bugs": {
+        "url": "https://github.com/Khan/wonder-blocks/issues"
     },
     "module": "dist/es/index.js",
     "main": "dist/index.js",
@@ -22,12 +25,13 @@
     "dependencies": {
         "@khanacademy/wonder-stuff-core": "workspace:*"
     },
+    "peerDependencies": {
+        "winston": "^3.10.0"
+    },
     "devDependencies": {
         "@khanacademy/ws-dev-build-settings": "workspace:*"
     },
-    "author": "",
-    "license": "MIT",
-    "peerDependencies": {
-        "winston": "^3.10.0"
+    "engines": {
+        "node": ">=20"
     }
 }

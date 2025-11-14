@@ -1,19 +1,23 @@
 {
     "name": "@khanacademy/eslint-config",
-    "version": "5.2.1",
     "description": "ESLint config that applies Khan Academy's setings",
+    "author": "Kevin Barabash <kevinb@khanacademy.org>",
+    "license": "MIT",
+    "version": "5.2.1",
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
     "repository": {
         "type": "git",
-        "url": "git@github.com:Khan/wonder-stuff.git",
+        "url": "https://github.com/Khan/wonder-stuff.git",
         "directory": "packages/eslint-config-khan"
     },
-    "publishConfig": {
-        "access": "public"
+    "bugs": {
+        "url": "https://github.com/Khan/wonder-blocks/issues"
     },
     "main": "index.js",
     "nobuild": true,
-    "author": "Kevin Barabash <kevinb@khanacademy.org>",
-    "license": "MIT",
     "peerDependencies": {
         "@khanacademy/eslint-plugin": "workspace:*",
         "@typescript-eslint/eslint-plugin": "8.46.3",
