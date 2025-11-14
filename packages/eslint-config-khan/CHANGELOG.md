@@ -1,5 +1,16 @@
 # @khanacademy/eslint-config
 
+## 6.0.0
+
+### Patch Changes
+
+-   8972b362: Re-publishing to enable Trusted Publishing
+-   eee37380: Re-publish with Trusted Publishing (no functional changes in this release)
+-   Updated dependencies [8972b362]
+-   Updated dependencies [31bd9f47]
+-   Updated dependencies [eee37380]
+    -   @khanacademy/eslint-plugin@3.2.0
+
 ## 5.2.1
 
 ### Patch Changes

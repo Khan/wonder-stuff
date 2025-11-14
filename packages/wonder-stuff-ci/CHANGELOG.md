@@ -1,5 +1,31 @@
 # @khanacademy/wonder-stuff-ci
 
+## 2.0.0
+
+### Major Changes
+
+-   a27f83f5: Update to TypeScript 5.9.x and other dependency changes
+-   6277a04b: Minimum node set to 20
+-   72be8b7e: Remove unneeded peer deps
+
+### Minor Changes
+
+-   6277a04b: Replaced use of @khanacademy/wonder-stuff-server with @khanacademy/wonder-stuff-logging
+
+### Patch Changes
+
+-   8972b362: Re-publishing to enable Trusted Publishing
+-   eee37380: Re-publish with Trusted Publishing (no functional changes in this release)
+-   Updated dependencies [8972b362]
+-   Updated dependencies [a27f83f5]
+-   Updated dependencies [6277a04b]
+-   Updated dependencies [72be8b7e]
+-   Updated dependencies [6277a04b]
+-   Updated dependencies [eee37380]
+-   Updated dependencies [6277a04b]
+    -   @khanacademy/wonder-stuff-logging@2.0.0
+    -   @khanacademy/wonder-stuff-core@2.0.0
+
 ## 1.2.7
 
 ### Patch Changes
