@@ -28,7 +28,7 @@
         "checksync": "^10.0.2"
     },
     "devDependencies": {
-        "@babel/eslint-parser": "^7.25.1",
+        "@babel/eslint-parser": "^7.28.5",
         "@babel/preset-env": "^7.28.5",
         "@babel/preset-react": "^7.22.15",
         "@swc-node/register": "^1.11.1",
