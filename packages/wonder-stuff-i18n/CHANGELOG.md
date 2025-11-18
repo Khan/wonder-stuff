@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 3.0.2
+
+### Patch Changes
+
+-   427718c: Re-publishing using Trusted Publishing (no functional change)
+
 ## 3.0.1
 
 ### Patch Changes
