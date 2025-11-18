@@ -168,6 +168,9 @@ importers:
 
   packages/eslint-config-khan:
     devDependencies:
+      '@khanacademy/eslint-plugin':
+        specifier: workspace:*
+        version: link:../eslint-plugin-khan
       '@typescript-eslint/rule-tester':
         specifier: ^8.46.3
         version: 8.46.3(eslint@8.57.1)(typescript@5.9.3)

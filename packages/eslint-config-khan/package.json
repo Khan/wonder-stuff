@@ -31,6 +31,7 @@
         "eslint-plugin-react": "^7.33.2"
     },
     "devDependencies": {
+        "@khanacademy/eslint-plugin": "workspace:*",
         "@typescript-eslint/rule-tester": "^8.46.3"
     }
 }
