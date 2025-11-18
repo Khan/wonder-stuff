@@ -1,5 +1,13 @@
 # @khanacademy/eslint-config
 
+## 6.0.1
+
+### Patch Changes
+
+-   71b60fb: Re-publish with Trusted Publishing (no functional changes from previous release)
+-   Updated dependencies [71b60fb]
+    -   @khanacademy/eslint-plugin@3.2.1
+
 ## 6.0.0
 
 ### Patch Changes

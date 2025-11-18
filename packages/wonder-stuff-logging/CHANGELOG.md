@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-logging
 
+## 2.0.1
+
+### Patch Changes
+
+-   71b60fb: Re-publish with Trusted Publishing (no functional changes from previous release)
+-   Updated dependencies [71b60fb]
+    -   @khanacademy/wonder-stuff-core@2.0.1
+
 ## 2.0.0
 
 ### Major Changes

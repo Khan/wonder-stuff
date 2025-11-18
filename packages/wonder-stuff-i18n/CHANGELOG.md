@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-i18n
 
+## 3.0.1
+
+### Patch Changes
+
+-   71b60fb: Re-publish with Trusted Publishing (no functional changes from previous release)
+
 ## 3.0.0
 
 ### Major Changes
