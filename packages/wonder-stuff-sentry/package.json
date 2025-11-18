@@ -30,11 +30,11 @@
         "@khanacademy/wonder-stuff-core": "workspace:*"
     },
     "peerDependencies": {
-        "@sentry/core": "9"
+        "@sentry/core": "10"
     },
     "devDependencies": {
         "@khanacademy/ws-dev-build-settings": "workspace:*",
-        "@sentry/core": "9"
+        "@sentry/core": "10"
     },
     "browser": {
         "dist/es/index.js": "./dist/browser/es/index.js",

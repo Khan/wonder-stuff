@@ -295,8 +295,8 @@ importers:
         specifier: workspace:*
         version: link:../../build-settings
       '@sentry/core':
-        specifier: '9'
-        version: 9.6.1
+        specifier: '10'
+        version: 10.25.0
 
   packages/wonder-stuff-testing:
     dependencies:
@@ -1630,8 +1630,8 @@ packages:
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
-  '@sentry/core@9.6.1':
-    resolution: {integrity: sha512-BHaRxyFF3sNlKP6lNcB5cxFogvfMOtWw0Est6mK/Mbewnim0qEbmqKyuMj67ebfgo+pmUJJc2wgugdxkxvqGRQ==}
+  '@sentry/core@10.25.0':
+    resolution: {integrity: sha512-mGi4BYIPwZjWdOXHrPoXz1AW4/cQbFoiuW/m+OOATmtSoGTDnWYwP+qZU7VLlL+v8ZEzxfPi2C1NPfJtPj7QWA==}
     engines: {node: '>=18'}
 
   '@shikijs/engine-oniguruma@3.14.0':
@@ -6879,7 +6879,7 @@ snapshots:
 
   '@rtsao/scc@1.1.0': {}
 
-  '@sentry/core@9.6.1': {}
+  '@sentry/core@10.25.0': {}
 
   '@shikijs/engine-oniguruma@3.14.0':
     dependencies:
