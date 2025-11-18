@@ -1,5 +1,11 @@
 # @khanacademy/eslint-plugin
 
+## 3.2.2
+
+### Patch Changes
+
+-   427718c: Re-publishing using Trusted Publishing (no functional change)
+
 ## 3.2.1
 
 ### Patch Changes

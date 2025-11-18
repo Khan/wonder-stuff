@@ -1,5 +1,13 @@
 # @khanacademy/wonder-stuff-sentry
 
+## 3.0.2
+
+### Patch Changes
+
+-   427718c: Re-publishing using Trusted Publishing (no functional change)
+-   Updated dependencies [427718c]
+    -   @khanacademy/wonder-stuff-core@2.0.2
+
 ## 3.0.1
 
 ### Patch Changes
