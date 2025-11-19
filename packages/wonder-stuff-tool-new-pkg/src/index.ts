@@ -17,13 +17,63 @@ import {
 
 function help(): void {
     console.log(`
-Usage: pnpm dlx @khanacademy/wonder-stuff-tool-publish-new-pkg <package-name>
+Usage: pnpm dlx @khanacademy/wonder-stuff-tool-publish-new-pkg <package-name> [options]
 
 This tool helps in publishing a placeholder npm package which can then be configured for Trusted Publishing.
 
 Arguments:
   <package-name>  The name of the package to publish (e.g., @khanacademy/my-package)
+
+Options:
+  --no-cleanup    Keep the temporary directory after publishing (useful for debugging)
 `);
+}
+
+interface ParsedArgs {
+    packageName: string;
+    shouldCleanup: boolean;
+}
+
+function parseArgs(args: string[]): ParsedArgs {
+    if (args.length < 1 || args.length > 2) {
+        help();
+        process.exit(1);
+    }
+
+    // Separate flags from package name
+    const flags = args.filter((arg) => arg.startsWith("--"));
+    const nonFlags = args.filter((arg) => !arg.startsWith("--"));
+
+    // Validate that we have exactly one package name
+    if (nonFlags.length === 0) {
+        console.error("\n✗ Error: Package name is required");
+        help();
+        process.exit(1);
+    }
+
+    if (nonFlags.length > 1) {
+        console.error(
+            `\n✗ Error: Expected one package name, got ${
+                nonFlags.length
+            }: ${nonFlags.join(", ")}`,
+        );
+        help();
+        process.exit(1);
+    }
+
+    const packageName = nonFlags[0];
+
+    // Validate that we only have known flags
+    const unknownFlags = flags.filter((flag) => flag !== "--no-cleanup");
+    if (unknownFlags.length > 0) {
+        console.error(`\n✗ Error: Unknown flag(s): ${unknownFlags.join(", ")}`);
+        help();
+        process.exit(1);
+    }
+
+    const shouldCleanup = !flags.includes("--no-cleanup");
+
+    return {packageName, shouldCleanup};
 }
 
 async function writeFiles(
@@ -57,12 +107,8 @@ https://docs.npmjs.com/trusted-publishers
 }
 
 async function main(args: string[]): Promise<void> {
-    if (args.length !== 1) {
-        help();
-        process.exit(1);
-    }
-
-    const packageName = args[0];
+    // Parse and validate arguments
+    const {packageName, shouldCleanup} = parseArgs(args);
     let tempDir: string | null = null;
 
     try {
@@ -89,9 +135,13 @@ async function main(args: string[]): Promise<void> {
         publishPackage(tempDir);
 
         // Step 6: Cleanup temp directory
-        console.log("\nCleaning up...");
-        await tryCleanupTempDirectory(tempDir);
-        tempDir = null;
+        if (shouldCleanup) {
+            console.log("\nCleaning up...");
+            await tryCleanupTempDirectory(tempDir);
+            tempDir = null;
+        } else {
+            console.log(`\nSkipping cleanup. Temporary directory: ${tempDir}`);
+        }
 
         // Step 7: Next steps
         printNextSteps(packageName);
@@ -103,7 +153,11 @@ async function main(args: string[]): Promise<void> {
             error instanceof Error ? error.message : String(error),
         );
 
-        await tryCleanupTempDirectory(tempDir);
+        if (shouldCleanup) {
+            await tryCleanupTempDirectory(tempDir);
+        } else if (tempDir) {
+            console.log(`\nTemporary directory preserved at: ${tempDir}`);
+        }
 
         process.exit(1);
     }

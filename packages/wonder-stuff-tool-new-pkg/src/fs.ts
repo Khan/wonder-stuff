@@ -1,8 +1,12 @@
+import path from "node:path";
+import os from "node:os";
 import {mkdtemp, rm} from "node:fs/promises";
 
-export function createTempDirectory(): Promise<string> {
-    const prefix = "npm-placeholder-";
-    return mkdtemp(prefix);
+export async function createTempDirectory(): Promise<string> {
+    const prefix = path.join(os.tmpdir(), "npm-placeholder-");
+    const tempDir = await mkdtemp(prefix);
+    console.log(`✓ Created temporary directory: ${tempDir}`);
+    return tempDir;
 }
 
 export async function cleanupTempDirectory(
