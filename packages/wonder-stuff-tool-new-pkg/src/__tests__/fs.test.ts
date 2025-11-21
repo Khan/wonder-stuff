@@ -77,8 +77,11 @@ describe("fs", () => {
             // Arrange
             const tempDir = "/tmp/nonexistent-dir";
 
-            // Act & Assert
-            await expect(cleanupTempDirectory(tempDir)).resolves.not.toThrow();
+            // Act
+            const result = cleanupTempDirectory(tempDir);
+
+            // Assert
+            await expect(result).resolves.not.toThrow();
         });
 
         it("should do nothing when tempDir is null", async () => {
@@ -99,8 +102,11 @@ describe("fs", () => {
                 .spyOn(require("node:fs/promises"), "rm")
                 .mockRejectedValue(new Error("Permission denied"));
 
-            // Act & Assert
-            await expect(cleanupTempDirectory(tempDir)).resolves.not.toThrow();
+            // Act
+            const result = cleanupTempDirectory(tempDir);
+
+            // Assert
+            await expect(result).resolves.not.toThrow();
         });
     });
 });
