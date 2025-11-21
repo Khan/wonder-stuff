@@ -120,21 +120,6 @@ describe("KindError", () => {
                     expect(act).toThrowErrorMatchingSnapshot();
                 },
             );
-
-            it("should throw if framesToPop is < 0", () => {
-                // Arrange
-
-                // Act
-                const act = () =>
-                    new KindError("MESSAGE", "CUSTOM_KIND", {
-                        framesToPop: -1,
-                    });
-
-                // Assert
-                expect(act).toThrowErrorMatchingInlineSnapshot(
-                    `"framesToPop must be >= 0"`,
-                );
-            });
         });
 
         describe("when built for production", () => {
@@ -184,19 +169,6 @@ describe("KindError", () => {
                     );
                 },
             );
-
-            it("should not throw validation error if framesToPop is < 0", () => {
-                // Arrange
-
-                // Act
-                const act = () =>
-                    new KindError("MESSAGE", "CUSTOM_KIND", {
-                        framesToPop: -1,
-                    });
-
-                // Assert
-                expect(act).not.toThrow("framesToPop must be >= 0");
-            });
         });
 
         it("should clone metadata", () => {
@@ -267,7 +239,6 @@ describe("KindError", () => {
                 const act = () =>
                     new KindError("MESSAGE", Errors.Unknown, {
                         cause,
-                        framesToPop: 1,
                     });
                 act();
 

@@ -32,15 +32,6 @@ export type Options = {
      * @type {?string}
      */
     name?: string | null | undefined;
-    /**
-     * The number of stack frames to strip from the error.
-     *
-     * This is added as a property on the error as a hint to frameworks like
-     * Sentry on how to process the stack.
-     *
-     * @type {?number}
-     */
-    framesToPop?: number | null | undefined;
 };
 
 /**
@@ -53,12 +44,6 @@ export type Options = {
  */
 export class KindError extends Error {
     readonly kind: string;
-    /**
-     * The number of stack frames to pop from the top of the stack.
-     *
-     * This is used by Sentry to determine how to process the stack for us.
-     */
-    readonly framesToPop: number;
     readonly originalMessage: string;
     readonly metadata: Readonly<Metadata> | null | undefined;
     readonly cause: Error | null | undefined;
@@ -77,18 +62,11 @@ export class KindError extends Error {
      * @param {string} [options.prefix=""] A prefix to prepend the name of the
      * error.
      * @param {string} [options.name="Error"] The name of the error.
-     * @param {number} [options.stripStackFrames=0] The number of stack frames
-     * to remove from the error's stack. This can be used to ensure that the top
-     * call of the stack references the point at which an error is thrown which
-     * can be useful when helper functions are used to build the error being
-     * thrown.
      */
     constructor(
         message: string,
         kind: string = Errors.Unknown,
-        {cause, prefix, name, metadata, framesToPop}: Options = Object.freeze(
-            {},
-        ),
+        {cause, prefix, name, metadata}: Options = Object.freeze({}),
     ) {
         if (process.env.NODE_ENV !== "production") {
             // Validate arguments.
@@ -103,9 +81,6 @@ export class KindError extends Error {
             }
             if (prefix != null && /\s/g.test(prefix)) {
                 throw new Error("prefix must not contain whitespace");
-            }
-            if (framesToPop != null && framesToPop < 0) {
-                throw new Error("framesToPop must be >= 0");
             }
         }
 
@@ -127,11 +102,6 @@ export class KindError extends Error {
 
         // The cause of this error, if there is one.
         this.cause = cause;
-
-        // How many frames should we pop from the top of the stack?
-        // This is used by things like Sentry when processing the error to
-        // provide better stack traces.
-        this.framesToPop = framesToPop ?? 0;
 
         if (cause != null) {
             // We want to normalize our error message and stack, stripping off
