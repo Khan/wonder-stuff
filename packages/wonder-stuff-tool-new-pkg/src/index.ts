@@ -96,7 +96,7 @@ function printNextSteps(packageName: string): void {
     console.log(`
 1. Go to https://www.npmjs.com/package/${packageName
         .replace("@", "")
-        .replace("/", "%2F")}
+        .replace(/\//g, "%2F")}
 2. Navigate to the package settings
 3. Configure Trusted Publishing for your GitHub repository
 4. You can now publish new versions using GitHub Actions without needing tokens!
