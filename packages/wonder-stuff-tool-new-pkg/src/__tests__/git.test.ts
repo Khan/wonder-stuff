@@ -33,9 +33,7 @@ describe("git", () => {
         it("should trim whitespace from the git remote URL", () => {
             // Arrange
             const expectedUrl = "https://github.com/Khan/wonder-stuff.git";
-            mockedExecSync.mockReturnValue(
-                Buffer.from(`  ${expectedUrl}  \n`),
-            );
+            mockedExecSync.mockReturnValue(Buffer.from(`  ${expectedUrl}  \n`));
 
             // Act
             const result = detectGitRepo();
@@ -50,8 +48,11 @@ describe("git", () => {
                 throw new Error("Command failed");
             });
 
-            // Act & Assert
-            expect(() => detectGitRepo()).toThrow(
+            // Act
+            const act = () => detectGitRepo();
+
+            // Assert
+            expect(act).toThrow(
                 "Failed to detect git repository. Make sure you're in a git repository with a remote named 'origin'.",
             );
         });
@@ -62,8 +63,11 @@ describe("git", () => {
                 throw new Error("fatal: not a git repository");
             });
 
-            // Act & Assert
-            expect(() => detectGitRepo()).toThrow(
+            // Act
+            const act = () => detectGitRepo();
+
+            // Assert
+            expect(act).toThrow(
                 "Failed to detect git repository. Make sure you're in a git repository with a remote named 'origin'.",
             );
         });
@@ -140,8 +144,11 @@ describe("git", () => {
             // Arrange
             const url = "invalid-url";
 
-            // Act & Assert
-            expect(() => parseRepoInfo(url)).toThrow(
+            // Act
+            const act = () => parseRepoInfo(url);
+
+            // Assert
+            expect(act).toThrow(
                 "Could not parse repository info from URL: invalid-url",
             );
         });
@@ -150,8 +157,11 @@ describe("git", () => {
             // Arrange
             const url = "https://gitlab.com/Khan/wonder-stuff.git";
 
-            // Act & Assert
-            expect(() => parseRepoInfo(url)).toThrow(
+            // Act
+            const act = () => parseRepoInfo(url);
+
+            // Assert
+            expect(act).toThrow(
                 "Could not parse repository info from URL: https://gitlab.com/Khan/wonder-stuff.git",
             );
         });
@@ -160,8 +170,11 @@ describe("git", () => {
             // Arrange
             const url = "https://github.com/Khan";
 
-            // Act & Assert
-            expect(() => parseRepoInfo(url)).toThrow(
+            // Act
+            const act = () => parseRepoInfo(url);
+
+            // Assert
+            expect(act).toThrow(
                 "Could not parse repository info from URL: https://github.com/Khan",
             );
         });
@@ -170,10 +183,11 @@ describe("git", () => {
             // Arrange
             const url = "";
 
-            // Act & Assert
-            expect(() => parseRepoInfo(url)).toThrow(
-                "Could not parse repository info from URL: ",
-            );
+            // Act
+            const act = () => parseRepoInfo(url);
+
+            // Assert
+            expect(act).toThrow("Could not parse repository info from URL: ");
         });
     });
 });
