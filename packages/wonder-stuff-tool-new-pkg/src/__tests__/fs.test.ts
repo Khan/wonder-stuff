@@ -2,9 +2,7 @@ import {vol} from "memfs";
 import {createTempDirectory, cleanupTempDirectory} from "../fs";
 
 // Mock the fs/promises module to use memfs
-jest.mock("node:fs/promises", () => {
-    return require("memfs").promises;
-});
+jest.mock("node:fs/promises", () => require("memfs").promises);
 
 describe("fs", () => {
     beforeEach(() => {
