@@ -7,12 +7,11 @@ export function detectGitRepoOriginUrl(
     /** The current working directory to detect the git repository in. */
     cwd: string,
 ): string {
-    const url = execSync("git remote get-url origin", {
+    return execSync("git remote get-url origin", {
         encoding: "utf-8",
         stdio: ["pipe", "pipe", "pipe"],
         cwd,
     }).trim();
-    return url;
 }
 
 /**
