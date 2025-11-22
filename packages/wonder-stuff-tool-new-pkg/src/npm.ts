@@ -1,8 +1,8 @@
 import {execSync} from "node:child_process";
 import {writeFile} from "node:fs/promises";
 import {join} from "node:path";
-import {openBrowser} from "./utils";
 import {createInterface} from "node:readline/promises";
+import {openBrowser} from "./open-browser";
 
 export function validatePackageName(name: string): void {
     // Basic npm package name validation

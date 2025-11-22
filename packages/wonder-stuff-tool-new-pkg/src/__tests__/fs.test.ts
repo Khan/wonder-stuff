@@ -70,15 +70,17 @@ describe("fs", () => {
 
         it("should silently handle errors during cleanup", async () => {
             // Arrange
-            const rmSpy = jest
-                .spyOn(require("node:fs/promises"), "rm")
-                .mockRejectedValue(new Error("Permission denied"));
+            jest.spyOn(require("node:fs/promises"), "rm").mockRejectedValue(
+                new Error("Permission denied"),
+            );
 
             // Act
-            const result = cleanupTempDirectory("/tmp/error-dir");
+            const act = async () => {
+                await cleanupTempDirectory("/tmp/error-dir");
+            };
 
             // Assert
-            await expect(result).resolves.not.toThrow();
+            expect(act).not.toThrow();
         });
     });
 });

@@ -1,6 +1,12 @@
 import {execSync} from "node:child_process";
 
-export function detectGitRepo(cwd: string): string {
+/**
+ * Detects the origin URL of a git repository.
+ */
+export function detectGitRepoOriginUrl(
+    /** The current working directory to detect the git repository in. */
+    cwd: string,
+): string {
     const url = execSync("git remote get-url origin", {
         encoding: "utf-8",
         stdio: ["pipe", "pipe", "pipe"],
@@ -9,20 +15,23 @@ export function detectGitRepo(cwd: string): string {
     return url;
 }
 
-export function parseRepoInfo(url: string): string {
+/**
+ * Parses the repository name from the given git remote URL.
+ */
+export function parseRepoInfo(remoteUrl: string): string {
     // Handle various git URL formats:
     // - https://github.com/Khan/wonder-stuff.git
     // - git@github.com:Khan/wonder-stuff.git
     // - git+https://github.com/Khan/wonder-stuff.git
 
     // Remove .git suffix
-    let cleaned = url.replace(/\.git$/, "");
+    const cleaned = remoteUrl.replace(/\.git$/, "");
 
     // Extract org/repo from URL
-    let match = cleaned.match(/github\.com[/:]([\w-]+\/[\w-]+)/);
+    const match = cleaned.match(/github\.com[/:]([\w-]+\/[\w-]+)/);
     if (match) {
         return match[1];
     }
 
-    throw new Error(`Could not parse repository info from URL: ${url}`);
+    throw new Error(`Could not parse repository info from URL: ${remoteUrl}`);
 }
