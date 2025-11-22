@@ -3,6 +3,8 @@
 import process from "node:process";
 import {writeFile} from "node:fs/promises";
 import {join} from "node:path";
+import yargs from "yargs";
+import {hideBin} from "yargs/helpers";
 import {promptForAccessToken, publishPackage, validatePackageName} from "./npm";
 import {detectGitRepoOriginUrl, parseRepoInfo} from "./git";
 import {
@@ -15,65 +17,35 @@ import {
     generateIndexJs,
 } from "./placeholder_package";
 
-function help(): void {
-    console.log(`
-Usage: pnpm dlx @khanacademy/wonder-stuff-tool-publish-new-pkg <package-name> [options]
-
-This tool helps in publishing a placeholder npm package which can then be configured for Trusted Publishing.
-
-Arguments:
-  <package-name>  The name of the package to publish (e.g., @khanacademy/my-package)
-
-Options:
-  --no-cleanup    Keep the temporary directory after publishing (useful for debugging)
-`);
-}
-
 interface ParsedArgs {
     packageName: string;
-    shouldCleanup: boolean;
+    cleanup: boolean;
 }
 
-function parseArgs(args: string[]): ParsedArgs {
-    if (args.length < 1 || args.length > 2) {
-        help();
-        process.exit(1);
-    }
+function parseArgs(): ParsedArgs {
+    const argv = yargs(hideBin(process.argv))
+        .scriptName("wonder-stuff-tool-publish-new-pkg")
+        .usage(
+            "Usage: $0 <package-name> [options]\n\n" +
+                "Helps with setting up Trusted Publishing for a new npm package by publishing a placeholder npm package which can then be configured.",
+        )
+        .demandCommand(1, 1, "You must provide exactly one package name")
+        .option("cleanup", {
+            type: "boolean",
+            default: true,
+            describe: "Clean up the temporary directory after publishing",
+        })
+        .help()
+        .alias("help", "h")
+        .strict()
+        .parseSync();
 
-    // Separate flags from package name
-    const flags = args.filter((arg) => arg.startsWith("--"));
-    const nonFlags = args.filter((arg) => !arg.startsWith("--"));
+    const packageName = argv._[0] as string;
 
-    // Validate that we have exactly one package name
-    if (nonFlags.length === 0) {
-        console.error("\n✗ Error: Package name is required");
-        help();
-        process.exit(1);
-    }
-
-    if (nonFlags.length > 1) {
-        console.error(
-            `\n✗ Error: Expected one package name, got ${
-                nonFlags.length
-            }: ${nonFlags.join(", ")}`,
-        );
-        help();
-        process.exit(1);
-    }
-
-    const packageName = nonFlags[0];
-
-    // Validate that we only have known flags
-    const unknownFlags = flags.filter((flag) => flag !== "--no-cleanup");
-    if (unknownFlags.length > 0) {
-        console.error(`\n✗ Error: Unknown flag(s): ${unknownFlags.join(", ")}`);
-        help();
-        process.exit(1);
-    }
-
-    const shouldCleanup = !flags.includes("--no-cleanup");
-
-    return {packageName, shouldCleanup};
+    return {
+        packageName,
+        cleanup: argv.cleanup,
+    };
 }
 
 async function writeFiles(
@@ -106,9 +78,9 @@ https://docs.npmjs.com/trusted-publishers
 `);
 }
 
-async function main(args: string[]): Promise<void> {
+async function main(): Promise<void> {
     // Parse and validate arguments
-    const {packageName, shouldCleanup} = parseArgs(args);
+    const {packageName, cleanup: shouldCleanup} = parseArgs();
     let tempDir: string | null = null;
 
     try {
@@ -163,7 +135,5 @@ async function main(args: string[]): Promise<void> {
     }
 }
 
-// process.argv includes `node` and the CLI filename being executed. We only
-// care about the args passed to this script so we slice off the first two
-// parameters.
-main(process.argv.slice(2));
+// Start the main process
+main();
