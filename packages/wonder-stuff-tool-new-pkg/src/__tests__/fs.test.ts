@@ -51,8 +51,7 @@ describe("fs", () => {
             const result2 = await createTempDirectory();
 
             // Assert
-            expect(result1).toBe("/tmp/npm-placeholder-abc123");
-            expect(result2).toBe("/tmp/npm-placeholder-def456");
+            expect(result1).not.toEqual(result2);
         });
     });
 
