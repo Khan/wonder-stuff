@@ -120,36 +120,6 @@ describe("KindError", () => {
                     expect(act).toThrowErrorMatchingSnapshot();
                 },
             );
-
-            it("should throw if stripStackFrames is < 0", () => {
-                // Arrange
-
-                // Act
-                const act = () =>
-                    new KindError("MESSAGE", "CUSTOM_KIND", {
-                        stripStackFrames: -1,
-                    });
-
-                // Assert
-                expect(act).toThrowErrorMatchingInlineSnapshot(
-                    `"stripStackFrames must be >= 0"`,
-                );
-            });
-
-            it("should throw if minimumFrameCount is < 0", () => {
-                // Arrange
-
-                // Act
-                const act = () =>
-                    new KindError("MESSAGE", "CUSTOM_KIND", {
-                        minimumFrameCount: -1,
-                    });
-
-                // Assert
-                expect(act).toThrowErrorMatchingInlineSnapshot(
-                    `"minimumFrameCount must be >= 0"`,
-                );
-            });
         });
 
         describe("when built for production", () => {
@@ -199,32 +169,6 @@ describe("KindError", () => {
                     );
                 },
             );
-
-            it("should not throw validation error if stripStackFrames is < 0", () => {
-                // Arrange
-
-                // Act
-                const act = () =>
-                    new KindError("MESSAGE", "CUSTOM_KIND", {
-                        stripStackFrames: -1,
-                    });
-
-                // Assert
-                expect(act).not.toThrow("stripStackFrames must be >= 0");
-            });
-
-            it("should not throw validation error if minimumFrameCount is < 0", () => {
-                // Arrange
-
-                // Act
-                const act = () =>
-                    new KindError("MESSAGE", "CUSTOM_KIND", {
-                        minimumFrameCount: -1,
-                    });
-
-                // Assert
-                expect(act).not.toThrow("minimumFrameCount must be >= 0");
-            });
         });
 
         it("should clone metadata", () => {
@@ -243,56 +187,6 @@ describe("KindError", () => {
             // Assert
             expect(cloneMetadataSpy).toHaveBeenCalledWith(metadata);
             expect(error.metadata).toBe("CLONED_METADATA");
-        });
-
-        it("should get the normalized error info for the error being constructed, stripping frames", () => {
-            // Arrange
-            const normalizeSpy = jest.spyOn(ErrorInfo, "normalize");
-
-            // Act
-            const error = new KindError("MESSAGE", Errors.Unknown, {
-                stripStackFrames: 1,
-                minimumFrameCount: 2,
-            });
-
-            // Assert
-            expect(normalizeSpy).toHaveBeenCalledWith(error, 1, 2);
-        });
-
-        it("should set the stack to the normalized value", () => {
-            // Arrange
-            const normalizedErrorInfo = new ErrorInfo(
-                "NORMALIZED_NAME",
-                "NORMALIZED_MESSAGE",
-                ["normalizedstack1", "normalizedstack2"],
-            );
-            jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
-                normalizedErrorInfo,
-            );
-
-            // Act
-            const error = new KindError("MESSAGE", Errors.Unknown);
-
-            // Assert
-            expect(error.stack).toBe(normalizedErrorInfo.standardizedStack);
-        });
-
-        it("should not set the message to the normalized value", () => {
-            // Arrange
-            const normalizedErrorInfo = new ErrorInfo(
-                "NORMALIZED_NAME",
-                "NORMALIZED_MESSAGE",
-                ["normalizedstack1", "normalizedstack2"],
-            );
-            jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
-                normalizedErrorInfo,
-            );
-
-            // Act
-            const error = new KindError("MESSAGE", Errors.Unknown);
-
-            // Assert
-            expect(error.message).toBe("MESSAGE");
         });
 
         describe("when cause is non-null", () => {
@@ -345,8 +239,6 @@ describe("KindError", () => {
                 const act = () =>
                     new KindError("MESSAGE", Errors.Unknown, {
                         cause,
-                        stripStackFrames: 1,
-                        minimumFrameCount: 2,
                     });
                 act();
 
@@ -359,12 +251,10 @@ describe("KindError", () => {
                 const consequentialErrorInfo = new ErrorInfo(
                     "CONSEQUENCE_NAME",
                     "CONSEQUENCE_MESSAGE",
-                    ["consequence1", "consequence2"],
                 );
                 const causalErrorInfo = new ErrorInfo(
                     "CAUSE_NAME",
                     "CAUSE_MESSAGE",
-                    ["cause1", "cause2"],
                 );
                 const cause = new Error("CAUSE_MESSAGE");
                 jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
@@ -394,7 +284,6 @@ describe("KindError", () => {
                 const combinedErrorInfo = new ErrorInfo(
                     "COMBINED_NAME",
                     "COMBINED_MESSAGE",
-                    ["combinedstack1", "combinedstack2"],
                 );
                 jest.spyOn(
                     ErrorInfo,
@@ -431,71 +320,6 @@ describe("KindError", () => {
                     		Error: CAUSE_MESSAGE"
                 `);
             });
-
-            describe("when compositeStack is true", () => {
-                it("should set the stack to the combined error standardized stack", () => {
-                    // Arrange
-                    const cause = new Error("CAUSE_MESSAGE");
-                    const combinedErrorInfo = new ErrorInfo(
-                        "COMBINED_NAME",
-                        "COMBINED_MESSAGE",
-                        ["combinedstack1", "combinedstack2"],
-                    );
-                    jest.spyOn(
-                        ErrorInfo,
-                        "fromConsequenceAndCause",
-                    ).mockReturnValue(combinedErrorInfo);
-
-                    // Act
-                    const error = new KindError("MESSAGE", Errors.Unknown, {
-                        cause,
-                        compositeStack: true,
-                    });
-
-                    // Assert
-                    expect(error.stack).toBe(
-                        combinedErrorInfo.standardizedStack,
-                    );
-                });
-            });
-
-            describe.each([undefined, null, false])(
-                "when composite stack is %s",
-                (compositeStackValue: any) => {
-                    it("should set the stack to the normalized stack, not the combined stack", () => {
-                        // Arrange
-                        const normalizedErrorInfo = new ErrorInfo(
-                            "NORMALIZED_NAME",
-                            "NORMALIZED_MESSAGE",
-                            ["normalizedstack1", "normalizedstack2"],
-                        );
-                        jest.spyOn(ErrorInfo, "normalize").mockReturnValue(
-                            normalizedErrorInfo,
-                        );
-                        const cause = new Error("CAUSE_MESSAGE");
-                        const combinedErrorInfo = new ErrorInfo(
-                            "COMBINED_NAME",
-                            "COMBINED_MESSAGE",
-                            ["combinedstack1", "combinedstack2"],
-                        );
-                        jest.spyOn(
-                            ErrorInfo,
-                            "fromConsequenceAndCause",
-                        ).mockReturnValue(combinedErrorInfo);
-
-                        // Act
-                        const error = new KindError("MESSAGE", Errors.Unknown, {
-                            cause,
-                            compositeStack: compositeStackValue,
-                        });
-
-                        // Assert
-                        expect(error.stack).toBe(
-                            normalizedErrorInfo.standardizedStack,
-                        );
-                    });
-                },
-            );
         });
     });
 });

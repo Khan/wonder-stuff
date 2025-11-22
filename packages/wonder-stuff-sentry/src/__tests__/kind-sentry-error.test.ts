@@ -6,6 +6,40 @@ import type {SentryData} from "../types";
 
 describe("KindSentryError", () => {
     describe("#constructor", () => {
+        it("should throw if framesToPop is < 0", () => {
+            // Arrange
+
+            // Act
+            const act = () =>
+                new KindSentryError("MESSAGE", "CUSTOM_KIND", {
+                    framesToPop: -1,
+                });
+
+            // Assert
+            expect(act).toThrowErrorMatchingInlineSnapshot(
+                `"framesToPop must be >= 0"`,
+            );
+        });
+
+        describe("when built for production", () => {
+            beforeEach(() => {
+                process.env.NODE_ENV = "production";
+            });
+
+            it("should not throw validation error if framesToPop is < 0", () => {
+                // Arrange
+
+                // Act
+                const act = () =>
+                    new KindSentryError("MESSAGE", "CUSTOM_KIND", {
+                        framesToPop: -1,
+                    });
+
+                // Assert
+                expect(act).not.toThrow("framesToPop must be >= 0");
+            });
+        });
+
         it("should end name with default SentryError", () => {
             // Arrange
 

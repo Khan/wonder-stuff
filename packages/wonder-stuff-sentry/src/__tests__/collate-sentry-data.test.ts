@@ -120,12 +120,10 @@ describe("#collateSentryData", () => {
             expect(result.contexts).toMatchObject({
                 "Source Error - 1": {
                     error: cause2.toString(),
-                    originalStack: expect.any(String),
                     sentryData: JSON.stringify(cause2.sentryData),
                 },
                 "Source Error - 2": {
                     error: cause1.toString(),
-                    originalStack: expect.any(String),
                     sentryData: "",
                 },
             });
@@ -159,12 +157,10 @@ describe("#collateSentryData", () => {
             expect(result.contexts).toMatchObject({
                 CAUSE1: {
                     error: cause2.toString(),
-                    originalStack: expect.any(String),
                     sentryData: JSON.stringify(cause2.sentryData),
                 },
                 CAUSE2: {
                     error: cause1.toString(),
-                    originalStack: expect.any(String),
                     sentryData: "",
                 },
             });
@@ -343,12 +339,10 @@ describe("#collateSentryData", () => {
             expect(result.contexts).toMatchObject({
                 "Source Error - 1": {
                     error: cause2.toString(),
-                    originalStack: expect.any(String),
                     sentryData: JSON.stringify(cause2.sentryData),
                 },
                 "Source Error - 2": {
                     error: cause1.toString(),
-                    originalStack: expect.any(String),
                     sentryData: "",
                 },
             });
@@ -392,12 +386,10 @@ describe("#collateSentryData", () => {
             expect(result.contexts).toMatchObject({
                 CAUSE1: {
                     error: cause2.toString(),
-                    originalStack: expect.any(String),
                     sentryData: JSON.stringify(cause2.sentryData),
                 },
                 CAUSE2: {
                     error: cause1.toString(),
-                    originalStack: expect.any(String),
                     sentryData: "",
                 },
             });

@@ -46,19 +46,7 @@ type Options = {
      *
      * @type {?number}
      */
-    stripStackFrames?: number | null | undefined;
-    /**
-     * The minimum number of stack frames to try and retain.
-     *
-     * @type {?number}
-     */
-    minimumFrameCount?: number | null | undefined;
-    /**
-     * Should we create a composite stack from the causal error chain or not?
-     *
-     * @type {?boolean}
-     */
-    compositeStack?: boolean | null | undefined;
+    framesToPop?: number | null | undefined;
 };
 
 /**
@@ -70,6 +58,13 @@ type Options = {
  * @extends {KindError}
  */
 export class KindSentryError extends KindError {
+    /**
+     * The number of stack frames to pop from the top of the stack.
+     *
+     * This is used by Sentry to determine how to process the stack for us.
+     */
+    readonly framesToPop: number;
+
     /**
      *Creates an instance of KindSentryError.
      * @param {string} message The error message.
@@ -83,16 +78,11 @@ export class KindSentryError extends KindError {
      * @param {string} [options.prefix=""] A prefix to prepend the name of the
      * error.
      * @param {string} [options.name="Error"] The name of the error.
-     * @param {number} [options.stripStackFrames=0] The number of stack frames
+     * @param {number} [options.framesToPop=0] The number of stack frames
      * to remove from the error's stack. This can be used to ensure that the top
      * call of the stack references the point at which an error is thrown which
      * can be useful when helper functions are used to build the error being
      * thrown.
-     * @param {number} [options.minimumFrameCount=1] The minimum number of
-     * stack frames to try and retain. This can be used to prevent stripping
-     * all stack frames from the error's stack.
-     * @param {boolean} [options.compositeStack=false] Should we build a
-     * composite stack from the causal error chain or not?
      */
     constructor(
         message: string,
@@ -100,7 +90,14 @@ export class KindSentryError extends KindError {
         // It's perfectly valid for options to be an empty object.
         options: Options = Object.freeze({}),
     ) {
-        const {metadata, sentryData, name, ...restOptions} = options;
+        const {metadata, sentryData, name, framesToPop, ...restOptions} =
+            options;
+
+        if (process.env.NODE_ENV !== "production") {
+            if (framesToPop != null && framesToPop < 0) {
+                throw new Error("framesToPop must be >= 0");
+            }
+        }
 
         super(message, kind, {
             ...restOptions,
@@ -126,6 +123,11 @@ export class KindSentryError extends KindError {
                 other: metadata,
             },
         });
+
+        // How many frames should we pop from the top of the stack?
+        // This is used by Sentry when processing the error to provide better
+        // stack traces.
+        this.framesToPop = framesToPop ?? 0;
     }
 
     get sentryData(): Readonly<SentryData> {
