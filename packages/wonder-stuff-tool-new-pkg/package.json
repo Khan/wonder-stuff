@@ -23,12 +23,9 @@
     },
     "dependencies": {
     },
-    "peerDependencies": {
-        "jest": "^30.2.0"
-    },
     "devDependencies": {
         "@khanacademy/ws-dev-build-settings": "workspace:*",
-        "memfs": "^4.51.0"
+        "jest": "^30.2.0"
     },
     "engines": {
         "node": ">=20"
