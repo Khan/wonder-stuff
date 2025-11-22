@@ -1,20 +1,9 @@
-import {detectGitRepo, parseRepoInfo} from "../git";
 import path from "node:path";
 import os from "node:os";
 import fs from "node:fs";
 import crypto from "node:crypto";
 import {execSync} from "node:child_process";
-
-function makeGitRepoWithRemote(remoteUrl: string) {
-    const tempDir = fs.mkdtempSync(
-        path.join(os.tmpdir(), `test-git-repo-${crypto.randomUUID()}`),
-    );
-
-    execSync("git init", {cwd: tempDir});
-    execSync(`git remote add origin "${remoteUrl}"`, {cwd: tempDir});
-
-    return tempDir;
-}
+import {detectGitRepoOriginUrl, parseRepoInfo} from "../git";
 
 describe("git", () => {
     const tempDirs: string[] = [];
@@ -49,7 +38,7 @@ describe("git", () => {
             const repoDir = makeGitRepoWithRemote(expectedUrl);
 
             // Act
-            const result = detectGitRepo(repoDir);
+            const result = detectGitRepoOriginUrl(repoDir);
 
             // Assert
             expect(result).toBe(expectedUrl);
@@ -61,7 +50,7 @@ describe("git", () => {
             const repoDir = makeGitRepoWithRemote(`  ${expectedUrl}  `);
 
             // Act
-            const result = detectGitRepo(repoDir);
+            const result = detectGitRepoOriginUrl(repoDir);
 
             // Assert
             expect(result).toBe(expectedUrl);
@@ -75,7 +64,7 @@ describe("git", () => {
             );
 
             // Act
-            const act = () => detectGitRepo(nonExistantWorkingDir);
+            const act = () => detectGitRepoOriginUrl(nonExistantWorkingDir);
 
             // Assert
             expect(act).toThrow("ENOENT");
@@ -88,7 +77,7 @@ describe("git", () => {
             );
 
             // Act
-            const act = () => detectGitRepo(repoDir);
+            const act = () => detectGitRepoOriginUrl(repoDir);
 
             // Assert
             expect(act).toThrow("not a git repository");

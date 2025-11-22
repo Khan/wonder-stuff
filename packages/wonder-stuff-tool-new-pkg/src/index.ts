@@ -4,7 +4,7 @@ import process from "node:process";
 import {writeFile} from "node:fs/promises";
 import {join} from "node:path";
 import {promptForAccessToken, publishPackage, validatePackageName} from "./npm";
-import {detectGitRepo, parseRepoInfo} from "./git";
+import {detectGitRepoOriginUrl, parseRepoInfo} from "./git";
 import {
     cleanupTempDirectory as tryCleanupTempDirectory,
     createTempDirectory,
@@ -119,7 +119,7 @@ async function main(args: string[]): Promise<void> {
 
         // Step 2: Detect git repository
         console.log("\nDetecting git repository...");
-        const gitUrl = detectGitRepo();
+        const gitUrl = detectGitRepoOriginUrl(process.cwd());
         const repoName = parseRepoInfo(gitUrl);
         console.log(`✓ Detected repository: ${repoName}`);
 
