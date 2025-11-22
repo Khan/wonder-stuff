@@ -1,17 +1,12 @@
 import {execSync} from "node:child_process";
 
-export function detectGitRepo(): string {
-    try {
-        const url = execSync("git remote get-url origin", {
-            encoding: "utf-8",
-            stdio: ["pipe", "pipe", "pipe"],
-        }).trim();
-        return url;
-    } catch (error) {
-        throw new Error(
-            "Failed to detect git repository. Make sure you're in a git repository with a remote named 'origin'.",
-        );
-    }
+export function detectGitRepo(cwd: string): string {
+    const url = execSync("git remote get-url origin", {
+        encoding: "utf-8",
+        stdio: ["pipe", "pipe", "pipe"],
+        cwd,
+    }).trim();
+    return url;
 }
 
 export function parseRepoInfo(url: string): string {

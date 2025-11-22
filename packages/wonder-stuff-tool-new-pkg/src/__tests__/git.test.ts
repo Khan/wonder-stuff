@@ -1,42 +1,67 @@
-import {execSync} from "node:child_process";
 import {detectGitRepo, parseRepoInfo} from "../git";
+import path from "node:path";
+import os from "node:os";
+import fs from "node:fs";
+import crypto from "node:crypto";
+import {execSync} from "node:child_process";
 
-jest.mock("node:child_process");
+function makeGitRepoWithRemote(remoteUrl: string) {
+    const tempDir = fs.mkdtempSync(
+        path.join(os.tmpdir(), `test-git-repo-${crypto.randomUUID()}`),
+    );
 
-const mockedExecSync = execSync as jest.MockedFunction<typeof execSync>;
+    execSync("git init", {cwd: tempDir});
+    execSync(`git remote add origin "${remoteUrl}"`, {cwd: tempDir});
+
+    return tempDir;
+}
 
 describe("git", () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
+    const tempDirs: string[] = [];
+
+    /**
+     * Creates a temporary git repository with the given remoteUrl as the
+     * repo's origin. Automatically registers the git repo dir for cleanup
+     * after the test is complete.
+     */
+    function makeGitRepoWithRemote(remoteUrl: string) {
+        const tempDir = fs.mkdtempSync(
+            path.join(os.tmpdir(), `test-git-repo-${crypto.randomUUID()}`),
+        );
+
+        execSync("git init", {cwd: tempDir});
+        execSync(`git remote add origin "${remoteUrl}"`, {cwd: tempDir});
+
+        tempDirs.push(tempDir);
+
+        return tempDir;
+    }
+
+    afterEach(() => {
+        tempDirs.forEach((dir) => fs.rmSync(dir, {recursive: true}));
+        tempDirs.splice(0, tempDirs.length);
     });
 
     describe("#detectGitRepo", () => {
         it("should return the git remote URL when successful", () => {
             // Arrange
             const expectedUrl = "git@github.com:Khan/wonder-stuff.git";
-            mockedExecSync.mockReturnValue(Buffer.from(expectedUrl + "\n"));
+            const repoDir = makeGitRepoWithRemote(expectedUrl);
 
             // Act
-            const result = detectGitRepo();
+            const result = detectGitRepo(repoDir);
 
             // Assert
             expect(result).toBe(expectedUrl);
-            expect(mockedExecSync).toHaveBeenCalledWith(
-                "git remote get-url origin",
-                {
-                    encoding: "utf-8",
-                    stdio: ["pipe", "pipe", "pipe"],
-                },
-            );
         });
 
         it("should trim whitespace from the git remote URL", () => {
             // Arrange
             const expectedUrl = "https://github.com/Khan/wonder-stuff.git";
-            mockedExecSync.mockReturnValue(Buffer.from(`  ${expectedUrl}  \n`));
+            const repoDir = makeGitRepoWithRemote(`  ${expectedUrl}  `);
 
             // Act
-            const result = detectGitRepo();
+            const result = detectGitRepo(repoDir);
 
             // Assert
             expect(result).toBe(expectedUrl);
@@ -44,32 +69,29 @@ describe("git", () => {
 
         it("should throw an error when git command fails", () => {
             // Arrange
-            mockedExecSync.mockImplementation(() => {
-                throw new Error("Command failed");
-            });
+            const nonExistantWorkingDir = path.join(
+                os.tmpdir(),
+                `test-git-repo-${crypto.randomUUID()}`,
+            );
 
             // Act
-            const act = () => detectGitRepo();
+            const act = () => detectGitRepo(nonExistantWorkingDir);
 
             // Assert
-            expect(act).toThrow(
-                "Failed to detect git repository. Make sure you're in a git repository with a remote named 'origin'.",
-            );
+            expect(act).toThrow("ENOENT");
         });
 
         it("should throw an error when not in a git repository", () => {
             // Arrange
-            mockedExecSync.mockImplementation(() => {
-                throw new Error("fatal: not a git repository");
-            });
+            const repoDir = fs.mkdtempSync(
+                path.join(os.tmpdir(), `test-git-repo-${crypto.randomUUID()}`),
+            );
 
             // Act
-            const act = () => detectGitRepo();
+            const act = () => detectGitRepo(repoDir);
 
             // Assert
-            expect(act).toThrow(
-                "Failed to detect git repository. Make sure you're in a git repository with a remote named 'origin'.",
-            );
+            expect(act).toThrow("not a git repository");
         });
     });
 
