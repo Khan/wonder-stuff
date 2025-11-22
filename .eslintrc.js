@@ -50,7 +50,12 @@ module.exports = {
             },
         },
         {
-            files: ["**/bin/**/*.ts", "build-scripts/*.ts"],
+            files: [
+                "**/bin/**/*.ts",
+                "build-scripts/*.ts",
+                // Allow console.log in tool packages
+                "packages/wonder-stuff-tool-*/src/**/*.ts",
+            ],
             rules: {
                 "no-console": "off",
             },
