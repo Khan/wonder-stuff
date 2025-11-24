@@ -4,6 +4,10 @@ import {join} from "node:path";
 import {createInterface} from "node:readline/promises";
 import {openBrowser} from "./open-browser";
 
+/**
+ * Validates that the given package name is a valid npm package name. Throws if
+ * the name is not valid.
+ */
 export function validatePackageName(name: string): void {
     // Basic npm package name validation
     if (!name || name.trim().length === 0) {
@@ -27,6 +31,10 @@ export function validatePackageName(name: string): void {
     }
 }
 
+/**
+ * Validates that the given access token is a valid npm granular access token.
+ * Throws if the token is not valid.
+ */
 export function validateAccessToken(token: string | null | undefined): void {
     const trimmedToken = token?.trim();
 
@@ -48,26 +56,36 @@ export function validateAccessToken(token: string | null | undefined): void {
     }
 }
 
+/**
+ * Prompts the user for an npm granular access token and writes it to the given
+ * temporary directory.
+ * @param tempDir The temporary directory to write the token to.
+ */
 export async function promptForAccessToken(tempDir: string): Promise<void> {
-    console.log("\n=== npm Granular Access Token Required ===");
+    console.log();
+    console.log("=== npm Granular Access Token Required ===");
+    console.log();
     console.log(
-        "We will need a granular access token to publish the placeholder package.",
+        "We need a granular access token to publish the placeholder package.",
     );
-    console.log("\nOpening a browser window so that you can create the token.");
-    console.log("\nWhen creating the token, please configure it with:");
+    console.log();
+    console.log("When creating the token, please configure it with:");
     console.log("  ✓ Expiration: 7 days (the default, or less if you prefer)");
     console.log("  ✓ Ensure 'Bypass two-factor authentication' is checked");
     console.log("  ✓ Permissions:");
     console.log("    • Read and write - only for the '@khanacademy' scope");
-    console.log("\nOpening the browser now...\n");
+    console.log();
+    console.log("Opening a browser window so that you can create the token...");
+    console.log();
 
     const tokenCreationUrl =
         "https://www.npmjs.com/settings/khanacademy/tokens/granular-access-tokens/new";
     openBrowser(tokenCreationUrl);
 
     console.log(
-        "After creating the token, copy it and paste it below (input will be hidden):\n",
+        "After creating the token, copy it and paste it below (input will be hidden):",
     );
+    console.log();
 
     const rl = createInterface({
         input: process.stdin,
@@ -82,7 +100,8 @@ export async function promptForAccessToken(tempDir: string): Promise<void> {
 
             // Validate the token
             validateAccessToken(token);
-            console.log("\n✓ Token format is valid");
+            console.log();
+            console.log("✓ Token format is valid");
 
             // Create .npmrc file in temp directory with the token
             const npmrcContent = `//registry.npmjs.org/:_authToken=${token.trim()}\n`;
@@ -93,28 +112,36 @@ export async function promptForAccessToken(tempDir: string): Promise<void> {
 
             tokenValid = true;
         } catch (error) {
+            console.log();
             if (error instanceof Error) {
-                console.error(`\n✗ ${error.message}`);
+                console.error(`✗ ${error.message}`);
             } else {
-                console.error("\n✗ Invalid token");
+                console.error("✗ Invalid token");
             }
-            console.log("Please try again (or press Ctrl+C to cancel).\n");
+            console.log("Please try again (or press Ctrl+C to cancel).");
+            console.log();
         }
     }
 
     rl.close();
 }
 
+/**
+ * Publishes the package from the given temporary directory.
+ */
 export function publishPackage(tempDir: string): void {
-    console.log("\n=== Publishing Package ===");
-    console.log(`Publishing from ${tempDir}...\n`);
+    console.log();
+    console.log("=== Publishing Package ===");
+    console.log(`Publishing from ${tempDir}...`);
+    console.log();
 
     try {
         execSync("npm publish", {
             cwd: tempDir,
             stdio: "inherit",
         });
-        console.log("\n✓ Package published successfully!");
+        console.log();
+        console.log("✓ Package published successfully!");
     } catch (error) {
         throw new Error("npm publish failed. See error above.");
     }
