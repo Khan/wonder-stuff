@@ -27,8 +27,8 @@ describe("git", () => {
     }
 
     afterEach(() => {
-        tempDirs.forEach((dir) => fs.rmSync(dir, {recursive: true}));
-        tempDirs.splice(0, tempDirs.length);
+        const dirsToDelete = tempDirs.splice(0, tempDirs.length);
+        dirsToDelete.forEach((dir) => fs.rmSync(dir, {recursive: true}));
     });
 
     describe("#detectGitRepo", () => {

@@ -16,6 +16,7 @@ export function generatePackageJson(
         },
         repository: {
             type: "git",
+            // This is the format that `npm pkg fix` writes.
             url: `git+https://github.com/${repoName}.git`,
         },
         bugs: {
@@ -26,25 +27,4 @@ export function generatePackageJson(
     };
 
     return JSON.stringify(packageJson, null, 4) + "\n";
-}
-
-/**
- * Generates the placeholder package's README file contents.
- */
-export function generateReadme(packageName: string): string {
-    return `# ${packageName}
-
-This package is being published as a placeholder for the \`${packageName}\`
-library. This will enable us to configure Trusted Publishing (which can't be
-enabled until the package has been published at least once).
-`;
-}
-
-/**
- * Generates the placholder package's `index.js` file contents. The contents are
- * meant to be very obvious that the package is simply a placeholder and
- * contains no usable code.
- */
-export function generateIndexJs(): string {
-    return 'throw new Error("Not implemented");\n';
 }

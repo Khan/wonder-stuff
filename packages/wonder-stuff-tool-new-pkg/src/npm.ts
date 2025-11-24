@@ -66,7 +66,7 @@ export async function promptForAccessToken(tempDir: string): Promise<void> {
     console.log("=== npm Granular Access Token Required ===");
     console.log();
     console.log(
-        "We need a granular access token to publish the placeholder package.",
+        "A granular access token is needed to publish the placeholder package.",
     );
     console.log();
     console.log("When creating the token, please configure it with:");
@@ -132,6 +132,7 @@ export async function promptForAccessToken(tempDir: string): Promise<void> {
 export function publishPackage(tempDir: string): void {
     console.log();
     console.log("=== Publishing Package ===");
+    console.log();
     console.log(`Publishing from ${tempDir}...`);
     console.log();
 

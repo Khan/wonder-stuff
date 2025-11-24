@@ -1,10 +1,8 @@
 import {writeFile} from "node:fs/promises";
 import {join} from "node:path";
-import {
-    generatePackageJson,
-    generateReadme,
-    generateIndexJs,
-} from "./placeholder_package";
+import {generatePackageJson} from "./generate-package-json";
+import {generateReadme} from "./generate-readme.md";
+import {generateIndexJs} from "./generate-index-js";
 
 /**
  * Generates and writes the placeholder package files using tempDir as the
