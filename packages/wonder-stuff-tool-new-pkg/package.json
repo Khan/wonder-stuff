@@ -16,8 +16,7 @@
     "bugs": {
         "url": "https://github.com/Khan/wonder-blocks/issues"
     },
-    "main": "dist/index.js",
-    "bin": "dist/bin/index.js",
+    "bin": "dist/bin/wonder-stuff-tool-new-pkg.js",
     "scripts": {
         "test": "bash -c 'pnpm run --silent --dir \"../..\" test ${@:0} $($([[ ${@: -1} = -* ]] || [[ ${@: -1} = bash ]]) && echo $PWD)'"
     },
