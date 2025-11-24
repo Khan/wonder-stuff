@@ -1,67 +1,14 @@
 #!/usr/bin/env node
 
 import process from "node:process";
-import {writeFile} from "node:fs/promises";
-import {join} from "node:path";
-import yargs from "yargs";
-import {hideBin} from "yargs/helpers";
 import {promptForAccessToken, publishPackage, validatePackageName} from "./npm";
 import {detectGitRepoOriginUrl, parseRepoInfo} from "./git";
 import {
     cleanupTempDirectory as tryCleanupTempDirectory,
     createTempDirectory,
 } from "./fs";
-import {
-    generatePackageJson,
-    generateReadme,
-    generateIndexJs,
-} from "./placeholder_package";
-
-interface ParsedArgs {
-    packageName: string;
-    cleanup: boolean;
-}
-
-function parseArgs(): ParsedArgs {
-    const argv = yargs(hideBin(process.argv))
-        .scriptName("wonder-stuff-tool-publish-new-pkg")
-        .usage(
-            "Usage: $0 <package-name> [options]\n\n" +
-                "Helps with setting up Trusted Publishing for a new npm package by publishing a placeholder npm package which can then be configured.",
-        )
-        .demandCommand(1, 1, "You must provide exactly one package name")
-        .option("cleanup", {
-            type: "boolean",
-            default: true,
-            describe: "Clean up the temporary directory after publishing",
-        })
-        .help()
-        .alias("help", "h")
-        .strict()
-        .parseSync();
-
-    const packageName = argv._[0] as string;
-
-    return {
-        packageName,
-        cleanup: argv.cleanup,
-    };
-}
-
-async function writeFiles(
-    tempDir: string,
-    packageName: string,
-    repoName: string,
-): Promise<void> {
-    await writeFile(
-        join(tempDir, "package.json"),
-        generatePackageJson(packageName, repoName),
-    );
-    await writeFile(join(tempDir, "README.md"), generateReadme(packageName));
-    await writeFile(join(tempDir, "index.js"), generateIndexJs());
-
-    console.log(`✓ Created placeholder files in ${tempDir}`);
-}
+import {parseArgs} from "./parse-args";
+import {writeFiles} from "./write-files";
 
 function printNextSteps(packageName: string): void {
     console.log("\n=== Next Steps ===");
