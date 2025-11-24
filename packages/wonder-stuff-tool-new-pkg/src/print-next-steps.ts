@@ -1,3 +1,7 @@
+/**
+ * Prints the next steps to take after the placeholder package has been
+ * published.
+ */
 export function printNextSteps(packageName: string): void {
     console.log("\n=== Next Steps ===");
     console.log(`

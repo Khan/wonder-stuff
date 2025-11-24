@@ -3,8 +3,12 @@ import {createTempDirectory, tryCleanupTempDirectory} from "./fs";
 import {detectGitRepoOriginUrl, parseRepoInfo} from "./git";
 import {validatePackageName, promptForAccessToken, publishPackage} from "./npm";
 import {printNextSteps} from "./print-next-steps";
-import {writeFiles} from "./write-files";
+import {writePackageFiles} from "./write-package-files";
 
+/**
+ * The entry to the process of publishing a placeholder npm package. This
+ * function coordinates the entire operation on behalf of the user.
+ */
 export async function publishPlaceholderPackage() {
     // Parse and validate arguments
     const {packageName, cleanup: shouldCleanup} = parseArgs();
@@ -25,7 +29,7 @@ export async function publishPlaceholderPackage() {
         // Step 3: Create temporary directory and files
         console.log("\nCreating placeholder package...");
         tempDir = await createTempDirectory();
-        await writeFiles(tempDir, packageName, repoName);
+        await writePackageFiles(tempDir, packageName, repoName);
 
         // Step 4: NPM authentication
         await promptForAccessToken(tempDir);

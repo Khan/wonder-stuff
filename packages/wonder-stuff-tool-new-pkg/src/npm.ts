@@ -141,8 +141,7 @@ export function publishPackage(tempDir: string): void {
             stdio: "inherit",
         });
         console.log();
-        console.log("✓ Package published successfully!");
     } catch (error) {
-        throw new Error("pnpm publish failed. See error above.");
+        throw new Error("pnpm publish failed");
     }
 }
