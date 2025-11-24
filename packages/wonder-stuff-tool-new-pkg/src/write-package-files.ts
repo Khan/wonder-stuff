@@ -6,7 +6,11 @@ import {
     generateIndexJs,
 } from "./placeholder_package";
 
-export async function writeFiles(
+/**
+ * Generates and writes the placeholder package files using tempDir as the
+ * package working directory.
+ */
+export async function writePackageFiles(
     tempDir: string,
     packageName: string,
     repoName: string,

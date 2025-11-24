@@ -2,7 +2,7 @@ import path from "node:path";
 import os from "node:os";
 import fs from "node:fs";
 
-import {createTempDirectory, cleanupTempDirectory} from "../fs";
+import {createTempDirectory, tryCleanupTempDirectory} from "../fs";
 
 describe("fs", () => {
     describe("#createTempDirectory", () => {
@@ -29,7 +29,7 @@ describe("fs", () => {
         });
     });
 
-    describe("#cleanupTempDirectory", () => {
+    describe("#tryCleanupTempDirectory", () => {
         it("should remove the directory when it exists", async () => {
             // Arrange
             const tempDir = fs.mkdtempSync(
@@ -37,7 +37,7 @@ describe("fs", () => {
             );
 
             // Act
-            await cleanupTempDirectory(tempDir);
+            await tryCleanupTempDirectory(tempDir);
 
             // Assert
             expect(fs.existsSync(tempDir)).toBe(false);
@@ -51,7 +51,7 @@ describe("fs", () => {
             );
 
             // Act
-            const result = cleanupTempDirectory(tempDir);
+            const result = tryCleanupTempDirectory(tempDir);
 
             // Assert
             await expect(result).resolves.not.toThrow();
@@ -62,7 +62,7 @@ describe("fs", () => {
             const rmSpy = jest.spyOn(require("node:fs/promises"), "rm");
 
             // Act
-            await cleanupTempDirectory(null);
+            await tryCleanupTempDirectory(null);
 
             // Assert
             expect(rmSpy).not.toHaveBeenCalled();
@@ -76,7 +76,7 @@ describe("fs", () => {
 
             // Act
             const act = async () => {
-                await cleanupTempDirectory("/tmp/error-dir");
+                await tryCleanupTempDirectory("/tmp/error-dir");
             };
 
             // Assert

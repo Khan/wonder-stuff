@@ -1,6 +1,12 @@
 import yargs from "yargs";
 import {hideBin} from "yargs/helpers";
 
+/**
+ * Parses the command-line arguments passed into this program and returns the
+ * parsed values.
+ *
+ * If invalid/incompatible parameters were provided, prints usage info.
+ */
 export function parseArgs(): ParsedArgs {
     const argv = yargs(hideBin(process.argv))
         .scriptName("wonder-stuff-tool-publish-new-pkg")
