@@ -136,13 +136,13 @@ export function publishPackage(tempDir: string): void {
     console.log();
 
     try {
-        execSync("npm publish", {
+        execSync("pnpm publish", {
             cwd: tempDir,
             stdio: "inherit",
         });
         console.log();
         console.log("✓ Package published successfully!");
     } catch (error) {
-        throw new Error("npm publish failed. See error above.");
+        throw new Error("pnpm publish failed. See error above.");
     }
 }
