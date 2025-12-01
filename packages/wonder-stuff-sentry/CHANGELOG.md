@@ -1,5 +1,17 @@
 # @khanacademy/wonder-stuff-sentry
 
+## 4.0.0
+
+### Major Changes
+
+-   d629c7a: Remove stack manipulation and replace with `framesToPop` property, deferring stack handling to the exception recording framework (such as Sentry)
+-   6d38fa5: Updated to Sentry 10.25.0
+
+### Patch Changes
+
+-   Updated dependencies [d629c7a]
+    -   @khanacademy/wonder-stuff-core@3.0.0
+
 ## 3.0.2
 
 ### Patch Changes
