@@ -60,7 +60,7 @@
     "rollup-plugin-preserve-shebangs": "^0.2.0",
     "typedoc": "^0.28.14",
     "typescript": "5.9.3",
-    "winston": "^3.10.0"
+    "winston": "^3.18.3"
   },
   "pnpm": {
     "overrides": {
