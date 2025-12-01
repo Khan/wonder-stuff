@@ -32,24 +32,6 @@ export type Options = {
      * @type {?string}
      */
     name?: string | null | undefined;
-    /**
-     * The number of stack frames to strip from the error.
-     *
-     * @type {?number}
-     */
-    stripStackFrames?: number | null | undefined;
-    /**
-     * The minimum number of stack frames to try and retain.
-     *
-     * @type {?number}
-     */
-    minimumFrameCount?: number | null | undefined;
-    /**
-     * Should we create a composite stack from the causal error chain or not?
-     *
-     * @type {?boolean}
-     */
-    compositeStack?: boolean | null | undefined;
 };
 
 /**
@@ -63,7 +45,6 @@ export type Options = {
 export class KindError extends Error {
     readonly kind: string;
     readonly originalMessage: string;
-    readonly originalStack: string;
     readonly metadata: Readonly<Metadata> | null | undefined;
     readonly cause: Error | null | undefined;
 
@@ -81,29 +62,11 @@ export class KindError extends Error {
      * @param {string} [options.prefix=""] A prefix to prepend the name of the
      * error.
      * @param {string} [options.name="Error"] The name of the error.
-     * @param {number} [options.stripStackFrames=0] The number of stack frames
-     * to remove from the error's stack. This can be used to ensure that the top
-     * call of the stack references the point at which an error is thrown which
-     * can be useful when helper functions are used to build the error being
-     * thrown.
-     * @param {number} [options.minimumFrameCount=1] The minimum number of
-     * stack frames to try and retain. This can be used to prevent stripping
-     * all stack frames from the error's stack.
-     * @param {boolean} [options.compositeStack=false] Should we build a
-     * composite stack from the causal error chain or not?
      */
     constructor(
         message: string,
         kind: string = Errors.Unknown,
-        {
-            cause,
-            prefix,
-            name,
-            metadata,
-            stripStackFrames,
-            minimumFrameCount,
-            compositeStack,
-        }: Options = Object.freeze({}),
+        {cause, prefix, name, metadata}: Options = Object.freeze({}),
     ) {
         if (process.env.NODE_ENV !== "production") {
             // Validate arguments.
@@ -118,12 +81,6 @@ export class KindError extends Error {
             }
             if (prefix != null && /\s/g.test(prefix)) {
                 throw new Error("prefix must not contain whitespace");
-            }
-            if (stripStackFrames != null && stripStackFrames < 0) {
-                throw new Error("stripStackFrames must be >= 0");
-            }
-            if (minimumFrameCount != null && minimumFrameCount < 0) {
-                throw new Error("minimumFrameCount must be >= 0");
             }
         }
 
@@ -143,31 +100,14 @@ export class KindError extends Error {
         // other error sources that use the same error taxonomy.
         this.kind = kind;
 
-        // Capture the original stack trace, in case we change it.
-        // @ts-expect-error [FEI-5011] - TS2322 - Type 'string | undefined' is not assignable to type 'string'.
-        this.originalStack = this.stack;
-
         // The cause of this error, if there is one.
         this.cause = cause;
 
-        // We want to normalize our error message and stack, stripping off
-        // frames that may obfuscate the real error cause.
-        const normalizedError = ErrorInfo.normalize(
-            this,
-            stripStackFrames ?? 0,
-            minimumFrameCount ?? 1,
-        );
-
-        delete this.stack;
-
-        // The default is the normalized stack.
-        // This may get replaced if there is a causal error and we want to
-        // use a composite stack.
-        // We don't use the normalized message here as we want to retain
-        // all lines of the message in this case.
-        this.stack = normalizedError.standardizedStack;
-
         if (cause != null) {
+            // We want to normalize our error message and stack, stripping off
+            // frames that may obfuscate the real error cause.
+            const normalizedError = ErrorInfo.normalize(this);
+
             // We want a better error message that reflects the causal error
             // chain, and we might also want a composite stack built from
             // those errors instead of the stack we have.
@@ -183,13 +123,6 @@ export class KindError extends Error {
             // We update our message to a standardized one, giving us a nice
             // causal relationship in the message.
             this.message = combined.message;
-
-            // And if we were asked to, we replace our stack with the
-            // composite stack built from the causal errors. Otherwise, we
-            // leave it with the normalized stack.
-            if (compositeStack === true) {
-                this.stack = combined.standardizedStack;
-            }
         }
     }
 }

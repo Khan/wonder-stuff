@@ -1,7 +1,4 @@
-import {
-    safeStringify,
-    getOriginalStackFromError,
-} from "@khanacademy/wonder-stuff-core";
+import {safeStringify} from "@khanacademy/wonder-stuff-core";
 import {getSentryDataFromError} from "./get-sentry-data-from-error";
 import type {SentryData, KindErrorDataOptions} from "./types";
 import {EmptySentryData} from "./empty-sentry-data";
@@ -70,7 +67,6 @@ export const sentryDataReducer = (
         ] = {
             error: current.toString(),
             sentryData: safeStringify(currentSentryData),
-            originalStack: getOriginalStackFromError(current),
         };
     }
 

@@ -107,7 +107,6 @@ describe("#sentryDataReducer", () => {
             expect(result.contexts).toHaveProperty(expectedContextName, {
                 error: error.toString(),
                 sentryData: "",
-                originalStack: error.stack,
             });
         });
 
@@ -144,7 +143,6 @@ describe("#sentryDataReducer", () => {
             expect(result.contexts).toHaveProperty(expectedContextName, {
                 error: error.toString(),
                 sentryData: '{"tags":{},"contexts":{},"fingerprint":[]}',
-                originalStack: error.stack,
             });
         });
 
@@ -180,7 +178,6 @@ describe("#sentryDataReducer", () => {
             expect(result.contexts).toHaveProperty(expectedContextName, {
                 error: error.toString(),
                 sentryData: "",
-                originalStack: error.stack,
             });
         });
 
@@ -219,7 +216,6 @@ describe("#sentryDataReducer", () => {
                 error: error.toString(),
                 sentryData:
                     '{"tags":{"tag1":"value1"},"contexts":{"context1":{"value1":"value1value"}},"fingerprint":["a"]}',
-                originalStack: error.stack,
             });
         });
     });
