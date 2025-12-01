@@ -3,7 +3,7 @@
     "description": "Sentry integration support",
     "author": "Khan Academy",
     "license": "MIT",
-    "version": "3.0.2",
+    "version": "4.0.0",
     "publishConfig": {
         "access": "public",
         "provenance": true

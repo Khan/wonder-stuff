@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-core
 
+## 3.0.0
+
+### Major Changes
+
+-   d629c7a: Remove stack manipulation and replace with `framesToPop` property, deferring stack handling to the exception recording framework (such as Sentry)
+
 ## 2.0.2
 
 ### Patch Changes

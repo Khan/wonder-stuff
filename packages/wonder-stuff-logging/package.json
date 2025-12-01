@@ -3,7 +3,7 @@
     "description": "Logging setup for Winston-based logging",
     "author": "Khan Academy",
     "license": "MIT",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "publishConfig": {
         "access": "public",
         "provenance": true
