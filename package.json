@@ -86,7 +86,7 @@
     "clean:all": "pnpm run clean && rm -rf node_modules && rm -rf packages/*/node_modules",
     "coverage": "pnpm jest --coverage",
     "format": "prettier --write .",
-    "lint": "pnpm run lint:ci .",
+    "lint": "pnpm run lint:ci . && pnpm run lint:pkg-json",
     "lint:ci": "eslint --ext .ts --ext .js",
     "lint:pkg-json": "pnpm npmPkgJsonLint ./packages/wonder-stuff-*",
     "publish:ci": "pnpm run lint:pkg-json && node utils/pre-publish-check-ci.js && git diff --stat --exit-code HEAD && pnpm run build && pnpm run build:types && changeset publish",
