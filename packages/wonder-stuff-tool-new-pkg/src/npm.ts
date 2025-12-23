@@ -6,7 +6,7 @@ import {openBrowser} from "./open-browser";
 
 /**
  * Validate that the given package name is a valid npm package name.
- * 
+ *
  * @param name The package name to validate.
  *
  * @throws If the name is not valid.
@@ -63,7 +63,7 @@ export function validateAccessToken(token: string | null | undefined): void {
 
 /**
  * Prompt the user for an npm granular access token.
- * 
+ *
  * This prompts the user for a token and then writes it to the given
  * temporary directory.
  * @param tempDir The temporary directory to write the token to.
