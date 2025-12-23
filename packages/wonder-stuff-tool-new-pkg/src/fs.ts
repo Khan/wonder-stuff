@@ -15,9 +15,10 @@ export async function createTempDirectory(): Promise<string> {
 
 /**
  * Cleans up a temporary directory, if it exists.
+ *
+ * @param tempDir The path to the directory to cleanup.
  */
 export async function tryCleanupTempDirectory(
-    /** The path to the directory to cleanup. */
     tempDir: string | null,
 ): Promise<void> {
     try {
