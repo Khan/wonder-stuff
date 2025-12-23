@@ -1,4 +1,6 @@
 /**
+ * Print the next steps to take after publish.
+ * 
  * Prints the next steps to take after the placeholder package has been
  * published.
  */
