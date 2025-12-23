@@ -3,10 +3,11 @@ import {hideBin} from "yargs/helpers";
 import {ParsedArgs} from "./types";
 
 /**
- * Parses the command-line arguments passed into this program and returns the
- * parsed values.
+ * Parse the command-line arguments.
  *
  * If invalid/incompatible parameters were provided, prints usage info.
+ *
+ * @returns The parsed values.
  */
 export function parseArgs(): ParsedArgs {
     const argv = yargs(hideBin(process.argv))
