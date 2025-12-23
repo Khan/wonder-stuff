@@ -62,7 +62,9 @@ export function validateAccessToken(token: string | null | undefined): void {
 }
 
 /**
- * Prompts the user for an npm granular access token and writes it to the given
+ * Prompt the user for an npm granular access token.
+ * 
+ * This prompts the user for a token and then writes it to the given
  * temporary directory.
  * @param tempDir The temporary directory to write the token to.
  */
