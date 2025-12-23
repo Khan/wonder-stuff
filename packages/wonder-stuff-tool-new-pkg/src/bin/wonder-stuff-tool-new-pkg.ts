@@ -12,8 +12,7 @@ import {printNextSteps} from "../print-next-steps";
 import {writePackageFiles} from "../write-package-files";
 
 /**
- * The entry to the process of publishing a placeholder npm package. This
- * function coordinates the entire operation on behalf of the user.
+ * Publishes a placeholder package.
  */
 async function publishPlaceholderPackage() {
     // Parse and validate arguments
