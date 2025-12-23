@@ -134,7 +134,7 @@ export async function promptForAccessToken(tempDir: string): Promise<void> {
 }
 
 /**
- * Publishes the package from the given temporary directory.
+ * Publish the package from the given temporary directory.
  */
 export function publishPackage(tempDir: string): void {
     console.log();
