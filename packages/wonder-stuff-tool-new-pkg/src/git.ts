@@ -16,7 +16,7 @@ export function detectGitRepoOriginUrl(
 }
 
 /**
- * Parses the repository name from the given git remote URL.
+ * Parse the repository name from the given git remote URL.
  */
 export function parseRepoInfo(remoteUrl: string): string {
     // Handle various git URL formats:
