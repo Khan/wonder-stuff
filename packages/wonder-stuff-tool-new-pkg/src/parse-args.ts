@@ -1,5 +1,6 @@
 import yargs from "yargs";
 import {hideBin} from "yargs/helpers";
+import {ParsedArgs} from "./types";
 
 /**
  * Parses the command-line arguments passed into this program and returns the
