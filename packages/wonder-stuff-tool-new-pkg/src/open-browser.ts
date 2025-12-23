@@ -1,7 +1,7 @@
 import {execSync} from "node:child_process";
 
 /**
- * Opens the system's default browser to the given url.
+ * Open the system's default browser to the given url.
  */
 export function openBrowser(url: string): void {
     try {
