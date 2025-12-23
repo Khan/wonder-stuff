@@ -12,7 +12,13 @@ describe("#writePackageFiles", () => {
 
     afterEach(() => {
         const dirsToDelete = tempDirs.splice(0, tempDirs.length);
-        dirsToDelete.forEach((dir) => fs.rmSync(dir, {recursive: true}));
+        for (const dir of dirsToDelete) {
+            try {
+               fs.rmSync(dir, {recursive: true});
+            } catch {
+               /* ignore */
+            }
+        }
     });
 
     async function makeTempDirAndWritePackageFiles() {
