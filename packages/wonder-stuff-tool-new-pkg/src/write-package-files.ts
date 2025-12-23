@@ -5,8 +5,15 @@ import {generateReadme} from "./generate-readme.md";
 import {generateIndexJs} from "./generate-index-js";
 
 /**
- * Generates and writes the placeholder package files using tempDir as the
- * package working directory.
+ * Generate and write the placeholder package files.
+ *
+ * This generated and writes the placeholder package files using
+ * the given dir as the package working directory.
+ *
+ * @param tempDir The package working directory.
+ * @param packageName The package name.
+ * @param repoName The repo name to use for the package.json.
+ * @returns A promise that resolves when the package files are written.
  */
 export async function writePackageFiles(
     tempDir: string,
