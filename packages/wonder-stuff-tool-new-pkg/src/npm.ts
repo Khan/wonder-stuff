@@ -5,8 +5,11 @@ import {createInterface} from "node:readline/promises";
 import {openBrowser} from "./open-browser";
 
 /**
- * Validates that the given package name is a valid npm package name. Throws if
- * the name is not valid.
+ * Validate that the given package name is a valid npm package name.
+ * 
+ * @param name The package name to validate.
+ *
+ * @throws If the name is not valid.
  */
 export function validatePackageName(name: string): void {
     // Basic npm package name validation
