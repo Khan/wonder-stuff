@@ -17,12 +17,11 @@ describe("git", () => {
         const tempDir = fs.mkdtempSync(
             path.join(os.tmpdir(), `test-git-repo-${crypto.randomUUID()}`),
         );
+        tempDirs.push(tempDir);
 
         execSync("git init", {cwd: tempDir});
         execSync(`git remote add origin "${remoteUrl}"`, {cwd: tempDir});
-
-        tempDirs.push(tempDir);
-
+        
         return tempDir;
     }
 
