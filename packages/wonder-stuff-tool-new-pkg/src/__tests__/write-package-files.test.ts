@@ -14,26 +14,25 @@ describe("#writePackageFiles", () => {
         const dirsToDelete = tempDirs.splice(0, tempDirs.length);
         for (const dir of dirsToDelete) {
             try {
-               fs.rmSync(dir, {recursive: true});
+                fs.rmSync(dir, {recursive: true});
             } catch {
-               /* ignore */
+                /* ignore */
             }
         }
     });
 
     async function makeTempDirAndWritePackageFiles() {
-        // Arrange
         const tempDir = fs.mkdtempSync(
             path.join(os.tmpdir(), "write-package-files-tests-"),
         );
+        tempDirs.push(tempDir);
 
         const localName = crypto.randomUUID();
         const packageName = `@khan/${localName}`;
 
-        // Act
         await writePackageFiles(tempDir, packageName, `Khan/repo-${localName}`);
 
-        return {localName, tempDir};
+        return {tempDir};
     }
 
     it.each(["package.json", "README.md", "index.js"])(
@@ -57,7 +56,7 @@ describe("#writePackageFiles", () => {
         ).mockReturnValue("Hello");
 
         // Act
-        const {localName, tempDir} = await makeTempDirAndWritePackageFiles();
+        const {tempDir} = await makeTempDirAndWritePackageFiles();
 
         // Assert
         expect(
@@ -72,7 +71,7 @@ describe("#writePackageFiles", () => {
         );
 
         // Act
-        const {localName, tempDir} = await makeTempDirAndWritePackageFiles();
+        const {tempDir} = await makeTempDirAndWritePackageFiles();
 
         // Assert
         expect(
@@ -87,7 +86,7 @@ describe("#writePackageFiles", () => {
         );
 
         // Act
-        const {localName, tempDir} = await makeTempDirAndWritePackageFiles();
+        const {tempDir} = await makeTempDirAndWritePackageFiles();
 
         // Assert
         expect(

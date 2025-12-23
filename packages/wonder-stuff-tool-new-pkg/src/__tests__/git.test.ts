@@ -21,7 +21,7 @@ describe("git", () => {
 
         execSync("git init", {cwd: tempDir});
         execSync(`git remote add origin "${remoteUrl}"`, {cwd: tempDir});
-        
+
         return tempDir;
     }
 
@@ -31,7 +31,7 @@ describe("git", () => {
             try {
                 fs.rmSync(dir, {recursive: true});
             } catch {
-               /* ignore */
+                /* ignore */
             }
         }
     });
@@ -69,10 +69,11 @@ describe("git", () => {
             );
 
             // Act
-            const act = () => detectGitRepoOriginUrl(nonExistantWorkingDir);
+            const underTest = () =>
+                detectGitRepoOriginUrl(nonExistantWorkingDir);
 
             // Assert
-            expect(act).toThrow("ENOENT");
+            expect(underTest).toThrow("ENOENT");
         });
 
         it("should throw an error when not in a git repository", () => {
@@ -82,10 +83,10 @@ describe("git", () => {
             );
 
             // Act
-            const act = () => detectGitRepoOriginUrl(repoDir);
+            const underTest = () => detectGitRepoOriginUrl(repoDir);
 
             // Assert
-            expect(act).toThrow("not a git repository");
+            expect(underTest).toThrow("not a git repository");
         });
     });
 
@@ -161,10 +162,10 @@ describe("git", () => {
             const url = "invalid-url";
 
             // Act
-            const act = () => parseRepoInfo(url);
+            const underTest = () => parseRepoInfo(url);
 
             // Assert
-            expect(act).toThrow(
+            expect(underTest).toThrow(
                 "Could not parse repository info from URL: invalid-url",
             );
         });
@@ -174,10 +175,10 @@ describe("git", () => {
             const url = "https://gitlab.com/Khan/wonder-stuff.git";
 
             // Act
-            const act = () => parseRepoInfo(url);
+            const underTest = () => parseRepoInfo(url);
 
             // Assert
-            expect(act).toThrow(
+            expect(underTest).toThrow(
                 "Could not parse repository info from URL: https://gitlab.com/Khan/wonder-stuff.git",
             );
         });
@@ -187,10 +188,10 @@ describe("git", () => {
             const url = "https://github.com/Khan";
 
             // Act
-            const act = () => parseRepoInfo(url);
+            const underTest = () => parseRepoInfo(url);
 
             // Assert
-            expect(act).toThrow(
+            expect(underTest).toThrow(
                 "Could not parse repository info from URL: https://github.com/Khan",
             );
         });
@@ -200,10 +201,12 @@ describe("git", () => {
             const url = "";
 
             // Act
-            const act = () => parseRepoInfo(url);
+            const underTest = () => parseRepoInfo(url);
 
             // Assert
-            expect(act).toThrow("Could not parse repository info from URL: ");
+            expect(underTest).toThrow(
+                "Could not parse repository info from URL: ",
+            );
         });
     });
 });
