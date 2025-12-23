@@ -1,5 +1,5 @@
 /**
- * Generates the placeholder package's `package.json` file contents.
+ * Generate the placeholder package's `package.json` file contents.
  */
 export function generatePackageJson(
     packageName: string,
