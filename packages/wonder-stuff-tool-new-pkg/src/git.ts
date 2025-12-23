@@ -2,9 +2,10 @@ import {execSync} from "node:child_process";
 
 /**
  * Detect the origin URL of a git repository.
+ *
+ * @param cwd The current working directory to detect the git repository in.
  */
 export function detectGitRepoOriginUrl(
-    /** The current working directory to detect the git repository in. */
     cwd: string,
 ): string {
     return execSync("git remote get-url origin", {
