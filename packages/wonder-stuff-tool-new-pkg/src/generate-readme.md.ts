@@ -1,5 +1,5 @@
 /**
- * Generates the placeholder package's README file contents.
+ * Generate the placeholder package's README file contents.
  */
 export function generateReadme(packageName: string): string {
     return `# ${packageName}
