@@ -1,5 +1,9 @@
 /**
  * Generate the placeholder package's `package.json` file contents.
+ *
+ * @param packageName The name of the package to create.
+ * @param repoName The Github repository name.
+ * @returns The package.json file contents as a JSON string.
  */
 export function generatePackageJson(
     packageName: string,

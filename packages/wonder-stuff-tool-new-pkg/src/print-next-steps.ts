@@ -1,8 +1,10 @@
 /**
  * Print the next steps to take after publish.
- * 
+ *
  * Prints the next steps to take after the placeholder package has been
  * published.
+ *
+ * @param packageName The name of the package that was published.
  */
 export function printNextSteps(packageName: string): void {
     console.log("\n=== Next Steps ===");

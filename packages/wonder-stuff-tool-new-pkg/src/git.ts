@@ -4,10 +4,9 @@ import {execSync} from "node:child_process";
  * Detect the origin URL of a git repository.
  *
  * @param cwd The current working directory to detect the git repository in.
+ * @returns The git remote origin URL.
  */
-export function detectGitRepoOriginUrl(
-    cwd: string,
-): string {
+export function detectGitRepoOriginUrl(cwd: string): string {
     return execSync("git remote get-url origin", {
         encoding: "utf-8",
         stdio: ["pipe", "pipe", "pipe"],
@@ -17,6 +16,9 @@ export function detectGitRepoOriginUrl(
 
 /**
  * Parse the repository name from the given git remote URL.
+ *
+ * @param remoteUrl The git remote URL to parse.
+ * @returns The repository name in the format "owner/repo".
  */
 export function parseRepoInfo(remoteUrl: string): string {
     // Handle various git URL formats:
