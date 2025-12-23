@@ -36,7 +36,9 @@ export function validatePackageName(name: string): void {
 
 /**
  * Validates that the given access token is a valid npm granular access token.
- * Throws if the token is not valid.
+ *
+ * @param token The token to validate.
+ * @throws if the token is not valid.
  */
 export function validateAccessToken(token: string | null | undefined): void {
     const trimmedToken = token?.trim();
