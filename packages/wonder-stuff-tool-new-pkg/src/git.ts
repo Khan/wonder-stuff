@@ -1,7 +1,7 @@
 import {execSync} from "node:child_process";
 
 /**
- * Detects the origin URL of a git repository.
+ * Detect the origin URL of a git repository.
  */
 export function detectGitRepoOriginUrl(
     /** The current working directory to detect the git repository in. */
