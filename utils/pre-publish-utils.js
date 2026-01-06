@@ -82,7 +82,7 @@ const checkBrowser = (pkgJson) => {
 };
 
 const checkBin = (pkgJson) => {
-    if (!pkgJson.hasOwnProperty("bin")) {
+    if (!("bin" in pkgJson)) {
         console.error(`ERROR: ${pkgJson.name} must have a "bin" set.`);
         process.exit(1);
     }
