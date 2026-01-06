@@ -12,6 +12,7 @@ const {
     checkTypes,
     checkPublishConfig,
     checkMainPathExists,
+    isWonderStuffTool,
 } = require("./pre-publish-utils");
 
 // eslint-disable-next-line promise/catch-or-return
@@ -27,8 +28,11 @@ fg("packages/*/package.json", {cwd: Ancesdir.default()}).then((pkgPaths) => {
             } else {
                 checkPublishConfig(pkgJson);
                 checkEntrypoints(pkgJson);
-                // The eslint packages don't publish types.
-                if (!pkgName.includes("eslint")) {
+                // The eslint and WS tool packages don't publish types.
+                if (
+                    !pkgName.includes("eslint") &&
+                    !isWonderStuffTool(pkgJson)
+                ) {
                     checkTypes(pkgJson);
                 }
             }
