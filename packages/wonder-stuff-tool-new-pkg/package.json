@@ -3,7 +3,7 @@
     "description": "Utility to create and publish a placeholder package",
     "author": "Khan Academy <opensource+npm@khanacademy.org>",
     "license": "MIT",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publishConfig": {
         "access": "public",
         "provenance": true
