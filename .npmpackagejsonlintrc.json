@@ -12,5 +12,17 @@
           "error",
           [{"access": "public", "provenance": true}]
         ]
-    }
+    },
+    "overrides": [
+        {
+          "patterns": ["packages/wonder-stuff-tool-*/package.json"],
+          "rules": {
+              "require-bin": "error",
+
+              "require-main": "off",
+              "require-module": "off",
+              "require-types": "off"
+          }
+        }
+    ]
 }

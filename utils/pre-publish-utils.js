@@ -5,6 +5,10 @@
 const fs = require("fs");
 const path = require("path");
 
+function isWonderStuffTool(pkgJson) {
+    return pkgJson.name.startsWith("@khanacademy/wonder-stuff-tool-");
+}
+
 const checkPublishConfig = ({name, publishConfig, private: isPrivate}) => {
     // first check if is marked as public and there's access to publish the current package
     if (!publishConfig || (!isPrivate && publishConfig.access !== "public")) {
@@ -77,7 +81,21 @@ const checkBrowser = (pkgJson) => {
     }
 };
 
+const checkBin = (pkgJson) => {
+    if (!("bin" in pkgJson)) {
+        console.error(`ERROR: ${pkgJson.name} must have a "bin" set.`);
+        process.exit(1);
+    }
+};
+
 const checkEntrypoints = (pkgJson) => {
+    // wonder-stuff-tool packages don't need to export anything, but they do
+    // need a bin entry!
+    if (isWonderStuffTool(pkgJson)) {
+        checkBin(pkgJson);
+        return;
+    }
+
     checkModule(pkgJson);
     checkMain(pkgJson);
     checkBrowser(pkgJson);
@@ -101,4 +119,5 @@ module.exports = {
     checkTypes,
     checkPrivate,
     checkMainPathExists,
+    isWonderStuffTool,
 };
