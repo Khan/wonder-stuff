@@ -1,7 +1,7 @@
 import {writeFile} from "node:fs/promises";
 import {join} from "node:path";
 import {generatePackageJson} from "./generate-package-json";
-import {generateReadme} from "./generate-readme.md";
+import {generateReadme} from "./generate-readme-md";
 import {generateIndexJs} from "./generate-index-js";
 
 /**

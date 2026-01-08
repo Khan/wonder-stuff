@@ -4,7 +4,7 @@ import fs from "node:fs";
 import {writePackageFiles} from "../write-package-files";
 
 import * as generatePackageJsonModule from "../generate-package-json";
-import * as generateReadmeModule from "../generate-readme.md";
+import * as generateReadmeModule from "../generate-readme-md";
 import * as generateIndexJSModule from "../generate-index-js";
 
 describe("#writePackageFiles", () => {
