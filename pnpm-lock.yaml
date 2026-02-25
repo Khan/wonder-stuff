@@ -114,7 +114,7 @@ importers:
         version: 0.3.2(@typescript-eslint/parser@8.46.3(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-typescript@4.4.4)(eslint@8.57.1)
       eslint-plugin-prettier:
         specifier: ^5.5.4
-        version: 5.5.4(eslint-config-prettier@9.0.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.0.3)
+        version: 5.5.4(eslint-config-prettier@9.0.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2)
       eslint-plugin-promise:
         specifier: ^7.2.1
         version: 7.2.1(eslint@8.57.1)
@@ -137,8 +137,8 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0(typescript@5.9.3)
       prettier:
-        specifier: ^3.0.3
-        version: 3.0.3
+        specifier: ^3.6.2
+        version: 3.6.2
       rollup:
         specifier: ^4.53.2
         version: 4.53.2
@@ -212,8 +212,8 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       prettier:
-        specifier: ^3.0.3
-        version: 3.0.3
+        specifier: ^3.6.2
+        version: 3.6.2
 
   packages/eslint-plugin-khan/demo:
     dependencies:
@@ -4391,8 +4391,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.0.3:
-    resolution: {integrity: sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==}
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -8352,10 +8352,10 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-prettier@5.5.4(eslint-config-prettier@9.0.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.0.3):
+  eslint-plugin-prettier@5.5.4(eslint-config-prettier@9.0.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.6.2):
     dependencies:
       eslint: 8.57.1
-      prettier: 3.0.3
+      prettier: 3.6.2
       prettier-linter-helpers: 1.0.0
       synckit: 0.11.11
     optionalDependencies:
@@ -10237,7 +10237,7 @@ snapshots:
 
   prettier@2.8.8: {}
 
-  prettier@3.0.3: {}
+  prettier@3.6.2: {}
 
   pretty-format@29.7.0:
     dependencies:
