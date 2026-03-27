@@ -10,7 +10,7 @@ export function printNextSteps(packageName: string): void {
     console.log("\n=== Next Steps ===");
     console.log(`
 1. Go to https://www.npmjs.com/package/${packageName
-        .replace("@", "")
+        .replace("@", "%40")
         .replace(/\//g, "%2F")}
 2. Navigate to the package settings
 3. Configure Trusted Publishing for your GitHub repository
