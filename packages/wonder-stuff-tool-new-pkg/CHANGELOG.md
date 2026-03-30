@@ -1,5 +1,11 @@
 # @khanacademy/wonder-stuff-tool-publish-new-pkg
 
+## 0.0.4
+
+### Patch Changes
+
+-   f3bde68: Fix npm package url in console output
+
 ## 0.0.3
 
 ### Patch Changes
