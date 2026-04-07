@@ -35,13 +35,13 @@ jobs:
       contents: write # required to `git push`
       pages: write # so we can deploy to GitHub pages
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ssh-key: ${{ secrets.KHAN_ACTIONS_BOT_SSH_PRIVATE_KEY }}
           fetch-depth: 0
 
       - name: Install & cache node_modules
-        uses: Khan/actions@shared-node-cache-v3
+        uses: Khan/actions@shared-node-cache-v4
         with:
           node-version: 24.x
 
