@@ -1,9 +1,9 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 # This workflow will run changesets depending on two different scenarios:
 #
@@ -27,107 +27,107 @@ on:
 # For more info about this workflow, see:
 # https://github.com/changesets/action#usage
 jobs:
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write # required for publishing to npm
-      contents: write # required to `git push`
-      pages: write # so we can deploy to GitHub pages
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ssh-key: ${{ secrets.KHAN_ACTIONS_BOT_SSH_PRIVATE_KEY }}
-          fetch-depth: 0
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write # required for publishing to npm
+            contents: write # required to `git push`
+            pages: write # so we can deploy to GitHub pages
+        steps:
+            - uses: actions/checkout@v5
+              with:
+                  ssh-key: ${{ secrets.KHAN_ACTIONS_BOT_SSH_PRIVATE_KEY }}
+                  fetch-depth: 0
 
-      - name: Secure Network
-        uses: Khan/actions@secure-network-v1
-        timeout-minutes: 5
-        with:
-          # registry.npmjs.org: npm package registry for pnpm install and npm publish
-          # hooks.slack.com: Slack webhook notifications via rtCamp/action-slack-notify
-          extra-domains: |
-            registry.npmjs.org
-            hooks.slack.com
+            - name: Secure Network
+              uses: Khan/actions@secure-network-v1
+              timeout-minutes: 5
+              with:
+                  # registry.npmjs.org: npm package registry for pnpm install and npm publish
+                  # hooks.slack.com: Slack webhook notifications via rtCamp/action-slack-notify
+                  extra-domains: |
+                      registry.npmjs.org
+                      hooks.slack.com
 
-      - name: Install & cache node_modules
-        uses: Khan/actions@shared-node-cache-v4
-        with:
-          node-version: 24.x
+            - name: Install & cache node_modules
+              uses: Khan/actions@shared-node-cache-v4
+              with:
+                  node-version: 24.x
 
-      - name: Upgrade npm for OIDC support
-        shell: bash
-        run: |
-          # npm trusted publishing requires npm CLI v11.5.1+
-          # Node.js 22 ships with npm 10.x, so we need to upgrade
-          # and pnpm uses npm under the hood for publishes.
-          npm install -g npm@latest && echo "✅ npm upgraded to $(npm --version)"
+            - name: Upgrade npm for OIDC support
+              shell: bash
+              run: |
+                  # npm trusted publishing requires npm CLI v11.5.1+
+                  # Node.js 22 ships with npm 10.x, so we need to upgrade
+                  # and pnpm uses npm under the hood for publishes.
+                  npm install -g npm@latest && echo "✅ npm upgraded to $(npm --version)"
 
-      - name: Build Typedoc
-        # Generate nice docs inside "docs/" folder
-        run: pnpm run build:docs
+            - name: Build Typedoc
+              # Generate nice docs inside "docs/" folder
+              run: pnpm run build:docs
 
-      - name: Deploy to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          # The branch the action should deploy to.
-          branch: gh-pages
-          # The folder the action should deploy.
-          folder: docs
+            - name: Deploy to GitHub pages
+              uses: JamesIves/github-pages-deploy-action@v4
+              with:
+                  # The branch the action should deploy to.
+                  branch: gh-pages
+                  # The folder the action should deploy.
+                  folder: docs
 
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          publish: pnpm run publish:ci
-        env:
-          # We use a Personal Access Token here rather than the GITHUB_TOKEN
-          # so that it will trigger our other actions. The token has to be on
-          # the account of someone with appropriate access levels and given the
-          # repo scope.
-          GITHUB_TOKEN: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
-          # Note: we no longer use the NPM_TOKEN secret because we've enabled
-          # Trusted Publishing (https://docs.npmjs.com/trusted-publishers) on
-          # the npmjs.com side:
-          # https://www.npmjs.com/package/@khanacademy/graphql-flow/access
+            - name: Create Release Pull Request or Publish to npm
+              id: changesets
+              uses: changesets/action@v1
+              with:
+                  publish: pnpm run publish:ci
+              env:
+                  # We use a Personal Access Token here rather than the GITHUB_TOKEN
+                  # so that it will trigger our other actions. The token has to be on
+                  # the account of someone with appropriate access levels and given the
+                  # repo scope.
+                  GITHUB_TOKEN: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
+                  # Note: we no longer use the NPM_TOKEN secret because we've enabled
+                  # Trusted Publishing (https://docs.npmjs.com/trusted-publishers) on
+                  # the npmjs.com side:
+                  # https://www.npmjs.com/package/@khanacademy/graphql-flow/access
 
-      - name: Build Slack message
-        id: slack_message
-        if: steps.changesets.outputs.published == 'true'
-        # We have to do this in stages to make sure that the output into the
-        # GITHUB_OUTPUT retains our lines and is valid for updating the env.
-        # This is based on:
-        #   https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
-        run: |
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "updated_packages<<$EOF" >> $GITHUB_OUTPUT
-          jq -r '[group_by(.name) | .[] | " - "+.[].name+"@"+.[].version] | join("\n")' <<< '${{ steps.changesets.outputs.publishedPackages }}' >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_OUTPUT
+            - name: Build Slack message
+              id: slack_message
+              if: steps.changesets.outputs.published == 'true'
+              # We have to do this in stages to make sure that the output into the
+              # GITHUB_OUTPUT retains our lines and is valid for updating the env.
+              # This is based on:
+              #   https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
+              run: |
+                  EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+                  echo "updated_packages<<$EOF" >> $GITHUB_OUTPUT
+                  jq -r '[group_by(.name) | .[] | " - "+.[].name+"@"+.[].version] | join("\n")' <<< '${{ steps.changesets.outputs.publishedPackages }}' >> $GITHUB_OUTPUT
+                  echo "$EOF" >> $GITHUB_OUTPUT
 
-      - name: Send a Slack notification for web if a publish happens
-        if: steps.changesets.outputs.published == 'true'
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_FEIWEB_WEBHOOK }}
-          SLACK_CHANNEL: frontend-infra-web
-          SLACK_MSG_AUTHOR: ${{ github.event.pull_request.user.login }}
-          SLACK_USERNAME: GithubGoose
-          SLACK_ICON_EMOJI: ":goose:"
-          SLACK_MESSAGE: "A new version of ${{ github.event.repository.name }} was published! 🎉 \n${{ steps.slack_message.outputs.updated_packages }}\n\nRelease notes → https://github.com/Khan/${{ github.event.repository.name }}/releases/"
-          SLACK_TITLE: "New Wonder Stuff release!"
-          SLACK_FOOTER: Wonder Stuff Slack Notification
-          MSG_MINIMAL: true
+            - name: Send a Slack notification for web if a publish happens
+              if: steps.changesets.outputs.published == 'true'
+              uses: rtCamp/action-slack-notify@v2
+              env:
+                  SLACK_WEBHOOK: ${{ secrets.SLACK_FEIWEB_WEBHOOK }}
+                  SLACK_CHANNEL: frontend-infra-web
+                  SLACK_MSG_AUTHOR: ${{ github.event.pull_request.user.login }}
+                  SLACK_USERNAME: GithubGoose
+                  SLACK_ICON_EMOJI: ":goose:"
+                  SLACK_MESSAGE: "A new version of ${{ github.event.repository.name }} was published! 🎉 \n${{ steps.slack_message.outputs.updated_packages }}\n\nRelease notes → https://github.com/Khan/${{ github.event.repository.name }}/releases/"
+                  SLACK_TITLE: "New Wonder Stuff release!"
+                  SLACK_FOOTER: Wonder Stuff Slack Notification
+                  MSG_MINIMAL: true
 
-      - name: Send a Slack notification for mobile if a publish happens
-        if: steps.changesets.outputs.published == 'true'
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_FEIMOBILE_WEBHOOK }}
-          SLACK_CHANNEL: frontend-infra-mobile
-          SLACK_MSG_AUTHOR: ${{ github.event.pull_request.user.login }}
-          SLACK_USERNAME: GithubGoose
-          SLACK_ICON_EMOJI: ":goose:"
-          SLACK_MESSAGE: "A new version of ${{ github.event.repository.name }} was published! 🎉 \n${{ steps.slack_message.outputs.updated_packages }}\n\nRelease notes → https://github.com/Khan/${{ github.event.repository.name }}/releases/"
-          SLACK_TITLE: "New Wonder Stuff release!"
-          SLACK_FOOTER: Wonder Stuff Slack Notification
-          MSG_MINIMAL: true
+            - name: Send a Slack notification for mobile if a publish happens
+              if: steps.changesets.outputs.published == 'true'
+              uses: rtCamp/action-slack-notify@v2
+              env:
+                  SLACK_WEBHOOK: ${{ secrets.SLACK_FEIMOBILE_WEBHOOK }}
+                  SLACK_CHANNEL: frontend-infra-mobile
+                  SLACK_MSG_AUTHOR: ${{ github.event.pull_request.user.login }}
+                  SLACK_USERNAME: GithubGoose
+                  SLACK_ICON_EMOJI: ":goose:"
+                  SLACK_MESSAGE: "A new version of ${{ github.event.repository.name }} was published! 🎉 \n${{ steps.slack_message.outputs.updated_packages }}\n\nRelease notes → https://github.com/Khan/${{ github.event.repository.name }}/releases/"
+                  SLACK_TITLE: "New Wonder Stuff release!"
+                  SLACK_FOOTER: Wonder Stuff Slack Notification
+                  MSG_MINIMAL: true
