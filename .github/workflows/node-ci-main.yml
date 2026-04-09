@@ -37,6 +37,7 @@ jobs:
                   extra-domains: registry.npmjs.org
             - name: Install & cache node_modules
               uses: Khan/actions@shared-node-cache-v4
+              timeout-minutes: 5
               with:
                   node-version: ${{ matrix.node-version }}
 
@@ -66,6 +67,7 @@ jobs:
                   extra-domains: registry.npmjs.org codecov.io cli.codecov.io keybase.io storage.googleapis.com
             - name: Install & cache node_modules
               uses: Khan/actions@shared-node-cache-v4
+              timeout-minutes: 5
               with:
                   node-version: ${{ matrix.node-version }}
             - name: Run tests with coverage

@@ -52,6 +52,7 @@ jobs:
 
             - name: Install & cache node_modules
               uses: Khan/actions@shared-node-cache-v4
+              timeout-minutes: 5
               with:
                   node-version: 24.x
 
