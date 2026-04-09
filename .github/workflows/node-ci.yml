@@ -58,9 +58,7 @@ jobs:
       with:
         # registry.npmjs.org: npm package registry for pnpm install
         # codecov.io: coverage report upload via codecov-action
-        extra-domains: |
-          registry.npmjs.org
-          codecov.io
+        extra-domains: registry.npmjs.org codecov.io cli.codecov.io
     - name: Install & cache node_modules
       uses: Khan/actions@shared-node-cache-v4
       with:
