@@ -54,6 +54,9 @@ jobs:
             - name: Secure Network
               uses: Khan/actions@secure-network-v1
               timeout-minutes: 5
+              with:
+                  # results-receiver.actions.githubusercontent.com: results are submitted here
+                  allowed-domains: results-receiver.actions.githubusercontent.com
 
             # Initializes the CodeQL tools for scanning.
             - name: Initialize CodeQL
