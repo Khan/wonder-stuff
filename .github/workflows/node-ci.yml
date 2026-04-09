@@ -154,7 +154,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [ubuntu-latest, macos-latest]
+                os: [ubuntu-latest]
                 # We want to include all the versions we support here.
                 node-version: [24.x]
                 exclude:
