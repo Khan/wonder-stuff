@@ -51,6 +51,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v5
 
+    - name: Secure Network
+      uses: Khan/actions@secure-network-v1
+      timeout-minutes: 5
+
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v4

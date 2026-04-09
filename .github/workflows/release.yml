@@ -40,6 +40,16 @@ jobs:
           ssh-key: ${{ secrets.KHAN_ACTIONS_BOT_SSH_PRIVATE_KEY }}
           fetch-depth: 0
 
+      - name: Secure Network
+        uses: Khan/actions@secure-network-v1
+        timeout-minutes: 5
+        with:
+          # registry.npmjs.org: npm package registry for pnpm install and npm publish
+          # hooks.slack.com: Slack webhook notifications via rtCamp/action-slack-notify
+          extra-domains: |
+            registry.npmjs.org
+            hooks.slack.com
+
       - name: Install & cache node_modules
         uses: Khan/actions@shared-node-cache-v4
         with:

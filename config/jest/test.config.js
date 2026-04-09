@@ -7,6 +7,7 @@ const path = require("path");
 
 module.exports = {
     rootDir: path.join(__dirname, "../../"),
+    ...(!!process.env.CLAUDECODE && {watchman: false}),
     transform: {
         "^.+\\.(j|t)sx?$": "<rootDir>/config/jest/test.transform.js",
     },
