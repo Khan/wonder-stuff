@@ -16,33 +16,7 @@ on:
 # For pushes directly to a branch, we assume a PR has been used with wider
 # checks, this just makes sure our coverage data is up-to-date.
 jobs:
-    prime_cache_primary:
-        name: Prime node_modules cache for primary configuration
-        env:
-            CI: true
-        runs-on: ${{ matrix.os }}
-        strategy:
-            # Use a matrix as it means we get the version info in the job name
-            # which is very helpful.
-            matrix:
-                os: [ubuntu-latest]
-                node-version: [24.x]
-        steps:
-            - uses: actions/checkout@v5
-            - name: Secure Network
-              uses: Khan/actions@secure-network-v1
-              timeout-minutes: 5
-              with:
-                  # registry.npmjs.org: npm package registry for pnpm install
-                  extra-domains: registry.npmjs.org
-            - name: Install & cache node_modules
-              uses: Khan/actions@shared-node-cache-v4
-              timeout-minutes: 5
-              with:
-                  node-version: ${{ matrix.node-version }}
-
     coverage:
-        needs: [prime_cache_primary]
         name: Gather coverage
         env:
             CI: true
