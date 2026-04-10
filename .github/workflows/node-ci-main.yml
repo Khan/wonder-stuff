@@ -20,7 +20,7 @@ jobs:
         name: Gather coverage
         env:
             CI: true
-        runs-on: ${{ matrix.os }}
+        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && '${{ matrix.os }}' || 'ephemeral-runner' }}
         strategy:
             matrix:
                 # Use a matrix as it means we get the version info in the job name

@@ -21,7 +21,7 @@ jobs:
         name: Lint, typecheck, and coverage check
         env:
             CI: true
-        runs-on: ${{ matrix.os }}
+        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && '${{ matrix.os }}' || 'ephemeral-runner' }}
         strategy:
             matrix:
                 os: [ubuntu-latest]
@@ -119,7 +119,6 @@ jobs:
                   clean-script: "clean"
                   # Build production
                   build-script: "build:prodsizecheck"
-
         #
         # Do not place any steps after "Check Builds"
         #
@@ -129,7 +128,7 @@ jobs:
         name: Test
         env:
             CI: true
-        runs-on: ${{ matrix.os }}
+        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && '${{ matrix.os }}' || 'ephemeral-runner' }}
         strategy:
             matrix:
                 os: [ubuntu-latest]

@@ -29,7 +29,7 @@ on:
 jobs:
     release:
         name: Release
-        runs-on: ubuntu-latest
+        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && 'ubuntu-latest' || 'ephemeral-runner' }}
         permissions:
             id-token: write # required for publishing to npm
             contents: write # required to `git push`
@@ -114,7 +114,13 @@ jobs:
                   SLACK_MSG_AUTHOR: ${{ github.event.pull_request.user.login }}
                   SLACK_USERNAME: GithubGoose
                   SLACK_ICON_EMOJI: ":goose:"
-                  SLACK_MESSAGE: "A new version of ${{ github.event.repository.name }} was published! 🎉 \n${{ steps.slack_message.outputs.updated_packages }}\n\nRelease notes → https://github.com/Khan/${{ github.event.repository.name }}/releases/"
+                  SLACK_MESSAGE:
+                      "A new version of ${{ github.event.repository.name }} was published! 🎉\
+
+                      ${{ steps.slack_message.outputs.updated_packages }}
+
+
+                      Release notes → https://github.com/Khan/${{ github.event.repository.name }}/releases/"
                   SLACK_TITLE: "New Wonder Stuff release!"
                   SLACK_FOOTER: Wonder Stuff Slack Notification
                   MSG_MINIMAL: true
@@ -128,7 +134,13 @@ jobs:
                   SLACK_MSG_AUTHOR: ${{ github.event.pull_request.user.login }}
                   SLACK_USERNAME: GithubGoose
                   SLACK_ICON_EMOJI: ":goose:"
-                  SLACK_MESSAGE: "A new version of ${{ github.event.repository.name }} was published! 🎉 \n${{ steps.slack_message.outputs.updated_packages }}\n\nRelease notes → https://github.com/Khan/${{ github.event.repository.name }}/releases/"
+                  SLACK_MESSAGE:
+                      "A new version of ${{ github.event.repository.name }} was published! 🎉\
+
+                      ${{ steps.slack_message.outputs.updated_packages }}
+
+
+                      Release notes → https://github.com/Khan/${{ github.event.repository.name }}/releases/"
                   SLACK_TITLE: "New Wonder Stuff release!"
                   SLACK_FOOTER: Wonder Stuff Slack Notification
                   MSG_MINIMAL: true
