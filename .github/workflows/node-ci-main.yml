@@ -1,11 +1,11 @@
 name: Node CI (landed on protected branch)
 
 on:
-  push:
-    branches:
-    - main
-    - changeset-release/*
-    - feature/*
+    push:
+        branches:
+            - main
+            - changeset-release/*
+            - feature/*
 
 # Our jobs run like this to minimize wasting resource cycles:
 #   1. Prime caches for primary configuration (ubuntu on node 14).
@@ -16,46 +16,31 @@ on:
 # For pushes directly to a branch, we assume a PR has been used with wider
 # checks, this just makes sure our coverage data is up-to-date.
 jobs:
-  prime_cache_primary:
-    name: Prime node_modules cache for primary configuration
-    env:
-      CI: true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      # Use a matrix as it means we get the version info in the job name
-      # which is very helpful.
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [24.x]
-    steps:
-    - uses: actions/checkout@v5
-    - name: Install & cache node_modules
-      uses: Khan/actions@shared-node-cache-v4
-      with:
-        node-version: ${{ matrix.node-version }}
-
-
-  coverage:
-    needs: [prime_cache_primary]
-    name: Gather coverage
-    env:
-      CI: true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        # Use a matrix as it means we get the version info in the job name
-        # which is very helpful.
-        os: [ubuntu-latest]
-        node-version: [24.x]
-    steps:
-    - uses: actions/checkout@v5
-    - name: Install & cache node_modules
-      uses: Khan/actions@shared-node-cache-v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Run tests with coverage
-      run: pnpm run coverage
-    - name: Upload Coverage
-      uses: codecov/codecov-action@v6
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+    coverage:
+        name: Gather coverage
+        env:
+            CI: true
+        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && 'ubuntu-latest' || 'ephemeral-runner' }}
+        steps:
+            - uses: actions/checkout@v5
+            - name: Secure Network
+              uses: Khan/actions@secure-network-v1
+              timeout-minutes: 5
+              with:
+                  # registry.npmjs.org: npm package registry for pnpm install
+                  # codecov.io: coverage report upload via codecov-action
+                  # cli.codecov.io: codecov binary download via codecov-action
+                  # keybase.io: codecov GPG public key import for binary signature verification
+                  # storage.googleapis.com: codecov coverage results upload destination
+                  extra-domains: registry.npmjs.org codecov.io cli.codecov.io keybase.io storage.googleapis.com
+            - name: Install & cache node_modules
+              uses: Khan/actions@shared-node-cache-v4
+              timeout-minutes: 5
+              with:
+                  node-version: 24.x
+            - name: Run tests with coverage
+              run: pnpm run coverage
+            - name: Upload Coverage
+              uses: codecov/codecov-action@v6
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}

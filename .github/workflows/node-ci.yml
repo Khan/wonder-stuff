@@ -1,11 +1,11 @@
 name: Node CI
 
 on:
-  pull_request:
-    # edited is needed because that's the trigger when the base branch is
-    # changed on a PR
-    # The rest are the defaults.
-    types: [edited, opened, synchronize, reopened]
+    pull_request:
+        # edited is needed because that's the trigger when the base branch is
+        # changed on a PR
+        # The rest are the defaults.
+        types: [edited, opened, synchronize, reopened]
 
 # Our jobs run like this to minimize wasting resource cycles:
 #   1. Prime caches for primary configuration (ubuntu on node 14).
@@ -17,173 +17,104 @@ on:
 #   3. Run tests for remaining configurations
 #      Since these don't share caches, we don't need to prime those caches.
 jobs:
-  prime_cache_primary:
-    name: Prime node_modules cache for primary configuration
-    env:
-      CI: true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [24.x]
-    steps:
-    - uses: actions/checkout@v5
-    - name: Install & cache node_modules
-      uses: Khan/actions@shared-node-cache-v4
-      with:
-        node-version: ${{ matrix.node-version }}
+    lint:
+        name: Lint, typecheck, and coverage check
+        env:
+            CI: true
+        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && 'ubuntu-latest' || 'ephemeral-runner' }}
+        steps:
+            - name: Checking out latest commit
+              uses: actions/checkout@v5
+            - name: Secure Network
+              uses: Khan/actions@secure-network-v1
+              timeout-minutes: 5
+              with:
+                  # registry.npmjs.org: npm package registry for pnpm install
+                  # codecov.io: coverage report upload via codecov-action
+                  # cli.codecov.io: codecov binary download via codecov-action
+                  # keybase.io: codecov GPG public key import for binary signature verification
+                  # storage.googleapis.com: codecov coverage results upload destination
+                  extra-domains: registry.npmjs.org codecov.io cli.codecov.io keybase.io storage.googleapis.com
+            - name: Install & cache node_modules
+              uses: Khan/actions@shared-node-cache-v4
+              timeout-minutes: 5
+              with:
+                  node-version: 24.x
 
-  lint:
-    needs: [prime_cache_primary]
-    name: Lint, typecheck, and coverage check
-    env:
-      CI: true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [24.x]
-    steps:
-    - name: Checking out latest commit
-      uses: actions/checkout@v5
-    - name: Install & cache node_modules
-      uses: Khan/actions@shared-node-cache-v4
-      with:
-        node-version: ${{ matrix.node-version }}
+            - name: Get All Changed Files
+              uses: Khan/actions@get-changed-files-v3
+              id: changed
 
-    - name: Get All Changed Files
-      uses: Khan/actions@get-changed-files-v3
-      id: changed
+            - id: js-ts-files
+              name: Find .js/.ts changed files
+              uses: Khan/actions@filter-files-v3
+              with:
+                  changed-files: ${{ steps.changed.outputs.files }}
+                  extensions: ".js,.jsx,.ts,.tsx"
 
-    - id: js-ts-files
-      name: Find .js/.ts changed files
-      uses: Khan/actions@filter-files-v3
-      with:
-        changed-files: ${{ steps.changed.outputs.files }}
-        extensions: '.js,.jsx,.ts,.tsx'
+            - id: eslint-reset
+              uses: Khan/actions@filter-files-v3
+              name: Files that would trigger a full eslint run
+              with:
+                  changed-files: ${{ steps.changed.outputs.files }}
+                  files: ".eslintrc.js,pnpm-lock.yaml,pnpm-workspace.yaml,.eslintignore"
 
-    - id: eslint-reset
-      uses: Khan/actions@filter-files-v3
-      name: Files that would trigger a full eslint run
-      with:
-        changed-files: ${{ steps.changed.outputs.files }}
-        files: '.eslintrc.js,pnpm-lock.yaml,pnpm-workspace.yaml,.eslintignore'
+            - name: Build so that inter-package references are resolved
+              run: pnpm run build
 
-    - name: Build so that inter-package references are resolved
-      run: pnpm run build
+            - name: Build Types
+              run: pnpm run build:types
 
-    - name: Build Types
-      run: pnpm run build:types
+            # Linting / type checking
+            - name: Eslint
+              uses: Khan/actions@full-or-limited-v0
+              with:
+                  full-trigger: ${{ steps.eslint-reset.outputs.filtered }}
+                  full: pnpm run lint:ci .
+                  limited-trigger: ${{ steps.js-ts-files.outputs.filtered }}
+                  limited: pnpm run lint:ci {}
 
-    # Linting / type checking
-    - name: Eslint
-      uses: Khan/actions@full-or-limited-v0
-      with:
-        full-trigger: ${{ steps.eslint-reset.outputs.filtered }}
-        full: pnpm run lint:ci .
-        limited-trigger: ${{ steps.js-ts-files.outputs.filtered }}
-        limited: pnpm run lint:ci {}
+            - name: Lint package.json
+              run: pnpm run lint:pkg-json
 
-    - name: Lint package.json
-      run: pnpm run lint:pkg-json
+            - name: Typecheck
+              if: steps.js-ts-files.outputs.filtered != '[]'
+              run: pnpm run typecheck
 
-    - name: Typecheck
-      if: steps.js-ts-files.outputs.filtered != '[]'
-      run: pnpm run typecheck
+            # Collect and record coverage
+            - name: Run Jest with coverage
+              run: pnpm run coverage
+            - name: Upload Coverage
+              # We don't bother collecting a record of coverage for dependabot changes
+              if: ${{ github.actor != 'dependabot[bot]' }}
+              uses: codecov/codecov-action@v6
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  files: ./coverage/coverage-final.json
+                  fail_ci_if_error: true
 
-    # Collect and record coverage
-    - name: Run Jest with coverage
-      run: pnpm run coverage
-    - name: Upload Coverage
-      # We don't bother collecting a record of coverage for dependabot changes
-      if: ${{ github.actor != 'dependabot[bot]' }}
-      uses: codecov/codecov-action@v6
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage/coverage-final.json
-        fail_ci_if_error: true
+            - uses: Khan/actions@check-for-changeset-v2
+              if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+              with:
+                  exclude: .github/,.storybook/
 
-    - uses: Khan/actions@check-for-changeset-v2
-      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
-      with:
-        exclude: .github/,.storybook/
+            - name: Pre-publish check
+              run: node utils/pre-publish-check-ci.js
 
-    - name: Pre-publish check
-      run: node utils/pre-publish-check-ci.js
-
-    # Make sure our packages aren't growing unexpectedly
-    # This must come last as it builds the old code last and so leaves the
-    # wrong code in place for the next job.
-    - name: Check Builds
-      uses: preactjs/compressed-size-action@v2
-      with:
-        # We only care about the browser ES module size, really:
-        pattern: "**/dist/browser/es/index.js"
-        # Always ignore SourceMaps and node_modules:
-        exclude: "{**/*.map,**/node_modules/**}"
-        # Clean up before a build
-        clean-script: "clean"
-        # Build production
-        build-script: "build:prodsizecheck"
-
-    #
-    # Do not place any steps after "Check Builds"
-    #
-
-  test:
-    needs: [lint]
-    name: Test
-    env:
-      CI: true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-        # We want to include all the versions we support here.
-        node-version: [24.x]
-        exclude:
-          # And exclude the configuration that our coverage job already
-          # includes.
-          - os: ubuntu-latest
-            node-version: 24.x
-    steps:
-    - uses: actions/checkout@v5
-
-    - name: Install & cache node_modules
-      uses: Khan/actions@shared-node-cache-v4
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Get All Changed Files
-      uses: Khan/actions@get-changed-files-v3
-      id: changed
-
-    - name: Build so that inter-package references are resolved
-      run: pnpm run build
-
-    - id: jest-reset
-      uses: Khan/actions@filter-files-v3
-      name: Files that would trigger a full Jest run
-      with:
-        changed-files: ${{ steps.changed.outputs.files }}
-        files: |
-          jest.config.js
-          pnpm-lock.yaml
-          pnpm-workspace.yaml
-          test.config.js
-          test.transform.js
-
-    - id: js-ts-files
-      name: Find .js/.ts changed files
-      uses: Khan/actions@filter-files-v3
-      with:
-        changed-files: ${{ steps.changed.outputs.files }}
-        extensions: '.js,.jsx,.ts,.tsx'
-
-    - name: Jest
-      uses: Khan/actions@full-or-limited-v0
-      with:
-        full-trigger: ${{ steps.jest-reset.outputs.filtered }}
-        full: pnpm run test
-        limited-trigger: ${{ steps.js-ts-files.outputs.filtered }}
-        limited: pnpm run test --findRelatedTests --passWithNoTests {}
+            # Make sure our packages aren't growing unexpectedly
+            # This must come last as it builds the old code last and so leaves the
+            # wrong code in place for the next job.
+            - name: Check Builds
+              uses: preactjs/compressed-size-action@v2
+              with:
+                  # We only care about the browser ES module size, really:
+                  pattern: "**/dist/browser/es/index.js"
+                  # Always ignore SourceMaps and node_modules:
+                  exclude: "{**/*.map,**/node_modules/**}"
+                  # Clean up before a build
+                  clean-script: "clean"
+                  # Build production
+                  build-script: "build:prodsizecheck"
+        #
+        # Do not place any steps after "Check Builds"
+        #
