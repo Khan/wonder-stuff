@@ -20,12 +20,11 @@ jobs:
         name: Gather coverage
         env:
             CI: true
-        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && '${{ matrix.os }}' || 'ephemeral-runner' }}
+        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && 'ubuntu-latest' || 'ephemeral-runner' }}
         strategy:
             matrix:
                 # Use a matrix as it means we get the version info in the job name
                 # which is very helpful.
-                os: [ubuntu-latest]
                 node-version: [24.x]
         steps:
             - uses: actions/checkout@v5

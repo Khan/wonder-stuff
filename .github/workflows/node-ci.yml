@@ -21,10 +21,9 @@ jobs:
         name: Lint, typecheck, and coverage check
         env:
             CI: true
-        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && '${{ matrix.os }}' || 'ephemeral-runner' }}
+        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && 'ubuntu-latest' || 'ephemeral-runner' }}
         strategy:
             matrix:
-                os: [ubuntu-latest]
                 node-version: [24.x]
         steps:
             - name: Checking out latest commit
@@ -122,68 +121,3 @@ jobs:
         #
         # Do not place any steps after "Check Builds"
         #
-
-    test:
-        needs: [lint]
-        name: Test
-        env:
-            CI: true
-        runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && '${{ matrix.os }}' || 'ephemeral-runner' }}
-        strategy:
-            matrix:
-                os: [ubuntu-latest]
-                # We want to include all the versions we support here.
-                node-version: [24.x]
-                exclude:
-                    # And exclude the configuration that our coverage job already
-                    # includes.
-                    - os: ubuntu-latest
-                      node-version: 24.x
-        steps:
-            - uses: actions/checkout@v5
-
-            - name: Secure Network
-              uses: Khan/actions@secure-network-v1
-              timeout-minutes: 5
-              with:
-                  # registry.npmjs.org: npm package registry for pnpm install
-                  extra-domains: registry.npmjs.org
-            - name: Install & cache node_modules
-              uses: Khan/actions@shared-node-cache-v4
-              timeout-minutes: 5
-              with:
-                  node-version: ${{ matrix.node-version }}
-
-            - name: Get All Changed Files
-              uses: Khan/actions@get-changed-files-v3
-              id: changed
-
-            - name: Build so that inter-package references are resolved
-              run: pnpm run build
-
-            - id: jest-reset
-              uses: Khan/actions@filter-files-v3
-              name: Files that would trigger a full Jest run
-              with:
-                  changed-files: ${{ steps.changed.outputs.files }}
-                  files: |
-                      jest.config.js
-                      pnpm-lock.yaml
-                      pnpm-workspace.yaml
-                      test.config.js
-                      test.transform.js
-
-            - id: js-ts-files
-              name: Find .js/.ts changed files
-              uses: Khan/actions@filter-files-v3
-              with:
-                  changed-files: ${{ steps.changed.outputs.files }}
-                  extensions: ".js,.jsx,.ts,.tsx"
-
-            - name: Jest
-              uses: Khan/actions@full-or-limited-v0
-              with:
-                  full-trigger: ${{ steps.jest-reset.outputs.filtered }}
-                  full: pnpm run test
-                  limited-trigger: ${{ steps.js-ts-files.outputs.filtered }}
-                  limited: pnpm run test --findRelatedTests --passWithNoTests {}
