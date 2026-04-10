@@ -21,11 +21,6 @@ jobs:
         env:
             CI: true
         runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && 'ubuntu-latest' || 'ephemeral-runner' }}
-        strategy:
-            matrix:
-                # Use a matrix as it means we get the version info in the job name
-                # which is very helpful.
-                node-version: [24.x]
         steps:
             - uses: actions/checkout@v5
             - name: Secure Network
@@ -42,7 +37,7 @@ jobs:
               uses: Khan/actions@shared-node-cache-v4
               timeout-minutes: 5
               with:
-                  node-version: ${{ matrix.node-version }}
+                  node-version: 24.x
             - name: Run tests with coverage
               run: pnpm run coverage
             - name: Upload Coverage

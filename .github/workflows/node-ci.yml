@@ -22,9 +22,6 @@ jobs:
         env:
             CI: true
         runs-on: ${{ vars.USE_GITHUB_RUNNERS == 'true' && 'ubuntu-latest' || 'ephemeral-runner' }}
-        strategy:
-            matrix:
-                node-version: [24.x]
         steps:
             - name: Checking out latest commit
               uses: actions/checkout@v5
@@ -42,7 +39,7 @@ jobs:
               uses: Khan/actions@shared-node-cache-v4
               timeout-minutes: 5
               with:
-                  node-version: ${{ matrix.node-version }}
+                  node-version: 24.x
 
             - name: Get All Changed Files
               uses: Khan/actions@get-changed-files-v3
