@@ -1,6 +1,6 @@
 import type {
     Logger as WinstonLogger,
-    LogEntry,
+    Logform,
     transport as Transport,
 } from "winston";
 import {Runtime} from "@khanacademy/wonder-stuff-core";
@@ -8,7 +8,7 @@ import {Runtime} from "@khanacademy/wonder-stuff-core";
 /**
  * Describes logging metdata.
  */
-export type Info = LogEntry;
+export type Info = Logform.TransformableInfo;
 
 /**
  * Defines the different log levels.
