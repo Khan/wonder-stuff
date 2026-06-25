@@ -10,6 +10,17 @@
         // tsc to output any modules.
         "module": "ESNext",
         "moduleResolution": "node",
+        // `moduleResolution: "node"` (node10) is deprecated as of TS 6.0 and
+        // will stop functioning in TS 7.0. We keep the existing resolution
+        // behavior for now and silence the deprecation error.
+        "ignoreDeprecations": "6.0",
+
+        // As of TS 6.0, `types` defaults to `[]` instead of automatically
+        // including every package under `node_modules/@types`. List the
+        // ambient types our source and tests rely on so they keep resolving:
+        // `node` for Node globals/built-ins and `jest` for the test globals
+        // (and for wonder-stuff-testing, whose published source uses them).
+        "types": ["node", "jest"],
 
         /* Interop Constraints */
         "esModuleInterop": true,
