@@ -59,10 +59,12 @@ jobs:
             - name: Upgrade npm for OIDC support
               shell: bash
               run: |
-                  # npm trusted publishing requires npm CLI v11.5.1+
+                  # npm trusted publishing requires npm CLI v11.5.1+, but NOT
+                  # the new v12, which is broken when detecting which packages
+                  # need to be published!
+                  #
                   # Node.js 22 ships with npm 10.x, so we need to upgrade
-                  # and pnpm uses npm under the hood for publishes.
-                  npm install -g npm@latest && echo "✅ npm upgraded to $(npm --version)"
+                  npm install -g npm@11 && echo "✅ npm upgraded to $(npm --version)"
 
             - name: Build Typedoc
               # Generate nice docs inside "docs/" folder
