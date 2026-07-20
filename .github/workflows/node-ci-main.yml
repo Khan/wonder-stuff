@@ -37,7 +37,7 @@ jobs:
               uses: Khan/actions@shared-node-cache-v4
               timeout-minutes: 5
               with:
-                  node-version: 24.x
+                  node-version: 24.18
             - name: Run tests with coverage
               run: pnpm run coverage
             - name: Upload Coverage

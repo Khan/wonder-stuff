@@ -54,7 +54,7 @@ jobs:
               uses: Khan/actions@shared-node-cache-v4
               timeout-minutes: 5
               with:
-                  node-version: 24.x
+                  node-version: 24.18
 
             - name: Upgrade npm for OIDC support
               shell: bash
