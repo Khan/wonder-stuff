@@ -1,62 +1,34 @@
 {
     "$schema": "https://json.schemastore.org/claude-code-settings.json",
-    "permissions": {
-        "deny": [
-            "Edit(.claude/settings.json)",
-            "Write(.claude/settings.json)",
-            "Edit(.claude/hooks/**)",
-            "Write(.claude/hooks/**)",
-            "Edit(~/.claude/settings.json)",
-            "Write(~/.claude/settings.json)",
-            "Edit(~/.claude/hooks/**)",
-            "Write(~/.claude/hooks/**)",
-            "Read(**/id_rsa*)",
-            "Read(**/id_ed25519*)",
-            "Read(**/id_ecdsa*)",
-            "Read(**/id_dsa*)",
-            "Read(**/.ssh/id_*)",
-            "Read(**/.aws/credentials)",
-            "Read(**/.aws/config)",
-            "Read(**/.config)"
-        ],
-        "allow": [
-            "Edit(/tmp/**)",
-            "Write(/tmp/**)",
-            "Read(/tmp/**)",
-            "Edit(/private/tmp/**)",
-            "Write(/private/tmp/**)",
-            "Read(/private/tmp/**)",
-            "Read(~/.claude/session-env/**)",
-            "Edit(~/.claude/session-env/**)",
-            "Write(~/.claude/session-env/**)",
-            "Read(~/.claude/debug/**)",
-            "Write(~/.claude/debug/**)",
-            "Edit(~/.cache/gh/**)",
-            "Write(~/.cache/gh/**)",
-            "Read(~/.cache/gh/**)",
-            "Read(~/khan/devtools/khan-linter/**)",
-            "Edit(~/khan/devtools/khan-linter/**)",
-            "Read(~/.npm/**)",
-            "Edit(~/.npm/**)",
-            "Write(~/.npm/**)",
-            "Read(~/.local/share/mise)",
-            "Edit(~/.local/share/mise)",
-            "Write(~/.local/share/mise)",
-            "Read(~/.local/state/mise)",
-            "Edit(~/.local/state/mise)",
-            "Write(~/.local/state/mise)",
-            "Read(~/.cache/node/corepack)",
-            "Edit(~/.cache/node/corepack)",
-            "Write(~/.cache/node/corepack)",
-            "Read(~/Library/pnpm/**)",
-            "Edit(~/Library/pnpm/**)",
-            "Write(~/Library/pnpm/**)"
-        ],
-        "ask": [
-            "mcp__*"
-        ]
-    },
     "sandbox": {
+        "filesystem": {
+            "allowWrite": [
+                ".",
+                "/tmp",
+                "/private/tmp",
+                "~/.claude/session-env",
+                "~/.claude/debug",
+                "~/.cache/gh",
+                "~/khan/devtools/khan-linter",
+                "~/.npm",
+                "~/.local/share/mise",
+                "~/.local/state/mise",
+                "~/.cache/node/corepack",
+                "~/Library/pnpm",
+                "~/Library/Caches/pnpm"
+            ],
+            "denyWrite": [
+                ".claude/settings.json",
+                ".claude/hooks",
+                "~/.claude/settings.json",
+                "~/.claude/hooks",
+                ".mcp.json",
+                ".mcp",
+                ".agent-settings-assets-manifest.json",
+                ".codex/config.toml"
+            ],
+            "allowGitConfig": true
+        },
         "enabled": true,
         "autoAllowBashIfSandboxed": true,
         "allowUnsandboxedCommands": false,
@@ -70,7 +42,150 @@
                 "npm.pkg.github.com"
             ]
         },
-        "enableWeakerNetworkIsolation": true
+        "enableWeakerNetworkIsolation": true,
+        "excludedCommands": [
+            "pbcopy"
+        ]
+    },
+    "permissions": {
+        "deny": [
+            "Edit(.mcp.json)",
+            "Edit(.mcp/**)",
+            "Edit(.agent-settings-assets-manifest.json)",
+            "Edit(.codex/config.toml)",
+            "mcp__google_cloud_bigquery__execute_sql",
+            "mcp__claude_ai_Google_Cloud_BigQuery__execute_sql"
+        ],
+        "allow": [
+            "mcp__Atlassian__atlassianUserInfo",
+            "mcp__claude_ai_Atlassian__atlassianUserInfo",
+            "mcp__Atlassian__fetch",
+            "mcp__claude_ai_Atlassian__fetch",
+            "mcp__Atlassian__getAccessibleAtlassianResources",
+            "mcp__claude_ai_Atlassian__getAccessibleAtlassianResources",
+            "mcp__Atlassian__getConfluenceCommentChildren",
+            "mcp__claude_ai_Atlassian__getConfluenceCommentChildren",
+            "mcp__Atlassian__getConfluencePage",
+            "mcp__claude_ai_Atlassian__getConfluencePage",
+            "mcp__Atlassian__getConfluencePageDescendants",
+            "mcp__claude_ai_Atlassian__getConfluencePageDescendants",
+            "mcp__Atlassian__getConfluencePageFooterComments",
+            "mcp__claude_ai_Atlassian__getConfluencePageFooterComments",
+            "mcp__Atlassian__getConfluencePageInlineComments",
+            "mcp__claude_ai_Atlassian__getConfluencePageInlineComments",
+            "mcp__Atlassian__getConfluenceSpaces",
+            "mcp__claude_ai_Atlassian__getConfluenceSpaces",
+            "mcp__Atlassian__getIssueLinkTypes",
+            "mcp__claude_ai_Atlassian__getIssueLinkTypes",
+            "mcp__Atlassian__getJiraIssue",
+            "mcp__claude_ai_Atlassian__getJiraIssue",
+            "mcp__Atlassian__getJiraIssueRemoteIssueLinks",
+            "mcp__claude_ai_Atlassian__getJiraIssueRemoteIssueLinks",
+            "mcp__Atlassian__getJiraIssueTypeMetaWithFields",
+            "mcp__claude_ai_Atlassian__getJiraIssueTypeMetaWithFields",
+            "mcp__Atlassian__getJiraProjectIssueTypesMetadata",
+            "mcp__claude_ai_Atlassian__getJiraProjectIssueTypesMetadata",
+            "mcp__Atlassian__getPagesInConfluenceSpace",
+            "mcp__claude_ai_Atlassian__getPagesInConfluenceSpace",
+            "mcp__Atlassian__getTransitionsForJiraIssue",
+            "mcp__claude_ai_Atlassian__getTransitionsForJiraIssue",
+            "mcp__Atlassian__getVisibleJiraProjects",
+            "mcp__claude_ai_Atlassian__getVisibleJiraProjects",
+            "mcp__Atlassian__lookupJiraAccountId",
+            "mcp__claude_ai_Atlassian__lookupJiraAccountId",
+            "mcp__Atlassian__search",
+            "mcp__claude_ai_Atlassian__search",
+            "mcp__Atlassian__searchConfluenceUsingCql",
+            "mcp__claude_ai_Atlassian__searchConfluenceUsingCql",
+            "mcp__Atlassian__searchJiraIssuesUsingJql",
+            "mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql",
+            "mcp__slack__slack_get_reactions",
+            "mcp__claude_ai_Slack__slack_get_reactions",
+            "mcp__slack__slack_list_channel_members",
+            "mcp__claude_ai_Slack__slack_list_channel_members",
+            "mcp__slack__slack_read_canvas",
+            "mcp__claude_ai_Slack__slack_read_canvas",
+            "mcp__slack__slack_read_channel",
+            "mcp__claude_ai_Slack__slack_read_channel",
+            "mcp__slack__slack_read_file",
+            "mcp__claude_ai_Slack__slack_read_file",
+            "mcp__slack__slack_read_thread",
+            "mcp__claude_ai_Slack__slack_read_thread",
+            "mcp__slack__slack_read_user_profile",
+            "mcp__claude_ai_Slack__slack_read_user_profile",
+            "mcp__slack__slack_search_channels",
+            "mcp__claude_ai_Slack__slack_search_channels",
+            "mcp__slack__slack_search_emojis",
+            "mcp__claude_ai_Slack__slack_search_emojis",
+            "mcp__slack__slack_search_public",
+            "mcp__claude_ai_Slack__slack_search_public",
+            "mcp__slack__slack_search_public_and_private",
+            "mcp__claude_ai_Slack__slack_search_public_and_private",
+            "mcp__slack__slack_search_users",
+            "mcp__claude_ai_Slack__slack_search_users",
+            "mcp__google_drive__download_file_content",
+            "mcp__claude_ai_Google_Drive__download_file_content",
+            "mcp__google_drive__get_file_metadata",
+            "mcp__claude_ai_Google_Drive__get_file_metadata",
+            "mcp__google_drive__get_file_permissions",
+            "mcp__claude_ai_Google_Drive__get_file_permissions",
+            "mcp__google_drive__list_recent_files",
+            "mcp__claude_ai_Google_Drive__list_recent_files",
+            "mcp__google_drive__read_file_content",
+            "mcp__claude_ai_Google_Drive__read_file_content",
+            "mcp__google_drive__search_files",
+            "mcp__claude_ai_Google_Drive__search_files",
+            "mcp__google_cloud_bigquery__get_dataset_info",
+            "mcp__claude_ai_Google_Cloud_BigQuery__get_dataset_info",
+            "mcp__google_cloud_bigquery__get_table_info",
+            "mcp__claude_ai_Google_Cloud_BigQuery__get_table_info",
+            "mcp__google_cloud_bigquery__list_dataset_ids",
+            "mcp__claude_ai_Google_Cloud_BigQuery__list_dataset_ids",
+            "mcp__google_cloud_bigquery__list_table_ids",
+            "mcp__claude_ai_Google_Cloud_BigQuery__list_table_ids",
+            "mcp__github",
+            "Bash(pbcopy)"
+        ],
+        "ask": [
+            "mcp__Atlassian__addCommentToJiraIssue",
+            "mcp__claude_ai_Atlassian__addCommentToJiraIssue",
+            "mcp__Atlassian__addWorklogToJiraIssue",
+            "mcp__claude_ai_Atlassian__addWorklogToJiraIssue",
+            "mcp__Atlassian__createConfluenceFooterComment",
+            "mcp__claude_ai_Atlassian__createConfluenceFooterComment",
+            "mcp__Atlassian__createConfluenceInlineComment",
+            "mcp__claude_ai_Atlassian__createConfluenceInlineComment",
+            "mcp__Atlassian__createConfluencePage",
+            "mcp__claude_ai_Atlassian__createConfluencePage",
+            "mcp__Atlassian__createIssueLink",
+            "mcp__claude_ai_Atlassian__createIssueLink",
+            "mcp__Atlassian__createJiraIssue",
+            "mcp__claude_ai_Atlassian__createJiraIssue",
+            "mcp__Atlassian__editJiraIssue",
+            "mcp__claude_ai_Atlassian__editJiraIssue",
+            "mcp__Atlassian__transitionJiraIssue",
+            "mcp__claude_ai_Atlassian__transitionJiraIssue",
+            "mcp__Atlassian__updateConfluencePage",
+            "mcp__claude_ai_Atlassian__updateConfluencePage",
+            "mcp__slack__slack_add_reaction",
+            "mcp__claude_ai_Slack__slack_add_reaction",
+            "mcp__slack__slack_create_canvas",
+            "mcp__claude_ai_Slack__slack_create_canvas",
+            "mcp__slack__slack_schedule_message",
+            "mcp__claude_ai_Slack__slack_schedule_message",
+            "mcp__slack__slack_send_message",
+            "mcp__claude_ai_Slack__slack_send_message",
+            "mcp__slack__slack_send_message_draft",
+            "mcp__claude_ai_Slack__slack_send_message_draft",
+            "mcp__slack__slack_update_canvas",
+            "mcp__claude_ai_Slack__slack_update_canvas",
+            "mcp__google_drive__copy_file",
+            "mcp__claude_ai_Google_Drive__copy_file",
+            "mcp__google_drive__create_file",
+            "mcp__claude_ai_Google_Drive__create_file",
+            "mcp__google_cloud_bigquery__execute_sql_readonly",
+            "mcp__claude_ai_Google_Cloud_BigQuery__execute_sql_readonly"
+        ]
     },
     "hooks": {
         "SessionStart": [
@@ -87,7 +202,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/gh-install.sh"
+                        "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/gh-install.mjs"
                     }
                 ]
             },
@@ -95,7 +210,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "pnpm install",
+                        "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/pnpm-install.mjs",
                         "timeout": 120,
                         "statusMessage": "Installing dependencies..."
                     }
@@ -120,6 +235,15 @@
                         "type": "command",
                         "if": "Bash(gh *)",
                         "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/gh-filter.mjs"
+                    }
+                ]
+            },
+            {
+                "matcher": "Bash",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/echo-banner-filter.mjs"
                     }
                 ]
             }
