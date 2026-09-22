@@ -46,8 +46,7 @@ jobs:
               with:
                   # registry.npmjs.org: npm package registry for pnpm install and npm publish
                   # hooks.slack.com: Slack webhook notifications via rtCamp/action-slack-notify
-                  # fulcio.sigstore.dev: signing certificate for npm provenance
-                  # rekor.sigstore.dev: transparency log upload for npm provenance
+                  # fulcio.sigstore.dev,rekor.sigstore.dev: signing certificates are stored here
                   extra-domains: |
                       registry.npmjs.org
                       hooks.slack.com
