@@ -8,10 +8,16 @@ when publishing a new package because the package does not yet exist on
 npmjs.com and so Trusted Publishing cannot be configured for it. 
 
 To work around that problem, this package guides you through publishing a
-placeholder package under the desired name using a short-lived, granular npm
-access token. Once the placeholder has been published, it's possible to
-configure the package on npmjs.com for Trusted Publishing and then never deal
-with tokens again. 
+placeholder package under the desired name. Once the placeholder has been
+published, it's possible to configure the package on npmjs.com for Trusted
+Publishing and then never deal with tokens again. 
+
+## Prerequisites
+
+Publishing the placeholder package requires you to be logged in to npm, so run
+`pnpm login` before running this tool. The tool checks that you are logged in
+before it does anything else, and stops with a reminder if you are not. The
+tool runs `pnpm logout` for you when it finishes.
 
 ## Usage 
 

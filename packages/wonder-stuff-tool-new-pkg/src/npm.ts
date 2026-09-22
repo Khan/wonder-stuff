@@ -1,8 +1,4 @@
 import {execSync} from "node:child_process";
-import {writeFile} from "node:fs/promises";
-import {join} from "node:path";
-import {createInterface} from "node:readline/promises";
-import {openBrowser} from "./open-browser";
 
 /**
  * Validate that the given package name is a valid npm package name.
@@ -35,102 +31,55 @@ export function validatePackageName(name: string): void {
 }
 
 /**
- * Validates that the given access token is a valid npm granular access token.
+ * Verify that the current user is logged in to npm.
  *
- * @param token The token to validate.
- * @throws if the token is not valid.
+ * Publishing the placeholder package requires an authenticated npm user.
+ * Rather than dealing with access tokens, we rely on the user having already
+ * logged in with `pnpm login`.
+ *
+ * @returns The npm username that is logged in.
+ * @throws If the user is not logged in to npm.
  */
-export function validateAccessToken(token: string | null | undefined): void {
-    const trimmedToken = token?.trim();
-
-    // npm granular access tokens start with "npm_" and are typically longer
-    if (!trimmedToken || trimmedToken.length === 0) {
-        throw new Error("Access token cannot be empty");
+export function verifyNpmLogin(): string {
+    let username: string | undefined;
+    try {
+        username = execSync("pnpm whoami", {
+            encoding: "utf-8",
+            stdio: ["ignore", "pipe", "pipe"],
+        }).trim();
+    } catch {
+        // `pnpm whoami` exits non-zero when there are no credentials for the
+        // registry, so treat any failure as "not logged in".
     }
 
-    // Check if it looks like an npm token
-    if (!trimmedToken.startsWith("npm_")) {
+    if (!username) {
         throw new Error(
-            'Invalid token format. npm granular access tokens should start with "npm_"',
+            "You are not logged in to npm. Run `pnpm login` to log in, then try again.",
         );
     }
 
-    // Basic length check (npm tokens are typically around 36+ characters)
-    if (trimmedToken.length < 20) {
-        throw new Error("Token appears to be too short to be valid");
-    }
+    console.log(`✓ Logged in to npm as ${username}`);
+
+    return username;
 }
 
 /**
- * Prompt the user for an npm granular access token.
+ * Log out of npm.
  *
- * This prompts the user for a token and then writes it to the given
- * temporary directory.
- * @param tempDir The temporary directory to write the token to.
+ * We don't want to leave a login session lying around once we're done with it.
+ *
+ * This is best-effort; there's nothing left for us to do by this point, so a
+ * failure to log out isn't worth failing the whole operation over.
  */
-export async function promptForAccessToken(tempDir: string): Promise<void> {
-    console.log();
-    console.log("=== npm Granular Access Token Required ===");
-    console.log();
-    console.log(
-        "A granular access token is needed to publish the placeholder package.",
-    );
-    console.log();
-    console.log("When creating the token, please configure it with:");
-    console.log("  ✓ Expiration: 7 days (the default, or less if you prefer)");
-    console.log("  ✓ Ensure 'Bypass two-factor authentication' is checked");
-    console.log("  ✓ Permissions:");
-    console.log("    • Read and write - only for the '@khanacademy' scope");
-    console.log();
-    console.log("Opening a browser window so that you can create the token...");
-    console.log();
-
-    const tokenCreationUrl =
-        "https://www.npmjs.com/settings/khanacademy/tokens/granular-access-tokens/new";
-    openBrowser(tokenCreationUrl);
-
-    console.log(
-        "After creating the token, copy it and paste it below (input will be hidden):",
-    );
-    console.log();
-
-    const rl = createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
-
-    let tokenValid = false;
-    while (!tokenValid) {
-        try {
-            // Read token from stdin (note: readline doesn't support hidden input natively)
-            const token = await rl.question("Access Token: ");
-
-            // Validate the token
-            validateAccessToken(token);
-            console.log();
-            console.log("✓ Token format is valid");
-
-            // Create .npmrc file in temp directory with the token
-            const npmrcContent = `//registry.npmjs.org/:_authToken=${token.trim()}\n`;
-            await writeFile(join(tempDir, ".npmrc"), npmrcContent);
-            console.log(
-                "✓ Configured npm authentication for temporary directory",
-            );
-
-            tokenValid = true;
-        } catch (error) {
-            console.log();
-            if (error instanceof Error) {
-                console.error(`✗ ${error.message}`);
-            } else {
-                console.error("✗ Invalid token");
-            }
-            console.log("Please try again (or press Ctrl+C to cancel).");
-            console.log();
-        }
+export function logoutOfNpm(): void {
+    try {
+        execSync("pnpm logout", {stdio: "ignore"});
+        console.log("✓ Logged out of npm");
+    } catch {
+        console.warn(
+            "⚠ Could not log out of npm. Please run `pnpm logout` yourself.",
+        );
     }
-
-    rl.close();
 }
 
 /**
